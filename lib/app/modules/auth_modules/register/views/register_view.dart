@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/register_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
@@ -151,7 +152,9 @@ class RegisterView extends GetView<RegisterController> {
                 padding: EdgeInsets.only(top: 26.h, bottom: 20.h),
                 child: CustomButton(
                   title: LocalKeys.kSignUp.tr,
-                  onPress: () {
+                  onPress: ()async {
+                    RegisterModel ? login= await  controller.registerUser() as RegisterModel? ;
+                    // LoginModel ? login= await  controller.loginUser(controller.phone.text)as LoginModel?;
                     Get.toNamed(Routes.OTP_VERIFICATION);
                   },
                 ),

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
@@ -15,7 +16,6 @@ import '../controllers/login_controller.dart';
 
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -82,7 +82,9 @@ class LoginView extends GetView<LoginController> {
               padding: EdgeInsets.only(top: 45.h, bottom: 66.h),
               child: CustomButton(
                 title: LocalKeys.kLogin.tr,
-                onPress: () {
+                onPress: ()async {
+               LoginModel ? login= await  controller.loginUser(controller.phone.text)as LoginModel?;
+              Get.snackbar("Unknown Network error", login!.data!.msg??'');
                   Get.toNamed(
                     Routes.OTP_VERIFICATION,
                     arguments: {"isLogin": true},

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class AppConstants {
   const AppConstants._();
 
-  static const String kBaseUrl = "https://elmorstan.com/";
+  static const String kBaseUrl = "https://api.eat-nourish.com/";
   static const String kGoogleMapsApiKey =
       "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8";
   static const String kImage =

@@ -4,6 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/otp_mobile_verify_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
@@ -93,10 +94,12 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                 padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
                 child: CustomButton(
                   title: LocalKeys.kContinue.tr,
-                  onPress: () {
+                  onPress: () async{
                     if (controller.isLogin) {
                       Get.offAllNamed(Routes.HOME_PAGE);
                     } else if (controller.isEmail.value) {
+                      OtpMobileVerifyModel ? login= await  controller.verifyMobileOtp()as OtpMobileVerifyModel?;
+                      Get.snackbar("Unknown Network error", login!.data!.msg??'');
                       Get.offAllNamed(Routes.LOGIN);
                     } else {
                       controller.isEmail.value = true;
