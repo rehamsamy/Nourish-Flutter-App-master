@@ -52,6 +52,8 @@ dependencies:
   date_time_picker: ^2.1.0
   dio_cache_interceptor: any
   dio_logger: ^4.0.8+8
+  shimmer: ^2.0.0
+  flutter_shimmer: ^2.1.2
 
 
 dev_dependencies:

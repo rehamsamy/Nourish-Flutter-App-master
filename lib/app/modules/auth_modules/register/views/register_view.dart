@@ -154,8 +154,11 @@ class RegisterView extends GetView<RegisterController> {
                   title: LocalKeys.kSignUp.tr,
                   onPress: ()async {
                     RegisterModel ? login= await  controller.registerUser() as RegisterModel? ;
-                    // LoginModel ? login= await  controller.loginUser(controller.phone.text)as LoginModel?;
-                    Get.toNamed(Routes.OTP_VERIFICATION);
+                    if(login?.data !=null){
+                      Get.toNamed(Routes.OTP_VERIFICATION,arguments: {'phone':controller.phone.text});
+                      Get.snackbar("Unknown Network error", login!.data!.msg??'');
+                    }
+
                   },
                 ),
               ),

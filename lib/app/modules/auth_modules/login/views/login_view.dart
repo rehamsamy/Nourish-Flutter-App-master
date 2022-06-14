@@ -84,11 +84,14 @@ class LoginView extends GetView<LoginController> {
                 title: LocalKeys.kLogin.tr,
                 onPress: ()async {
                LoginModel ? login= await  controller.loginUser(controller.phone.text)as LoginModel?;
-              Get.snackbar("Unknown Network error", login!.data!.msg??'');
-                  Get.toNamed(
-                    Routes.OTP_VERIFICATION,
-                    arguments: {"isLogin": true},
-                  );
+               if(login?.data !=null){
+                 Get.snackbar("Unknown Network error", login!.data!.msg??'');
+                 Get.toNamed(
+                   Routes.OTP_VERIFICATION,
+                   arguments: {"isLogin": true},
+                 );
+               }
+
                 },
               ),
             ),

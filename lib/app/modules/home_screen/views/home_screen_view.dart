@@ -7,6 +7,7 @@ import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
+import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/packages/views/all_package_body.dart';
 import 'package:nourish_sa/app/shared/dialogs/filter_dialog.dart';
 import 'package:nourish_sa/app/shared/headline_with_view_all.dart';
@@ -20,7 +21,8 @@ import '../controllers/home_screen_controller.dart';
 import 'widgets/drawer.dart';
 
 class HomeScreenView extends GetView<HomeScreenController> {
-  const HomeScreenView({Key? key}) : super(key: key);
+   HomeScreenView({Key? key}) : super(key: key);
+  final HomeScreenController homeScreenController = Get.find();
 
   @override
   Widget build(BuildContext context) {
@@ -123,21 +125,26 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 },
               ),
             ),
-            SizedBox(
-              width: Get.width,
-              height: 100.h,
-              child: ListView.builder(
-                itemCount: 6,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(horizontal: 7.w),
-                itemBuilder: (context, index) {
-                  return MealCard(
-                    title: "Healty",
-                    color: AppConstants.colorsMenu[index],
-                    image:
-                        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-                  );
-                },
+            GetBuilder<HomeScreenController>(
+              builder: (_)=> SizedBox(
+                width: Get.width,
+                height: 100.h,
+                child: controller.isLoading?ListView.builder(
+                  itemCount: 10,
+                    itemBuilder:(_,index)=>MealLoading() ):
+                  ListView.builder(
+                    itemCount: controller.categoriesList.length,
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 7.w),
+                    itemBuilder: (context, index) {
+                      return MealCard(
+                        title: controller.categoriesList[index].name??'',
+                        color: AppConstants.colorsMenu[index],
+                        image:controller.categoriesList[index].image??''
+                            // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
+                      );
+                    },
+                  )
               ),
             ),
             Padding(

@@ -16,6 +16,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class OtpVerificationView extends GetView<OtpVerificationController> {
   const OtpVerificationView({Key? key}) : super(key: key);
 
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -96,12 +97,15 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                   title: LocalKeys.kContinue.tr,
                   onPress: () async{
                     if (controller.isLogin) {
+                      Get.log('xxxx1');
                       Get.offAllNamed(Routes.HOME_PAGE);
                     } else if (controller.isEmail.value) {
+                      Get.log('xxxx2');
                       OtpMobileVerifyModel ? login= await  controller.verifyMobileOtp()as OtpMobileVerifyModel?;
-                      Get.snackbar("Unknown Network error", login!.data!.msg??'');
+                       Get.snackbar("Unknown Network error", login!.data!.msg??'');
                       Get.offAllNamed(Routes.LOGIN);
                     } else {
+                      Get.log('xxxx3');
                       controller.isEmail.value = true;
                     }
                   },

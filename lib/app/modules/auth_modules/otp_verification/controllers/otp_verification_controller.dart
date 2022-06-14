@@ -9,6 +9,7 @@ import 'package:nourish_sa/app/core/values/app_constants.dart';
 class OtpVerificationController extends GetxController {
   TextEditingController otp = TextEditingController();
   final Map args = Get.arguments ?? {};
+  String ? phone;
 
   late bool isLogin;
   RxBool isEmail = false.obs;
@@ -18,12 +19,13 @@ class OtpVerificationController extends GetxController {
     super.onInit();
     isLogin = args["isLogin"] ?? false;
     isEmail.value = args["isEmail"] ?? false;
+    phone=args['phone'];
   }
 
-  Future<OtpMobileVerifyModel?> verifyMobileOtp(String mobile) async {
+  Future<OtpMobileVerifyModel?> verifyMobileOtp() async {
     Map<String, dynamic> ?map = {
       'code':otp.text,
-      'mobile': CupertinoIcons.money_dollar,
+      'mobile': phone,
     };
     Dio dio = Dio();
     try {
