@@ -5,6 +5,7 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_logger/dio_logger.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class OtpVerificationController extends GetxController {
   TextEditingController otp = TextEditingController();
@@ -23,10 +24,12 @@ class OtpVerificationController extends GetxController {
   }
 
   Future<OtpMobileVerifyModel?> verifyMobileOtp() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
     Map<String, dynamic> ?map = {
       'code':otp.text,
       'mobile': phone,
     };
+
     Dio dio = Dio();
     try {
       Dio dio = Dio();

@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
   TextEditingController phone = TextEditingController();
@@ -21,6 +22,7 @@ class LoginController extends GetxController {
 
 
   Future<LoginModel?> loginUser(String mobile) async {
+
     Map<String, dynamic> ?map = {
       'mobile': mobile,
     };
