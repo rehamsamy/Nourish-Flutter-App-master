@@ -5,6 +5,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
+import 'package:nourish_sa/app/data/services/logging_interceptor.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginController extends GetxController {
@@ -22,13 +23,12 @@ class LoginController extends GetxController {
 
 
   Future<LoginModel?> loginUser(String mobile) async {
-
     Map<String, dynamic> ?map = {
       'mobile': mobile,
     };
     Dio dio = Dio();
     try {
-      Dio dio = Dio();
+      dio.interceptors.add(LoggingInterceptor());
       dio.interceptors
         ..add(
             DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
@@ -38,7 +38,7 @@ class LoginController extends GetxController {
         AppConstants.kBaseUrl + "api/auth/login",
         data: map
       );
-      loginModel=LoginModel.fromJson(response.data) as LoginModel;
+      loginModel=LoginModel.fromJson(response.data) ;
       return LoginModel.fromJson(response.data);
     } on DioError catch (e) {
       if(e.response?.statusCode==401){

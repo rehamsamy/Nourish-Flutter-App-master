@@ -23,7 +23,7 @@ GlobalKey<ScaffoldState>? scaffoldKey = GlobalKey<ScaffoldState>();
   }
 
   Future<List<CategoryItem>?> getHomeCategories() async {
-  Dio dio = Dio();
+  Get.log('isLoading'+isLoading.toString());
   try {
     Dio dio = Dio();
     dio.interceptors

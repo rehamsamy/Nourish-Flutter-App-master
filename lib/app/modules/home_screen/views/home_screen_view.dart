@@ -137,12 +137,12 @@ class HomeScreenView extends GetView<HomeScreenController> {
                       scrollDirection: Axis.horizontal,
                       padding: EdgeInsets.symmetric(horizontal: 7.w),
                       itemBuilder: (context, index) {
+                        Get.log('images is '+controller.categoriesList[index].image.toString());
                         return MealCard(
                           title: controller.categoriesList[index].name??'',
                           color: AppConstants.colorsMenu[index],
                           image:controller.categoriesList[index].image??''
-                              // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-                        );
+                                   );
                       },
                     )
                 ),
