@@ -91,7 +91,6 @@ class LoginView extends GetView<LoginController> {
                    arguments: {"isLogin": true},
                  );
                }
-
                 },
               ),
             ),

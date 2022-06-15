@@ -4,7 +4,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/views/shimmer_effect.dart';
 
 class MealLoading extends StatelessWidget {
-  const MealLoading({Key? key}) : super(key: key);
+  double width,height;
+
+  MealLoading(this.width, this.height);
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +17,8 @@ class MealLoading extends StatelessWidget {
           ClipRRect(
             borderRadius: BorderRadius.circular(8),
             child: MyShimmerEffectUI.rectangular(
-              height: 99.h- 30,
+              height: height,
+              width: width,
             ),
           ),
           // SizedBox(height: 10),
