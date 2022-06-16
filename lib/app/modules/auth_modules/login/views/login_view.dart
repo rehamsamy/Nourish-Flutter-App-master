@@ -83,7 +83,7 @@ class LoginView extends GetView<LoginController> {
               child: CustomButton(
                 title: LocalKeys.kLogin.tr,
                 onPress: ()async {
-            LoginModel ? login=  AuthApis().loginUser(controller.phone.text) as LoginModel?;
+            LoginModel ? login= await AuthApis().loginUser(controller.phone.text) as LoginModel?;
                if(login?.data !=null){
                  Get.snackbar("Unknown Network error", login?.data?.msg??'');
                  Get.toNamed(

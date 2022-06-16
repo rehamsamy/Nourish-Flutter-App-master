@@ -5,6 +5,9 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/categories_model.dart';
+import 'package:nourish_sa/app/data/models/home_package_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/packages/views/all_package_body.dart';
@@ -21,7 +24,8 @@ import 'widgets/drawer.dart';
 
 class HomeScreenView extends GetView<HomeScreenController> {
    HomeScreenView({Key? key}) : super(key: key);
-  final HomeScreenController homeScreenController = Get.find();
+   List<CategoryItem> categoriesList=[];
+   List<WeeklyItem> homePackagesList=[];
 
   @override
   Widget build(BuildContext context) {
@@ -125,27 +129,31 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   },
                 ),
               ),
-               SizedBox(
-                  width: Get.width,
-                  height: 100.h,
-                  child: controller.isLoading?ListView.builder(
-                    itemCount: 10,
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder:(_,index)=>MealLoading( 60.w,60.h) ):
-                    ListView.builder(
-                      itemCount: controller.categoriesList.length,
-                      scrollDirection: Axis.horizontal,
-                      padding: EdgeInsets.symmetric(horizontal: 7.w),
-                      itemBuilder: (context, index) {
-                        Get.log('images is '+controller.categoriesList[index].image.toString());
-                        return MealCard(
-                          title: controller.categoriesList[index].name??'',
-                          color: AppConstants.colorsMenu[index],
-                          image:controller.categoriesList[index].image??''
-                                   );
-                      },
-                    )
-                ),
+               FutureBuilder(
+                 future: HomeApis().getHomeCategories()
+                 ,builder: (_,snap){
+              categoriesList= snap.data as List<CategoryItem>;
+                 return  SizedBox(
+                    width: Get.width,
+                    height: 100.h,
+                    child: snap.connectionState==ConnectionState.waiting?ListView.builder(
+                      itemCount: 10,
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder:(_,index)=>MealLoading( 60.w,60.h) ):
+                      ListView.builder(
+                        itemCount: categoriesList.length,
+                        scrollDirection: Axis.horizontal,
+                        padding: EdgeInsets.symmetric(horizontal: 7.w),
+                        itemBuilder: (context, index) {
+                          return MealCard(
+                            title: categoriesList[index].name??'',
+                            color: AppConstants.colorsMenu[index],
+                            image:categoriesList[index].image??''
+                                     );
+                        },
+                      )
+                  );}
+               ),
 
               Padding(
                 padding: EdgeInsets.only(top: 31.h, bottom: 20.h),
@@ -157,10 +165,18 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   },
                 ),
               ),
-              SizedBox(
-                width: Get.width,
-                height: 185.h,
-                child: controller.isLoading?buildSwiper(10, true):buildSwiper(controller.homePackagesList.length,false)
+              FutureBuilder(
+                  future: HomeApis().getHomePackages(),
+                builder: (_,snap) {
+                    homePackagesList=snap.data as List<WeeklyItem>;
+               return  SizedBox(
+                      width: Get.width,
+                      height: 185.h,
+                      child: snap.connectionState == ConnectionState.waiting ?
+                      buildSwiper(10, snap) : buildSwiper(
+                          homePackagesList.length, snap)
+                  );
+                }
               ),
               SizedBox(
                 height: 52.h,
@@ -190,7 +206,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
   }
 
 
-  buildSwiper(int length,bool isLoading){
+  buildSwiper(int length,AsyncSnapshot snapshot){
     return Swiper(
       outer: true,
       itemCount: length,
@@ -198,11 +214,11 @@ class HomeScreenView extends GetView<HomeScreenController> {
       itemWidth: 155.h,
       viewportFraction: 0.8,
       itemBuilder: (context, index) {
-        return isLoading?MealLoading(423.w,120.h):
+        return snapshot.connectionState==ConnectionState.waiting?MealLoading(423.w,120.h):
           PackageCard(
-            title: controller.homePackagesList[index].name??'',
+            title: homePackagesList[index].name??'',
             onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
-            image:controller.homePackagesList[index].image??''
+            image:homePackagesList[index].image??''
           // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
         );
       },

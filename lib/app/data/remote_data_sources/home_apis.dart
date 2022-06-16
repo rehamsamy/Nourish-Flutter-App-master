@@ -1,47 +1,58 @@
-Future<List<CategoryItem>?> getHomeCategories() async {
-  Get.log('isLoading'+isLoading.toString());
-  try {
-    Dio dio = Dio();
-    dio.interceptors
-      ..add(
-          DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-      ..add(dioLoggerInterceptor);
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/models/categories_model.dart';
+import 'package:nourish_sa/app/data/models/home_package_model.dart';
+import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
+import 'package:dio_logger/dio_logger.dart';
+import 'package:nourish_sa/app/core/values/app_constants.dart';
+class HomeApis {
 
-    final response = await dio.get(
-      AppConstants.kBaseUrl + "api/categories",
+  Future<List<CategoryItem>?> getHomeCategories() async {
+    List<CategoryItem> categoriesList=[];
+    try {
+      Dio dio = Dio();
+      dio.interceptors..add(
+          DioCacheInterceptor(
+              options: CacheOptions(store: MemCacheStore())))..add(
+          dioLoggerInterceptor);
 
-    );
-    CategoriesModel model=CategoriesModel.fromJson(response.data);
-    categoriesList=model.categoryData?.categoriesList??[] ;
-    Get.log('size is s'+categoriesList.length.toString());
-    handleIsLoading(false);
-    return categoriesList;
-  } on DioError catch (e) {
-    Get.snackbar("Unknown Network error", e.message.toString());
-    return null;
+      final response = await dio.get(
+        AppConstants.kBaseUrl + "api/categories",
+
+      );
+      CategoriesModel model = CategoriesModel.fromJson(response.data);
+      categoriesList = model.categoryData?.categoriesList ?? [];
+      Get.log('size is s' + categoriesList.length.toString());
+      return categoriesList;
+    } on DioError catch (e) {
+      Get.snackbar("Unknown Network error", e.message.toString());
+      return null;
+    }
   }
-}
 
 
-Future<List<WeeklyItem>?> getHomePackages() async {
-  Dio dio = Dio();
-  try {
+  Future<List<WeeklyItem>?> getHomePackages() async {
+    List<WeeklyItem> homePackagesList=[];
     Dio dio = Dio();
-    dio.interceptors
-      ..add(
-          DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-      ..add(dioLoggerInterceptor);
+    try {
+      Dio dio = Dio();
+      dio.interceptors..add(
+          DioCacheInterceptor(
+              options: CacheOptions(store: MemCacheStore())))..add(
+          dioLoggerInterceptor);
 
-    final response = await dio.get(
-      AppConstants.kBaseUrl + "api/homePackages",
+      final response = await dio.get(
+        AppConstants.kBaseUrl + "api/homePackages",
 
-    );
-    HomePackageModel model=HomePackageModel.fromJson(response.data);
-    homePackagesList=model.data!.weekly??[] ;
-    handleIsLoading(false);
-    return homePackagesList;
-  } on DioError catch (e) {
-    Get.snackbar("Unknown Network error", e.message.toString());
-    return null;
+      );
+      HomePackageModel model = HomePackageModel.fromJson(response.data);
+      homePackagesList = model.data!.weekly ?? [];
+      return homePackagesList;
+    } on DioError catch (e) {
+      Get.snackbar("Unknown Network error", e.message.toString());
+      return null;
+    }
   }
 }
