@@ -85,7 +85,7 @@ class LoginView extends GetView<LoginController> {
                 onPress: ()async {
             LoginModel ? login=  AuthApis().loginUser(controller.phone.text) as LoginModel?;
                if(login?.data !=null){
-                 Get.snackbar("Unknown Network error", login!.data!.msg??'');
+                 Get.snackbar("Unknown Network error", login?.data?.msg??'');
                  Get.toNamed(
                    Routes.OTP_VERIFICATION,
                    arguments: {"isLogin": true},
