@@ -5,7 +5,6 @@ import 'package:nourish_sa/app/views/shimmer_effect.dart';
 
 class MealLoading extends StatelessWidget {
   double width,height;
-
   MealLoading(this.width, this.height);
 
   @override
