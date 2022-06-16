@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';

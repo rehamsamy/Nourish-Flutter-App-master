@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
@@ -13,6 +12,7 @@ import 'package:nourish_sa/app/shared/custom_outlined_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
+
 
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
@@ -83,7 +83,7 @@ class LoginView extends GetView<LoginController> {
               child: CustomButton(
                 title: LocalKeys.kLogin.tr,
                 onPress: ()async {
-               LoginModel ? login= await  controller.loginUser(controller.phone.text)as LoginModel?;
+            LoginModel ? login=  AuthApis().loginUser(controller.phone.text) as LoginModel?;
                if(login?.data !=null){
                  Get.snackbar("Unknown Network error", login!.data!.msg??'');
                  Get.toNamed(

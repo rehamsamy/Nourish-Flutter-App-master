@@ -7,7 +7,11 @@ import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 
 class AuthApis {
-  Future<LoginModel?> loginUser(String email,String password) async {
+  LoginModel? loginModel ;
+  Future<LoginModel?> loginUser(String mobile) async {
+    Map<String, dynamic> ?map = {
+      'mobile': mobile,
+    };
     Dio dio = Dio();
     try {
       Dio dio = Dio();
@@ -17,14 +21,18 @@ class AuthApis {
         ..add(dioLoggerInterceptor);
 
       final response = await dio.post(
-        AppConstants.kBaseUrl + "api/auth/login",
+          AppConstants.kBaseUrl + "api/auth/login",
+          data: map
       );
-
+      loginModel=LoginModel.fromJson(response.data) as LoginModel;
       return LoginModel.fromJson(response.data);
     } on DioError catch (e) {
-      Get.snackbar("Unknown Network error", e.message.toString());
-      return null;
+      if(e.response?.statusCode==401){
+        Get.snackbar("Unknown Network error", 'Unauthorized');
+      }else{
+        Get.snackbar("Unknown Network error", e.message.toString());
+        // return null;
+      }
     }
   }
-
 }
