@@ -249,13 +249,6 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "5.5.2"
-  flutter_shimmer:
-    dependency: "direct main"
-    description:
-      name: flutter_shimmer
-      url: "https://pub.dartlang.org"
-    source: hosted
-    version: "2.1.2"
   flutter_svg:
     dependency: "direct main"
     description:

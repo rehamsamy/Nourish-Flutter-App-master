@@ -35,6 +35,9 @@ class MealCard extends StatelessWidget {
             radius: 5.r,
             width: 83.w,
             height: 58.h,
+            errorWidget: Container(
+              color: Colors.grey,
+            ),
           ),
           SizedBox(
             height: 5.h,

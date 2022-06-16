@@ -8,10 +8,9 @@ import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/models/register_model.dart';
 
 class AuthApis {
-
   Future<LoginModel?> loginUser(String mobile) async {
-    LoginModel? loginModel ;
-    Map<String, dynamic> ?map = {
+    LoginModel? loginModel;
+    Map<String, dynamic>? map = {
       'mobile': mobile,
     };
     Dio dio = Dio();
@@ -22,27 +21,27 @@ class AuthApis {
             DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
         ..add(dioLoggerInterceptor);
 
-      final response = await dio.post(
-          AppConstants.kBaseUrl + "api/auth/login",
-          data: map
-      );
-      loginModel=LoginModel.fromJson(response.data) as LoginModel;
+      final response =
+          await dio.post(AppConstants.kBaseUrl + "api/auth/login", data: map);
+      loginModel = LoginModel.fromJson(response.data) as LoginModel;
       return LoginModel.fromJson(response.data);
     } on DioError catch (e) {
-      if(e.response?.statusCode==401){
-        Get.snackbar("Unknown Network error", 'Unauthorized');
-      }else{
-        Get.snackbar("Unknown Network error", e.message.toString());
+      if (e.response?.statusCode == 401) {
+        Get.snackbar("Unknown Network error", e.message);
+      } else if (e.response?.statusCode == 200) {
+        Get.snackbar("Success", e.message.toString());
         // return null;
       }
     }
   }
-  Future<RegisterModel?> registerUser(String firstName,String lastName,String phone,String email) async {
-    Map<String, dynamic> ?map = {
-      'first_name':firstName,
-      'last_name':lastName,
+
+  Future<RegisterModel?> registerUser(
+      String firstName, String lastName, String phone, String email) async {
+    Map<String, dynamic>? map = {
+      'first_name': firstName,
+      'last_name': lastName,
       'mobile': phone,
-      'email':email
+      'email': email
     };
     try {
       Dio dio = Dio();
@@ -51,16 +50,12 @@ class AuthApis {
             DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
         ..add(dioLoggerInterceptor);
 
-      final response = await dio.post(
-          AppConstants.kBaseUrl + "api/auth/register",
-          data: map
-      );
+      final response = await dio
+          .post(AppConstants.kBaseUrl + "api/auth/register", data: map);
       return RegisterModel.fromJson(response.data);
     } on DioError catch (e) {
       Get.snackbar("Unknown Network error", e.message.toString());
       return null;
     }
   }
-
-
 }

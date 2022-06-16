@@ -23,14 +23,14 @@ import '../controllers/home_screen_controller.dart';
 import 'widgets/drawer.dart';
 
 class HomeScreenView extends GetView<HomeScreenController> {
-   HomeScreenView({Key? key}) : super(key: key);
-   List<CategoryItem> categoriesList=[];
-   List<WeeklyItem> homePackagesList=[];
+  HomeScreenView({Key? key}) : super(key: key);
+  List<CategoryItem> categoriesList = [];
+  List<WeeklyItem> homePackagesList = [];
 
   @override
   Widget build(BuildContext context) {
     return GetBuilder<HomePageController>(
-      builder: (_)=> Scaffold(
+      builder: (_) => Scaffold(
         key: controller.scaffoldKey,
         appBar: CustomAppBar(
           scaffoldKey: controller.scaffoldKey,
@@ -129,34 +129,44 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   },
                 ),
               ),
-               FutureBuilder(
-                 future: HomeApis().getHomeCategories()
-                 ,builder: (_,snap){
-              categoriesList= snap.data as List<CategoryItem>;
-                 return  SizedBox(
-                    width: Get.width,
-                    height: 100.h,
-                    child: snap.connectionState==ConnectionState.waiting?ListView.builder(
-                      itemCount: 10,
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder:(_,index)=>MealLoading( 60.w,60.h) ):
-                        snap.hasData?
-                      ListView.builder(
-                        itemCount: categoriesList.length,
-                        scrollDirection: Axis.horizontal,
-                        padding: EdgeInsets.symmetric(horizontal: 7.w),
-                        itemBuilder: (context, index) {
-                          return MealCard(
-                            title: categoriesList[index].name??'',
-                            color: AppConstants.colorsMenu[index],
-                            image:categoriesList[index].image??''
-                                     );
-                        },
-                      ):
-                          const  Center(child: Text('empty_data'),)
-                  );}
-               ),
+              FutureBuilder(
+                  future: HomeApis().getHomeCategories(),
+                  builder: (_, snapshot) {
+                    if (snapshot.hasData) {
+                      categoriesList = snapshot.data as List<CategoryItem>;
 
+                      return SizedBox(
+                          width: Get.width,
+                          height: 100.h,
+                          child: ListView.builder(
+                            itemCount: categoriesList.length,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.symmetric(horizontal: 7.w),
+                            itemBuilder: (context, index) {
+                              return MealCard(
+                                  title: categoriesList[index].name ?? '',
+                                  color: AppConstants.colorsMenu[index],
+                                  image: categoriesList[index].image ?? '');
+                            },
+                          ));
+                    } else {
+                      return SizedBox(
+                          width: Get.width,
+                          height: 100.h,
+                          child: ListView.builder(
+                            itemCount: categoriesList.length,
+                            scrollDirection: Axis.horizontal,
+                            padding: EdgeInsets.symmetric(horizontal: 7.w),
+                            itemBuilder: (context, index) {
+                              return MealCard(
+                                title: "Name",
+                                color: Colors.transparent,
+                                image: "",
+                              );
+                            },
+                          ));
+                    }
+                  }),
               Padding(
                 padding: EdgeInsets.only(top: 31.h, bottom: 20.h),
                 child: HeadlineWithViewAll(
@@ -169,18 +179,19 @@ class HomeScreenView extends GetView<HomeScreenController> {
               ),
               FutureBuilder(
                   future: HomeApis().getHomePackages(),
-                builder: (_,snap) {
-                    homePackagesList=snap.data as List<WeeklyItem>;
-               return  SizedBox(
-                      width: Get.width,
-                      height: 185.h,
-                      child: snap.connectionState == ConnectionState.waiting ?
-                      buildSwiper(10, snap) : snap.hasData?buildSwiper(
-                          homePackagesList.length, snap):
-                          Center(child: Text('empty data'),)
-                  );
-                }
-              ),
+                  builder: (_, snap) {
+                    homePackagesList = snap.data as List<WeeklyItem>;
+                    return SizedBox(
+                        width: Get.width,
+                        height: 185.h,
+                        child: snap.connectionState == ConnectionState.waiting
+                            ? buildSwiper(10, snap)
+                            : snap.hasData
+                                ? buildSwiper(homePackagesList.length, snap)
+                                : Center(
+                                    child: Text('empty data'),
+                                  ));
+                  }),
               SizedBox(
                 height: 52.h,
               ),
@@ -208,8 +219,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
     );
   }
 
-
-  buildSwiper(int length,AsyncSnapshot snapshot){
+  buildSwiper(int length, AsyncSnapshot snapshot) {
     return Swiper(
       outer: true,
       itemCount: length,
@@ -217,13 +227,14 @@ class HomeScreenView extends GetView<HomeScreenController> {
       itemWidth: 155.h,
       viewportFraction: 0.8,
       itemBuilder: (context, index) {
-        return snapshot.connectionState==ConnectionState.waiting?MealLoading(423.w,120.h):
-          PackageCard(
-            title: homePackagesList[index].name??'',
-            onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
-            image:homePackagesList[index].image??''
-          // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-        );
+        return snapshot.connectionState == ConnectionState.waiting
+            ? MealLoading(423.w, 120.h)
+            : PackageCard(
+                title: homePackagesList[index].name ?? '',
+                onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
+                image: homePackagesList[index].image ?? ''
+                // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
+                );
       },
       pagination: SwiperPagination(
         margin: EdgeInsets.only(top: 10.h),
@@ -242,11 +253,8 @@ class HomeScreenView extends GetView<HomeScreenController> {
                     height: active ? 5.h : 5.h,
                     decoration: BoxDecoration(
                       color: active ? primaryColor : greyColor,
-                      borderRadius:
-                      active ? BorderRadius.circular(20.r) : null,
-                      shape: active
-                          ? BoxShape.rectangle
-                          : BoxShape.circle,
+                      borderRadius: active ? BorderRadius.circular(20.r) : null,
+                      shape: active ? BoxShape.rectangle : BoxShape.circle,
                     ),
                   ),
                 ),
