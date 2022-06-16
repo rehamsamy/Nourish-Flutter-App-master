@@ -15,31 +15,6 @@ class RegisterController extends GetxController {
 RxBool isTermsAgreed = false.obs;
 
 
-  Future<RegisterModel?> registerUser() async {
-    Map<String, dynamic> ?map = {
-      'first_name':firstName.text,
-      'last_name':lastName.text,
-      'mobile': phone.text,
-      'email':email.text
-    };
-    Dio dio = Dio();
-    try {
-      Dio dio = Dio();
-      dio.interceptors
-        ..add(
-            DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-        ..add(dioLoggerInterceptor);
-
-      final response = await dio.post(
-          AppConstants.kBaseUrl + "api/auth/register",
-          data: map
-      );
-      return RegisterModel.fromJson(response.data);
-    } on DioError catch (e) {
-      Get.snackbar("Unknown Network error", e.message.toString());
-      return null;
-    }
-  }
 
 
 }

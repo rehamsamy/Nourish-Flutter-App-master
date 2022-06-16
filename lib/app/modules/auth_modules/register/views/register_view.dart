@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/register_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
@@ -153,7 +154,8 @@ class RegisterView extends GetView<RegisterController> {
                 child: CustomButton(
                   title: LocalKeys.kSignUp.tr,
                   onPress: ()async {
-                    RegisterModel ? login= await  controller.registerUser() as RegisterModel? ;
+                    RegisterModel ? login= await  AuthApis().registerUser(controller.firstName.text,
+                    controller.lastName.text,controller.phone.text,controller.email.text) as RegisterModel? ;
                     if(login?.data !=null){
                       Get.toNamed(Routes.OTP_VERIFICATION,arguments: {'phone':controller.phone.text});
                       Get.snackbar("Unknown Network error", login!.data!.msg??'');

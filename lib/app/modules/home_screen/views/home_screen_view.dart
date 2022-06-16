@@ -140,6 +140,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                       itemCount: 10,
                         scrollDirection: Axis.horizontal,
                         itemBuilder:(_,index)=>MealLoading( 60.w,60.h) ):
+                        snap.hasData?
                       ListView.builder(
                         itemCount: categoriesList.length,
                         scrollDirection: Axis.horizontal,
@@ -151,7 +152,8 @@ class HomeScreenView extends GetView<HomeScreenController> {
                             image:categoriesList[index].image??''
                                      );
                         },
-                      )
+                      ):
+                          const  Center(child: Text('empty_data'),)
                   );}
                ),
 
@@ -173,8 +175,9 @@ class HomeScreenView extends GetView<HomeScreenController> {
                       width: Get.width,
                       height: 185.h,
                       child: snap.connectionState == ConnectionState.waiting ?
-                      buildSwiper(10, snap) : buildSwiper(
-                          homePackagesList.length, snap)
+                      buildSwiper(10, snap) : snap.hasData?buildSwiper(
+                          homePackagesList.length, snap):
+                          Center(child: Text('empty data'),)
                   );
                 }
               ),
