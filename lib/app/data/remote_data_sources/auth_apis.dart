@@ -13,6 +13,14 @@ class AuthApis {
     };
   }
 
+
+  // Future<LoginModel?> loginUser(String mobile) async {
+  //   Map<String, dynamic>? map = {
+  //     'mobile': mobile,
+  //   };
+  // }
+
+
   Future<RegisterModel?> registerUser(
       String firstName, String lastName, String phone, String email) async {
     Map<String, dynamic>? map = {
