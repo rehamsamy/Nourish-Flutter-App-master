@@ -134,7 +134,6 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   builder: (_, snapshot) {
                     if (snapshot.hasData) {
                       categoriesList = snapshot.data as List<CategoryItem>;
-
                       return SizedBox(
                           width: Get.width,
                           height: 100.h,
@@ -180,17 +179,22 @@ class HomeScreenView extends GetView<HomeScreenController> {
               FutureBuilder(
                   future: HomeApis().getHomePackages(),
                   builder: (_, snap) {
-                    homePackagesList = snap.data as List<WeeklyItem>;
-                    return SizedBox(
-                        width: Get.width,
-                        height: 185.h,
-                        child: snap.connectionState == ConnectionState.waiting
-                            ? buildSwiper(10, snap)
-                            : snap.hasData
-                                ? buildSwiper(homePackagesList.length, snap)
-                                : Center(
-                                    child: Text('empty data'),
-                                  ));
+                    if(snap.hasData){
+                      homePackagesList = snap.data as List<WeeklyItem>;
+                      return SizedBox(
+                          width: Get.width,
+                          height: 185.h,
+                          child: snap.connectionState == ConnectionState.waiting
+                              ? buildSwiper(10, snap)
+                              : snap.hasData
+                              ? buildSwiper(homePackagesList.length, snap)
+                              : const Center(
+                            child: Text('empty data'),
+                          ));
+                    }else{
+                      return const Center( child: Text('empty data'),);
+                    }
+
                   }),
               SizedBox(
                 height: 52.h,
