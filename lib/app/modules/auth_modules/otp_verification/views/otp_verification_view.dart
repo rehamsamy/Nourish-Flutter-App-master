@@ -5,6 +5,8 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/otp_mobile_verify_model.dart';
+import 'package:nourish_sa/app/data/models/verify_email_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
@@ -97,8 +99,12 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                   title: LocalKeys.kContinue.tr,
                   onPress: () async{
                     if (controller.isLogin) {
-                      Get.log('xxxx1');
-                      Get.offAllNamed(Routes.HOME_PAGE);
+                      VerifyEmailModel ? verifyEmail= await  AuthApis().ver(controller.phone
+                          ,controller.otp.text
+                      ) as VerifyEmailModel? ;
+                      if(verifyEmail!=null){
+                        Get.offAllNamed(Routes.HOME_PAGE);
+                      }
                     } else if (controller.isEmail.value) {
                       Get.log('xxxx2');
                       OtpMobileVerifyModel ? login= await  controller.verifyMobileOtp()as OtpMobileVerifyModel?;

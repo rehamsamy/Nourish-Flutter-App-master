@@ -89,7 +89,11 @@ class LoginView extends GetView<LoginController> {
                         "Unknown Network error", login?.data?.msg ?? '');
                     Get.toNamed(
                       Routes.OTP_VERIFICATION,
+<<<<<<< HEAD
                       arguments: {"isLogin": true},
+=======
+                      arguments: {"isLogin": true,'phone':controller.phone.text},
+>>>>>>> 7989bf7 (yes)
                     );
                   }
                 },
