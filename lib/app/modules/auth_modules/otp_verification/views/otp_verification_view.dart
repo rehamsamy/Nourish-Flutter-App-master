@@ -99,7 +99,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                   title: LocalKeys.kContinue.tr,
                   onPress: () async{
                     if (controller.isLogin) {
-                      VerifyEmailModel ? verifyEmail= await  AuthApis().ver(controller.phone
+                      VerifyEmailModel ? verifyEmail= await  AuthApis().verifyOtpMobile(controller.phone??''
                           ,controller.otp.text
                       ) as VerifyEmailModel? ;
                       if(verifyEmail!=null){

@@ -22,24 +22,5 @@ class OtpVerificationController extends GetxController {
     phone = args['phone'];
   }
 
-  Future<OtpMobileVerifyModel?> verifyMobileOtp() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    Map<String, dynamic>? map = {
-      'code': otp.text,
-      'mobile': phone,
-    };
 
-    Dio dio = Dio();
-    try {
-      Dio dio = Dio();
-      dio.interceptors.add(dioLoggerInterceptor);
-
-      final response = await dio
-          .post(AppConstants.kBaseUrl + "api/auth/verifyMobileOTP", data: map);
-      return OtpMobileVerifyModel.fromJson(response.data);
-    } on DioError catch (e) {
-      Get.snackbar("Unknown Network error", e.message.toString());
-      return null;
-    }
-  }
 }
