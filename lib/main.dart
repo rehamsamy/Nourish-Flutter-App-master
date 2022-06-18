@@ -16,7 +16,7 @@ void main() async {
   Get.put(SharedPrefService(prefs: pref));
   Get.put(LocalizationService());
 
-  Get.put(ApiProvider());
+  //Get.put(ApiProvider());
 
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {

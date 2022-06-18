@@ -8,28 +8,9 @@ import 'package:nourish_sa/app/data/models/register_model.dart';
 
 class AuthApis {
   Future<LoginModel?> loginUser(String mobile) async {
-    LoginModel? loginModel;
     Map<String, dynamic>? map = {
       'mobile': mobile,
     };
-    Dio dio = Dio();
-    try {
-      Dio dio = Dio();
-      dio.interceptors
-        .add(dioLoggerInterceptor);
-
-      final response =
-          await dio.post(AppConstants.kBaseUrl + "api/auth/login", data: map);
-      loginModel = LoginModel.fromJson(response.data) as LoginModel;
-      return LoginModel.fromJson(response.data);
-    } on DioError catch (e) {
-      if (e.response?.statusCode == 401) {
-        Get.snackbar("Unknown Network error", e.message);
-      } else if (e.response?.statusCode == 200) {
-        Get.snackbar("Success", e.message.toString());
-        // return null;
-      }
-    }
   }
 
   Future<RegisterModel?> registerUser(
@@ -42,8 +23,7 @@ class AuthApis {
     };
     try {
       Dio dio = Dio();
-      dio.interceptors
-        .add(dioLoggerInterceptor);
+      dio.interceptors.add(dioLoggerInterceptor);
 
       final response = await dio
           .post(AppConstants.kBaseUrl + "api/auth/register", data: map);

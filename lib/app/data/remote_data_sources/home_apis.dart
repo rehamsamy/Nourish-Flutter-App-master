@@ -6,6 +6,7 @@ import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:dio/dio.dart';
 import 'package:dio_logger/dio_logger.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
+import '../services/network_service.dart/dio_network_service.dart';
 
 class HomeApis {
   Future<List<CategoryItem>?> getHomeCategories() async {
@@ -28,21 +29,24 @@ class HomeApis {
   }
 
   Future<List<WeeklyItem>?> getHomePackages() async {
-    List<WeeklyItem> homePackagesList = [];
-    Dio dio = Dio();
-    try {
-      Dio dio = Dio();
-      dio.interceptors.add(dioLoggerInterceptor);
-
-      final response = await dio.get(
-        AppConstants.kBaseUrl + "api/homePackages",
-      );
-      HomePackageModel model = HomePackageModel.fromJson(response.data);
-      homePackagesList = model.data!.weekly ?? [];
-      return homePackagesList;
-    } on DioError catch (e) {
-      Get.snackbar("Unknown Network error", e.message.toString());
-      return null;
-    }
+    const request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: 'homePackages',
+      data: NetworkRequestBody.json(
+        {},
+      ),
+    );
+// Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      HomePackageModel
+          .fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(
+        ok: (authResponse) {
+          return authResponse.data.weekly;
+        },
+        badRequest: (info) {},
+        orElse: () {});
   }
 }

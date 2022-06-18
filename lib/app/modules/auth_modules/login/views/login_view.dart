@@ -13,7 +13,6 @@ import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
-
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
   @override
@@ -82,15 +81,17 @@ class LoginView extends GetView<LoginController> {
               padding: EdgeInsets.only(top: 45.h, bottom: 66.h),
               child: CustomButton(
                 title: LocalKeys.kLogin.tr,
-                onPress: ()async {
-            LoginModel ? login= await AuthApis().loginUser(controller.phone.text) as LoginModel?;
-               if(login?.data !=null){
-                 Get.snackbar("Unknown Network error", login?.data?.msg??'');
-                 Get.toNamed(
-                   Routes.OTP_VERIFICATION,
-                   arguments: {"isLogin": true},
-                 );
-               }
+                onPress: () async {
+                  LoginModel? login =
+                      await AuthApis().loginUser(controller.phone.text);
+                  if (login?.data != null) {
+                    Get.snackbar(
+                        "Unknown Network error", login?.data?.msg ?? '');
+                    Get.toNamed(
+                      Routes.OTP_VERIFICATION,
+                      arguments: {"isLogin": true},
+                    );
+                  }
                 },
               ),
             ),
