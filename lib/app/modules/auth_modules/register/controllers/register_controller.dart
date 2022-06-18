@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_logger/dio_logger.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,9 +11,5 @@ class RegisterController extends GetxController {
   TextEditingController email = TextEditingController();
   TextEditingController firstName = TextEditingController();
   TextEditingController lastName = TextEditingController();
-RxBool isTermsAgreed = false.obs;
-
-
-
-
+  RxBool isTermsAgreed = false.obs;
 }

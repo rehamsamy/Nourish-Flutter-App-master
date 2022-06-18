@@ -1,5 +1,4 @@
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_logger/dio_logger.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -17,9 +16,7 @@ class AuthApis {
     try {
       Dio dio = Dio();
       dio.interceptors
-        ..add(
-            DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-        ..add(dioLoggerInterceptor);
+        .add(dioLoggerInterceptor);
 
       final response =
           await dio.post(AppConstants.kBaseUrl + "api/auth/login", data: map);
@@ -46,9 +43,7 @@ class AuthApis {
     try {
       Dio dio = Dio();
       dio.interceptors
-        ..add(
-            DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-        ..add(dioLoggerInterceptor);
+        .add(dioLoggerInterceptor);
 
       final response = await dio
           .post(AppConstants.kBaseUrl + "api/auth/register", data: map);
