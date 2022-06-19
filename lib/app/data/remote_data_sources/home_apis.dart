@@ -29,24 +29,25 @@ class HomeApis {
   }
 
   Future<List<WeeklyItem>?> getHomePackages() async {
-    const request = NetworkRequest(
+    final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homePackages',
       data: NetworkRequestBody.json(
         {},
       ),
     );
-// Execute a request and convert response to your model:
+    // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
       HomePackageModel
           .fromJson, // <- Function to convert API response to your model
+      onReceiveProgress: (count, total) {},
+      onSendProgress: (count, total) {},
     );
     response.maybeWhen(
         ok: (authResponse) {
           return authResponse.data.weekly;
         },
-        badRequest: (info) {},
         orElse: () {});
   }
 }

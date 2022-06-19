@@ -12,6 +12,8 @@ import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import '../services/network_service.dart/dio_network_service.dart';
+
 class AuthApis {
   Future<LoginModel?> loginUser(String mobile) async {
     LoginModel? loginModel;
@@ -46,6 +48,7 @@ class AuthApis {
       'mobile': mobile,
       'code':otp
     };
+<<<<<<< Updated upstream
     Dio dio = Dio();
     try {
       Dio dio = Dio();
@@ -70,6 +73,26 @@ class AuthApis {
         prefs.setString("tokenAccess", userToken);
       }
     }
+=======
+    final request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: 'auth/login',
+      data: NetworkRequestBody.json(
+        {"mobile": "$mobile"},
+      ),
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      LoginModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(
+        ok: (authResponse) {
+          return authResponse.data.weekly;
+        },
+        badRequest: (info) {},
+        orElse: () {});
+>>>>>>> Stashed changes
   }
 
 
@@ -81,19 +104,70 @@ class AuthApis {
       'mobile': phone,
       'email': email
     };
+<<<<<<< Updated upstream
     try {
       Dio dio = Dio();
       dio.interceptors
         ..add(
             DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
         ..add(dioLoggerInterceptor);
+=======
+    final request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: 'auth/login',
+      data: NetworkRequestBody.json(map),
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      LoginModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(
+        ok: (authResponse) {
+          return authResponse.data.weekly;
+        },
+        badRequest: (info) {},
+        orElse: () {});
+  }
 
-      final response = await dio
-          .post(AppConstants.kBaseUrl + "api/auth/register", data: map);
-      return RegisterModel.fromJson(response.data);
-    } on DioError catch (e) {
-      Get.snackbar("Unknown Network error", e.message.toString());
-      return null;
-    }
+  Future<RegisterModel?> verifyMobile(String code, String mobile) async {
+    Map<String, dynamic>? map = {'code': code, 'email': mobile};
+    final request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: 'auth/login',
+      data: NetworkRequestBody.json(map),
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      LoginModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(
+        ok: (authResponse) {
+          return authResponse.data.weekly;
+        },
+        badRequest: (info) {},
+        orElse: () {});
+  }
+>>>>>>> Stashed changes
+
+  Future<RegisterModel?> verifyEmail(String code, String email) async {
+    Map<String, dynamic>? map = {'code': code, 'email': email};
+    final request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: 'auth/login',
+      data: NetworkRequestBody.json(map),
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      LoginModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(
+        ok: (authResponse) {
+          return authResponse.data.weekly;
+        },
+        badRequest: (info) {},
+        orElse: () {});
   }
 }
