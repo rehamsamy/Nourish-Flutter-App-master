@@ -1,5 +1,4 @@
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
+
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
@@ -32,7 +31,7 @@ class HomeApis {
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homePackages',
-      data: NetworkRequestBody.json(
+      data: const NetworkRequestBody.json(
         {},
       ),
     );

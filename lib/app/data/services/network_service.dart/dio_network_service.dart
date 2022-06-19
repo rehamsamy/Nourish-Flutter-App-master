@@ -9,7 +9,7 @@ part 'dio_network_service.freezed.dart';
 @freezed
 class NetworkRequestBody with _$NetworkRequestBody {
   const factory NetworkRequestBody.empty() = Empty;
-  const factory NetworkRequestBody.json(Map<String, dynamic> data) = Json;
+   const factory NetworkRequestBody.json(Map<String, dynamic> data) = Json;
   const factory NetworkRequestBody.text(String data) = Text;
 }
 

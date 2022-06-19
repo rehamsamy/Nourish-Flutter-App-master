@@ -84,18 +84,19 @@ class LoginView extends GetView<LoginController> {
                 onPress: () async {
                   LoginModel? login =
                       await AuthApis().loginUser(controller.phone.text);
+    Get.log('ssssss'+login.toString());
                   if (login?.data != null) {
+             Get.log('ssssss1');
                     Get.snackbar(
                         "Unknown Network error", login?.data?.msg ?? '');
                     Get.toNamed(
                       Routes.OTP_VERIFICATION,
-<<<<<<< HEAD
-                      arguments: {"isLogin": true},
-=======
-                      arguments: {"isLogin": true,'phone':controller.phone.text},
->>>>>>> 7989bf7 (yes)
+                      // arguments: {"isLogin": true},
+                      arguments: {"isLogin": true,'phone':controller.phone.text}
                     );
-                  }
+                  }else{
+                    Get.log('ssssss');
+    }
                 },
               ),
             ),

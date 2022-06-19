@@ -107,8 +107,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                       }
                     } else if (controller.isEmail.value) {
                       Get.log('xxxx2');
-                      OtpMobileVerifyModel ? login= await  controller.verifyMobileOtp()as OtpMobileVerifyModel?;
-                       Get.snackbar("Unknown Network error", login!.data!.msg??'');
+                       // Get.snackbar("Unknown Network error", login!.data!.msg??'');
                       Get.offAllNamed(Routes.LOGIN);
                     } else {
                       Get.log('xxxx3');
