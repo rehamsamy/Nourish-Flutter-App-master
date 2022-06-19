@@ -1,7 +1,6 @@
 import 'dart:convert';
 
 import 'package:dio/dio.dart';
-import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:dio_logger/dio_logger.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_navigation/get_navigation.dart';
@@ -22,11 +21,11 @@ class AuthApis {
     };
     Dio dio = Dio();
     try {
-      Dio dio = Dio();
-      dio.interceptors
-        ..add(
-            DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-        ..add(dioLoggerInterceptor);
+      // Dio dio = Dio();
+      // dio.interceptors
+        // ..add(
+        //     DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
+        // ..add(dioLoggerInterceptor);
 
       final response =
           await dio.post(AppConstants.kBaseUrl + "api/auth/login", data: map);
@@ -48,14 +47,13 @@ class AuthApis {
       'mobile': mobile,
       'code':otp
     };
-<<<<<<< Updated upstream
     Dio dio = Dio();
     try {
-      Dio dio = Dio();
-      dio.interceptors
-        ..add(
-            DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-        ..add(dioLoggerInterceptor);
+      // Dio dio = Dio();
+      // dio.interceptors
+      //   ..add(
+      //       DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
+      //   ..add(dioLoggerInterceptor);
       final response =
       await dio.post(AppConstants.kBaseUrl + "api/auth/verifyMobileOTP", data: map);
       emailModel = VerifyEmailModel.fromJson(response.data);
@@ -73,7 +71,7 @@ class AuthApis {
         prefs.setString("tokenAccess", userToken);
       }
     }
-=======
+
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'auth/login',
@@ -92,7 +90,7 @@ class AuthApis {
         },
         badRequest: (info) {},
         orElse: () {});
->>>>>>> Stashed changes
+
   }
 
 
@@ -104,14 +102,9 @@ class AuthApis {
       'mobile': phone,
       'email': email
     };
-<<<<<<< Updated upstream
-    try {
-      Dio dio = Dio();
-      dio.interceptors
-        ..add(
-            DioCacheInterceptor(options: CacheOptions(store: MemCacheStore())))
-        ..add(dioLoggerInterceptor);
-=======
+
+
+
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'auth/login',
@@ -149,7 +142,7 @@ class AuthApis {
         badRequest: (info) {},
         orElse: () {});
   }
->>>>>>> Stashed changes
+
 
   Future<RegisterModel?> verifyEmail(String code, String email) async {
     Map<String, dynamic>? map = {'code': code, 'email': email};
