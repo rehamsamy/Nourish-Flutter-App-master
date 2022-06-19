@@ -1,9 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
-
-import '../api_provider.dart';
-
 part 'dio_network_service.freezed.dart';
 
 @freezed
@@ -110,11 +107,11 @@ class NetworkService {
     required this.baseUrl,
     dioClient,
     httpHeaders,
-  })  : this._dio = dioClient,
-        this._headers = httpHeaders ?? {};
+  })  : _dio = dioClient,
+        _headers = httpHeaders ?? {};
   Dio? _dio;
   final String baseUrl;
-  Map<String, String> _headers;
+  final Map<String, String> _headers;
   Future<Dio> _getDefaultDioClient() async {
     _headers['content-type'] = 'application/json; charset=utf-8';
     final dio = Dio()
@@ -132,12 +129,10 @@ class NetworkService {
   Future<NetworkResponse<T>> execute<T>(
     NetworkRequest request,
     T Function(Map<String, dynamic>) parser, {
-    ProgressCallback? onSendProgress = null,
-    ProgressCallback? onReceiveProgress = null,
+    ProgressCallback? onSendProgress,
+    ProgressCallback? onReceiveProgress,
   }) async {
-    if (_dio == null) {
-      _dio = await _getDefaultDioClient();
-    }
+    _dio ??= await _getDefaultDioClient();
     final req = _PreparedNetworkRequest<T>(
       request,
       parser,
