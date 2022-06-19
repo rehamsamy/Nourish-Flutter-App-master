@@ -4,6 +4,7 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/categories_model.dart';
+import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
@@ -83,30 +84,23 @@ class LoginView extends GetView<LoginController> {
             Padding(
               padding: EdgeInsets.only(top: 45.h, bottom: 66.h),
               child: FutureBuilder(
-                future:  HomeApis().getHomePackages() ,
+                 future:  AuthApis().loginUser(controller.phone.text) ,
                 builder: (_,snap)=>CustomButton(
                   title: LocalKeys.kLogin.tr,
                   onPress: ()async {
-                    print(snap.connectionState.toString()+'kkkkk'+snap.data.toString());
-                    if(snap.hasData){
+                    if(snap.hasData&&snap.data !=null){
                       print('tttttt1');
+                      LoginModel model=snap.data as LoginModel;
+                             Get.snackbar("Unknown Network error", model.data?.msg??'');
+                             Get.toNamed(
+                               Routes.OTP_VERIFICATION,
+                               arguments: {"isLogin": true},
+                             );
                     }else if(snap.hasError){
-                      print('tttttt2');
+                      print('tttttt2'+snap.error.toString());
                     }else if(snap.connectionState==ConnectionState.waiting){
                       print('tttttt3');
                     }
-            //      // List<CategoryItem> list=await   HomeApis().getHomeCategories() as List<CategoryItem>;
-            //      // print('xxxxxxxxx'+list.toString());
-            // LoginModel ? login= await AuthApis().loginUser(controller.phone.text) as LoginModel?;
-            //      if(login?.data !=null){
-            //        Get.snackbar("Unknown Network error", login?.data?.msg??'');
-            //        Get.toNamed(
-            //          Routes.OTP_VERIFICATION,
-            //          arguments: {"isLogin": true},
-            //        );
-            //      }else{
-            //        print('xxxxxxxxx'+login.toString());
-            //      }
                   },
                 ),
               ),

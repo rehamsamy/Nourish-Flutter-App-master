@@ -1,13 +1,17 @@
 
+import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/models/register_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../services/network_service.dart/dio_network_service.dart';
 
 class AuthApis {
   Future<LoginModel?> loginUser(String mobile) async {
+    LoginModel loginModel=LoginModel();
     final request = NetworkRequest(
       type: NetworkRequestType.POST,
       path: 'auth/login',
@@ -21,35 +25,44 @@ class AuthApis {
     );
     response.maybeWhen(ok: (data) {
       print('vvv'+
-          data.data.msg);
+          data.toString());
+      loginModel=data;
       return data;
     }, orElse: () {
       print(response.toString());
       print("data");
     });
+    return loginModel;
   }
 
   Future<VerifyEmailModel?> verifyOtpMobile(String mobile, otp) async {
-    VerifyEmailModel? emailModel;
-    Map<String, dynamic>? map = {'mobile': mobile, 'code': otp};
+    VerifyEmailModel emailModel=VerifyEmailModel();
+    Map<String, dynamic>? map = {'mobile': '1143551071', 'code': otp};
     final request = NetworkRequest(
-      type: NetworkRequestType.GET,
-      path: 'auth/login',
+      type: NetworkRequestType.POST,
+      path: 'auth/verifyMobileOTP',
       data: NetworkRequestBody.json(
-        {"mobile": "$mobile"},
+          {'mobile': '1143551071', 'code': otp}
+
       ),
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      LoginModel.fromJson, // <- Function to convert API response to your model
+      VerifyEmailModel.fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(
-        ok: (authResponse) {
-          return authResponse.data.weekly;
+        ok: (authResponse) async{
+          Get.log('ttttt1'+authResponse.toString());
+          emailModel=authResponse;
+          SharedPreferences prefs= await SharedPreferences.getInstance();
+          prefs.setString('token', emailModel.accessToken??'');
+          SharedPrefService(prefs: prefs).saveToken(emailModel.accessToken??'');
+         // return authResponse;
         },
         badRequest: (info) {},
         orElse: () {});
+    return emailModel;
   }
 
   Future<RegisterModel?> registerUser(

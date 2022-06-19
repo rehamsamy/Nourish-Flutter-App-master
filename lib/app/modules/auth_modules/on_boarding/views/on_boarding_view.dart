@@ -8,6 +8,7 @@ import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../controllers/on_boarding_controller.dart';
 class OnBoardingView extends GetView<OnBoardingController> {
   const OnBoardingView({Key? key}) : super(key: key);
@@ -123,9 +124,15 @@ class OnBoardingView extends GetView<OnBoardingController> {
                       height: 48.h,
                     )
                   : TextButton(
-                      onPressed: () {
+                      onPressed: () async{
                         Get.find<SharedPrefService>().saveIsFirstTime();
-                        Get.offAllNamed(Routes.LOGIN);
+                        // SharedPreferences prefs= await SharedPreferences.getInstance();
+                        // prefs.getString('token');
+                        // if(SharedPrefService(prefs: prefs).getToken()!=null){
+                        //   Get.offAllNamed(Routes.HOME_PAGE);
+                        // }else{
+                        //   Get.offAllNamed(Routes.LOGIN);
+                        // }
                       },
                       child: Text(
                         LocalKeys.kSkip.tr,

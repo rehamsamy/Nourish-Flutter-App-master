@@ -27,12 +27,15 @@ class HomeApis {
     );
     response.maybeWhen(
         ok: (model) {
+          categoriesList=model.categoryData?.categoriesList;
           return model.categoryData?.categoriesList;
         },
         orElse: () {});
+    return categoriesList;
   }
 
   Future<List<WeeklyItem>?> getHomePackages() async {
+    List<WeeklyItem> weeklyList=[];
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homePackages',
@@ -48,10 +51,26 @@ class HomeApis {
       onReceiveProgress: (count, total) {},
       onSendProgress: (count, total) {},
     );
+
+      print('cccc'+response.obs.toString());
     response.maybeWhen(
         ok: (authResponse) {
-          return authResponse.data.weekly;
+          print('mmmmm  '+authResponse.data.weekly.toString());
+          List<WeeklyItem> list=authResponse.data.weekly as List<WeeklyItem> ;
+          print('mmmmm  '+list.length.toString());
+          weeklyList=list;
+          return list;
         },
         orElse: () {});
+    return weeklyList;
+      // response.mapOrNull(
+    //   ok:(x){
+    //     print('cccc2 '+x.data.data.weekly.toString());
+    //     List<WeeklyItem>? res=x.data.data.weekly;
+    //     print('cccc'+response.toString());
+    //     return res;
+    //   }
+    // )  ;
+      //   response.obs;
   }
 }

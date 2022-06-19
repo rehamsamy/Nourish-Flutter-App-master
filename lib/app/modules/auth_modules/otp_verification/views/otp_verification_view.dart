@@ -99,9 +99,11 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                   title: LocalKeys.kContinue.tr,
                   onPress: () async{
                     if (controller.isLogin) {
+                      Get.log('xxxx1');
                       VerifyEmailModel ? verifyEmail= await  AuthApis().verifyOtpMobile(controller.phone??''
                           ,controller.otp.text
                       ) as VerifyEmailModel? ;
+                      Get.log('xxxxxxx'+verifyEmail.toString());
                       if(verifyEmail!=null){
                         Get.offAllNamed(Routes.HOME_PAGE);
                       }
