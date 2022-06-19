@@ -28,7 +28,7 @@ class HomeApis {
   }
 
   Future<List<WeeklyItem>?> getHomePackages() async {
-    final request = NetworkRequest(
+    const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homePackages',
       data: const NetworkRequestBody.json(

@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:nourish_sa/app/data/services/logging_interceptor.dart';
 part 'dio_network_service.freezed.dart';
 
 @freezed
@@ -115,6 +116,7 @@ class NetworkService {
   Future<Dio> _getDefaultDioClient() async {
     _headers['content-type'] = 'application/json; charset=utf-8';
     final dio = Dio()
+      ..interceptors.add(LoggingInterceptor())
       ..options.baseUrl = baseUrl
       ..options.headers = _headers
       ..options.connectTimeout = 10000 // 10 seconds

@@ -1,3 +1,10 @@
+<<<<<<< Updated upstream
+=======
+import 'package:dio/dio.dart';
+import 'package:dio_logger/dio_logger.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:get/get_navigation/get_navigation.dart';
+>>>>>>> Stashed changes
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/models/register_model.dart';

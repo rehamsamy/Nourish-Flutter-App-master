@@ -82,6 +82,7 @@ class LoginView extends GetView<LoginController> {
               child: CustomButton(
                 title: LocalKeys.kLogin.tr,
                 onPress: () async {
+                  print("Login try");
                   LoginModel? login =
                       await AuthApis().loginUser(controller.phone.text);
     Get.log('ssssss'+login.toString());
@@ -91,8 +92,15 @@ class LoginView extends GetView<LoginController> {
                         "Unknown Network error", login?.data?.msg ?? '');
                     Get.toNamed(
                       Routes.OTP_VERIFICATION,
+<<<<<<< Updated upstream
                       // arguments: {"isLogin": true},
                       arguments: {"isLogin": true,'phone':controller.phone.text}
+=======
+                      arguments: {
+                        "isLogin": true,
+                        'phone': controller.phone.text
+                      },
+>>>>>>> Stashed changes
                     );
                   }else{
                     Get.log('ssssss');
