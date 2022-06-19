@@ -1,10 +1,4 @@
-<<<<<<< Updated upstream
-=======
-import 'package:dio/dio.dart';
-import 'package:dio_logger/dio_logger.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_navigation/get_navigation.dart';
->>>>>>> Stashed changes
+
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/models/register_model.dart';
@@ -26,7 +20,8 @@ class AuthApis {
       LoginModel.fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(ok: (data) {
-      print(data.data.msg);
+      print('vvv'+
+          data.data.msg);
       return data;
     }, orElse: () {
       print(response.toString());

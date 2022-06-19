@@ -130,7 +130,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 ),
               ),
               FutureBuilder(
-                  future: HomeApis().getHomeCategories(),
+                  future: HomeApis().getHomePackages(),
                   builder: (_, snapshot) {
                     if (snapshot.hasData) {
                       categoriesList = snapshot.data as List<CategoryItem>;

@@ -10,21 +10,26 @@ import '../services/network_service.dart/dio_network_service.dart';
 class HomeApis {
   Future<List<CategoryItem>?> getHomeCategories() async {
     List<CategoryItem> categoriesList = [];
-    try {
-      Dio dio = Dio();
-      dio.interceptors.add(dioLoggerInterceptor);
-
-      final response = await dio.get(
-        AppConstants.kBaseUrl + "api/categories",
-      );
-      CategoriesModel model = CategoriesModel.fromJson(response.data);
-      categoriesList = model.categoryData?.categoriesList ?? [];
-      Get.log('size is s' + categoriesList.length.toString());
-      return categoriesList;
-    } on DioError catch (e) {
-      Get.snackbar("Unknown Network error", e.message.toString());
-      return null;
-    }
+    const request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: 'categories',
+      data: const NetworkRequestBody.json(
+        {},
+      ),
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      CategoriesModel
+          .fromJson, // <- Function to convert API response to your model
+      onReceiveProgress: (count, total) {},
+      onSendProgress: (count, total) {},
+    );
+    response.maybeWhen(
+        ok: (model) {
+          return model.categoryData?.categoriesList;
+        },
+        orElse: () {});
   }
 
   Future<List<WeeklyItem>?> getHomePackages() async {

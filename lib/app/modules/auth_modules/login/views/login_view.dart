@@ -3,8 +3,10 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
@@ -12,6 +14,7 @@ import 'package:nourish_sa/app/shared/custom_outlined_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
+
 
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
@@ -79,33 +82,33 @@ class LoginView extends GetView<LoginController> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 45.h, bottom: 66.h),
-              child: CustomButton(
-                title: LocalKeys.kLogin.tr,
-                onPress: () async {
-                  print("Login try");
-                  LoginModel? login =
-                      await AuthApis().loginUser(controller.phone.text);
-    Get.log('ssssss'+login.toString());
-                  if (login?.data != null) {
-             Get.log('ssssss1');
-                    Get.snackbar(
-                        "Unknown Network error", login?.data?.msg ?? '');
-                    Get.toNamed(
-                      Routes.OTP_VERIFICATION,
-<<<<<<< Updated upstream
-                      // arguments: {"isLogin": true},
-                      arguments: {"isLogin": true,'phone':controller.phone.text}
-=======
-                      arguments: {
-                        "isLogin": true,
-                        'phone': controller.phone.text
-                      },
->>>>>>> Stashed changes
-                    );
-                  }else{
-                    Get.log('ssssss');
-    }
-                },
+              child: FutureBuilder(
+                future:  HomeApis().getHomePackages() ,
+                builder: (_,snap)=>CustomButton(
+                  title: LocalKeys.kLogin.tr,
+                  onPress: ()async {
+                    print(snap.connectionState.toString()+'kkkkk'+snap.data.toString());
+                    if(snap.hasData){
+                      print('tttttt1');
+                    }else if(snap.hasError){
+                      print('tttttt2');
+                    }else if(snap.connectionState==ConnectionState.waiting){
+                      print('tttttt3');
+                    }
+            //      // List<CategoryItem> list=await   HomeApis().getHomeCategories() as List<CategoryItem>;
+            //      // print('xxxxxxxxx'+list.toString());
+            // LoginModel ? login= await AuthApis().loginUser(controller.phone.text) as LoginModel?;
+            //      if(login?.data !=null){
+            //        Get.snackbar("Unknown Network error", login?.data?.msg??'');
+            //        Get.toNamed(
+            //          Routes.OTP_VERIFICATION,
+            //          arguments: {"isLogin": true},
+            //        );
+            //      }else{
+            //        print('xxxxxxxxx'+login.toString());
+            //      }
+                  },
+                ),
               ),
             ),
             CustomOutlinedButton(
