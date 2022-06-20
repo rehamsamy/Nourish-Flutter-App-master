@@ -102,7 +102,6 @@ Future<NetworkResponse<Model>> executeRequest<Model>(
     return NetworkResponse.noData(error.toString());
   }
 }
-
 class NetworkService {
   NetworkService({
     required this.baseUrl,

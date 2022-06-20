@@ -1,12 +1,8 @@
 
-import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
-import 'package:dio/dio.dart';
-import 'package:dio_logger/dio_logger.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import '../services/network_service.dart/dio_network_service.dart';
-
 class HomeApis {
   Future<List<CategoryItem>?> getHomeCategories() async {
     List<CategoryItem> categoriesList = [];
@@ -52,25 +48,13 @@ class HomeApis {
       onSendProgress: (count, total) {},
     );
 
-      print('cccc'+response.obs.toString());
     response.maybeWhen(
         ok: (authResponse) {
-          print('mmmmm  '+authResponse.data.weekly.toString());
           List<WeeklyItem> list=authResponse.data.weekly as List<WeeklyItem> ;
-          print('mmmmm  '+list.length.toString());
           weeklyList=list;
           return list;
         },
         orElse: () {});
     return weeklyList;
-      // response.mapOrNull(
-    //   ok:(x){
-    //     print('cccc2 '+x.data.data.weekly.toString());
-    //     List<WeeklyItem>? res=x.data.data.weekly;
-    //     print('cccc'+response.toString());
-    //     return res;
-    //   }
-    // )  ;
-      //   response.obs;
   }
 }

@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 import '../app/modules/Subscription/bindings/subscription_binding.dart';
 import '../app/modules/Subscription/views/subscription_view.dart';
@@ -61,14 +62,14 @@ part 'app_routes.dart';
 
 class AppPages {
   AppPages._();
-
   static const INITIAL = Routes.SPLASH;
+ static String? token= Get.find<SharedPrefService>().getToken() ??'';
 
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () => const SplashView(),
-      binding: SplashBinding(),
+      page: () => token ==null?const SplashView():const HomePageView(),
+      binding:token==null? SplashBinding():HomePageBinding(),
     ),
     GetPage(
       name: _Paths.ON_BOARDING,

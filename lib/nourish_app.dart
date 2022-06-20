@@ -52,6 +52,7 @@ class _NourishAppState extends State<NourishApp> {
 
   @override
   Widget build(BuildContext context) {
+    Get.log('page 1   ===>');
     return ScreenUtilInit(
       designSize: const Size(428, 926),
       builder: (child) {
