@@ -128,8 +128,8 @@ class ProfileView extends GetView<ProfileController> {
                           onPress: () async {
                             UpdateProfileModel updateModel = await ProfileApis()
                                     .updateProfileInfo(
-                                        first_name: controller.firstName.text,
-                                        last_name: controller.lastName.text,
+                                        firstName: controller.firstName.text,
+                                        lastName: controller.lastName.text,
                                         mobile: controller.phone.text,
                                         email: controller.email.text)
                                 as UpdateProfileModel;

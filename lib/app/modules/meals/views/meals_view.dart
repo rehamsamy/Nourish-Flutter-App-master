@@ -16,6 +16,8 @@ import '../controllers/meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MealsView extends GetView<MealsController> {
+  const MealsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     Get.log('page  => Meals');
@@ -56,6 +58,7 @@ class MealsView extends GetView<MealsController> {
                         return ListView.builder(
                           itemCount: categories?.length ?? 0,
                           scrollDirection: Axis.horizontal,
+                          physics: const BouncingScrollPhysics(),
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
                           itemBuilder: (context, index) {
                             return Obx(
