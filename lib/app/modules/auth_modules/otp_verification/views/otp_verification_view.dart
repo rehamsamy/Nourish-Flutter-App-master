@@ -18,7 +18,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class OtpVerificationView extends GetView<OtpVerificationController> {
   const OtpVerificationView({Key? key}) : super(key: key);
 
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +54,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                     children: <TextSpan>[
                       TextSpan(
                         text:
-                            "${LocalKeys.kSentOTPTo.tr} ${controller.isEmail.value ?  LocalKeys.kEmailAddress.tr : LocalKeys.kMobileNumber.tr} ",
+                            "${LocalKeys.kSentOTPTo.tr} ${controller.isEmail.value ? LocalKeys.kEmailAddress.tr : LocalKeys.kMobileNumber.tr} ",
                         style:
                             Get.textTheme.headline3!.copyWith(fontSize: 16.sp),
                       ),
@@ -97,23 +96,18 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                 padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
                 child: CustomButton(
                   title: LocalKeys.kContinue.tr,
-                  onPress: () async{
+                  onPress: () async {
                     if (controller.isLogin) {
                       Get.log('xxxx1');
-                      VerifyEmailModel ? verifyEmail= await  AuthApis().verifyOtpMobile(controller.phone??''
-                          ,controller.otp.text
-                      ) as VerifyEmailModel? ;
-                      Get.log('xxxxxxx'+verifyEmail.toString());
-                      if(verifyEmail!=null){
+                      VerifyEmailModel? verifyEmail = await AuthApis()
+                              .verifyOtpMobile(
+                                  controller.phone ?? '', controller.otp.text)
+                          as VerifyEmailModel?;
+                      Get.log('xxxxxxx' + verifyEmail.toString());
+                      if (verifyEmail != null) {
                         Get.offAllNamed(Routes.HOME_PAGE);
                       }
                     } else if (controller.isEmail.value) {
-<<<<<<< Updated upstream
-                      Get.log('xxxx2');
-                      // OtpMobileVerifyModel ? login= await  controller.verifyMobileOtp()as OtpMobileVerifyModel?;
-                      //  Get.snackbar("Unknown Network error", login!.data!.msg??'');
-=======
->>>>>>> Stashed changes
                       Get.offAllNamed(Routes.LOGIN);
                     } else {
                       Get.log('xxxx3');

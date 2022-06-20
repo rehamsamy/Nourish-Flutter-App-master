@@ -83,28 +83,6 @@ class LoginView extends GetView<LoginController> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 45.h, bottom: 66.h),
-<<<<<<< Updated upstream
-              child: FutureBuilder(
-                 future:  AuthApis().loginUser(controller.phone.text) ,
-                builder: (_,snap)=>CustomButton(
-                  title: LocalKeys.kLogin.tr,
-                  onPress: ()async {
-                    if(snap.hasData&&snap.data !=null){
-                      print('tttttt1');
-                      LoginModel model=snap.data as LoginModel;
-                             Get.snackbar("Unknown Network error", model.data?.msg??'');
-                             Get.toNamed(
-                               Routes.OTP_VERIFICATION,
-                               arguments: {"isLogin": true},
-                             );
-                    }else if(snap.hasError){
-                      print('tttttt2'+snap.error.toString());
-                    }else if(snap.connectionState==ConnectionState.waiting){
-                      print('tttttt3');
-                    }
-                  },
-                ),
-=======
               child: CustomButton(
                 title: LocalKeys.kLogin.tr,
                 onPress: () async {
@@ -127,7 +105,6 @@ class LoginView extends GetView<LoginController> {
                     Get.log('ssssss');
                   }
                 },
->>>>>>> Stashed changes
               ),
             ),
             CustomOutlinedButton(

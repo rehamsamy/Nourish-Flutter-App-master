@@ -16,7 +16,6 @@ import '../controllers/meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MealsView extends GetView<MealsController> {
-
   @override
   Widget build(BuildContext context) {
     Get.log('page  => Meals');
@@ -28,7 +27,6 @@ class MealsView extends GetView<MealsController> {
         ),
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
-
         leading: InkWell(
             onTap: () {
               Get.find<HomePageController>().changeIndex(0);
@@ -48,45 +46,45 @@ class MealsView extends GetView<MealsController> {
               ),
             ),
             SizedBox(
-              width: Get.width,
-              height: 120.h,
-              child: FutureBuilder(
-                future: HomeApis().getHomeCategories(),
-                builder: (_,snap) {
-                  List<CategoryItem> categories=snap.data  as List<CategoryItem>;
-                  return  snap.hasData?ListView.builder(
-                    itemCount:categories.length,
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    itemBuilder: (context, index) {
-                      return Obx(
-                            () => InkWell(
-                            onTap: () {
-                              controller.changeSelected(index);
-                            },
-                            child: SelectedMenu(
-                              image:categories[index].image??'',
-                              title: categories[index].name??'',
-                              color: AppConstants.colorsMenu[index],
-                              isSelected: controller.selected.value == index,
-                            )
-                        ),
-                      );
-                    },
-                  ):
-                  snap.connectionState==ConnectionState.waiting?
-                  ListView.builder(
-                    itemCount: 6,
-                    scrollDirection: Axis.horizontal,
-                    padding: EdgeInsets.symmetric(horizontal: 24.w),
-                    itemBuilder: (context, index) {
-                      return   MealLoading(111.w, 99.h);
-                    },
-                  ):SizedBox();
-
-                }
-              )
-            ),
+                width: Get.width,
+                height: 120.h,
+                child: FutureBuilder(
+                    future: HomeApis().getHomeCategories(),
+                    builder: (_, snap) {
+                      if (snap.hasData) {
+                        List<CategoryItem> categories =
+                            snap.data as List<CategoryItem>;
+                        return ListView.builder(
+                          itemCount: categories.length,
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          itemBuilder: (context, index) {
+                            return Obx(
+                              () => InkWell(
+                                  onTap: () {
+                                    controller.changeSelected(index);
+                                  },
+                                  child: SelectedMenu(
+                                    image: categories[index].image ?? '',
+                                    title: categories[index].name ?? '',
+                                    color: AppConstants.colorsMenu[index],
+                                    isSelected:
+                                        controller.selected.value == index,
+                                  )),
+                            );
+                          },
+                        );
+                      } else {
+                        return ListView.builder(
+                          itemCount: 6,
+                          scrollDirection: Axis.horizontal,
+                          padding: EdgeInsets.symmetric(horizontal: 24.w),
+                          itemBuilder: (context, index) {
+                            return MealLoading(111.w, 99.h);
+                          },
+                        );
+                      }
+                    })),
             Padding(
               padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
               child: HeadlineWithViewAll(
