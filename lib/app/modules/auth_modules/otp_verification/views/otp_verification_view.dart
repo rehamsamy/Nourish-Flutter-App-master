@@ -108,9 +108,12 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                         Get.offAllNamed(Routes.HOME_PAGE);
                       }
                     } else if (controller.isEmail.value) {
+<<<<<<< Updated upstream
                       Get.log('xxxx2');
                       // OtpMobileVerifyModel ? login= await  controller.verifyMobileOtp()as OtpMobileVerifyModel?;
                       //  Get.snackbar("Unknown Network error", login!.data!.msg??'');
+=======
+>>>>>>> Stashed changes
                       Get.offAllNamed(Routes.LOGIN);
                     } else {
                       Get.log('xxxx3');

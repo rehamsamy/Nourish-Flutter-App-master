@@ -83,6 +83,7 @@ class LoginView extends GetView<LoginController> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 45.h, bottom: 66.h),
+<<<<<<< Updated upstream
               child: FutureBuilder(
                  future:  AuthApis().loginUser(controller.phone.text) ,
                 builder: (_,snap)=>CustomButton(
@@ -103,6 +104,30 @@ class LoginView extends GetView<LoginController> {
                     }
                   },
                 ),
+=======
+              child: CustomButton(
+                title: LocalKeys.kLogin.tr,
+                onPress: () async {
+                  print("Login try");
+                  LoginModel? login =
+                      await AuthApis().loginUser(controller.phone.text);
+                  Get.log('ssssss' + login.toString());
+                  if (login?.data != null) {
+                    Get.log('ssssss1');
+                    Get.snackbar(
+                        "Unknown Network error", login?.data?.msg ?? '');
+                    Get.toNamed(
+                      Routes.OTP_VERIFICATION,
+                      arguments: {
+                        "isLogin": true,
+                        'phone': controller.phone.text
+                      },
+                    );
+                  } else {
+                    Get.log('ssssss');
+                  }
+                },
+>>>>>>> Stashed changes
               ),
             ),
             CustomOutlinedButton(

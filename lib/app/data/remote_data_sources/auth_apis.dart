@@ -1,5 +1,8 @@
+<<<<<<< Updated upstream
 
 import 'package:get/get.dart';
+=======
+>>>>>>> Stashed changes
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/models/register_model.dart';
