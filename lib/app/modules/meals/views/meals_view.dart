@@ -48,14 +48,13 @@ class MealsView extends GetView<MealsController> {
             SizedBox(
                 width: Get.width,
                 height: 120.h,
-                child: FutureBuilder(
+                child: FutureBuilder<List<CategoryItem>?>(
                     future: HomeApis().getHomeCategories(),
                     builder: (_, snap) {
                       if (snap.hasData) {
-                        List<CategoryItem> categories =
-                            snap.data as List<CategoryItem>;
+                        List<CategoryItem>? categories = snap.data;
                         return ListView.builder(
-                          itemCount: categories.length,
+                          itemCount: categories?.length ?? 0,
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
                           itemBuilder: (context, index) {
@@ -65,9 +64,9 @@ class MealsView extends GetView<MealsController> {
                                     controller.changeSelected(index);
                                   },
                                   child: SelectedMenu(
-                                    image: categories[index].image ?? '',
-                                    title: categories[index].name ?? '',
-                                    color: AppConstants.colorsMenu[index],
+                                    image: categories?[index].image ?? '',
+                                    title: categories?[index].name ?? '',
+                                    color: AppConstants.colorsMenu[index % 5],
                                     isSelected:
                                         controller.selected.value == index,
                                   )),
@@ -76,7 +75,7 @@ class MealsView extends GetView<MealsController> {
                         );
                       } else {
                         return ListView.builder(
-                          itemCount: 6,
+                          itemCount: 5,
                           scrollDirection: Axis.horizontal,
                           padding: EdgeInsets.symmetric(horizontal: 24.w),
                           itemBuilder: (context, index) {

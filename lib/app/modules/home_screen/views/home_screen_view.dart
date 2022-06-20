@@ -144,7 +144,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                             itemBuilder: (context, index) {
                               return MealCard(
                                   title: categoriesList[index].name ?? '',
-                                  color: AppConstants.colorsMenu[index],
+                                  color: AppConstants.colorsMenu[index % 5],
                                   image: categoriesList[index].image ?? '');
                             },
                           ));
@@ -178,23 +178,24 @@ class HomeScreenView extends GetView<HomeScreenController> {
               ),
               FutureBuilder(
                   future: HomeApis().getHomePackages(),
-                  builder: (_, snap) {
-                    if(snap.hasData){
-                      homePackagesList = snap.data as List<WeeklyItem>;
+                  builder: (_, snapshot) {
+                    if (snapshot.hasData) {
+                      homePackagesList = snapshot.data as List<WeeklyItem>;
                       return SizedBox(
                           width: Get.width,
                           height: 185.h,
-                          child: snap.connectionState == ConnectionState.waiting
-                              ? buildSwiper(10, snap)
-                              : snap.hasData
-                              ? buildSwiper(homePackagesList.length, snap)
-                              : const Center(
-                            child: Text('empty data'),
+                          child: buildSwiper(
+                            homePackagesList.length,
                           ));
-                    }else{
-                      return const Center( child: Text('empty data'),);
+                    } else {
+                      return SizedBox(
+                          width: Get.width,
+                          height: 185.h,
+                          child: ListView.builder(
+                            itemBuilder: (context, index) =>
+                                MealLoading(100.w, 100.h),
+                          ));
                     }
-
                   }),
               SizedBox(
                 height: 52.h,
@@ -223,7 +224,9 @@ class HomeScreenView extends GetView<HomeScreenController> {
     );
   }
 
-  buildSwiper(int length, AsyncSnapshot snapshot) {
+  buildSwiper(
+    int length,
+  ) {
     return Swiper(
       outer: true,
       itemCount: length,
@@ -231,13 +234,10 @@ class HomeScreenView extends GetView<HomeScreenController> {
       itemWidth: 155.h,
       viewportFraction: 0.8,
       itemBuilder: (context, index) {
-        return snapshot.connectionState == ConnectionState.waiting
-            ? MealLoading(423.w, 120.h)
-            : PackageCard(
-                title: homePackagesList[index].name ?? '',
-                onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
-                image: homePackagesList[index].image ?? ''
-                );
+        return PackageCard(
+            title: homePackagesList[index].name ?? '',
+            onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
+            image: homePackagesList[index].image ?? '');
       },
       pagination: SwiperPagination(
         margin: EdgeInsets.only(top: 10.h),
