@@ -138,6 +138,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                           width: Get.width,
                           height: 100.h,
                           child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
                             itemCount: categoriesList.length,
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.symmetric(horizontal: 7.w),
@@ -153,6 +154,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                           width: Get.width,
                           height: 100.h,
                           child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
                             itemCount: categoriesList.length,
                             scrollDirection: Axis.horizontal,
                             padding: EdgeInsets.symmetric(horizontal: 7.w),
@@ -229,6 +231,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
   ) {
     return Swiper(
       outer: true,
+      physics: const BouncingScrollPhysics(),
       itemCount: length,
       autoplay: true,
       itemWidth: 155.h,
