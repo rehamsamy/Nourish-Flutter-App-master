@@ -3,7 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/categories_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
+import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/meals/views/widgets/category_product_card.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
 import 'package:nourish_sa/app/shared/headline_with_view_all.dart';
@@ -13,8 +16,10 @@ import '../controllers/meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class MealsView extends GetView<MealsController> {
+
   @override
   Widget build(BuildContext context) {
+    Get.log('page  => Meals');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -44,28 +49,43 @@ class MealsView extends GetView<MealsController> {
             ),
             SizedBox(
               width: Get.width,
-              height: 100.h,
-              child: ListView.builder(
-                itemCount: 6,
-                scrollDirection: Axis.horizontal,
-                padding: EdgeInsets.symmetric(horizontal: 24.w),
-                itemBuilder: (context, index) {
-                  return Obx(
-                    () => InkWell(
-                      onTap: () {
-                        controller.changeSelected(index);
-                      },
-                      child: SelectedMenu(
-                        image:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-                        title: "HEALTH",
-                        color: AppConstants.colorsMenu[index],
-                        isSelected: controller.selected.value == index,
-                      ),
-                    ),
-                  );
-                },
-              ),
+              height: 120.h,
+              child: FutureBuilder(
+                future: HomeApis().getHomeCategories(),
+                builder: (_,snap) {
+                  List<CategoryItem> categories=snap.data  as List<CategoryItem>;
+                  return  snap.hasData?ListView.builder(
+                    itemCount:categories.length,
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    itemBuilder: (context, index) {
+                      return Obx(
+                            () => InkWell(
+                            onTap: () {
+                              controller.changeSelected(index);
+                            },
+                            child: SelectedMenu(
+                              image:categories[index].image??'',
+                              title: categories[index].name??'',
+                              color: AppConstants.colorsMenu[index],
+                              isSelected: controller.selected.value == index,
+                            )
+                        ),
+                      );
+                    },
+                  ):
+                  snap.connectionState==ConnectionState.waiting?
+                  ListView.builder(
+                    itemCount: 6,
+                    scrollDirection: Axis.horizontal,
+                    padding: EdgeInsets.symmetric(horizontal: 24.w),
+                    itemBuilder: (context, index) {
+                      return   MealLoading(111.w, 99.h);
+                    },
+                  ):SizedBox();
+
+                }
+              )
             ),
             Padding(
               padding: EdgeInsets.only(top: 26.h, bottom: 8.h),

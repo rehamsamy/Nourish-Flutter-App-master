@@ -237,7 +237,6 @@ class HomeScreenView extends GetView<HomeScreenController> {
                 title: homePackagesList[index].name ?? '',
                 onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
                 image: homePackagesList[index].image ?? ''
-                // "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
                 );
       },
       pagination: SwiperPagination(

@@ -1,8 +1,12 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/update_profile_model.dart';
+import 'package:nourish_sa/app/data/models/user_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/profile_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/modules/profile/views/otp_dialog.dart';
@@ -14,6 +18,7 @@ import '../controllers/profile_controller.dart';
 class ProfileView extends GetView<ProfileController> {
   @override
   Widget build(BuildContext context) {
+    Get.log('page  => profile');
     return Scaffold(
       appBar: AppBar(
         title: const Text('Setting'),
@@ -25,100 +30,110 @@ class ProfileView extends GetView<ProfileController> {
             },
             child: const Icon(Icons.arrow_back)),
       ),
-      body: SizedBox(
-        width: Get.width,
-        height: Get.height,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 36.w),
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.start,
-              crossAxisAlignment: CrossAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 113.w,
-                  height: 113.w,
-                  child: Stack(
-                    children: [
-                      Container(
-                        width: 113.w,
-                        height: 150.w,
-                        decoration: const BoxDecoration(
-                          shape: BoxShape.circle,
-                          color: greyColor,
-                        ),
-                        child: Image.asset(
-                          Assets.kPlaceholder,
-                        ),
-                      ),
-                      PositionedDirectional(
-                        bottom: 0,
-                        end: 5,
-                        width: 38.w,
-                        height: 38.w,
-                        child: Container(
-                          width: 38.w,
-                          height: 38.w,
+      body: FutureBuilder(
+      future:  ProfileApis().getProfileInfo(),
+        builder: (_,snap){
+        UserModel userModel=snap.data as UserModel;
+        return SizedBox(
+          width: Get.width,
+          height: Get.height,
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(vertical: 40.h, horizontal: 36.w),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.start,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(
+                    width: 113.w,
+                    height: 113.w,
+                    child: Stack(
+                      children: [
+                        Container(
+                          width: 113.w,
+                          height: 150.w,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
-                            color: Color(0xff253F50),
+                            color: greyColor,
                           ),
-                          child: const Icon(
-                            Icons.edit,
-                            color: Colors.white,
+                          child: Image.network(userModel.image??'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX4wVGjMQ37PaO4PdUVEAliSLi8-c2gJ1zvQ&usqp=CAU')
+                        ),
+                        PositionedDirectional(
+                          bottom: 0,
+                          end: 5,
+                          width: 38.w,
+                          height: 38.w,
+                          child: Container(
+                            width: 38.w,
+                            height: 38.w,
+                            decoration: const BoxDecoration(
+                              shape: BoxShape.circle,
+                              color: Color(0xff253F50),
+                            ),
+                            child: const Icon(
+                              Icons.edit,
+                              color: Colors.white,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
+                      ],
+                    ),
                   ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    top: 14.h,
-                    bottom: 44.h,
+                  Padding(
+                    padding: EdgeInsets.only(
+                      top: 14.h,
+                      bottom: 44.h,
+                    ),
+                    child: Text(
+                     userModel.name??'User Name',
+                      style: Get.textTheme.bodyText1,
+                    ),
                   ),
-                  child: Text(
-                    "Ayman Taher",
-                    style: Get.textTheme.bodyText1,
+                  CustomInput(
+                    hint: userModel.firstName??LocalKeys.kFirstName.tr,
+                    textEditingController: controller.firstName,
+                    title: LocalKeys.kFirstName.tr,
+                    suffixIcon: Assets.kProfileIcon,
                   ),
-                ),
-                CustomInput(
-                  hint: LocalKeys.kFirstName.tr,
-                  textEditingController: controller.firstName,
-                  title: LocalKeys.kFirstName.tr,
-                  suffixIcon: Assets.kProfileIcon,
-                ),
-                CustomInput(
-                  hint: LocalKeys.kLastName.tr,
-                  textEditingController: controller.lastName,
-                  title: LocalKeys.kLastName.tr,
-                  suffixIcon: Assets.kProfileIcon,
-                ),
-                CustomInput(
-                  hint: LocalKeys.kPhoneNumber.tr,
-                  textEditingController: controller.phone,
-                  title: LocalKeys.kPhoneNumber.tr,
-                  suffixIcon: Assets.kPhone,
-                ),
-                CustomInput(
-                  hint: LocalKeys.kEmail.tr,
-                  textEditingController: controller.email,
-                  title: LocalKeys.kEmail.tr,
-                  suffixIcon: Assets.kEmailIcon,
-                ),
-                SizedBox(
-                  height: 50.h,
-                ),
-                CustomButton(
-                  title: LocalKeys.kSave.tr,
-                  onPress: () {
-                    Get.dialog(const OTPDialog());
-                  },
-                ),
-              ],
+                  CustomInput(
+                    hint: userModel.lastName??LocalKeys.kLastName.tr,
+                    textEditingController: controller.lastName,
+                    title: LocalKeys.kLastName.tr,
+                    suffixIcon: Assets.kProfileIcon,
+                  ),
+                  CustomInput(
+                    hint: userModel.mobile??LocalKeys.kPhoneNumber.tr,
+                    textEditingController: controller.phone,
+                    title: LocalKeys.kPhoneNumber.tr,
+                    suffixIcon: Assets.kPhone,
+                  ),
+                  CustomInput(
+                    hint:userModel.email?? LocalKeys.kEmail.tr,
+                    textEditingController: controller.email,
+                    title: LocalKeys.kEmail.tr,
+                    suffixIcon: Assets.kEmailIcon,
+                  ),
+                  SizedBox(
+                    height: 50.h,
+                  ),
+
+                  CustomButton(
+                        title: LocalKeys.kSave.tr,
+                        onPress: () async{
+                          UpdateProfileModel updateModel =  await  ProfileApis().updateProfileInfo(first_name: controller.firstName.text,
+                              last_name:  controller.lastName.text, mobile:  controller.phone.text, email:  controller.email.text) as UpdateProfileModel;
+                          if(updateModel !=null){
+                            Get.snackbar("Unknown Network error", updateModel.data?.msg??'');
+                          }
+                          Get.dialog(const OTPDialog());
+                        },
+                  ),
+                ],
+              ),
             ),
           ),
-        ),
+        );
+  }
       ),
     );
   }

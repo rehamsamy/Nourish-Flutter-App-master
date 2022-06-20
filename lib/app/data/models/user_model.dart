@@ -32,6 +32,7 @@ class UserModel {
     smsCode = json['sms_code'];
     emailVerifyCode = json['email_verify_code'];
     verified = json['verified'];
+
     locale = json['locale'];
     deviceToken = json['device_token'];
     name = json['name'];
