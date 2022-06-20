@@ -14,6 +14,7 @@ class LocationAcesssView extends GetView<LocationAcesssController> {
   const LocationAcesssView({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
+    Get.log('Page =>  address');
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kAddAddess.tr),

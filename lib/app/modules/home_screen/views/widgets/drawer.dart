@@ -133,6 +133,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                     name: LocalKeys.kAddressBook.tr,
                     icon: Assets.kLocation,
                     onTap: () {
+                      Get.toNamed(Routes.ADD_ADDRESS);
                       controller.scaffoldKey!.currentState!.openEndDrawer();
                     },
                   ),

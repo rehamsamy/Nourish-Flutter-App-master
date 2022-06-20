@@ -126,12 +126,12 @@ class ProfileView extends GetView<ProfileController> {
                         CustomButton(
                           title: LocalKeys.kSave.tr,
                           onPress: () async {
-                            UpdateProfileModel updateModel = await ProfileApis()
+                            UpdateProfileModel ? updateModel = await ProfileApis()
                                     .updateProfileInfo(
-                                        firstName: controller.firstName.text,
-                                        lastName: controller.lastName.text,
+                                        first_name: controller.firstName.text,
+                                        last_name: controller.lastName.text,
                                         mobile: controller.phone.text,
-                                        email: controller.email.text)
+                                        email: controller.email.text,)
                                 as UpdateProfileModel;
                             if (updateModel != null) {
                               Get.snackbar("Unknown Network error",

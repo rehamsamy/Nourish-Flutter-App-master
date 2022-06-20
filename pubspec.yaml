@@ -49,6 +49,8 @@ dependencies:
   pin_input_text_field: ^4.1.1
   restart_app: ^1.1.0
   shared_preferences: ^2.0.6
+  google_maps_flutter: ^2.1.5
+  geolocator: ^8.2.1
   shimmer: ^2.0.0
 
 dev_dependencies:
