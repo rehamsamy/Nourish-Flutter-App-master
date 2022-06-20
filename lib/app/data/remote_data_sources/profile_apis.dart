@@ -10,17 +10,17 @@ import 'package:nourish_sa/app/data/services/shared_pref.dart';
 class ProfileApis {
   Future<UserModel?> getProfileInfo() async {
     UserModel? userModel = UserModel();
+ const   String token1='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTU3MTU3NzYsImV4cCI6MTY1NTcxOTM3NiwibmJmIjoxNjU1NzE1Nzc2LCJqdGkiOiJRNjVGRWtrUTZPczZUVUo3Iiwic3ViIjoxNywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.PNPvOmNeEcnbOiBWhjAK0go_AnOQSrtXuckkv3vuxBk';
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     const request = NetworkRequest(
-        type: NetworkRequestType.GET,
+        type: NetworkRequestType.POST,
         path: 'me',
         data: NetworkRequestBody.json(
           {},
         ),
+
         headers: {
-          'Authorization':
-              'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOlwvXC9hcGkuZWF0LW5vdXJpc2guY29tXC9hcGlcL2F1dGhcL3ZlcmlmeU1vYmlsZU9UUCIsImlhdCI6MTY1NTcyNDY4OCwiZXhwIjoxNjU1NzI4Mjg4LCJuYmYiOjE2NTU3MjQ2ODgsImp0aSI6ImM4NnowWHhGT1VJMUxrVWsiLCJzdWIiOjE2LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.zw1FPcegZQw8Tp1ecU21IWZAt-tb0-N5HAvLe3yAFlY}'
-        });
+          'Authorization':'Bearer $token1'  });
     final response = await networkService.execute(
       request,
       UserModel.fromJson, // <- Function to convert API response to your model
