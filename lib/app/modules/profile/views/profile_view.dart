@@ -36,6 +36,10 @@ class ProfileView extends GetView<ProfileController> {
           builder: (_, snap) {
             if (snap.hasData) {
               UserModel userModel = snap.data as UserModel;
+              controller.email.text=userModel.email??'';
+              controller.phone.text=userModel.mobile??'';
+              controller.lastName.text=userModel.lastName??'';
+              controller.firstName.text=userModel.firstName??'';
               return SizedBox(
                 width: Get.width,
                 height: Get.height,
