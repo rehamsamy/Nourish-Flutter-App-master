@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
+
 import '../../app_theme.dart';
 import 'package:geolocator/geolocator.dart';
 
@@ -16,9 +17,11 @@ class MapEditLocationPin extends StatefulWidget {
 }
 
 class _MapEditLocationPinState extends State<MapEditLocationPin> {
+  late LocationPermission permission;
   GoogleMapController? mapController=null;
-  Map<MarkerId, Marker> markers = {};
+  Set<Marker> markers = Set();
   var currentLocation;
+  LatLng showLocation = LatLng(27.7089427, 85.3086209);
 
   Completer<GoogleMapController> _controller = Completer();
 
@@ -32,24 +35,23 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
   @override
   void initState() {
     Get.log('vvvvv');
-   getLocation();
-  }
-  _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
-    MarkerId markerId = MarkerId(id);
-    Marker marker =
-    Marker(markerId: markerId, icon: descriptor, position: position);
-    markers[markerId] = marker;
+     getLocation();
+    markers.add(Marker( //add marker on google map
+      markerId: MarkerId(currentLocation.toString()),
+      position: _center, //position of marker
+      infoWindow: InfoWindow( //popup info
+        title: 'My Custom Title ',
+        snippet: 'My Custom Subtitle',
+      ),
+      icon: BitmapDescriptor.defaultMarker, //Icon for Marker
+    ));
+
+
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    // mapController = controller;
-    Get.log('xxxx   ');
-    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
-        .then((currloc) {
-      setState(() {
-        Get.log('xxxx   '+currloc.toString());
-        currentLocation = currloc;
-      });
+    setState(() {
+      mapController = controller;
     });
   }
   @override
@@ -83,7 +85,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
           zoom: 5.0,
         ),
           myLocationButtonEnabled: true,
-          // markers: _markers,
+           markers: markers,
         ),
       ),
       // Column(
@@ -129,20 +131,32 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
   }
 
   void getLocation() async{
-    // permission = await Geolocator.requestPermission();
+     permission = await Geolocator.requestPermission();
     Get.log('xxxx2   ');
     Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((currloc) {
       setState(() {
         Get.log('xxxx   '+currloc.toString());
         currentLocation = currloc;
+        Get.log('xxxx   '+currentLocation.toString());
+        mapController?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(currentLocation.latitude, currentLocation.longitude), 14));
+
       });
     }).catchError((err)=>Get.log('xxx '+err.toString())
     );
-  }
+     Get.log('xxxx2   ');
+    // var location = await currentLocation.getLocation();
+    // currentLocation.onLocationChanged.listen((loc) {
+    //   mapController?.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
+    //     target: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0),
+    //     zoom: 12.0,
+    //   )));
+    //
+    //   Get.log('locaaa    '+location.toString());
+  // });
 
 
 
 
 
-}
+}}
