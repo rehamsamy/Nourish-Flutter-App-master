@@ -52,6 +52,7 @@ dependencies:
   google_maps_flutter: ^2.1.5
   geolocator: ^8.2.1
   shimmer: ^2.0.0
+  permission: ^0.1.7
 
 dev_dependencies:
   # The "flutter_lints" package below contains a set of recommended lints to

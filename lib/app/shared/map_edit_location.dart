@@ -1,10 +1,9 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:nourish_sa/app/core/values/assets.dart';
-import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 
 import '../../app_theme.dart';
 import 'package:geolocator/geolocator.dart';
@@ -18,27 +17,41 @@ class MapEditLocationPin extends StatefulWidget {
 
 class _MapEditLocationPinState extends State<MapEditLocationPin> {
   GoogleMapController? mapController=null;
+  Map<MarkerId, Marker> markers = {};
   var currentLocation;
+
+  Completer<GoogleMapController> _controller = Completer();
+
+  static final CameraPosition _kGooglePlex = CameraPosition(
+    target: LatLng(37.42796133580664, -122.085749655962),
+    zoom: 14.4746,
+  );
 
   LatLng _center = const LatLng(45.521563, -122.677433);
 
   @override
   void initState() {
-    _onMapCreated(mapController!);
+    Get.log('vvvvv');
+   getLocation();
+  }
+  _addMarker(LatLng position, String id, BitmapDescriptor descriptor) {
+    MarkerId markerId = MarkerId(id);
+    Marker marker =
+    Marker(markerId: markerId, icon: descriptor, position: position);
+    markers[markerId] = marker;
   }
 
   void _onMapCreated(GoogleMapController controller) {
-    mapController = controller;
+    // mapController = controller;
+    Get.log('xxxx   ');
     Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((currloc) {
       setState(() {
+        Get.log('xxxx   '+currloc.toString());
         currentLocation = currloc;
       });
     });
-
   }
-
-
   @override
   Widget build(BuildContext context) {
     return
@@ -59,23 +72,19 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
         ],
       ),
      child:
-      GoogleMap(
-        onMapCreated: _onMapCreated,
-        myLocationEnabled: true,
-        initialCameraPosition:  CameraPosition(
-        target: _center,
-        zoom: 5.0,
-      ),
-        myLocationButtonEnabled: true,
-
-        // markers: Set<Marker>.of(markers.values),
-        // // markers: _markers,
-        // //  polylines:_polyline,
-        // initialCameraPosition: CameraPosition(
-        //   target: _center,
-        //   zoom: 5.0,
-        // ),
-
+      SizedBox(
+        height: 200,
+        child:
+        GoogleMap(
+          onMapCreated: _onMapCreated,
+          myLocationEnabled: true,
+          initialCameraPosition:  CameraPosition(
+          target: _center,
+          zoom: 5.0,
+        ),
+          myLocationButtonEnabled: true,
+          // markers: _markers,
+        ),
       ),
       // Column(
       //   children: [
@@ -118,4 +127,22 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
       // ),
     );
   }
+
+  void getLocation() async{
+    // permission = await Geolocator.requestPermission();
+    Get.log('xxxx2   ');
+    Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
+        .then((currloc) {
+      setState(() {
+        Get.log('xxxx   '+currloc.toString());
+        currentLocation = currloc;
+      });
+    }).catchError((err)=>Get.log('xxx '+err.toString())
+    );
+  }
+
+
+
+
+
 }

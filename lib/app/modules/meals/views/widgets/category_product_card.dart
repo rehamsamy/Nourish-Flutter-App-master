@@ -15,9 +15,9 @@ class CategoryProductCard extends StatelessWidget {
       required this.productCalories,
       Key? key})
       : super(key: key);
-  final String image;
-  final String productName;
-  final String productCalories;
+  final String ? image;
+  final String ? productName;
+  final String ? productCalories;
 
   @override
   Widget build(BuildContext context) {
@@ -43,7 +43,7 @@ class CategoryProductCard extends StatelessWidget {
       child: Row(
         children: [
           CustomNetworkImage(
-            imageUrl: image,
+            imageUrl: image??'https://image.shutterstock.com/image-vector/little-boy-happy-eat-spaghetti-260nw-687046024.jpg',
             height: 120.h,
             width: 120.w,
             radius: 10.r,
@@ -57,7 +57,7 @@ class CategoryProductCard extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  productName,
+                  productName??'',
                   style: Theme.of(context).textTheme.bodyText2,
                 ),
                 SizedBox(
@@ -75,7 +75,7 @@ class CategoryProductCard extends StatelessWidget {
                       width: 8.w,
                     ),
                     Text(
-                      productCalories + " ${LocalKeys.kCalories.tr}",
+                      productCalories??'' + " ${LocalKeys.kCalories.tr}",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!

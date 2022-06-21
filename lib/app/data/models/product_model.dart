@@ -19,25 +19,25 @@ class ProductModel {
 
 class Data {
   Data({
-      this.productsList,
+      this.productdata,
       this.paginate,});
 
   Data.fromJson(dynamic json) {
     if (json['data'] != null) {
-      productsList = [];
+      productdata = [];
       json['data'].forEach((v) {
-        productsList?.add(ProductItem.fromJson(v));
+        productdata?.add(ProductItem.fromJson(v));
       });
     }
     paginate = json['paginate'] != null ? Paginate.fromJson(json['paginate']) : null;
   }
-  List<ProductItem>? productsList;
+  List<ProductItem>? productdata;
   Paginate? paginate;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (productsList != null) {
-      map['data'] = productsList?.map((v) => v.toJson()).toList();
+    if (productdata != null) {
+      map['data'] = productdata?.map((v) => v.toJson()).toList();
     }
     if (paginate != null) {
       map['paginate'] = paginate?.toJson();

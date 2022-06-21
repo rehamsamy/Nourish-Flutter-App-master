@@ -67,6 +67,7 @@ class MealsView extends GetView<MealsController> {
                               () => InkWell(
                                   onTap: () {
                                     controller.changeSelected(index);
+                                    controller.changeCategoryId(categories?[index].id);
                                   },
                                   child: SelectedMenu(
                                     image: categories?[index].image ?? '',
@@ -100,43 +101,52 @@ class MealsView extends GetView<MealsController> {
             SizedBox(
               height: 10.h,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 27.w),
-              child: FutureBuilder(
-                future: ProductApis().getProducts(),
-                builder: (_,snap) {
-                  List<ProductItem> ? list=snap.data as  List<ProductItem>;
-                  return ListView.builder(
-                      itemCount:list.length,
-                      physics: const NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            Get.dialog(const MealInfoDialog(
-                              // image: list[index].image??'',
-                              // title: list[index].name??'',
-                              // desc: list[index].description??'',
-                              image: '',
-                              title: '',
-                              desc: '',
-                              values: {
-                                "Carb": "500",
-                                "Protein": "500",
-                                "Fat": "500",
-                                "Calories": "500"
-                              },
-                            ));
-                          },
-                          child: const CategoryProductCard(
-                            productName: "sdss",
-                            productCalories: "250",
-                            image:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-                          ),
-                        );
-                      });
-                }
+            Obx(()=> Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 27.w),
+                child: FutureBuilder(
+                  future: ProductApis().getProducts(category_id: controller.categoryId.value),
+                  builder: (_,snap) {
+                    List<ProductItem> ? list = snap.data as List<ProductItem>;
+                    Get.log('****** '+controller.categoryId.value.toString());
+                    if (snap.hasData) {
+                      if(list.length>0){
+                        return ListView.builder(
+                            itemCount: list.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.dialog(MealInfoDialog(
+                                    image: list[index].image ?? '',
+                                    title: list[index].name ?? '',
+                                    desc: list[index].description ?? '',
+                                    values: {
+                                      "Carb": list[index].carb.toString(),
+                                      "Protein": list[index].protein.toString(),
+                                      "Fat": list[index].fat.toString(),
+                                      "Calories": list[index].calories.toString()
+                                    },
+                                  ));
+                                },
+                                child: CategoryProductCard(
+                                  productName: list[index].name,
+                                  productCalories: list[index].calories.toString(),
+                                  image:
+                                  list[index].image,
+                                ),
+                              );
+                            });
+                      }else{
+                        return const SizedBox(
+                            height:200,child: Center(child: Text('no data found',)));
+                      }
+
+                    } else {
+                      return SizedBox(height: 200,);
+                    }
+                  }
+                ),
               ),
             ),
           ],
