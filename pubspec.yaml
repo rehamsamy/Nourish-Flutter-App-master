@@ -51,7 +51,7 @@ dependencies:
   shared_preferences: ^2.0.6
   google_maps_flutter: ^2.1.5
   geolocator: ^8.2.1
-  geocoder: ^0.2.1
+#  geocoder: ^0.2.1
 #  geocoding: ^2.0.4
   shimmer: ^2.0.0
   permission: ^0.1.7

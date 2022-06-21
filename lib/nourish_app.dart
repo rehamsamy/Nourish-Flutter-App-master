@@ -55,7 +55,7 @@ class _NourishAppState extends State<NourishApp> {
     Get.log('page 1   ===>');
     return ScreenUtilInit(
       designSize: const Size(428, 926),
-      builder: (child) {
+      builder: (_,child) {
         return GetMaterialApp(
           title: 'Nourish.SA',
           debugShowCheckedModeBanner: false,

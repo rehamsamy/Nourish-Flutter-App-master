@@ -20,6 +20,7 @@ class PackagesView extends GetView<PackagesController> {
         shadowColor: const Color(0xff000000).withOpacity(0.3),
         leading: InkWell(
             onTap: () {
+              Get.log('tab   ---- ');
               Get.find<HomePageController>().changeIndex(0);
             },
             child: const Icon(Icons.arrow_back)),
