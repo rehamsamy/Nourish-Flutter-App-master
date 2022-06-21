@@ -26,18 +26,18 @@ class Data {
     if (json['data'] != null) {
       subscriptiondata = [];
       json['data'].forEach((v) {
-        subscriptiondata?.add(Subscriptiondata.fromJson(v));
+        subscriptiondata?.add(SubscriptionItem.fromJson(v));
       });
     }
     paginate = json['paginate'] != null ? Paginate.fromJson(json['paginate']) : null;
   }
-  List<Subscriptiondata>? subscriptiondata;
+  List<SubscriptionItem>? subscriptiondata;
   Paginate? paginate;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     if (subscriptiondata != null) {
-      map['subscriptiondata'] = subscriptiondata?.map((v) => v.toJson()).toList();
+      map['data'] = subscriptiondata?.map((v) => v.toJson()).toList();
     }
     if (paginate != null) {
       map['paginate'] = paginate?.toJson();
@@ -76,8 +76,8 @@ class Paginate {
 
 }
 
-class Subscriptiondata {
-  Subscriptiondata({
+class SubscriptionItem {
+  SubscriptionItem({
       this.id, 
       this.packageId, 
       this.userId, 
@@ -89,7 +89,7 @@ class Subscriptiondata {
       this.user, 
       this.branch,});
 
-  Subscriptiondata.fromJson(dynamic json) {
+  SubscriptionItem.fromJson(dynamic json) {
     id = json['id'];
     packageId = json['package_id'];
     userId = json['user_id'];

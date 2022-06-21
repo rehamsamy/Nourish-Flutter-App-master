@@ -27,7 +27,7 @@ class PackageApis{
     response.maybeWhen(
         ok: (response) {
          PackageModel model=response;
-        packagesList=model?.data?.packagedata;
+        packagesList=model.data?.packagedata;
         Get.log('size of package  ee');
           return packagesList;
         },

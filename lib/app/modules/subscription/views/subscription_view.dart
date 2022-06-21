@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/subscription_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/sbscription_apis.dart';
 import 'package:nourish_sa/app/modules/packages/views/package_info_card.dart';
 import 'package:nourish_sa/app/shared/tab_bar_selector.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
@@ -47,51 +49,74 @@ class SubscriptionView extends GetView<SubscriptionController> {
                     selected: controller.selected.value,
                     onTap: (value) {
                       controller.selected.value = value;
+                      Get.log('subb  index  ==> ');
                     },
                   ),
                 ),
                 Expanded(
-                  child: ListView.builder(
-                    itemCount: 7,
-                    padding: EdgeInsets.only(bottom: 35.h),
-                    itemBuilder: (context, index) {
-                      return controller.selected.value == 0
-                          ? InkWell(
-                              onTap: () {
-                                Get.toNamed(Routes.SUBSCRIPTION_DETAILS);
-                              },
-                              child: const PackageInfoCard(
-                                image: "",
-                                options: ["sdads", "saddsa"],
-                                title: "title",
-                                priceWithVat: "150",
-                              ),
-                            )
-                          : InkWell(
-                              onTap: () {
-                                Get.dialog(
-                                  const PackageInfoDialog(
-                                    days: "7 Days",
-                                    endDate: "12/12/2020",
-                                    image: "",
-                                    options: ["dsasad", "asdas", "saddsa"],
-                                    packageName: "Package Name",
-                                    packageType: "Package Type",
-                                    paymentMethod: "Cash",
-                                    price: "220",
-                                    subTitle: "Sub Title",
-                                  ),
-                                );
-                              },
-                              child: const SupscriptionCard(
-                                image: "",
-                                days: "7 Days",
-                                title: "sadasd",
-                                price: "205",
-                                endDate: "15/2/2022",
-                              ),
-                            );
-                    },
+                  child: FutureBuilder(
+                    future: SubscriptionApis().getSubscriptionAccordingType(controller.selected==0?
+                        'myCurrentSubscriptions':'myPreviousSubscriptions'),
+                    builder: (_,snap) {
+                      if(snap.hasData){
+                        List<SubscriptionItem> ?list=snap.data as List<SubscriptionItem>;
+                        if(list.length>0){
+                          return ListView.builder(
+                            itemCount: list.length,
+                            padding: EdgeInsets.only(bottom: 35.h),
+                            itemBuilder: (context, index) {
+                              return controller.selected.value == 0
+                                  ? InkWell(
+                                onTap: () {
+                                  Get.toNamed(Routes.SUBSCRIPTION_DETAILS);
+                                },
+                                child:  PackageInfoCard(
+                                  image: list[index].package?.image??'',
+                                  options: ["sdads", "saddsa"],
+                                  title: list[index].package?.name??'',
+                                  priceWithVat: list[index].package?.priceWithTax.toString()??'',
+                                ),
+                              )
+                                  : InkWell(
+                                onTap: () {
+                                  Get.dialog(
+                                     PackageInfoDialog(
+                                      days: list[index].package?.daysNumberOfWeek as String,
+                                      endDate: "12/12/2020",
+                                      image: "",
+                                      options: ["dsasad", "asdas", "saddsa"],
+                                      packageName: list[index].packageName??'',
+                                      packageType: "Package Type",
+                                      paymentMethod: "Cash",
+                                      price: list[index].package?.priceWithTax?.toString()??'',
+                                      subTitle: list[index].branchName??'',
+                                    ),
+                                  );
+                                },
+                                child: const SupscriptionCard(
+                                  image: "",
+                                  days: "7 Days",
+                                  title: "sadasd",
+                                  price: "205",
+                                  endDate: "15/2/2022",
+                                ),
+                              );
+                            },
+                          );
+                        }else{
+                          return SizedBox(
+                            height: 300,
+                            child:const Center(child: Text('empty subscription'),),
+                          );
+                        }
+
+                      }else{
+                        return SizedBox(
+                          height: 300,
+                        );
+                      }
+
+                    }
                   ),
                 ),
               ],

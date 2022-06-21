@@ -97,7 +97,7 @@ class AllPackagesBody extends GetView<PackagesController> {
                               "1750 SAR/Month",
                             ],
                             title: packagesList[index].name ?? "BreadFase",
-                            priceWithVat: packagesList[index].priceWithTax.toString() ?? "150",
+                            priceWithVat: packagesList[index].priceWithTax?.toString() ?? "150",
                           ),
                         );
                       },
