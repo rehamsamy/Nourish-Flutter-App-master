@@ -1,9 +1,10 @@
 import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:geocoder/geocoder.dart';
+import 'package:flutter/services.dart';
 
 
 import '../../app_theme.dart';
@@ -135,28 +136,12 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
     Get.log('xxxx2   ');
     Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((currloc) {
-      setState(() {
+      setState(() async {
         Get.log('xxxx   '+currloc.toString());
         currentLocation = currloc;
         Get.log('xxxx   '+currentLocation.toString());
         mapController?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(currentLocation.latitude, currentLocation.longitude), 14));
-
       });
     }).catchError((err)=>Get.log('xxx '+err.toString())
     );
-     Get.log('xxxx2   ');
-    // var location = await currentLocation.getLocation();
-    // currentLocation.onLocationChanged.listen((loc) {
-    //   mapController?.animateCamera(CameraUpdate.newCameraPosition(new CameraPosition(
-    //     target: LatLng(loc.latitude ?? 0.0, loc.longitude ?? 0.0),
-    //     zoom: 12.0,
-    //   )));
-    //
-    //   Get.log('locaaa    '+location.toString());
-  // });
-
-
-
-
-
 }}
