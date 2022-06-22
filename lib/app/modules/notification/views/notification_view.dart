@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/notification_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/notifiacation_apis.dart';
 import 'package:nourish_sa/app_theme.dart';
 
 import '../controllers/notification_controller.dart';
@@ -43,38 +45,56 @@ class NotificationView extends GetView<NotificationController> {
             SizedBox(
               height: 20.h,
             ),
-            Expanded(
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 2.w),
-                child: ListView.builder(itemBuilder: (context, index) {
-                  return Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      SizedBox(
-                        height: 20.h,
-                      ),
-                      Text(
-                        "New Updates Coming ",
-                        style: Get.textTheme.headline3!
-                            .copyWith(color: blackColor),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(top: 6.h, bottom: 11.h),
-                        child: Text(
-                          "5 hours ago",
-                          style: Get.textTheme.subtitle1!
-                              .copyWith(color: primaryColor),
+            FutureBuilder(
+              future: NotificationApis().getNotifications(),
+                builder: (_,snap) {
+                  if(snap.hasData){
+                    List<NotificationItem>? notificationsList = snap.data as List<NotificationItem>;
+                    if(notificationsList.length>0){
+                      return    Expanded(
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(horizontal: 2.w),
+                          child: ListView.builder(
+                              itemCount:notificationsList.length
+                              ,itemBuilder: (context, index) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  height: 20.h,
+                                ),
+                                Text(
+                                  notificationsList[index].text??"New Updates Coming ",
+                                  style: Get.textTheme.headline3!
+                                      .copyWith(color: blackColor),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.only(top: 6.h, bottom: 11.h),
+                                  child: Text(
+                                    notificationsList[index].time?? "5 hours ago",
+                                    style: Get.textTheme.subtitle1!
+                                        .copyWith(color: primaryColor),
+                                  ),
+                                ),
+                                Container(
+                                  width: Get.width,
+                                  height: 1,
+                                  color: greyColor,
+                                ),
+                              ],
+                            );
+                          }),
                         ),
-                      ),
-                      Container(
-                        width: Get.width,
-                        height: 1,
-                        color: greyColor,
-                      ),
-                    ],
-                  );
-                }),
-              ),
+                      );
+                    }else{
+                      return Expanded(child: Center(child: Text('no notification found'),));
+                    }
+                  }else{
+                    return Expanded(child: SizedBox(height: 200,));
+                  }
+
+
+                }
             ),
           ],
         ),

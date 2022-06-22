@@ -35,14 +35,15 @@ class AuthApis {
     return loginModel;
   }
 
-  Future<VerifyEmailModel?> verifyOtpMobile(String mobile, otp) async {
-    VerifyEmailModel emailModel=VerifyEmailModel();
-    Map<String, dynamic>? map = {'mobile': '1143551071', 'code': otp};
+  Future<VerifyEmailModel> verifyOtpMobile(String mobile, String otp) async {
+    VerifyEmailModel verifyModel=VerifyEmailModel();
+    Get.log('otp   =>'+mobile+otp);
+    Map<String, dynamic>? map = {'mobile': mobile, 'code': otp};
     final request = NetworkRequest(
       type: NetworkRequestType.POST,
       path: 'auth/verifyMobileOTP',
       data: NetworkRequestBody.json(
-          {'mobile': '1143551071', 'code': otp}
+          map
 
       ),
     );
@@ -51,22 +52,30 @@ class AuthApis {
       request,
       VerifyEmailModel.fromJson, // <- Function to convert API response to your model
     );
+    Get.log('ttttt1'+response.toString());
     response.maybeWhen(
-        ok: (authResponse) async{
+        ok: (authResponse) {
           Get.log('ttttt1'+authResponse.toString());
-          emailModel=authResponse;
-          SharedPreferences prefs= await SharedPreferences.getInstance();
-          prefs.setString('token', emailModel.accessToken??'');
-          SharedPrefService(prefs: prefs).saveToken(emailModel.accessToken??'');
-         // return authResponse;
+          verifyModel=authResponse as VerifyEmailModel;
+         // SharedPreferences prefs= await SharedPreferences.getInstance();
+        //  prefs.setString('token', verifyModel.accessToken??'');
+          Get.log('token  saved  =>');
+        //  SharedPrefService(prefs: prefs).saveToken(verifyModel.accessToken??'');
+          Get.log('token  saved  =>'+Get.find<SharedPrefService>().getToken().toString());
+          return verifyModel;
         },
         badRequest: (info) {},
-        orElse: () {});
-    return emailModel;
+        orElse: () {
+          Get.log('error  + ');
+        },
+   );
+    return verifyModel;
   }
 
   Future<RegisterModel?> registerUser(
       String firstName, String lastName, String phone, String email) async {
+    RegisterModel registerModel=RegisterModel();
+    Get.log('register data  =>  '+firstName+lastName+email+phone);
     Map<String, dynamic>? map = {
       'first_name': firstName,
       'last_name': lastName,
@@ -74,60 +83,79 @@ class AuthApis {
       'email': email
     };
     final request = NetworkRequest(
-      type: NetworkRequestType.GET,
-      path: 'auth/login',
+      type: NetworkRequestType.POST,
+      path: 'auth/register',
       data: NetworkRequestBody.json(map),
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      LoginModel.fromJson, // <- Function to convert API response to your model
+      RegisterModel.fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(
-        ok: (authResponse) {
-          return authResponse.data.weekly;
+        ok: (response) {
+          registerModel=response;
+          return registerModel;
         },
         badRequest: (info) {},
         orElse: () {});
+
+    return registerModel;
   }
 
-  Future<RegisterModel?> verifyMobile(String code, String mobile) async {
-    Map<String, dynamic>? map = {'code': code, 'email': mobile};
-    final request = NetworkRequest(
-      type: NetworkRequestType.GET,
-      path: 'auth/login',
-      data: NetworkRequestBody.json(map),
-    );
-    // Execute a request and convert response to your model:
-    final response = await networkService.execute(
-      request,
-      LoginModel.fromJson, // <- Function to convert API response to your model
-    );
-    response.maybeWhen(
-        ok: (authResponse) {
-          return authResponse.data.weekly;
-        },
-        badRequest: (info) {},
-        orElse: () {});
-  }
-
-  Future<RegisterModel?> verifyEmail(String code, String email) async {
+  Future<VerifyEmailModel?> verifyEmail(String ? code, String ? email) async {
+    Get.log('email   reg '+code.toString()+email.toString());
+    VerifyEmailModel emailModel=VerifyEmailModel();
     Map<String, dynamic>? map = {'code': code, 'email': email};
     final request = NetworkRequest(
-      type: NetworkRequestType.GET,
-      path: 'auth/login',
+      type: NetworkRequestType.POST,
+      path: 'auth/verifyEmailOTP',
       data: NetworkRequestBody.json(map),
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      LoginModel.fromJson, // <- Function to convert API response to your model
+      VerifyEmailModel.fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(
-        ok: (authResponse) {
-          return authResponse.data.weekly;
+        ok: (authResponse) async{
+          emailModel=authResponse;
+          SharedPreferences prefs= await SharedPreferences.getInstance();
+          prefs.setString('token', emailModel.accessToken??'');
+          SharedPrefService(prefs: prefs).saveToken(emailModel.accessToken??'');
+
+          return emailModel;
         },
         badRequest: (info) {},
         orElse: () {});
+
+    return emailModel;
+  }
+
+  Future<LoginModel?> logoutUser() async {
+    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    LoginModel? loginModel=LoginModel();
+    final request = NetworkRequest(
+      type: NetworkRequestType.POST,
+      path: 'auth/logout',
+      data: NetworkRequestBody.json(
+        {},
+      ),
+      headers: {'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTU4OTM2NzksImV4cCI6MTY1NTg5NzI3OSwibmJmIjoxNjU1ODkzNjc5LCJqdGkiOiJXWmVhTDRmSlN2OUg1WFAyIiwic3ViIjo0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.7mvWFNdOj7AF4iqp7ENLjW5gs4ux0EjIdHsprPMnPr4'}
+    );
+    NetworkResponse response = await networkService.execute(
+      request,
+      LoginModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(ok: (data) {
+      print('vvv'+
+          data.toString());
+      loginModel=data as LoginModel;
+      return loginModel;
+    }, orElse: () {
+      print(response.toString());
+      print("data");
+    });
+    return loginModel;
   }
 }

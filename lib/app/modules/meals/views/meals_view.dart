@@ -106,9 +106,9 @@ class MealsView extends GetView<MealsController> {
                 child: FutureBuilder(
                   future: ProductApis().getProducts(category_id: controller.categoryId.value),
                   builder: (_,snap) {
-                    List<ProductItem> ? list = snap.data as List<ProductItem>;
-                    Get.log('****** '+controller.categoryId.value.toString());
                     if (snap.hasData) {
+                      List<ProductItem> ? list = snap.data as List<ProductItem>;
+                      Get.log('****** '+controller.categoryId.value.toString());
                       if(list.length>0){
                         return ListView.builder(
                             itemCount: list.length,

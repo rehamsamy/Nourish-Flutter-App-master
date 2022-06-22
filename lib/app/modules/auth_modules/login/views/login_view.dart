@@ -89,9 +89,7 @@ class LoginView extends GetView<LoginController> {
                   print("Login try");
                   LoginModel? login =
                       await AuthApis().loginUser(controller.phone.text);
-                  Get.log('ssssss' + login.toString());
                   if (login?.data != null) {
-                    Get.log('ssssss1');
                     Get.snackbar(
                         "Unknown Network error", login?.data?.msg ?? '');
                     Get.toNamed(
@@ -102,7 +100,6 @@ class LoginView extends GetView<LoginController> {
                       },
                     );
                   } else {
-                    Get.log('ssssss');
                   }
                 },
               ),

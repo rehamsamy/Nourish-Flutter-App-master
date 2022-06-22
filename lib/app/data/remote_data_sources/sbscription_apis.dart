@@ -26,8 +26,8 @@ class  SubscriptionApis{
 
     response.maybeWhen(
         ok: (response) {
-          SubscriptionModel model=response;
-          list=model.data?.subscriptiondata;
+          SubscriptionModel  model=response;
+          list=model.data?.subscriptiondata??[];
           // Get.log('size of package  ee'+list!.length.toString()??'');
           return list;
         },
