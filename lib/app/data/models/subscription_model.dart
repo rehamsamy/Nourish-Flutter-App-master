@@ -262,9 +262,57 @@ class Delivery_periods {
   Delivery_periods({
       this.id, 
       this.period, 
-      this.pivot,});
+      this.pivot1,});
 
   Delivery_periods.fromJson(dynamic json) {
+    id = json['id'];
+    period = json['period'];
+    pivot1 = json['pivot1'] != null ? Pivot1.fromJson(json['pivot1']) : null;
+  }
+  int? id;
+  String? period;
+  Pivot1? pivot1;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['period'] = period;
+    if (pivot1 != null) {
+      map['pivot1'] = pivot1?.toJson();
+    }
+    return map;
+  }
+
+}
+
+class Pivot1 {
+  Pivot1({
+      this.branchId, 
+      this.periodId,});
+
+  Pivot1.fromJson(dynamic json) {
+    branchId = json['branch_id'];
+    periodId = json['period_id'];
+  }
+  int? branchId;
+  int? periodId;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['branch_id'] = branchId;
+    map['period_id'] = periodId;
+    return map;
+  }
+
+}
+
+class Pickup_periods {
+  Pickup_periods({
+      this.id, 
+      this.period, 
+      this.pivot,});
+
+  Pickup_periods.fromJson(dynamic json) {
     id = json['id'];
     period = json['period'];
     pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
@@ -291,54 +339,6 @@ class Pivot {
       this.periodId,});
 
   Pivot.fromJson(dynamic json) {
-    branchId = json['branch_id'];
-    periodId = json['period_id'];
-  }
-  int? branchId;
-  int? periodId;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['branch_id'] = branchId;
-    map['period_id'] = periodId;
-    return map;
-  }
-
-}
-
-class Pickup_periods {
-  Pickup_periods({
-      this.id, 
-      this.period, 
-      this.pivot1,});
-
-  Pickup_periods.fromJson(dynamic json) {
-    id = json['id'];
-    period = json['period'];
-    pivot1 = json['pivot'] != null ? Pivot1.fromJson(json['pivot1']) : null;
-  }
-  int? id;
-  String? period;
-  Pivot1? pivot1;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['period'] = period;
-    if (pivot1 != null) {
-      map['pivot'] = pivot1?.toJson();
-    }
-    return map;
-  }
-
-}
-
-class Pivot1 {
-  Pivot1({
-      this.branchId, 
-      this.periodId,});
-
-  Pivot1.fromJson(dynamic json) {
     branchId = json['branch_id'];
     periodId = json['period_id'];
   }

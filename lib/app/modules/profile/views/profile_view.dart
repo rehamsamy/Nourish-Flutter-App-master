@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/profile_model.dart';
 import 'package:nourish_sa/app/data/models/update_profile_model.dart';
 import 'package:nourish_sa/app/data/models/user_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/profile_apis.dart';
@@ -35,7 +36,7 @@ class ProfileView extends GetView<ProfileController> {
           future: ProfileApis().getProfileInfo(),
           builder: (_, snap) {
             if (snap.hasData) {
-              UserModel userModel = snap.data as UserModel;
+              ProfileModel userModel = snap.data as ProfileModel;
               controller.email.text=userModel.email??'';
               controller.phone.text=userModel.mobile??'';
               controller.lastName.text=userModel.lastName??'';
@@ -126,7 +127,7 @@ class ProfileView extends GetView<ProfileController> {
                         CustomButton(
                           title: LocalKeys.kSave.tr,
                           onPress: () async {
-                            UpdateProfileModel ? updateModel = await ProfileApis()
+                            UpdateProfileModel  updateModel = await ProfileApis()
                                     .updateProfileInfo(
                                         first_name: controller.firstName.text,
                                         last_name: controller.lastName.text,
@@ -134,6 +135,8 @@ class ProfileView extends GetView<ProfileController> {
                                         email: controller.email.text,)
                                 as UpdateProfileModel;
                             if (updateModel != null) {
+                              String? mes=updateModel.data?.msg.toString();
+                              Get.log('updated   =>'+mes.toString());
                               Get.snackbar("Unknown Network error",
                                   updateModel.data?.msg ?? '');
                             }

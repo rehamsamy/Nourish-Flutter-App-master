@@ -1,3 +1,4 @@
+
 class RegisterModel {
   RegisterModel({
       this.data,});

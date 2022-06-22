@@ -5,16 +5,24 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/pause_subscription_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/sbscription_apis.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 
 import '../../../../../app_theme.dart';
 
-class PauseSubscriptionDialog extends StatelessWidget {
+class PauseSubscriptionDialog extends StatefulWidget {
   const PauseSubscriptionDialog({Key? key}) : super(key: key);
 
   @override
+  State<PauseSubscriptionDialog> createState() => _PauseSubscriptionDialogState();
+}
+
+class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
+  @override
   Widget build(BuildContext context) {
+    String ?first,resume;
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       scrollable: true,
@@ -70,6 +78,11 @@ class PauseSubscriptionDialog extends StatelessWidget {
                 ),
                 child: DateTimePicker(
                   type: DateTimePickerType.date,
+                  onChanged: (String firstDate){
+                    setState(() {
+                      first=firstDate;
+                    });
+                  },
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2100),
                   dateMask: 'yyyy-MM-dd',
@@ -134,6 +147,11 @@ class PauseSubscriptionDialog extends StatelessWidget {
                 ),
                 child: DateTimePicker(
                   type: DateTimePickerType.date,
+                  onChanged: (String resumeDate){
+                    setState(() {
+                      resume=resumeDate;
+                    });
+                  },
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2100),
                   dateMask: 'yyyy-MM-dd',
@@ -184,7 +202,15 @@ class PauseSubscriptionDialog extends StatelessWidget {
               ),
               child: CustomButton(
                 title: LocalKeys.kConfirm.tr,
-                onPress: () {
+                onPress: () async{
+                  PauseSubscriptionModel pauseModel=await SubscriptionApis()
+                                                                  .pauseSubscription(orderId: '5',
+                                                                  pauseFrom: first,
+                                                                   resumFrom: resume);
+
+                  if(pauseModel.data != null){
+                    Get.snackbar('Pause Subscription', pauseModel.data?.msg??'');
+                  }
                   Get.back();
                 },
               ),

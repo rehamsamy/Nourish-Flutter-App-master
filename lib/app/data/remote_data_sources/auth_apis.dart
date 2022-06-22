@@ -3,6 +3,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/models/register_model.dart';
+import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -52,15 +53,13 @@ class AuthApis {
       request,
       VerifyEmailModel.fromJson, // <- Function to convert API response to your model
     );
-    Get.log('ttttt1'+response.toString());
     response.maybeWhen(
-        ok: (authResponse) {
-          Get.log('ttttt1'+authResponse.toString());
+        ok: (authResponse) async{
           verifyModel=authResponse as VerifyEmailModel;
-         // SharedPreferences prefs= await SharedPreferences.getInstance();
-        //  prefs.setString('token', verifyModel.accessToken??'');
+         SharedPreferences prefs= await SharedPreferences.getInstance();
+         prefs.setString('token', verifyModel.accessToken??'');
           Get.log('token  saved  =>');
-        //  SharedPrefService(prefs: prefs).saveToken(verifyModel.accessToken??'');
+         SharedPrefService(prefs: prefs).saveToken(verifyModel.accessToken??'');
           Get.log('token  saved  =>'+Get.find<SharedPrefService>().getToken().toString());
           return verifyModel;
         },
@@ -68,6 +67,8 @@ class AuthApis {
         orElse: () {
           Get.log('error  + ');
         },
+      invalidParameters: (x)=>  Get.log('error  + '+x)
+
    );
     return verifyModel;
   }
@@ -158,4 +159,36 @@ class AuthApis {
     });
     return loginModel;
   }
+
+
+
+  Future<ResendOtpModel> resendOtpMobile(String mobile) async {
+    ResendOtpModel resendOtpModel=ResendOtpModel();
+    Map<String, dynamic>? map = {'mobile': mobile};
+    final request = NetworkRequest(
+      type: NetworkRequestType.POST,
+      path: 'auth/resendMobileOTP',
+      data: NetworkRequestBody.json(
+          map
+
+      ),
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      VerifyEmailModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(
+        ok: (authResponse) async{
+          resendOtpModel=authResponse as ResendOtpModel;
+          return resendOtpModel;
+        },
+        badRequest: (info) {},
+        orElse: () {
+        },
+
+    );
+    return resendOtpModel;
+  }
+
 }

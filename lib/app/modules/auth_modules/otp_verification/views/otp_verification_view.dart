@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/otp_mobile_verify_model.dart';
+import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
@@ -180,7 +181,13 @@ class EmailCodeDialog extends GetView<OtpVerificationController> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30.h, bottom: 13.h),
-              child: CustomButton(title: "Resend Code", onPress: () {}),
+              child: CustomButton(title: "Resend Code", onPress: () async{
+               ResendOtpModel? otpModel=await AuthApis().resendOtpMobile(controller.phone??'') as ResendOtpModel;
+               if(otpModel.data !=null){
+                 Get.snackbar("Resend Otp Code", otpModel.data?.msg??'');
+               }
+
+              }),
             ),
             InkWell(
               onTap: () => Get.toNamed(Routes.CHANGE_EMAIL),

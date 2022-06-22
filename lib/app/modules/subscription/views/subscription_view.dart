@@ -71,7 +71,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                   Get.toNamed(Routes.SUBSCRIPTION_DETAILS);
                                 },
                                 child:  PackageInfoCard(
-                                  image: list[index].package?.image??'',
+                                  image: list[index].package?.image??'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
                                   options: ["sdads", "saddsa"],
                                   title: list[index].package?.name??'',
                                   priceWithVat: list[index].package?.priceWithTax.toString()??'',
@@ -83,21 +83,21 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                      PackageInfoDialog(
                                       days: list[index].package?.daysNumberOfWeek as String,
                                       endDate: "12/12/2020",
-                                      image: "",
+                                      image: list[index].package?.image??'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
                                       options: ["dsasad", "asdas", "saddsa"],
                                       packageName: list[index].packageName??'',
-                                      packageType: "Package Type",
+                                      packageType: list[index].package?.descriptions?[index].desc ??'diet',
                                       paymentMethod: "Cash",
                                       price: list[index].package?.priceWithTax?.toString()??'',
                                       subTitle: list[index].branchName??'',
                                     ),
                                   );
                                 },
-                                child: const SupscriptionCard(
+                                child:  SupscriptionCard(
                                   image: "",
-                                  days: "7 Days",
-                                  title: "sadasd",
-                                  price: "205",
+                                  days: list[index].package?.daysNumberOfWeek.toString()??'',
+                                  title: list[index].packageName??'',
+                                  price: list[index].package?.priceWithTax.toString()??'',
                                   endDate: "15/2/2022",
                                 ),
                               );

@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
-
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/payment_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/payment_apis.dart';
 import 'package:nourish_sa/app/modules/payment_methods/views/widgets/or.dart';
 import 'package:nourish_sa/app/modules/payment_methods/views/widgets/payment_method_item.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
@@ -51,17 +52,33 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                 LocalKeys.kSelectPaymentMethod.tr,
                 style: Get.textTheme.headline1,
               ),
-              ListView.builder(
-                itemCount: 7,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) {
-                  return const PaymentMethodItem(
-                    image: "",
-                    name: "masterCard",
-                    isSelected: false,
-                  );
-                },
+              FutureBuilder(
+                future: PaymentApis().getPaymentMethods(),
+                builder: (_,snapshot){
+                  if(snapshot.hasData){
+                    List<PaymentItem> ? list=snapshot.data as List<PaymentItem>;
+                    if(list.length>0){
+                      return  ListView.builder(
+                        itemCount: list.length,
+                        shrinkWrap: true,
+                        physics: const NeverScrollableScrollPhysics(),
+                        itemBuilder: (context, index) {
+                          return  PaymentMethodItem(
+                            image: list[index].logo??'https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png',
+                            name: list[index].name??"masterCard",
+                            isSelected: false,
+                          );
+                        },
+                      );
+                    }else{
+                      return SizedBox(height: 200,child: Center(child: Text('no payment found'),),);
+                    }
+                  }else{
+                    return SizedBox(height: 200,);
+                  }
+
+                }
+
               ),
               Padding(
                 padding: EdgeInsets.symmetric(vertical: 26.h),
