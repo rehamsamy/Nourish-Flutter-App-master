@@ -323,13 +323,12 @@ class CartItem extends StatelessWidget {
 
 class WhiteSpacesInputFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(
-      TextEditingValue oldValue, TextEditingValue newValue) {
+  TextEditingValue formatEditUpdate(TextEditingValue oldValue,
+                     TextEditingValue newValue){
     var text = newValue.text;
     if (newValue.selection.baseOffset == 0) {
       return newValue;
     }
-
     var string = text.trim();
     return newValue.copyWith(
         text: string,

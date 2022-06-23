@@ -20,9 +20,10 @@ class PauseSubscriptionDialog extends StatefulWidget {
 }
 
 class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
+  String ?first;
+  String ?resume;
   @override
   Widget build(BuildContext context) {
-    String ?first,resume;
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       scrollable: true,
@@ -81,6 +82,7 @@ class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
                   onChanged: (String firstDate){
                     setState(() {
                       first=firstDate;
+                      Get.log('date is   => '+firstDate);
                     });
                   },
                   firstDate: DateTime.now(),
@@ -150,6 +152,7 @@ class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
                   onChanged: (String resumeDate){
                     setState(() {
                       resume=resumeDate;
+                      Get.log('date is   => '+resume.toString());
                     });
                   },
                   firstDate: DateTime.now(),
@@ -203,8 +206,9 @@ class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
               child: CustomButton(
                 title: LocalKeys.kConfirm.tr,
                 onPress: () async{
+                  Get.log('date is   => '+first.toString()+resume.toString());
                   PauseSubscriptionModel pauseModel=await SubscriptionApis()
-                                                                  .pauseSubscription(orderId: '5',
+                                                                  .pauseSubscription(orderId: '6',
                                                                   pauseFrom: first,
                                                                    resumFrom: resume);
 

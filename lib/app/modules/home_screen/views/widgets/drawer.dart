@@ -17,7 +17,6 @@ import 'drawer_item.dart';
 
 class MainDrawer extends GetView<HomeScreenController> {
   const MainDrawer({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Drawer(
@@ -137,7 +136,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                     name: LocalKeys.kAddressBook.tr,
                     icon: Assets.kLocation,
                     onTap: () {
-                      Get.toNamed(Routes.NOTIFICATION);
+                      Get.toNamed(Routes.ADD_ADDRESS);
                       controller.scaffoldKey!.currentState!.openEndDrawer();
                     },
                   ),
