@@ -19,7 +19,9 @@ class CustomInput extends StatelessWidget {
     this.height,
     this.maxLength,
     this.width,
+    this.initalValue,
     Key? key,
+
   }) : super(key: key);
   final String? secondTitle;
 
@@ -34,6 +36,7 @@ class CustomInput extends StatelessWidget {
   final ValueNotifier<bool> changeObscure = ValueNotifier(true);
   final bool isPassword;
   final double? width;
+  final String?initalValue;
 
   final double? height;
   final int? maxLength;

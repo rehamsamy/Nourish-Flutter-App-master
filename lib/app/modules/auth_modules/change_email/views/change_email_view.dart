@@ -3,6 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/verify_email_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
@@ -54,8 +56,12 @@ class ChangeEmailView extends GetView<ChangeEmailController> {
               padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
               child: CustomButton(
                 title: LocalKeys.kSave.tr,
-                onPress: () {
-                  Get.offAllNamed(Routes.HOME_PAGE);
+                onPress: () async{
+                  VerifyEmailModel model= await AuthApis().verifyEmail(controller.otp, controller.email.text) as VerifyEmailModel;
+                  if(model !=null){
+                    Get.offAllNamed(Routes.HOME_PAGE);
+                  }
+                //  Get.offAllNamed(Routes.HOME_PAGE);
                 },
               ),
             ),

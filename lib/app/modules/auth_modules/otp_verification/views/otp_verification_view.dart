@@ -5,11 +5,14 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/otp_mobile_verify_model.dart';
+import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../app_theme.dart';
 import '../controllers/otp_verification_controller.dart';
@@ -105,10 +108,21 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                           as VerifyEmailModel?;
                       Get.log('xxxxxxx' + verifyEmail.toString());
                       if (verifyEmail != null) {
+
                         Get.offAllNamed(Routes.HOME_PAGE);
+                        // Get.snackbar("Unknown Network error", verifyEmail.message??'');
                       }
                     } else if (controller.isEmail.value) {
-                      Get.offAllNamed(Routes.LOGIN);
+                      VerifyEmailModel? verifyEmail = await AuthApis()
+                          .verifyOtpMobile(
+                          controller.phone ?? '', controller.otp.text)
+                      as VerifyEmailModel?;
+                      if (verifyEmail != null) {
+                        Get.offAllNamed(Routes.CHANGE_EMAIL,arguments: {'otp':controller.otp.text});
+                         Get.snackbar("Unknown Network error", verifyEmail.message??'');
+                      }
+
+                      // Get.offAllNamed(Routes.LOGIN);
                     } else {
                       Get.log('xxxx3');
                       controller.isEmail.value = true;
@@ -167,7 +181,13 @@ class EmailCodeDialog extends GetView<OtpVerificationController> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30.h, bottom: 13.h),
-              child: CustomButton(title: "Resend Code", onPress: () {}),
+              child: CustomButton(title: "Resend Code", onPress: () async{
+               ResendOtpModel? otpModel=await AuthApis().resendOtpMobile(controller.phone??'') as ResendOtpModel;
+               if(otpModel.data !=null){
+                 Get.snackbar("Resend Otp Code", otpModel.data?.msg??'');
+               }
+
+              }),
             ),
             InkWell(
               onTap: () => Get.toNamed(Routes.CHANGE_EMAIL),

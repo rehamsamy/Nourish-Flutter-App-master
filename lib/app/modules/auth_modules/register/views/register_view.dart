@@ -154,11 +154,11 @@ class RegisterView extends GetView<RegisterController> {
                 child: CustomButton(
                   title: LocalKeys.kSignUp.tr,
                   onPress: ()async {
-                    RegisterModel ? login= await  AuthApis().registerUser(controller.firstName.text,
-                    controller.lastName.text,controller.phone.text,controller.email.text) as RegisterModel? ;
-                    if(login?.data !=null){
-                      Get.toNamed(Routes.OTP_VERIFICATION,arguments: {'phone':controller.phone.text});
-                      Get.snackbar("Unknown Network error", login!.data!.msg??'');
+                    RegisterModel  model= await  AuthApis().registerUser(controller.firstName.text,
+                    controller.lastName.text,controller.phone.text,controller.email.text) as RegisterModel ;
+                    if(model.data !=null){
+                      Get.toNamed(Routes.OTP_VERIFICATION,arguments: {'phone':controller.phone.text, "isEmail": true,});
+                      Get.snackbar("Unknown Network error", model.data?.msg??'');
                     }
 
                   },

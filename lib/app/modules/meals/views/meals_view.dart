@@ -4,7 +4,9 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/categories_model.dart';
+import 'package:nourish_sa/app/data/models/product_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/product_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/meals/views/widgets/category_product_card.dart';
@@ -65,6 +67,7 @@ class MealsView extends GetView<MealsController> {
                               () => InkWell(
                                   onTap: () {
                                     controller.changeSelected(index);
+                                    controller.changeCategoryId(categories?[index].id);
                                   },
                                   child: SelectedMenu(
                                     image: categories?[index].image ?? '',
@@ -98,35 +101,53 @@ class MealsView extends GetView<MealsController> {
             SizedBox(
               height: 10.h,
             ),
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 27.w),
-              child: ListView.builder(
-                  itemCount: 5,
-                  physics: const NeverScrollableScrollPhysics(),
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () {
-                        Get.dialog(const MealInfoDialog(
-                          image: "",
-                          title: "dsads",
-                          desc: "sssssssssssssssssssssssss",
-                          values: {
-                            "Carb": "500",
-                            "Protein": "500",
-                            "Fat": "500",
-                            "Calories": "500"
-                          },
-                        ));
-                      },
-                      child: const CategoryProductCard(
-                        productName: "sdss",
-                        productCalories: "250",
-                        image:
-                            "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-                      ),
-                    );
-                  }),
+            Obx(()=> Padding(
+                padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 27.w),
+                child: FutureBuilder(
+                  future: ProductApis().getProducts(category_id: controller.categoryId.value),
+                  builder: (_,snap) {
+                    if (snap.hasData) {
+                      List<ProductItem> ? list = snap.data as List<ProductItem>;
+                      Get.log('****** '+controller.categoryId.value.toString());
+                      if(list.length>0){
+                        return ListView.builder(
+                            itemCount: list.length,
+                            physics: const NeverScrollableScrollPhysics(),
+                            shrinkWrap: true,
+                            itemBuilder: (context, index) {
+                              return InkWell(
+                                onTap: () {
+                                  Get.dialog(MealInfoDialog(
+                                    image: list[index].image ?? '',
+                                    title: list[index].name ?? '',
+                                    desc: list[index].description ?? '',
+                                    values: {
+                                      "Carb": list[index].carb.toString(),
+                                      "Protein": list[index].protein.toString(),
+                                      "Fat": list[index].fat.toString(),
+                                      "Calories": list[index].calories.toString()
+                                    },
+                                  ));
+                                },
+                                child: CategoryProductCard(
+                                  productName: list[index].name,
+                                  productCalories: list[index].calories.toString(),
+                                  image:
+                                  list[index].image,
+                                ),
+                              );
+                            });
+                      }else{
+                        return const SizedBox(
+                            height:200,child: Center(child: Text('no data found',)));
+                      }
+
+                    } else {
+                      return SizedBox(height: 200,);
+                    }
+                  }
+                ),
+              ),
             ),
           ],
         ),

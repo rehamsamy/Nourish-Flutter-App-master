@@ -1,5 +1,6 @@
-class UserModel {
-  UserModel({
+
+class ProfileModel {
+  ProfileModel({
     this.id,
     this.nameEn,
     this.email,
@@ -19,7 +20,7 @@ class UserModel {
     this.lastName,
     this.additionalData,});
 
-  UserModel.fromJson(dynamic json) {
+  ProfileModel.fromJson(dynamic json) {
     id = json['id'];
     nameEn = json['name_en'];
     email = json['email'];
@@ -51,7 +52,7 @@ class UserModel {
   String? mobile;
   dynamic smsCode;
   dynamic emailVerifyCode;
-  bool? verified;
+  int? verified;
   dynamic locale;
   dynamic deviceToken;
   String? name;

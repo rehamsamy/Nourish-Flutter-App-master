@@ -2,6 +2,11 @@ import 'package:get/get.dart';
 
 class PackagesController extends GetxController {
   //TODO: Implement PackagesController
+  RxInt selectedPackageType = 0.obs;
+
+  changeSelectedPackageType(index) {
+    selectedPackageType.value = index;
+  }
 
   final count = 0.obs;
   @override
