@@ -22,7 +22,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
   Widget build(BuildContext context) {
      Map args = Get.arguments ?? {};
     int subscripId=args['subscripId'];
-    Get.log('Vvvvv   '+controller.detailModel?.data?.meals.toString());
+   // Get.log('Vvvvv   '+controller.detailModel?.data?.meals.toString());
     return Scaffold(
       appBar: AppBar(
         title:  Text(LocalKeys.kMySubscription.tr),
