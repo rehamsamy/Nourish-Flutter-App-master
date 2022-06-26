@@ -15,6 +15,8 @@ class SubscriptionStatusView extends GetView<SubscriptionStatusController> {
 
   @override
   Widget build(BuildContext context) {
+    Map args = Get.arguments ?? {};
+    int subscripId=args['subscripId'];
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kSubscriptionStatus.tr),
@@ -89,7 +91,7 @@ class SubscriptionStatusView extends GetView<SubscriptionStatusController> {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.dialog(const PauseSubscriptionDialog());
+                    Get.dialog(const PauseSubscriptionDialog(),arguments: args);
                   },
                   child: Row(
                     children: [

@@ -68,7 +68,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                               return controller.selected.value == 0
                                   ? InkWell(
                                 onTap: () {
-                                  Get.toNamed(Routes.SUBSCRIPTION_DETAILS);
+                                  Get.toNamed(Routes.SUBSCRIPTION_DETAILS,arguments: {'subscripId':list[index].id});
                                 },
                                 child:  PackageInfoCard(
                                   image: list[index].package?.image??'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',

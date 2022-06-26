@@ -20,6 +20,8 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
 
   @override
   Widget build(BuildContext context) {
+     Map args = Get.arguments ?? {};
+    int subscripId=args['subscripId'];
     return Scaffold(
       appBar: AppBar(
         title:  Text(LocalKeys.kMySubscription.tr),
@@ -45,6 +47,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                   ),
                   child: Row(
                     children: [
+                      // Image.network(controller.detailModel?.data?.order?.package?.image??''),
                       SvgPicture.asset(
                         Assets.kMeal,
                         width: 73.w,
@@ -58,7 +61,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            "Zuppa Soup Package",
+                            controller.detailModel?.data?.order?.package?.name.toString()??'',
                             style: Get.textTheme.headline1!
                                 .copyWith(color: whiteColor),
                           ),
@@ -135,7 +138,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                       SubscriptionDetailsItem(
                         title: LocalKeys.kSubscriptionStatus.tr,
                         isEnd: true,
-                        onTap: () => Get.toNamed(Routes.SUBSCRIPTION_STATUS),
+                        onTap: () => Get.toNamed(Routes.SUBSCRIPTION_STATUS,arguments: args),
                         valueWidget: Row(
                           children: [
                             Text(
