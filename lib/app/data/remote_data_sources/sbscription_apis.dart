@@ -78,7 +78,7 @@ Get.log('subscrip  =>'+response.toString());
 
 
 
-  Future<SubscriptionDetailModel> subscriptionDetails({required String ?subscripId}) async {
+  Future<SubscriptionDetailModel> subscriptionDetails({required int ?subscripId}) async {
 
     SubscriptionDetailModel detailModel=SubscriptionDetailModel();
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';

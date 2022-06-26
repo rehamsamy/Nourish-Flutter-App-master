@@ -21,8 +21,15 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
   @override
   Widget build(BuildContext context) {
      Map args = Get.arguments ?? {};
-    int subscripId=args['subscripId'];
-   // Get.log('Vvvvv   '+controller.detailModel?.data?.meals.toString());
+    Get.log('Vvvvv   ${controller.detailModel.data?.meals?.saturday?[0].toString()??''}');
+  bool status=   controller.detailModel.data?.order?.activeStatus??true;
+  getDeliveryTime(controller.detailModel.data?.order?.branch?.deliveryPeriods?[0].period);
+  String statusType;
+  if(status==true){
+    statusType=LocalKeys.kActive.tr;
+  }else{
+    statusType='Pause';
+  }
     return Scaffold(
       appBar: AppBar(
         title:  Text(LocalKeys.kMySubscription.tr),
@@ -62,20 +69,20 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            controller.detailModel?.data?.order?.package?.name.toString()??'',
+                            controller.detailModel.data?.order?.package?.name.toString()??'',
                             style: Get.textTheme.headline1!
                                 .copyWith(color: whiteColor),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 4.h, bottom: 9.h),
                             child: Text(
-                              "${LocalKeys.kEndedAt.tr}: 2/10/2022",
+                              "${LocalKeys.kEndedAt.tr}: ${controller.detailModel.data?.order?.endDate??''}",
                               style: Get.textTheme.headline3!
                                   .copyWith(color: whiteColor),
                             ),
                           ),
                           Text(
-                            "200.00 RS",
+                            "${controller.detailModel.data?.order?.package?.priceWithTax.toString()??''} RS",
                             style: Get.textTheme.caption!.copyWith(
                               color: const Color(0xffF4EC64),
                             ),
@@ -114,17 +121,17 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                       SubscriptionDetailsItem(
                         title: LocalKeys.kRemainingDays.tr,
                         valueWidget: Text(
-                          '14 days',
+                          '${controller.detailModel.data?.order?.package?.daysNumberOfWeek.toString()??''} days',
                           style: Get.textTheme.caption,
                         ),
                       ),
-                      SubscriptionDetailsItem(
-                        title: LocalKeys.kRemainingDays.tr,
-                        valueWidget: Text(
-                          '14 days',
-                          style: Get.textTheme.caption,
-                        ),
-                      ),
+                      // SubscriptionDetailsItem(
+                      //   title: LocalKeys.kRemainingDays.tr,
+                      //   valueWidget: Text(
+                      //     '14 days',
+                      //     style: Get.textTheme.caption,
+                      //   ),
+                      // ),
                       SubscriptionDetailsItem(
                         title: LocalKeys.kRenew.tr,
                         valueWidget: Icon(
@@ -142,9 +149,8 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                         onTap: () => Get.toNamed(Routes.SUBSCRIPTION_STATUS,arguments: args),
                         valueWidget: Row(
                           children: [
-                            Text(
-                              LocalKeys.kActive.tr,
-                              style: Get.textTheme.caption,
+                            Text( statusType,
+                              style: Get.textTheme.caption
                             ),
                             SizedBox(
                               width: 7.w,
@@ -188,9 +194,14 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                         onTap: () => Get.toNamed(Routes.DELIVERY_TIME),
                         valueWidget: Row(
                           children: [
-                            Text(
-                              '7 am to 11 am',
-                              style: Get.textTheme.caption,
+                            SizedBox(
+                              width: 100,
+                              child: Expanded(
+                                child: Text(
+                         controller.detailModel.data?.order?.branch?.workTimes?[0].data??'7 am to 11 am',
+                                  style: Get.textTheme.caption,
+                                ),
+                              ),
                             ),
                             SizedBox(
                               width: 7.w,
@@ -212,7 +223,8 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                     isEnd: true,
                     onTap: () => Get.toNamed(
                       Routes.CART,
-                      arguments: true,
+                        arguments: {'isSubscribtion':false,
+                          'detailModel':controller.detailModel}
                     ),
                     valueWidget: Icon(
                       Icons.arrow_forward_ios,
@@ -237,5 +249,12 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
         ),
       ),
     );
+  }
+
+  void getDeliveryTime(String? period) {
+  //  "period": "7 morning - 4 evening", 
+ String? amPeriod=   period?.replaceRange(2, 7, 'am');
+ String? pmPeriod=   period?.replaceRange(2, 7, 'am');
+
   }
 }

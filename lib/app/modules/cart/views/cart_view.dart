@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/meals_summery_card.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
@@ -15,8 +16,18 @@ import '../controllers/cart_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartView extends GetView<CartController> {
+  SubscriptionDetailModel ? detailModel;
   @override
   Widget build(BuildContext context) {
+     detailModel=controller.detailModel;
+     Meals ?meals=detailModel?.data?.meals;
+     Product? product=detailModel?.data?.meals?.saturday?[0].product;
+     String ?dayName=detailModel?.data?.meals?.saturday?[0].day;
+String? x=dayName?.substring(0,3).toString();
+     Get.log('ccccccc 0 '+x.toString());
+    int? total=((controller.detailModel?.data?.order?.package?.priceWithTax))! +
+        (controller.detailModel?.data?.order?.branch?.deliveryFees  as int);
+    ;
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kCart.tr),
@@ -67,7 +78,7 @@ class CartView extends GetView<CartController> {
                                 width: 6.w,
                               ),
                               Text(
-                                "10-35% Carb",
+                                "${product?.carb}% Carb",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -86,7 +97,7 @@ class CartView extends GetView<CartController> {
                                 width: 6.w,
                               ),
                               Text(
-                                "10-35% Fat",
+                                "${product?.fat}% Fat",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -105,7 +116,7 @@ class CartView extends GetView<CartController> {
                                 width: 6.w,
                               ),
                               Text(
-                                "10-35% Protein",
+                                "${product?.protein}% Protein",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -124,7 +135,7 @@ class CartView extends GetView<CartController> {
                                 width: 6.w,
                               ),
                               Text(
-                                "10-35% Calories",
+                                "${product?.calories.toString()}% Calories",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -165,11 +176,11 @@ class CartView extends GetView<CartController> {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.r),
-                              color: AppConstants.days[index] == "Sat"
+                              color: AppConstants.days[index] == dayName?.substring(0,3)
                                   ? primaryColor
                                   : whiteColor,
                               border: Border.all(
-                                color: AppConstants.days[index] == "Sat"
+                                color: AppConstants.days[index] == dayName?.substring(0,3)
                                     ? primaryColor
                                     : lightGreyColor,
                               ),
@@ -177,7 +188,7 @@ class CartView extends GetView<CartController> {
                             child: Text(
                               AppConstants.days[index],
                               style: Get.textTheme.headline3!.copyWith(
-                                color: AppConstants.days[index] == "Sat"
+                                color: AppConstants.days[index] == dayName?.substring(0,3)
                                     ? whiteColor
                                     : lightGreyColor,
                               ),
@@ -193,7 +204,7 @@ class CartView extends GetView<CartController> {
                 height: 25.h,
               ),
               ListView.builder(
-                itemCount: 5,
+                itemCount:2,
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, inedx) {
@@ -206,15 +217,15 @@ class CartView extends GetView<CartController> {
                       children: [
                         CartItem(
                           item: LocalKeys.kSubTotal.tr,
-                          value: "5,000 SAR",
+                          value: "${controller.detailModel?.data?.order?.package?.priceWithTax} SAR",
                         ),
                         CartItem(
                           item: "${LocalKeys.kDelivery.tr}:",
-                          value: "5,0 SAR",
+                          value: "${controller.detailModel?.data?.order?.branch?.deliveryFees} SAR",
                         ),
                         CartItem(
                           item: LocalKeys.kTax.tr,
-                          value: "5,0 SAR",
+                          value: "${controller.detailModel?.data?.order?.package?.tax} SAR",
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 21.h, bottom: 15.h),
@@ -264,7 +275,7 @@ class CartView extends GetView<CartController> {
                         ),
                         CartItem(
                           item: LocalKeys.kTotal.tr,
-                          value: "50000,0 SAR",
+                          value: "${total} SAR",
                           isTotal: true,
                         ),
                         Padding(
@@ -272,7 +283,7 @@ class CartView extends GetView<CartController> {
                           child: CustomButton(
                             title: LocalKeys.kContinue.tr,
                             onPress: () {
-                              Get.toNamed(Routes.PAYMENT_METHODS);
+                              Get.toNamed(Routes.PAYMENT_METHODS,arguments: {'total':total});
                             },
                           ),
                         ),

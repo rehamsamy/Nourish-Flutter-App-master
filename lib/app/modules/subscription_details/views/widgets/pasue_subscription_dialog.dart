@@ -213,12 +213,19 @@ class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
                   PauseSubscriptionModel pauseModel=await SubscriptionApis()
                                                                   .pauseSubscription(orderId: subscripId.toString(),
                                                                   pauseFrom: first,
-                                                                   resumFrom: resume);
+                                                                 resumFrom: resume);
+
+
+
 
                   if(pauseModel.data != null){
-                    Get.snackbar('Pause Subscription', pauseModel.data?.msg??'');
+                    String ?x=  pauseModel.data?.msg.toString();
+                    Get.back();
+                    Get.snackbar('Pause Subscription',x.toString());
+                  }else{
+                    Get.back();
+                   Get.snackbar('Pause Subscription','error => no data found');
                   }
-                  Get.back();
                 },
               ),
             ),
