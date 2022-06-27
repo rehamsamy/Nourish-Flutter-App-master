@@ -11,11 +11,20 @@ import 'package:nourish_sa/app/shared/custom_input.dart';
 import '../../../../app_theme.dart';
 import 'height_screen.dart';
 
-class BirthDateScreen extends StatelessWidget {
+class BirthDateScreen extends StatefulWidget {
   const BirthDateScreen({Key? key}) : super(key: key);
 
   @override
+  State<BirthDateScreen> createState() => _BirthDateScreenState();
+}
+
+class _BirthDateScreenState extends State<BirthDateScreen> {
+
+  @override
   Widget build(BuildContext context) {
+  Map args=  Get.arguments();
+ String ? gender=args['gender'] as String?;
+    String bithdate;
     return Scaffold(
       appBar: AppBar(
         title:  Text('${LocalKeys.kStep.tr} 2 ${LocalKeys.kOf.tr} 7'),
@@ -51,12 +60,19 @@ class BirthDateScreen extends StatelessWidget {
                 ),
                 child: DateTimePicker(
                   type: DateTimePickerType.date,
-                  firstDate: DateTime.now(),
-                  lastDate: DateTime(2100),
+                  firstDate:DateTime(1980),
+                  lastDate: DateTime(2022),
                   dateMask: 'yyyy-MM-dd',
+                  initialDate:DateTime(2010),
                   style: Theme.of(context).textTheme.bodyText2,
+                  onChanged: (String dat){
+                    setState(() {
+                      bithdate=dat;
+                      Get.log('vvvvvv '+bithdate);
+                    });
+                  },
                   decoration: InputDecoration(
-                    hintText: LocalKeys.kBirthDate.tr,
+                   // hintText: LocalKeys.kBirthDate.tr,
                     hintStyle: Theme.of(context).textTheme.caption,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
