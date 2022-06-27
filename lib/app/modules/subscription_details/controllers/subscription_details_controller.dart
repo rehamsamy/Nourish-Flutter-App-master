@@ -5,7 +5,7 @@ import 'package:nourish_sa/app/data/remote_data_sources/sbscription_apis.dart';
 class SubscriptionDetailsController extends GetxController {
   //TODO: Implement SubscriptionDetailsController
   Map args = Get.arguments ?? {};
-  SubscriptionDetailModel  detailModel= SubscriptionDetailModel();
+   SubscriptionDetailModel  detailModel= SubscriptionDetailModel();
 
 
   final count = 0.obs;

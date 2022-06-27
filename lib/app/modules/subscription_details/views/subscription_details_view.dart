@@ -171,6 +171,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                     children: [
                       SubscriptionDetailsItem(
                         title: LocalKeys.kChangeDeliveryLocation.tr,
+                        onTap: () => Get.toNamed(Routes.DELIVERY_ADDRESSES),
                         valueWidget: Row(
                           children: [
                             Text(
@@ -191,7 +192,13 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                       SubscriptionDetailsItem(
                         title: LocalKeys.kChangeDeliveryTime.tr,
                         isEnd: true,
-                        onTap: () => Get.toNamed(Routes.DELIVERY_TIME),
+                        onTap: () {
+                          Get.toNamed(Routes.DELIVERY_TIME, arguments: {
+                            'deliveryPeriods':controller.detailModel.data?.order?.branch?.deliveryPeriods,
+                             'periodId':controller.detailModel.data?.order?.periodId,
+                            'orderId':controller.detailModel.data?.order?.id,});
+
+                        },
                         valueWidget: Row(
                           children: [
                             SizedBox(

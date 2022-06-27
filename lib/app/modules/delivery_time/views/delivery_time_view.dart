@@ -3,6 +3,8 @@ import 'package:flutter_screenutil/src/size_extension.dart';
 
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/change_order_period_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/order_apis.dart';
 import 'package:nourish_sa/app/modules/subscription_details/views/widgets/subscription_bordered_container.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 
@@ -37,7 +39,7 @@ class DeliveryTimeView extends GetView<DeliveryTimeController> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: Text(
-                    "7 am to 11 am",
+                    controller.workTime?[0].period??"7 am to 11 am",
                     style: Get.textTheme.caption!.copyWith(
                       color: whiteColor,
                     ),
@@ -49,74 +51,66 @@ class DeliveryTimeView extends GetView<DeliveryTimeController> {
               height: 20.h,
             ),
             SubscriptionBorderedContainer(
-              child: Column(
-                children: [
-                  Row(
+              child: Expanded(
+                child: ListView.builder(
+                    shrinkWrap: true,itemCount:  controller.workTime?.length,
+                itemBuilder: (_,index){
+                  return Column(
                     children: [
-                      Container(
-                        width: 16.w,
-                        height: 16.h,
-                        padding: EdgeInsets.all(2.w),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: primaryColor,
-                            )),
-                        child: const CircleAvatar(
-                          backgroundColor: primaryColor,
+                      Row(
+                        children: [
+                          Container(
+                            width: 16.w,
+                            height: 16.h,
+                            padding: EdgeInsets.all(2.w),
+                            decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                border: Border.all(
+                                  color: primaryColor,
+                                )),
+                            child: const CircleAvatar(
+                              backgroundColor: primaryColor,
+                            ),
+                          ),
+                          SizedBox(
+                            width: 11.w,
+                          ),
+                          Text(
+                            controller.workTime?[index].period?? 'ffffffff',
+                            style: Get.textTheme.headline3!
+                                .copyWith(color: blackColor),
+                          ),
+                        ],
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(
+                          vertical: 7.5.h,
+                        ),
+                        child: const Divider(
+                          color: lightGreyColor,
                         ),
                       ),
-                      SizedBox(
-                        width: 11.w,
-                      ),
-                      Text(
-                        "7 Am To 11 Am (Morning)",
-                        style: Get.textTheme.headline3!
-                            .copyWith(color: blackColor),
-                      ),
                     ],
-                  ),
-                  Padding(
-                    padding: EdgeInsets.symmetric(
-                      vertical: 7.5.h,
-                    ),
-                    child: const Divider(
-                      color: lightGreyColor,
-                    ),
-                  ),
-                  Row(
-                    children: [
-                      Container(
-                        width: 16.w,
-                        height: 16.h,
-                        padding: EdgeInsets.all(2.w),
-                        decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            border: Border.all(
-                              color: primaryColor,
-                            )),
-                        child: const CircleAvatar(
-                          backgroundColor: whiteColor,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 11.w,
-                      ),
-                      Text(
-                        "6 Pm To 10 Pm (The Night Before)",
-                        style: Get.textTheme.headline3!
-                            .copyWith(color: blackColor),
-                      ),
-                    ],
-                  ),
-                ],
-              ),
+                  );
+                }),
+              )
+
             ),
             const Spacer(),
             CustomButton(
               title: LocalKeys.kContinue.tr,
-              onPress: () {
-                Get.back();
+              onPress: () async{
+                ChangeOrderPeriodModel ? periodModel=  await OrderApis().changeOrderPeriod
+                  (controller.orderId, controller.periodId) as ChangeOrderPeriodModel;
+                if(periodModel.data !=null){
+                  Get.snackbar(
+                      "Change Order Period", periodModel.data?.msg?? '');
+                 // Get.back();
+                }else{
+                  Get.snackbar('Change Order Period', 'error => plz try again');
+                }
+
+
               },
             ),
           ],

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
@@ -10,7 +9,6 @@ import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/meals_summery_card.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
-
 import '../../../../app_theme.dart';
 import '../controllers/cart_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -208,7 +206,7 @@ String? x=dayName?.substring(0,3).toString();
                 shrinkWrap: true,
                 physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, inedx) {
-                  return const MealsSummeryCard();
+                  return  MealsSummeryCard(controller.detailModel?.data?.meals?.saturday?[inedx]);
                 },
               ),
               controller.isSubscribtion
