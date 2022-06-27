@@ -100,6 +100,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                       ),
                       SubscriptionDetailsItem(
                         title: LocalKeys.kPickupType.tr,
+                        onTap: () => Get.toNamed(Routes.DELIVERY_ADDRESSES,arguments: {'branchData',controller.detailModel.data?.order?.branch}),
                         valueWidget: Row(
                           children: [
                             Text(
@@ -196,7 +197,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                           Get.toNamed(Routes.DELIVERY_TIME, arguments: {
                             'deliveryPeriods':controller.detailModel.data?.order?.branch?.deliveryPeriods,
                              'periodId':controller.detailModel.data?.order?.periodId,
-                            'orderId':controller.detailModel.data?.order?.id,});
+                              'orderId':controller.detailModel.data?.order?.id,});
 
                         },
                         valueWidget: Row(
