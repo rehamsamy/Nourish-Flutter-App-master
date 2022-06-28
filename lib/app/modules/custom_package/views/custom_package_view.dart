@@ -66,7 +66,7 @@ class CustomPackageView extends GetView<CustomPackageController> {
                 onPress: () {
                   String? gender=(controller.isMaleSelected)==true?'male':'female';
                   Get.log('1111111'+gender.toString());
-                  Get.to(()=> const BirthDateScreen());
+                  Get.to( BirthDateScreen());
                 },
               ),
               SizedBox(
