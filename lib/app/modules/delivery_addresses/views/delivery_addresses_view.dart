@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -68,50 +70,57 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
               ),
             ),
             GetBuilder<DeliveryAddressesController>(
-              builder: (_)=>
-               SizedBox(
+              builder: (_) => SizedBox(
                 height: 400.h,
                 child: FutureBuilder(
                     future: AddressApis().getAddress(),
-                    builder: (_,snap){
-                  if(snap.hasData){
-                    List<AddressItem> ?list=snap.data as  List<AddressItem>;
-                    if(list.length>0){
-                      return ListView.builder(
-                          itemCount:list.length
-                          ,itemBuilder: (_,index){
-                        return Column(
-                          children: [
-                            SelectionCheckBox(
-                              title: list[index].name??"Title",
-                              isSelected: controller.isChecked?[index]??false,
-                              onTap: (val) {
-                                controller.changeCheckBoxSelected(val?? false,index);
-                                //Get.offNamed(Routes.ADD_ADDRESS,arguments: {'addressModel':list[index]});
-                              },
+                    builder: (_, snap) {
+                      if (snap.hasData) {
+                        List<AddressItem>? list =
+                            snap.data as List<AddressItem>;
+                        if (list.isNotEmpty) {
+                          return ListView.builder(
+                              itemCount: list.length,
+                              itemBuilder: (_, index) {
+                                return Column(
+                                  children: [
+                                    SelectionCheckBox(
+                                      title: list[index].name ?? "Title",
+                                      isSelected:
+                                          controller.isChecked?[index] ?? false,
+                                      onTap: (val) {
+                                        controller.changeCheckBoxSelected(
+                                            val ?? false, index);
+                                        //Get.offNamed(Routes.ADD_ADDRESS,arguments: {'addressModel':list[index]});
+                                      },
+                                    ),
+                                    SizedBox(
+                                      height: 21.h,
+                                    ),
+                                  ],
+                                );
+                              });
+                        } else {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('no address found'),
                             ),
-                            SizedBox(
-                              height: 21.h,
-                            ),
-                          ],
-                        );
-                      });
-                    }else{
-                      return SizedBox(
-                        height: 200,
-                        child: Center(child: Text('no address found'),),
-                      );
-                    }
-                  }{
-                        Get.snackbar('error ', 'error => no data found');
-                    return SizedBox(height: 200,);
-
+                          );
+                        }
                       }
-                }
-                ),
+                      {
+                        Timer.run(() =>
+                            Get.snackbar('error ', 'error => no data found'));
+
+                        return const SizedBox(
+                          height: 200,
+                        );
+                      }
+                    }),
               ),
             ),
-          //  ListView.builder(itemBuilder: (_,index))
+            //  ListView.builder(itemBuilder: (_,index))
 
             // SelectionCheckBox(
             //   title: "Title",

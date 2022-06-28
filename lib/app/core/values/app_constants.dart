@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 String? token = Get.find<SharedPrefService>().getToken() ?? '';
 
@@ -11,7 +10,7 @@ NetworkService networkService = NetworkService(
   httpHeaders: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    //'Authorization': 'Bearer $token',
+    'Authorization': 'Bearer $token',
   },
 );
 

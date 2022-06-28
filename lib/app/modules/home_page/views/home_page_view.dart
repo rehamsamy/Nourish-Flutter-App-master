@@ -85,7 +85,7 @@ class HomePageView extends GetView<HomePageController> {
         () => IndexedStack(
           index: controller.currentIndex.value,
           children: [
-             HomeScreenView(),
+            HomeScreenView(),
             MealsView(),
             const PackagesView(),
             ProfileView(),

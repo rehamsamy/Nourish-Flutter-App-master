@@ -19,7 +19,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(LocalKeys.kMySubscription.tr),
+        title: Text(LocalKeys.kMySubscription.tr),
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
@@ -56,79 +56,118 @@ class SubscriptionView extends GetView<SubscriptionController> {
                 ),
                 Expanded(
                   child: FutureBuilder(
-                    future: SubscriptionApis().getSubscriptionAccordingType(controller.selected==0?
-                        'myCurrentSubscriptions':'myPreviousSubscriptions'),
-                    builder: (_,snap) {
-                      if(snap.hasData){
-                        List<SubscriptionItem> ?list=snap.data as List<SubscriptionItem>;
-                        if(list.length>0){
-                          return ListView.builder(
-                            itemCount: list.length,
-                            padding: EdgeInsets.only(bottom: 35.h),
-                            itemBuilder: (context, index) {
-                              return controller.selected.value == 0
-                                  ? InkWell(
-                                onTap: () async{
+                      future: SubscriptionApis().getSubscriptionAccordingType(
+                          controller.selected == 0
+                              ? 'myCurrentSubscriptions'
+                              : 'myPreviousSubscriptions'),
+                      builder: (_, snap) {
+                        if (snap.hasData) {
+                          List<SubscriptionItem>? list =
+                              snap.data as List<SubscriptionItem>;
+                          if (list.length > 0) {
+                            return ListView.builder(
+                              itemCount: list.length,
+                              padding: EdgeInsets.only(bottom: 35.h),
+                              itemBuilder: (context, index) {
+                                return controller.selected.value == 0
+                                    ? InkWell(
+                                        onTap: () async {
                                           SubscriptionDetailModel detailModel =
-                                              await SubscriptionApis().subscriptionDetails(
-                                                  subscripId: list[index].id) ;
-                                          if(detailModel.data !=null){
-                                            Get.toNamed(Routes.SUBSCRIPTION_DETAILS,
-                                                arguments: {'detailModel': detailModel,
-                                                'subscripId':list[index].id});
-                                          }else{
+                                              await SubscriptionApis()
+                                                  .subscriptionDetails(
+                                                      subscripId:
+                                                          list[index].id);
+                                          if (detailModel.data != null) {
+                                            Get.toNamed(
+                                                Routes.SUBSCRIPTION_DETAILS,
+                                                arguments: {
+                                                  'detailModel': detailModel,
+                                                  'subscripId': list[index].id
+                                                });
+                                          } else {
                                             null;
                                           }
-
                                         },
-                                        child:  PackageInfoCard(
-                                  image: list[index].package?.image??'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
-                                  options: ["sdads", "saddsa"],
-                                  title: list[index].package?.name??'',
-                                  priceWithVat: list[index].package?.priceWithTax.toString()??'',
-                                ),
-                              )
-                                  : InkWell(
-                                onTap: () {
-                                  Get.dialog(
-                                     PackageInfoDialog(
-                                      days: list[index].package?.daysNumberOfWeek as String,
-                                      endDate: "12/12/2020",
-                                      image: list[index].package?.image??'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
-                                      options: ["dsasad", "asdas", "saddsa"],
-                                      packageName: list[index].packageName??'',
-                                      packageType: list[index].package?.descriptions?[index].desc ??'diet',
-                                      paymentMethod: "Cash",
-                                      price: list[index].package?.priceWithTax?.toString()??'',
-                                      subTitle: list[index].branchName??'',
-                                    ),
-                                  );
-                                },
-                                child:  SupscriptionCard(
-                                  image: "",
-                                  days: list[index].package?.daysNumberOfWeek.toString()??'',
-                                  title: list[index].packageName??'',
-                                  price: list[index].package?.priceWithTax.toString()??'',
-                                  endDate: "15/2/2022",
-                                ),
-                              );
-                            },
-                          );
-                        }else{
+                                        child: PackageInfoCard(
+                                          image: list[index].package?.image ??
+                                              'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
+                                          options: ["sdads", "saddsa"],
+                                          title:
+                                              list[index].package?.name ?? '',
+                                          priceWithVat: list[index]
+                                                  .package
+                                                  ?.priceWithTax
+                                                  .toString() ??
+                                              '',
+                                        ),
+                                      )
+                                    : InkWell(
+                                        onTap: () {
+                                          Get.dialog(
+                                            PackageInfoDialog(
+                                              days: list[index]
+                                                  .package
+                                                  ?.daysNumberOfWeek as String,
+                                              endDate: "12/12/2020",
+                                              image: list[index]
+                                                      .package
+                                                      ?.image ??
+                                                  'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
+                                              options: [
+                                                "dsasad",
+                                                "asdas",
+                                                "saddsa"
+                                              ],
+                                              packageName:
+                                                  list[index].packageName ?? '',
+                                              packageType: list[index]
+                                                      .package
+                                                      ?.descriptions?[index]
+                                                      .desc ??
+                                                  'diet',
+                                              paymentMethod: "Cash",
+                                              price: list[index]
+                                                      .package
+                                                      ?.priceWithTax
+                                                      ?.toString() ??
+                                                  '',
+                                              subTitle:
+                                                  list[index].branchName ?? '',
+                                            ),
+                                          );
+                                        },
+                                        child: SupscriptionCard(
+                                          image: "",
+                                          days: list[index]
+                                                  .package
+                                                  ?.daysNumberOfWeek
+                                                  .toString() ??
+                                              '',
+                                          title: list[index].packageName ?? '',
+                                          price: list[index]
+                                                  .package
+                                                  ?.priceWithTax
+                                                  .toString() ??
+                                              '',
+                                          endDate: "15/2/2022",
+                                        ),
+                                      );
+                              },
+                            );
+                          } else {
+                            return SizedBox(
+                              height: 300,
+                              child: const Center(
+                                child: Text('empty subscription'),
+                              ),
+                            );
+                          }
+                        } else {
                           return SizedBox(
                             height: 300,
-                            child:const Center(child: Text('empty subscription'),),
                           );
                         }
-
-                      }else{
-                        return SizedBox(
-                          height: 300,
-                        );
-                      }
-
-                    }
-                  ),
+                      }),
                 ),
               ],
             ),

@@ -10,7 +10,7 @@ import 'package:nourish_sa/app_theme.dart';
 
 import 'weight_screen.dart';
 
-class HeightScreen extends  GetView<CustomPackageController> {
+class HeightScreen extends GetView<CustomPackageController> {
   HeightScreen({Key? key}) : super(key: key);
   final TextEditingController _textEditingController = TextEditingController();
 
@@ -19,13 +19,13 @@ class HeightScreen extends  GetView<CustomPackageController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title:  Text('${LocalKeys.kStep.tr} 3 ${LocalKeys.kOf.tr} 7'),
+        title: Text('${LocalKeys.kStep.tr} 3 ${LocalKeys.kOf.tr} 7'),
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
         elevation: 0,
       ),
       body: GetBuilder<CustomPackageController>(
-        builder: (_)=> Padding(
+        builder: (_) => Padding(
           padding: EdgeInsets.symmetric(horizontal: 35.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -39,7 +39,7 @@ class HeightScreen extends  GetView<CustomPackageController> {
               ),
               Padding(
                 padding: EdgeInsets.only(top: 55.h, bottom: 44.h),
-                child:  SelectorTwoCard(
+                child: SelectorTwoCard(
                   title: LocalKeys.kFeet.tr,
                   secondTitle: LocalKeys.kCentimetre.tr,
                 ),
@@ -50,9 +50,9 @@ class HeightScreen extends  GetView<CustomPackageController> {
                   CustomInput(
                     hint: "",
                     textEditingController: _textEditingController,
-                    validator: (val){
-                      if(double.parse(val!)<20 ||double.parse(val!)>300 ){
-                   //return
+                    validator: (val) {
+                      if (double.parse(val!) < 20 || double.parse(val) > 300) {
+                        //return
                       }
                     },
                     width: 110.w,
