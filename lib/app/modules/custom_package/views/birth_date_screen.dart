@@ -5,25 +5,16 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/custom_package/controllers/custom_package_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 
 import '../../../../app_theme.dart';
 import 'height_screen.dart';
 
-class BirthDateScreen extends StatefulWidget {
-  const BirthDateScreen({Key? key}) : super(key: key);
-
-  @override
-  State<BirthDateScreen> createState() => _BirthDateScreenState();
-}
-
-class _BirthDateScreenState extends State<BirthDateScreen> {
-
+class BirthDateScreen extends GetView<CustomPackageController> {
   @override
   Widget build(BuildContext context) {
-  Map args=  Get.arguments();
- String ? gender=args['gender'] as String?;
     String bithdate;
     return Scaffold(
       appBar: AppBar(
@@ -32,95 +23,94 @@ class _BirthDateScreenState extends State<BirthDateScreen> {
         elevation: 0,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 35.w),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            SizedBox(
-              height: 70.h,
-            ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                LocalKeys.kSelectbirthdate.tr,
-                style: Theme.of(context).textTheme.headline3,
+      body: GetBuilder<CustomPackageController>(
+        builder: (_)=> Padding(
+          padding: EdgeInsets.symmetric(horizontal: 35.w),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              SizedBox(
+                height: 70.h,
               ),
-            ),
-            Padding(
-              padding: EdgeInsets.only(
-                top: 7.h,
-                bottom: 17.h,
-              ),
-              child: Theme(
-                data: ThemeData(
-                  colorScheme: const ColorScheme.light(
-                    primary: primaryColor,
-                  ),
-                ),
-                child: DateTimePicker(
-                  type: DateTimePickerType.date,
-                  firstDate:DateTime(1980),
-                  lastDate: DateTime(2022),
-                  dateMask: 'yyyy-MM-dd',
-                  initialDate:DateTime(2010),
-                  style: Theme.of(context).textTheme.bodyText2,
-                  onChanged: (String dat){
-                    setState(() {
-                      bithdate=dat;
-                      Get.log('vvvvvv '+bithdate);
-                    });
-                  },
-                  decoration: InputDecoration(
-                   // hintText: LocalKeys.kBirthDate.tr,
-                    hintStyle: Theme.of(context).textTheme.caption,
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        10.r,
-                      ),
-                      borderSide: const BorderSide(
-                        color: lightGreyColor,
-                      ),
-                    ),
-                    enabledBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        10.r,
-                      ),
-                      borderSide: const BorderSide(
-                        color: lightGreyColor,
-                      ),
-                    ),
-                    focusedBorder: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(
-                        10.r,
-                      ),
-                      borderSide: const BorderSide(
-                        color: lightGreyColor,
-                      ),
-                    ),
-                    suffixIconConstraints:
-                        BoxConstraints(maxHeight: 27.h, maxWidth: 50.w),
-                    suffixIcon: Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 16.w),
-                      child: SvgPicture.asset(
-                        Assets.kCalendar,
-                        color: lightGreyColor,
-                      ),
-                    ),
-                  ),
+              Align(
+                alignment: AlignmentDirectional.centerStart,
+                child: Text(
+                  LocalKeys.kSelectbirthdate.tr,
+                  style: Theme.of(context).textTheme.headline3,
                 ),
               ),
-            ),
-            const Spacer(),
-            CustomButton(
-                title: LocalKeys.kContinue.tr,
-                onPress: () {
-                  Get.to(HeightScreen());
-                }),
-            SizedBox(
-              height: 111.h,
-            ),
-          ],
+              Padding(
+                padding: EdgeInsets.only(
+                  top: 7.h,
+                  bottom: 17.h,
+                ),
+                child: Theme(
+                  data: ThemeData(
+                    colorScheme: const ColorScheme.light(
+                      primary: primaryColor,
+                    ),
+                  ),
+                  child: DateTimePicker(
+                    type: DateTimePickerType.date,
+                    firstDate:DateTime(1980),
+                    lastDate: DateTime(2022),
+                    dateMask: 'yyyy-MM-dd',
+                    initialDate:DateTime(2010),
+                    style: Theme.of(context).textTheme.bodyText2,
+                    onChanged: (String dat) {
+                      controller.setBirthdate(dat);
+                    },
+                    decoration: InputDecoration(
+                     // hintText: LocalKeys.kBirthDate.tr,
+                      hintStyle: Theme.of(context).textTheme.caption,
+                      border: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          10.r,
+                        ),
+                        borderSide: const BorderSide(
+                          color: lightGreyColor,
+                        ),
+                      ),
+                      enabledBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          10.r,
+                        ),
+                        borderSide: const BorderSide(
+                          color: lightGreyColor,
+                        ),
+                      ),
+                      focusedBorder: OutlineInputBorder(
+                        borderRadius: BorderRadius.circular(
+                          10.r,
+                        ),
+                        borderSide: const BorderSide(
+                          color: lightGreyColor,
+                        ),
+                      ),
+                      suffixIconConstraints:
+                          BoxConstraints(maxHeight: 27.h, maxWidth: 50.w),
+                      suffixIcon: Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 16.w),
+                        child: SvgPicture.asset(
+                          Assets.kCalendar,
+                          color: lightGreyColor,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+              const Spacer(),
+              CustomButton(
+                  title: LocalKeys.kContinue.tr,
+                  onPress: () {
+                    Get.to(HeightScreen());
+                  }),
+              SizedBox(
+                height: 111.h,
+              ),
+            ],
+          ),
         ),
       ),
     );

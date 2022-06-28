@@ -4,6 +4,11 @@ class CustomPackageController extends GetxController {
   //TODO: Implement CustomPackageController
  bool isMaleSelected=false;
  bool isFemaleSelected=false;
+ String ? birtdate ;
+ double ?height;
+ String ?heightType;
+ RxBool isCmSelected=true.obs;
+ RxBool isFeetSelected=true.obs;
 
   final count = 0.obs;
   @override
@@ -30,4 +35,31 @@ class CustomPackageController extends GetxController {
    Get.log('cccc '+newVal.toString());
    update();
  }
+
+ void setBirthdate(String newVal){
+   birtdate=newVal;
+   Get.log('cccc '+newVal.toString());
+   update();
+ }
+
+ void setHeightType(String newVal){
+    heightType=newVal;
+    update();
+ }
+
+ void setHeight(double newVal){
+   height=newVal;
+   update();
+ }
+
+ void setCmSelected(bool newVal){
+   isCmSelected.value=newVal;
+ }
+
+ void setFeetSelected(bool newVal){
+   isFeetSelected.value=newVal;
+ }
+
+
+
 }
