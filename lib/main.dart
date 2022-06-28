@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/modules/home_screen/views/home_screen_view.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,7 @@ import 'nourish_app.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   final pref = await SharedPreferences.getInstance();
+
   Get.put(SharedPrefService(prefs: pref));
   Get.put(LocalizationService());
 

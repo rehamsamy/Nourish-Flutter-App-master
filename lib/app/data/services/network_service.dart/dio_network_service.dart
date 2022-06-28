@@ -7,7 +7,7 @@ part 'dio_network_service.freezed.dart';
 @freezed
 class NetworkRequestBody with _$NetworkRequestBody {
   const factory NetworkRequestBody.empty() = Empty;
-   const factory NetworkRequestBody.json(Map<String, dynamic> data) = Json;
+  const factory NetworkRequestBody.json(Map<String, dynamic> data) = Json;
   const factory NetworkRequestBody.text(String data) = Text;
 }
 
@@ -102,6 +102,7 @@ Future<NetworkResponse<Model>> executeRequest<Model>(
     return NetworkResponse.noData(error.toString());
   }
 }
+
 class NetworkService {
   NetworkService({
     required this.baseUrl,
@@ -115,7 +116,7 @@ class NetworkService {
   Future<Dio> _getDefaultDioClient() async {
     _headers['content-type'] = 'application/json; charset=utf-8';
     final dio = Dio()
-      ..interceptors.add(LoggingInterceptor())
+      ..interceptors.add(LoggerInterceptor())
       ..options.baseUrl = baseUrl
       ..options.headers = _headers
       ..options.connectTimeout = 10000 // 10 seconds

@@ -1,12 +1,13 @@
 import 'dart:async';
-import 'package:geocode/geocode.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:geocode/geocode.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+
 import '../../app_theme.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:geocode/geocode.dart';
 
 class MapEditLocationPin extends StatefulWidget {
   const MapEditLocationPin({Key? key}) : super(key: key);
@@ -18,11 +19,11 @@ class MapEditLocationPin extends StatefulWidget {
 class _MapEditLocationPinState extends State<MapEditLocationPin> {
   GeoCode geoCode = GeoCode();
   late LocationPermission permission;
-  GoogleMapController? mapController=null;
+  GoogleMapController? mapController = null;
   Set<Marker> markers = Set();
-  String ? city;
+  String? city;
   var currentLocation;
-  Future<Address> ?_address;
+  Future<Address>? _address;
   LatLng showLocation = LatLng(27.7089427, 85.3086209);
 
   Completer<GoogleMapController> _controller = Completer();
@@ -38,12 +39,14 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
   void initState() {
     Get.log('vvvvv');
     getLocation();
-    Get.log('vvvvv'+_address.toString());
+    Get.log('vvvvv' + _address.toString());
 
-    markers.add(Marker( //add marker on google map
+    markers.add(Marker(
+      //add marker on google map
       markerId: MarkerId(currentLocation.toString()),
       position: _center, //position of marker
-      infoWindow: InfoWindow( //popup info
+      infoWindow: InfoWindow(
+        //popup info
         title: 'My Custom Title ',
         snippet: 'My Custom Subtitle',
       ),
@@ -52,17 +55,16 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
 
     try {
       Get.log('xxxx   ');
-       geoCode.reverseGeocoding(latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude)
+      geoCode
+          .reverseGeocoding(
+              latitude: currentLocation.latitude,
+              longitude: currentLocation.longitude)
           .then((value) => print(value.toString()));
-    // Address address1= await address as Address;
-    // Get.log('xxxx   '+address1.streetNumber.toString());
+      // Address address1= await address as Address;
+      // Get.log('xxxx   '+address1.streetNumber.toString());
     } catch (e) {
-    print(e);
+      print(e);
     }
-
-
-
   }
 
   void _onMapCreated(GoogleMapController controller) {
@@ -70,10 +72,10 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
       mapController = controller;
     });
   }
+
   @override
   Widget build(BuildContext context) {
-    return
-      Container(
+    return Container(
       width: 370.w,
       margin: EdgeInsets.only(bottom: 17.w),
       padding: EdgeInsets.symmetric(vertical: 13.h, horizontal: 14.w),
@@ -89,19 +91,17 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
           )
         ],
       ),
-     child:
-      SizedBox(
+      child: SizedBox(
         height: 200,
-        child:
-        GoogleMap(
+        child: GoogleMap(
           onMapCreated: _onMapCreated,
           myLocationEnabled: true,
-          initialCameraPosition:  CameraPosition(
-          target: _center,
-          zoom: 5.0,
-        ),
+          initialCameraPosition: CameraPosition(
+            target: _center,
+            zoom: 5.0,
+          ),
           myLocationButtonEnabled: true,
-           markers: markers,
+          markers: markers,
         ),
       ),
       // Column(
@@ -146,24 +146,23 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
     );
   }
 
-   getLocation() async{
-     permission = await Geolocator.requestPermission();
+  getLocation() async {
+    permission = await Geolocator.requestPermission();
     Get.log('xxxx2   ');
     Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((currloc) async {
-      setState(()  {
+      setState(() {
         currentLocation = currloc;
-        Get.log('xxxx   1  '+currloc.toString());
-        _address= geoCode.reverseGeocoding(latitude: currloc.latitude,
-            longitude: currloc.longitude) ;
-        _address?.then((value) =>  Get.log('xxxx   2  '+value.toString())).
-        catchError((err)=>Get.log('xxxx   2  '+err.toString()));
+        Get.log('xxxx   1  ' + currloc.toString());
+        _address = geoCode.reverseGeocoding(
+            latitude: currloc.latitude, longitude: currloc.longitude);
+        _address
+            ?.then((value) => Get.log('xxxx   2  ' + value.toString()))
+            .catchError((err) => Get.log('xxxx   2  ' + err.toString()));
         Get.log('xxxx   2  ');
-        mapController?.animateCamera(CameraUpdate.newLatLngZoom(LatLng(currentLocation.latitude, currentLocation.longitude), 14));
+        mapController?.animateCamera(CameraUpdate.newLatLngZoom(
+            LatLng(currentLocation.latitude, currentLocation.longitude), 14));
       });
-
-
-
 
       // geoCode.reverseGeocoding(latitude: currentLocation.latitude,
       //     longitude: currentLocation.longitude)
@@ -173,15 +172,8 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
       //       });
       // }).catchError((error)=>print('hhhhhhhhhhhhh'+error));
 
-      Get.log('xxxx  city '+city.toString());
-
-
-   }).catchError((err)=>Get.log('xxx  err'+err.toString())
-    );
-     // return _address;
-
-}
-
-
-
+      Get.log('xxxx  city ' + city.toString());
+    }).catchError((err) => Get.log('xxx  err' + err.toString()));
+    // return _address;
+  }
 }
