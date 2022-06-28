@@ -116,7 +116,7 @@ class NetworkService {
   Future<Dio> _getDefaultDioClient() async {
     _headers['content-type'] = 'application/json; charset=utf-8';
     final dio = Dio()
-      ..interceptors.add(LoggerInterceptor())
+    //..interceptors.add(LoggerInterceptor())
       ..options.baseUrl = baseUrl
       ..options.headers = _headers
       ..options.connectTimeout = 10000 // 10 seconds
