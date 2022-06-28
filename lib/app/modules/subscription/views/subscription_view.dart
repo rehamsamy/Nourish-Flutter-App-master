@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/data/models/subscription_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/sbscription_apis.dart';
 import 'package:nourish_sa/app/modules/packages/views/package_info_card.dart';
@@ -67,10 +68,20 @@ class SubscriptionView extends GetView<SubscriptionController> {
                             itemBuilder: (context, index) {
                               return controller.selected.value == 0
                                   ? InkWell(
-                                onTap: () {
-                                  Get.toNamed(Routes.SUBSCRIPTION_DETAILS);
-                                },
-                                child:  PackageInfoCard(
+                                onTap: () async{
+                                          SubscriptionDetailModel detailModel =
+                                              await SubscriptionApis().subscriptionDetails(
+                                                  subscripId: list[index].id) ;
+                                          if(detailModel.data !=null){
+                                            Get.toNamed(Routes.SUBSCRIPTION_DETAILS,
+                                                arguments: {'detailModel': detailModel,
+                                                'subscripId':list[index].id});
+                                          }else{
+                                            null;
+                                          }
+
+                                        },
+                                        child:  PackageInfoCard(
                                   image: list[index].package?.image??'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
                                   options: ["sdads", "saddsa"],
                                   title: list[index].package?.name??'',

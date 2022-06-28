@@ -5,11 +5,13 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 
 import '../../app_theme.dart';
 
 class MealsSummeryCard extends StatelessWidget {
-  const MealsSummeryCard({Key? key}) : super(key: key);
+  Saturday ? saturday;
+  MealsSummeryCard(this.saturday);
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +50,7 @@ class MealsSummeryCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return FoodItem(
-                title: "EGGS",
+                title: saturday?.product?.name??"EGGS",
                 isEnd: index == 1,
               );
             },

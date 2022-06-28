@@ -15,6 +15,15 @@ class SubscriptionStatusView extends GetView<SubscriptionStatusController> {
 
   @override
   Widget build(BuildContext context) {
+    Map args = Get.arguments ?? {};
+     int subscripId=args['subscripId'];
+     String statusType;
+     bool status=controller.detailModel.data?.order?.activeStatus??true;
+     if(status){
+     statusType=  LocalKeys.kSubscription.tr;
+     }else{
+       statusType=LocalKeys.kPauseSubscription.tr;
+    }
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kSubscriptionStatus.tr),
@@ -73,7 +82,7 @@ class SubscriptionStatusView extends GetView<SubscriptionStatusController> {
                       width: 11.w,
                     ),
                     Text(
-                      LocalKeys.kActive.tr + LocalKeys.kSubscription.tr,
+                      LocalKeys.kActive.tr + statusType,
                       style:
                           Get.textTheme.headline3!.copyWith(color: blackColor),
                     ),
@@ -89,7 +98,7 @@ class SubscriptionStatusView extends GetView<SubscriptionStatusController> {
                 ),
                 InkWell(
                   onTap: () {
-                    Get.dialog(const PauseSubscriptionDialog());
+                    Get.dialog(const PauseSubscriptionDialog(),arguments: args);
                   },
                   child: Row(
                     children: [

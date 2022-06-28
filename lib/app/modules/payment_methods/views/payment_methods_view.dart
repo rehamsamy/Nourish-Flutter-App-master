@@ -43,7 +43,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                     children: [
                       Text(LocalKeys.kTotalPayment.tr,
                           style: Get.textTheme.button),
-                      Text("\$117", style: Get.textTheme.button)
+                      Text("${controller.total}", style: Get.textTheme.button)
                     ],
                   ),
                 ),

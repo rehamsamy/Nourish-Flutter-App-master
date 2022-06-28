@@ -137,6 +137,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                     icon: Assets.kLocation,
                     onTap: () {
                       Get.toNamed(Routes.ADD_ADDRESS);
+                     // Get.toNamed(Routes.DELIVERY_ADDRESSES);
                       controller.scaffoldKey!.currentState!.openEndDrawer();
                     },
                   ),

@@ -24,6 +24,9 @@ class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
   String ?resume;
   @override
   Widget build(BuildContext context) {
+    Map args = Get.arguments ?? {};
+    int subscripId=args['subscripId'];
+    Get.log('subscripId    => '+subscripId.toString());
     return AlertDialog(
       contentPadding: EdgeInsets.zero,
       scrollable: true,
@@ -55,15 +58,15 @@ class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
                   maxHeight: 2.h,
                   child: const Divider(
                     color: lightGreyColor,
-                  ),
-                ),
               ),
             ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                LocalKeys.kPauseFrom.tr,
-                style: Theme.of(context).textTheme.headline3,
+      ),
+    ),
+    Align(
+    alignment: AlignmentDirectional.centerStart,
+    child: Text(
+    LocalKeys.kPauseFrom.tr,
+    style: Theme.of(context).textTheme.headline3,
               ),
             ),
             Padding(
@@ -208,14 +211,21 @@ class _PauseSubscriptionDialogState extends State<PauseSubscriptionDialog> {
                 onPress: () async{
                   Get.log('date is   => '+first.toString()+resume.toString());
                   PauseSubscriptionModel pauseModel=await SubscriptionApis()
-                                                                  .pauseSubscription(orderId: '6',
+                                                                  .pauseSubscription(orderId: subscripId.toString(),
                                                                   pauseFrom: first,
-                                                                   resumFrom: resume);
+                                                                 resumFrom: resume);
+
+
+
 
                   if(pauseModel.data != null){
-                    Get.snackbar('Pause Subscription', pauseModel.data?.msg??'');
+                    String ?x=  pauseModel.data?.msg.toString();
+                    Get.back();
+                    Get.snackbar('Pause Subscription',x.toString());
+                  }else{
+                    Get.back();
+                   Get.snackbar('Pause Subscription','error => no data found');
                   }
-                  Get.back();
                 },
               ),
             ),
