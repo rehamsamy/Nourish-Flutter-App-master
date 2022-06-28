@@ -7,9 +7,11 @@ import '../../../../app_theme.dart';
 
 class SelectorTwoCard extends GetView<CustomPackageController> {
   const SelectorTwoCard(
-      {required this.title, required this.secondTitle, Key? key})
+      {required this.title, required this.secondTitle,required this.flag,
+        required Key? key})
       : super(key: key);
-  final String title, secondTitle;
+  final String title, secondTitle ,flag;
+
   @override
   Widget build(BuildContext context) {
     return
@@ -29,9 +31,16 @@ class SelectorTwoCard extends GetView<CustomPackageController> {
             children: [
               InkWell(
                 onTap:(){
-                  controller.setFeetSelected(true);
-                  controller.setCmSelected(false);
-                  controller.setHeightType('feet');
+                  Get.log('llllll'+flag+controller.isPoundSelected.toString()+'    '+controller.isKilogramSelected.toString());
+                  if(flag=='height'){
+                    controller.setFeetSelected(true);
+                    controller.setCmSelected(false);
+                    controller.setHeightType('feet');
+                  }else{
+                    controller.setPoundSelected(true);
+                    controller.setKiloGramSelected(false);
+                    controller.setHeightType('pound');
+                  }
                 } ,
                 child: Container(
                   width: 130.w,
@@ -39,32 +48,43 @@ class SelectorTwoCard extends GetView<CustomPackageController> {
                   alignment: Alignment.center,
                   decoration: BoxDecoration(
                    // color:greyColor ,
-                    color:  controller.isFeetSelected.value?primaryColor:moreLightGreyColor,
+                    color:  getCardColor1(flag),
                     borderRadius: BorderRadius.circular(14.r),
                   ),
                   child: Text(
                     title,
-                    style: Get.textTheme.headline3!.copyWith(fontSize: 14.sp,color: controller.isFeetSelected.value?moreLightGreyColor:primaryColor),
+                    style: Get.textTheme.headline3!.copyWith(fontSize: 14.sp
+                        ,color: getTextColor1(flag)),
                   ),
                 ),
               ),
               InkWell(
                 onTap: (){
-                  controller.setHeightType('cm');
-                  controller.setFeetSelected(false);
-                  controller.setCmSelected(true);
+                  if(flag=='height') {
+                    controller.setHeightType('cm');
+                    controller.setFeetSelected(false);
+                    controller.setCmSelected(true);
+                  }else{
+                    controller.setHeightType('kg');
+                    controller.setPoundSelected(false);
+                    controller.setKiloGramSelected(true);
+
+                  }
+
+
                 },
                 child: Container(
                   height: 35.h,
                   width: 130.w,
                   decoration: BoxDecoration(
-                    color:  controller.isFeetSelected.value?moreLightGreyColor:primaryColor,
+                    color:  getCardColor2(flag),
                     borderRadius: BorderRadius.circular(14.r),
                   ),
                   alignment: Alignment.center,
                   child: Text(
                     secondTitle,
-                    style: Get.textTheme.headline3!.copyWith(color:controller.isFeetSelected.value?primaryColor:moreLightGreyColor),
+                    style: Get.textTheme.headline3!.copyWith
+                      (color:getTextColor2(flag)),
                   ),
                 ),
               ),
@@ -73,6 +93,37 @@ class SelectorTwoCard extends GetView<CustomPackageController> {
     ),
       );
   }
+  getCardColor1(String flag){
+    if(flag=='height'){
+     return controller.isFeetSelected.value?primaryColor:moreLightGreyColor;
+    }else{
+      return controller.isPoundSelected.value?primaryColor:moreLightGreyColor;
+    }
+  }
+  getCardColor2(String flag){
+    if(flag=='height'){
+       return controller.isFeetSelected.value?moreLightGreyColor:primaryColor;
+    }else{
+      return controller.isPoundSelected.value?moreLightGreyColor:primaryColor;
+    }
+  }
+
+
+  getTextColor1(String flag){
+    if(flag=='height'){
+      return controller.isFeetSelected.value?moreLightGreyColor:primaryColor;
+    }else{
+      return controller.isPoundSelected.value?moreLightGreyColor:primaryColor;
+    }
+  }
+  getTextColor2(String flag){
+    if(flag=='height'){
+      return controller.isFeetSelected.value?primaryColor:moreLightGreyColor;
+    }else{
+      return controller.isPoundSelected.value?primaryColor:moreLightGreyColor;
+    }
+  }
+
 }
 
 //moreLightGreyColor

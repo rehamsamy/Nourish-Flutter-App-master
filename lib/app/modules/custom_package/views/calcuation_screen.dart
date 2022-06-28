@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
+import 'package:nourish_sa/app/data/models/create_package_model.dart';
 import 'package:nourish_sa/app/modules/custom_package/views/result_screen.dart';
 import 'package:nourish_sa/app/shared/percent_indicator.dart';
 import 'package:nourish_sa/app_theme.dart';
@@ -24,6 +25,7 @@ class _CalcuationScreenState extends State<CalcuationScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(

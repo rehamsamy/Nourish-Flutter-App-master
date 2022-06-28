@@ -187,10 +187,11 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
             LatLng(currentLocation.latitude, currentLocation.longitude), 18));
         _center = LatLng(currentLocation.latitude, currentLocation.longitude);
       });
-      _address = await Geocoder2.getDataFromCoordinates(
+     _address=  await Geocoder2.getDataFromCoordinates(
           latitude: currentLocation.latitude,
           longitude: currentLocation.longitude,
-          googleMapApiKey: "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8");
+          googleMapApiKey: "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8").
+      catchError((err) => Get.log('xxx  err 1 ' + err.toString()));
       print(_address);
 
       // geoCode.reverseGeocoding(latitude: currentLocation.latitude,
@@ -202,7 +203,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
       // }).catchError((error)=>print('hhhhhhhhhhhhh'+error));
 
       Get.log('xxxx  city ' + city.toString());
-    }).catchError((err) => Get.log('xxx  err' + err.toString()));
+    }).catchError((err) => Get.log('xxx  err  ' + err.toString()));
     // return _address;
   }
 }

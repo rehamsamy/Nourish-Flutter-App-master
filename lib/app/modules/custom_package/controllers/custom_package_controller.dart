@@ -1,19 +1,31 @@
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/models/experience_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/experience_apis.dart';
 
 class CustomPackageController extends GetxController {
   //TODO: Implement CustomPackageController
+   TextEditingController heightTextEditingController = TextEditingController();
+   final TextEditingController weightTextEditingController = TextEditingController();
+   final TextEditingController targetWeightTextEditingController = TextEditingController();
  bool isMaleSelected=false;
  bool isFemaleSelected=false;
  String ? birtdate ;
  double ?height;
  String ?heightType;
  RxBool isCmSelected=true.obs;
- RxBool isFeetSelected=true.obs;
-
+ RxBool isFeetSelected=false.obs;
+   RxBool isPoundSelected=true.obs;
+   RxBool isKilogramSelected=false.obs;
+   List<ExperienceItem> ? experiencesList;
+   List<bool>? isExperienceSelected;
+int experienceIndex=0;
   final count = 0.obs;
   @override
-  void onInit() {
+  void onInit() async{
     super.onInit();
+    experiencesList= await ExperienceApis().getExperience();
+    isExperienceSelected = List<bool>.filled(experiencesList?.length??0, false);
   }
 
   @override
@@ -59,6 +71,25 @@ class CustomPackageController extends GetxController {
  void setFeetSelected(bool newVal){
    isFeetSelected.value=newVal;
  }
+
+
+   void setPoundSelected(bool newVal){
+     isPoundSelected.value=newVal;
+   }
+
+   void setKiloGramSelected(bool newVal){
+     isKilogramSelected.value=newVal;
+   }
+
+   void setExperienceSelect(bool newVal,int index){
+     isExperienceSelected?[index] = newVal;
+     update();
+   }
+
+   void setExperienceIndex(int newVal){
+     experienceIndex=newVal;
+     update();
+   }
 
 
 
