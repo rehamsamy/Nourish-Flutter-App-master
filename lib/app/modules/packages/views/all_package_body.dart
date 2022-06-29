@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/data/models/package_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/package_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
@@ -86,7 +87,12 @@ class AllPackagesBody extends GetView<PackagesController> {
                       padding: EdgeInsets.symmetric(horizontal: 24.w),
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
+                          onTap: () async{
+                            PackageDetailModel ? model=    await PackageApis().getPackageDetail(packagesList[index].id??0);
+                            if(model?.data !=null){
+                              Get.toNamed(Routes.PACKAGE_DETAILS,arguments: {'packageDetailModel':model});
+                            }
+                          },
                           child: PackageInfoCard(
                             image: packagesList[index].image ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",

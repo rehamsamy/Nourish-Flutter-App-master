@@ -19,6 +19,7 @@ class ActivityScreen extends  GetView<CustomPackageController> {
 
   @override
   Widget build(BuildContext context) {
+    int selectedExper=1;
     return Scaffold(
       appBar: AppBar(
         title:  Text('${LocalKeys.kStep.tr} 5 ${LocalKeys.kOf.tr} 7'),
@@ -52,6 +53,7 @@ class ActivityScreen extends  GetView<CustomPackageController> {
                           return
                               InkWell(
                                 onTap: (){
+                                  selectedExper=list[index].id??1;
                                 //  controller.setExperienceSelect(true);
                                   controller.setExperienceSelect(true,index);
                                   Get.log('cccc   '+controller.experienceIndex.toString());
@@ -84,7 +86,8 @@ class ActivityScreen extends  GetView<CustomPackageController> {
 
                         CreatePackageModel? packageModel= await CreatePackageApis()
                             .createPackage(gender: controller.isMaleSelected?'male':'female',
-                            experience_id: 2, date_of_birth: controller.birtdate??'',
+                            experience_id:selectedExper,
+                            date_of_birth: controller.birtdate??'',
                             height: int.parse(controller.heightTextEditingController.text),
                             height_unit: controller.isFeetSelected.value?'feet':'cm',
                             weight: int.parse(controller.weightTextEditingController.text),

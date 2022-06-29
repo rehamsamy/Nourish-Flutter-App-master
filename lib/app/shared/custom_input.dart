@@ -37,7 +37,7 @@ class CustomInput extends StatelessWidget {
   final bool isPassword;
   final double? width;
   final String?initalValue;
-
+ //final  Function(String) onChange;
   final double? height;
   final int? maxLength;
   @override
@@ -114,6 +114,7 @@ class CustomInput extends StatelessWidget {
                           ),
                   ),
                   validator: validator,
+               //   onChanged: (val){onChange(value);},
                   inputFormatters: [
                     if (maxLength == 10) FilteringTextInputFormatter.digitsOnly,
                   ],

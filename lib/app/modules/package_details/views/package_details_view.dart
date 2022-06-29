@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
@@ -9,7 +7,6 @@ import 'package:nourish_sa/app/shared/custom_network_image.dart';
 import 'package:nourish_sa/app/shared/dialogs/enable_location_dialog.dart';
 import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
 import 'package:nourish_sa/app/shared/selection_card.dart';
-import 'package:nourish_sa/app_theme.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../controllers/package_details_controller.dart';
 
@@ -30,14 +27,14 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
         child: Column(
           children: [
             CustomNetworkImage(
-              imageUrl: "",
+              imageUrl: controller.packageDetailModel?.data?.image??'https://wallpaperaccess.com/full/3758411.jpg',
               height: 180.h,
               width: 180.w,
               radius: 4.r,
             ),
             Padding(
               padding: EdgeInsets.only(top: 11.h, bottom: 18.h),
-              child: const Text("American Package"),
+              child:  Text(controller.packageDetailModel?.data?.name??"American Package"),
             ),
             PackageCaleroiesDetails(),
             Align(

@@ -181,7 +181,7 @@ class AuthApis {
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      VerifyEmailModel
+      ResendOtpModel
           .fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(

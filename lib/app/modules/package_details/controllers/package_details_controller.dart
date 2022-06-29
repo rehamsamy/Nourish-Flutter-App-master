@@ -1,12 +1,16 @@
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 
 class PackageDetailsController extends GetxController {
   //TODO: Implement PackageDetailsController
+  Map map=Get.arguments;
+  PackageDetailModel ? packageDetailModel;
 
   final count = 0.obs;
   @override
   void onInit() {
     super.onInit();
+    packageDetailModel=map['packageDetailModel'];
   }
 
   @override

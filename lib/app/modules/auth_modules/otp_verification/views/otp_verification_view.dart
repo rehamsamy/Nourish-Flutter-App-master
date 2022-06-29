@@ -131,6 +131,16 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                 ),
               ),
               InkWell(
+                onTap: () async {
+                  ResendOtpModel? otpModel =
+                      await AuthApis().resendOtpMobile(controller.phone ?? '') as ResendOtpModel;
+                  if (otpModel.data != null) {
+                    Get.snackbar("Resend Otp Code", otpModel.data?.msg ?? '');
+                    Get.log('ccccccc0');
+                  }else{
+                    Get.log('ccccccc');
+                  }
+                },
                 child: Padding(
                   padding: const EdgeInsets.all(8.0),
                   child: Text(

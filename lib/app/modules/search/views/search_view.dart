@@ -5,6 +5,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/package_model.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/search_item.dart';
 
@@ -18,9 +19,18 @@ class SearchView extends GetView<SearchController> {
       appBar: AppBar(
         title: Padding(
           padding: EdgeInsets.only(top: 10.h),
-          child: CustomInput(
-            hint: LocalKeys.kSearch.tr,
-            textEditingController: controller.searchController,
+          // child: CustomInput(
+          //   hint: LocalKeys.kSearch.tr,
+          //   textEditingController: controller.searchController,
+          // ),
+          child: TextFormField(
+            controller:  controller.searchController,
+            decoration: InputDecoration(
+              hintText: LocalKeys.kSearch.tr,
+            ),
+            onChanged: (val){
+              controller.onSearchTextChanged(val);
+            },
           ),
         ),
         centerTitle: true,
@@ -49,37 +59,44 @@ class SearchView extends GetView<SearchController> {
           )
         ],
       ),
-      body: SizedBox(
-        width: Get.width,
-        height: Get.height,
-        child: Padding(
-          padding: EdgeInsets.symmetric(horizontal: 27.w),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(
-                  top: 20.h,
-                  bottom: 8.h,
+      body: GetBuilder<SearchController>(
+        builder: (_)=>
+        SizedBox(
+          width: Get.width,
+          height: Get.height,
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 27.w),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(
+                    top: 20.h,
+                    bottom: 8.h,
+                  ),
+                  child: Text(
+                    LocalKeys.kRecentSearch.tr,
+                    style: Get.textTheme.caption!.copyWith(color: blueGreyColor),
+                  ),
                 ),
-                child: Text(
-                  LocalKeys.kRecentSearch.tr,
-                  style: Get.textTheme.caption!.copyWith(color: blueGreyColor),
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: controller.searchList?.length,
+                    itemBuilder: (context, index) {
+                      return  SearchItem(
+                        text: controller.searchList?[index].name??' ',
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Expanded(
-                child: ListView.builder(
-                  itemBuilder: (context, index) {
-                    return const SearchItem(
-                      text: "Berry Donuts Topping with Che...",
-                    );
-                  },
-                ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
     );
   }
+
+
+
 }

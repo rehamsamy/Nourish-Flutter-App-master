@@ -7,7 +7,9 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
+import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/package_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/packages/views/all_package_body.dart';
@@ -58,7 +60,9 @@ class HomeScreenView extends GetView<HomeScreenController> {
                       SizedBox(
                         width: 313.w,
                         child: InkWell(
-                          onTap: () => Get.offNamed(Routes.SEARCH),
+                          onTap: () => Get.offNamed(Routes.SEARCH,
+                            arguments: {'packagesList':homePackagesList}
+                          ),
                           child: Container(
                             height: 53.h,
                             width: 374.w,
@@ -241,7 +245,12 @@ class HomeScreenView extends GetView<HomeScreenController> {
       itemBuilder: (context, index) {
         return PackageCard(
             title: homePackagesList[index].name ?? '',
-            onTap: () => Get.toNamed(Routes.PACKAGE_DETAILS),
+            onTap: () async{
+          PackageDetailModel ? model=    await PackageApis().getPackageDetail(homePackagesList[index].id??0);
+          if(model?.data !=null){
+            Get.toNamed(Routes.PACKAGE_DETAILS,arguments: {'packageDetailModel':model});
+          }
+            } ,
             image: homePackagesList[index].image ?? '');
       },
       pagination: SwiperPagination(
