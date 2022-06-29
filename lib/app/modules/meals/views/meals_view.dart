@@ -22,7 +22,6 @@ class MealsView extends GetView<MealsController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.log('page  => Meals');
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -67,7 +66,8 @@ class MealsView extends GetView<MealsController> {
                               () => InkWell(
                                   onTap: () {
                                     controller.changeSelected(index);
-                                    controller.changeCategoryId(categories?[index].id);
+                                    controller.changeCategoryId(
+                                        categories?[index].id);
                                   },
                                   child: SelectedMenu(
                                     image: categories?[index].image ?? '',
@@ -101,52 +101,62 @@ class MealsView extends GetView<MealsController> {
             SizedBox(
               height: 10.h,
             ),
-            Obx(()=> Padding(
+            Obx(
+              () => Padding(
                 padding: EdgeInsets.symmetric(vertical: 10.h, horizontal: 27.w),
                 child: FutureBuilder(
-                  future: ProductApis().getProducts(category_id: controller.categoryId.value),
-                  builder: (_,snap) {
-                    if (snap.hasData) {
-                      List<ProductItem> ? list = snap.data as List<ProductItem>;
-                      Get.log('****** '+controller.categoryId.value.toString());
-                      if(list.length>0){
-                        return ListView.builder(
-                            itemCount: list.length,
-                            physics: const NeverScrollableScrollPhysics(),
-                            shrinkWrap: true,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Get.dialog(MealInfoDialog(
-                                    image: list[index].image ?? '',
-                                    title: list[index].name ?? '',
-                                    desc: list[index].description ?? '',
-                                    values: {
-                                      "Carb": list[index].carb.toString(),
-                                      "Protein": list[index].protein.toString(),
-                                      "Fat": list[index].fat.toString(),
-                                      "Calories": list[index].calories.toString()
-                                    },
-                                  ));
-                                },
-                                child: CategoryProductCard(
-                                  productName: list[index].name,
-                                  productCalories: list[index].calories.toString(),
-                                  image:
-                                  list[index].image,
-                                ),
-                              );
-                            });
-                      }else{
-                        return const SizedBox(
-                            height:200,child: Center(child: Text('no data found',)));
+                    future: ProductApis()
+                        .getProducts(category_id: controller.categoryId.value),
+                    builder: (_, snap) {
+                      if (snap.hasData) {
+                        List<ProductItem>? list =
+                            snap.data as List<ProductItem>;
+                        Get.log(
+                            '****** ' + controller.categoryId.value.toString());
+                        if (list.length > 0) {
+                          return ListView.builder(
+                              itemCount: list.length,
+                              physics: const NeverScrollableScrollPhysics(),
+                              shrinkWrap: true,
+                              itemBuilder: (context, index) {
+                                return InkWell(
+                                  onTap: () {
+                                    Get.dialog(MealInfoDialog(
+                                      image: list[index].image ?? '',
+                                      title: list[index].name ?? '',
+                                      desc: list[index].description ?? '',
+                                      values: {
+                                        "Carb": list[index].carb.toString(),
+                                        "Protein":
+                                            list[index].protein.toString(),
+                                        "Fat": list[index].fat.toString(),
+                                        "Calories":
+                                            list[index].calories.toString()
+                                      },
+                                    ));
+                                  },
+                                  child: CategoryProductCard(
+                                    productName: list[index].name,
+                                    productCalories:
+                                        list[index].calories.toString(),
+                                    image: list[index].image,
+                                  ),
+                                );
+                              });
+                        } else {
+                          return const SizedBox(
+                              height: 200,
+                              child: Center(
+                                  child: Text(
+                                'no data found',
+                              )));
+                        }
+                      } else {
+                        return SizedBox(
+                          height: 200,
+                        );
                       }
-
-                    } else {
-                      return SizedBox(height: 200,);
-                    }
-                  }
-                ),
+                    }),
               ),
             ),
           ],

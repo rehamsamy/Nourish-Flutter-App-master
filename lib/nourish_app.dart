@@ -52,7 +52,6 @@ class _NourishAppState extends State<NourishApp> {
 
   @override
   Widget build(BuildContext context) {
-    Get.log('page 1   ===>');
     return ScreenUtilInit(
       designSize: const Size(428, 926),
       builder: (_, child) {
@@ -65,6 +64,7 @@ class _NourishAppState extends State<NourishApp> {
           // home:  ChangeEmailView(),
           locale: Get.locale,
           translations: Messages(),
+          defaultTransition: Transition.fadeIn,
           fallbackLocale: Messages.fallbackLocale,
           supportedLocales: Messages.supportedLocales,
           builder: (context, child) {

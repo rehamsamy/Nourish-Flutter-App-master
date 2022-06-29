@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -9,6 +10,7 @@ import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 
 import '../../app_theme.dart';
+import '../core/values/localization/local_keys.dart';
 
 class MapEditLocationPin extends StatefulWidget {
   const MapEditLocationPin({Key? key}) : super(key: key);
@@ -21,7 +23,14 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
   GeoData? geoCode;
   late LocationPermission permission;
   GoogleMapController? mapController;
-  Set<Marker> markers = {};
+  Marker markers = Marker(
+    markerId: MarkerId('marker'),
+    position: LatLng(0, 0),
+    infoWindow: InfoWindow(
+      title: '',
+      snippet: '',
+    ),
+  );
   String? city;
   var currentLocation;
   GeoData? _address;
@@ -35,7 +44,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
   void initState() {
     super.initState();
     getLocation();
-    markers.add(Marker(
+    markers = Marker(
       //add marker on google map
       markerId: MarkerId(currentLocation.toString()),
       position: _center, //position of marker
@@ -45,7 +54,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
         snippet: 'My Custom Subtitle',
       ),
       icon: BitmapDescriptor.defaultMarker, //Icon for Marker
-    ));
+    );
 
     try {
       // Address address1= await address as Address;
@@ -105,7 +114,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
             zoom: 5.0,
           ),
           myLocationButtonEnabled: true,
-          markers: markers,
+          markers: <Marker>{markers},
         ),
       ),
       // Column(
@@ -150,30 +159,33 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
     );
   }
 
-  Widget _expandedMap() => GoogleMap(
-        zoomGesturesEnabled: true,
-        compassEnabled: true,
-        buildingsEnabled: true,
-        liteModeEnabled: true,
-        mapToolbarEnabled: true,
-        indoorViewEnabled: true,
-        rotateGesturesEnabled: true,
-        zoomControlsEnabled: true,
-        trafficEnabled: true,
-        tiltGesturesEnabled: true,
-        scrollGesturesEnabled: true,
-        onMapCreated: _onMapCreated,
-        myLocationEnabled: true,
-        onTap: (latLng) {
-          getLocation();
-        },
-        initialCameraPosition: CameraPosition(
-          target: _center,
-          zoom: 5.0,
-        ),
-        myLocationButtonEnabled: true,
-        markers: markers,
-        mapType: MapType.normal,
+  Widget _expandedMap() => Stack(
+        children: [
+          GoogleMap(
+            initialCameraPosition: CameraPosition(
+              target: _center,
+              zoom: 18.0,
+            ),
+            myLocationButtonEnabled: true,
+            markers: <Marker>{markers},
+            //mapType: MapType.normal,
+          ),
+          //select location on map and get address from latlng and show in textfield
+          Positioned(
+              bottom: 50.h,
+              left: 20.h,
+              right: 20.h,
+              child: ElevatedButton.icon(
+                onPressed: () {},
+                icon: const Icon(CupertinoIcons.location_solid),
+                label: _address == null
+                    ? const Text("Select Address")
+                    : Text(
+                        _address.toString(),
+                        style: Get.textTheme.headline3,
+                      ),
+              ))
+        ],
       );
 
   getLocation() async {
@@ -187,11 +199,11 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
             LatLng(currentLocation.latitude, currentLocation.longitude), 18));
         _center = LatLng(currentLocation.latitude, currentLocation.longitude);
       });
-     _address=  await Geocoder2.getDataFromCoordinates(
-          latitude: currentLocation.latitude,
-          longitude: currentLocation.longitude,
-          googleMapApiKey: "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8").
-      catchError((err) => Get.log('xxx  err 1 ' + err.toString()));
+      _address = await Geocoder2.getDataFromCoordinates(
+              latitude: currentLocation.latitude,
+              longitude: currentLocation.longitude,
+              googleMapApiKey: "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8")
+          .catchError((err) => Get.log('xxx  err 1 ' + err.toString()));
       print(_address);
 
       // geoCode.reverseGeocoding(latitude: currentLocation.latitude,
