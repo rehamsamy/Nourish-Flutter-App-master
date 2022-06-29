@@ -12,7 +12,7 @@ import 'weight_screen.dart';
 
 class HeightScreen extends GetView<CustomPackageController> {
   HeightScreen({Key? key}) : super(key: key);
-  final TextEditingController _textEditingController = TextEditingController();
+
 
   @override
   Widget build(BuildContext context) {
@@ -42,6 +42,7 @@ class HeightScreen extends GetView<CustomPackageController> {
                 child: SelectorTwoCard(
                   title: LocalKeys.kFeet.tr,
                   secondTitle: LocalKeys.kCentimetre.tr,
+                 flag: 'height', key: null,
                 ),
               ),
               Row(
@@ -49,10 +50,11 @@ class HeightScreen extends GetView<CustomPackageController> {
                 children: [
                   CustomInput(
                     hint: "",
-                    textEditingController: _textEditingController,
+                    textInputType: TextInputType.number,
+                    textEditingController: controller.heightTextEditingController,
                     validator: (val) {
                       if (double.parse(val!) < 20 || double.parse(val) > 300) {
-                        //return
+                        return 'the height must be between 20 and 300 ';
                       }
                     },
                     width: 110.w,

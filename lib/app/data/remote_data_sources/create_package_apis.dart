@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/create_package_model.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
-
 import '../services/network_service.dart/dio_network_service.dart';
 
 class CreatePackageApis {
@@ -45,6 +44,7 @@ class CreatePackageApis {
       onReceiveProgress: (count, total) {},
       onSendProgress: (count, total) {},
     );
+    Get.log('ccccccc '+response.toString());
     response.maybeWhen(
         ok: (model) {
           packageModel = model ;
