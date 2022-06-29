@@ -81,14 +81,16 @@ class ActivityScreen extends  GetView<CustomPackageController> {
                     CustomButton(
                       title: LocalKeys.kContinue.tr,
                       onPress: ()async {
+
                         CreatePackageModel? packageModel= await CreatePackageApis()
                             .createPackage(gender: controller.isMaleSelected?'male':'female',
                             experience_id: 2, date_of_birth: controller.birtdate??'',
                             height: int.parse(controller.heightTextEditingController.text),
-                            height_unit: controller.heightType??'',
+                            height_unit: controller.isFeetSelected.value?'feet':'cm',
                             weight: int.parse(controller.weightTextEditingController.text),
                             weight_unit: controller.isPoundSelected.value?'pound':'kg',
-                            goal: 'ddddddddddd', meals: []);
+                            goal: 'lose_weight', meals: 1);
+
                         if(packageModel?.data !=null){
                           Get.to(const CalcuationScreen(),arguments: {'packageModel':packageModel});
                         }

@@ -104,7 +104,12 @@ class BirthDateScreen extends GetView<CustomPackageController> {
               CustomButton(
                   title: LocalKeys.kContinue.tr,
                   onPress: () {
-                    Get.to(HeightScreen());
+                    if(controller.birtdate!=null){
+                      Get.to(HeightScreen());
+                    }else{
+                      Get.snackbar('required', 'You must enter the birthdate',colorText: Colors.red);
+                    }
+
                   }),
               SizedBox(
                 height: 111.h,

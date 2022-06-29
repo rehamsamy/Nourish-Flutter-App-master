@@ -13,6 +13,7 @@ import '../controllers/custom_package_controller.dart';
 class CustomPackageView extends GetView<CustomPackageController> {
   @override
   Widget build(BuildContext context) {
+    int flag=0;
     return Scaffold(
       appBar: AppBar(
         title:  Text('${LocalKeys.kStep.tr} 1 ${LocalKeys.kOf.tr} 7'),
@@ -43,6 +44,7 @@ class CustomPackageView extends GetView<CustomPackageController> {
                 isWithBG: true,
                 title: LocalKeys.kWoman.tr,
                 onTap: () {
+                  flag=1;
                   controller.changeFemale(true);
                   controller.changeMale(false);
                 },
@@ -55,6 +57,7 @@ class CustomPackageView extends GetView<CustomPackageController> {
                   isWithBG: true,
                   title: LocalKeys.kMan.tr,
                   onTap: () {
+                    flag=1;
                     controller.changeFemale(false);
                     controller.changeMale(true);
                   },
@@ -64,9 +67,15 @@ class CustomPackageView extends GetView<CustomPackageController> {
               CustomButton(
                 title: LocalKeys.kContinue.tr,
                 onPress: () {
-                  String? gender=(controller.isMaleSelected)==true?'male':'female';
-                  Get.log('1111111'+gender.toString());
-                  Get.to( BirthDateScreen());
+                 // Get.log('ccc  xx '+controller.isMaleSelected.toString());
+                  if(flag==1){
+                    String? gender=(controller.isMaleSelected)==true?'male':'female';
+                    Get.log('1111111'+gender.toString());
+                    Get.to( BirthDateScreen());
+                  }else{
+                    Get.snackbar('required', 'You must choose the gender',colorText: Colors.red);
+                  }
+                
                 },
               ),
               SizedBox(
