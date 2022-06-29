@@ -69,8 +69,7 @@ class AppPages {
     GetPage(
       name: _Paths.SPLASH,
       page: () => token == null ? const SplashView() : const HomePageView(),
-      binding:
-          token == null || token!.isEmpty ? SplashBinding() : HomePageBinding(),
+      binding: token == null ? SplashBinding() : HomePageBinding(),
     ),
     GetPage(
       name: _Paths.ON_BOARDING,
@@ -79,17 +78,17 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => LoginView(),
+      page: () => const LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
       name: _Paths.REGISTER,
-      page: () => RegisterView(),
+      page: () => const RegisterView(),
       binding: RegisterBinding(),
     ),
     GetPage(
       name: _Paths.HOME_PAGE,
-      page: () => HomePageView(),
+      page: () => const HomePageView(),
       binding: HomePageBinding(),
     ),
     GetPage(
@@ -99,12 +98,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.CHOOSE_LANG,
-      page: () => ChooseLangView(),
+      page: () => const ChooseLangView(),
       binding: ChooseLangBinding(),
     ),
     GetPage(
       name: _Paths.OTP_VERIFICATION,
-      page: () => OtpVerificationView(),
+      page: () => const OtpVerificationView(),
       binding: OtpVerificationBinding(),
     ),
     GetPage(
@@ -114,12 +113,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.MEALS,
-      page: () => MealsView(),
+      page: () => const MealsView(),
       binding: MealsBinding(),
     ),
     GetPage(
       name: _Paths.PACKAGES,
-      page: () => PackagesView(),
+      page: () => const PackagesView(),
       binding: PackagesBinding(),
     ),
     GetPage(
@@ -139,17 +138,17 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DELIVERY_ADDRESSES,
-      page: () => DeliveryAddressesView(),
+      page: () => const DeliveryAddressesView(),
       binding: DeliveryAddressesBinding(),
     ),
     GetPage(
       name: _Paths.ADD_ADDRESS,
-      page: () => AddAddressView(),
+      page: () => const AddAddressView(),
       binding: AddAddressBinding(),
     ),
     GetPage(
       name: _Paths.DAYS_TIME,
-      page: () => DaysTimeView(),
+      page: () => const DaysTimeView(),
       binding: DaysTimeBinding(),
     ),
     GetPage(
@@ -164,12 +163,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.PAYMENT_METHODS,
-      page: () => PaymentMethodsView(),
+      page: () => const PaymentMethodsView(),
       binding: PaymentMethodsBinding(),
     ),
     GetPage(
       name: _Paths.SUCCESS_ORDER,
-      page: () => SuccessOrderView(),
+      page: () => const SuccessOrderView(),
       binding: SuccessOrderBinding(),
     ),
     GetPage(
@@ -179,12 +178,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.SUBSCRIPTION_DETAILS,
-      page: () => SubscriptionDetailsView(),
+      page: () => const SubscriptionDetailsView(),
       binding: SubscriptionDetailsBinding(),
     ),
     GetPage(
       name: _Paths.SUBSCRIPTION_STATUS,
-      page: () => SubscriptionStatusView(),
+      page: () => const SubscriptionStatusView(),
       binding: SubscriptionStatusBinding(),
     ),
     GetPage(
@@ -199,7 +198,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.NOTIFICATION,
-      page: () => NotificationView(),
+      page: () => const NotificationView(),
       binding: NotificationBinding(),
     ),
     GetPage(

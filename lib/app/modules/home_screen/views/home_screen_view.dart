@@ -194,6 +194,8 @@ class HomeScreenView extends GetView<HomeScreenController> {
                           width: Get.width,
                           height: 185.h,
                           child: ListView.builder(
+                            physics: const BouncingScrollPhysics(),
+                            scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) =>
                                 MealLoading(100.w, 100.h),
                           ));

@@ -2,8 +2,15 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 
 class HomePageController extends GetxController {
+  @override
+  void onInit() {
+    AuthApis().refreshToken();
+    super.onInit();
+  }
+
   RxInt currentIndex = 0.obs;
 
   changeIndex(value) {
