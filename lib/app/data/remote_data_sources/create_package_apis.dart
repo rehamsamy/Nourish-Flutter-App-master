@@ -13,7 +13,7 @@ class CreatePackageApis {
                                       required int weight,
                                       required String weight_unit,
                                       required String goal,
-                                      required List<String> meals
+                                      required int meals
                                      }) async {
     CreatePackageModel? packageModel=CreatePackageModel();
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
@@ -28,28 +28,35 @@ class CreatePackageApis {
       'goal':goal,
       'your_meals[saturday]':meals
     };
+    Get.log('ccccccc 1 '+gender.toString()+ ' ===  '+experience_id .toString() +'  ===  '+date_of_birth.toString()+'---- '
+    +height.toString()+' ===  '+height_unit.toString()+'  === '+weight.toString()+'-==='+
+    weight_unit.toString()+'===='+goal.toString()+'----'+meals.toString());
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
-        path: 'changeOrderPeriod',
-        data: NetworkRequestBody.json(map),
+        path: 'updateAdditionalData',
+        data:  NetworkRequestBody.json(map),
         headers: {
           'Authorization':'Bearer $token',
         }
     );
+
+
+
+    Get.log('ccccccc 1 '+request.path.toString());
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
       CreatePackageModel
           .fromJson, // <- Function to convert API response to your model
-      onReceiveProgress: (count, total) {},
-      onSendProgress: (count, total) {},
     );
     Get.log('ccccccc '+response.toString());
     response.maybeWhen(
         ok: (model) {
+          Get.log('ccccccc 2'+model.toString());
           packageModel = model ;
           return packageModel;
         },
+        conflict: (err){print('err'+err.toString());},
         orElse: () {});
     return packageModel;
   }

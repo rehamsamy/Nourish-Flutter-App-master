@@ -12,7 +12,7 @@ import 'weight_screen.dart';
 
 class HeightScreen extends GetView<CustomPackageController> {
   HeightScreen({Key? key}) : super(key: key);
-
+  final GlobalKey<FormState> _key = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -48,16 +48,25 @@ class HeightScreen extends GetView<CustomPackageController> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomInput(
-                    hint: "",
-                    textInputType: TextInputType.number,
-                    textEditingController: controller.heightTextEditingController,
-                    validator: (val) {
-                      if (double.parse(val!) < 20 || double.parse(val) > 300) {
-                        return 'the height must be between 20 and 300 ';
-                      }
-                    },
-                    width: 110.w,
+                  Form(
+                    key: _key,
+                    child: CustomInput(
+                      hint: "",
+                      textInputType: TextInputType.number,
+                      textEditingController: controller.heightTextEditingController,
+                      validator: (val) {
+                        if (val!.trim().isEmpty) {
+                          Get.snackbar('error', 'the  height is required');
+                          return 'the height is required';
+                        }else if(int.parse(val.toString())<20 ||int.parse(val.toString())>400){
+                          int  x=int.parse(val.toString());
+                          Get.snackbar('error', 'the  height must be between 20 and 300 ');
+                          return 'the height must be between 20 and 300 ';
+                        }
+
+                      },
+                      width: 110.w,
+                    ),
                   ),
                   SizedBox(
                     width: 11.w,
@@ -72,7 +81,10 @@ class HeightScreen extends GetView<CustomPackageController> {
               CustomButton(
                   title: LocalKeys.kContinue.tr,
                   onPress: () {
-                    Get.to(WeightScreen());
+                    if (_key.currentState!.validate()) {
+                      Get.to(WeightScreen());
+                    }
+
                   }),
               SizedBox(
                 height: 111.h,
