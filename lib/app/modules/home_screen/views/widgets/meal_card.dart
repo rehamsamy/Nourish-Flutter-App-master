@@ -1,6 +1,7 @@
+import 'package:cached_network_image/cached_network_image.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nourish_sa/app/shared/custom_network_image.dart';
 import 'package:nourish_sa/app_theme.dart';
 
 class MealCard extends StatelessWidget {
@@ -26,27 +27,48 @@ class MealCard extends StatelessWidget {
         color: color,
         borderRadius: BorderRadius.circular(5.r),
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        crossAxisAlignment: CrossAxisAlignment.center,
+      child: Stack(
         children: [
-          CustomNetworkImage(
-            imageUrl: image,
-            radius: 5.r,
-            width: 83.w,
-            height: 58.h,
-            errorWidget: Container(
-              color: Colors.grey,
+          ClipRRect(
+            borderRadius: BorderRadius.circular(5.r),
+            child: CachedNetworkImage(
+              imageUrl: image,
+              fit: BoxFit.fitWidth,
+              width: width,
+              errorWidget: (context, url, error) => Container(
+                width: width,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(5.r),
+                ),
+                child: const CupertinoActivityIndicator(),
+              ),
             ),
           ),
           SizedBox(
             height: 5.h,
           ),
-          Text(
-            title,
-            style: Theme.of(context).textTheme.button!.copyWith(
-                  fontSize: 14.sp,
+          Column(
+            children: [
+              const Spacer(),
+              Padding(
+                padding: const EdgeInsets.only(top: 4.0),
+                child: Container(
+                  alignment: Alignment.bottomCenter,
+                  //height: height / 3,
+                  color: Colors.black26,
+                  child: Positioned(
+                    bottom: 5.h,
+                    left: (width / 3).w,
+                    right: (width / 3).w,
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.button!.copyWith(
+                          fontSize: 14.sp, fontWeight: FontWeight.bold),
+                    ),
+                  ),
                 ),
+              ),
+            ],
           ),
         ],
       ),

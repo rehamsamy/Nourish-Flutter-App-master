@@ -3,12 +3,11 @@ import 'package:logger/logger.dart';
 
 Logger logger = Logger(
   printer: PrettyPrinter(
-    methodCount: 0,
+    methodCount: 2,
     errorMethodCount: 8,
-    lineLength: 120,
+    lineLength: 40,
     colors: true,
     printEmojis: true,
-    printTime: true,
   ),
 );
 final dioLoggerInterceptor =
@@ -34,7 +33,9 @@ final dioLoggerInterceptor =
   handler.next(response);
   // return response; // continue
 }, onError: (DioError error, handler) async {
-  logger.wtf("| [DIO] Error: ${error.error}: ${error.response?.toString()}");
+  logger.wtf("---------------------------------------");
+  logger.wtf(
+      "| [DIO] Error: ${error.error}: ${error.response?.toString()}", error);
   logger.wtf(
       "└------------------------------------------------------------------------------");
   handler.next(error); //continue

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
@@ -26,10 +27,10 @@ class CustomNetworkImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return CachedNetworkImage(
-      imageUrl: imageUrl==null?AppConstants.kImage:imageUrl,
+      imageUrl: imageUrl == "" ? AppConstants.kImage : imageUrl,
       width: width,
       height: height,
-      fit: BoxFit.fill,
+      fit: BoxFit.contain,
       imageBuilder: (context, imageProvider) => Container(
         decoration: BoxDecoration(
           borderRadius: shape == null
@@ -59,22 +60,21 @@ class CustomNetworkImage extends StatelessWidget {
           shape: shape ?? BoxShape.rectangle,
         ),
         child: ClipRRect(
-          borderRadius: shape == null
-              ? radiusOnlyTop
-                  ? BorderRadius.only(
-                      topLeft: Radius.circular(radius),
-                      topRight: Radius.circular(radius))
-                  : BorderRadius.circular(radius)
-              : null,
-          child: errorWidget ??
-              const Icon(
-                Icons.broken_image,
-                color: Colors.white,
-              )
-        ),
+            borderRadius: shape == null
+                ? radiusOnlyTop
+                    ? BorderRadius.only(
+                        topLeft: Radius.circular(radius),
+                        topRight: Radius.circular(radius))
+                    : BorderRadius.circular(radius)
+                : null,
+            child: errorWidget ??
+                const Icon(
+                  Icons.broken_image,
+                  color: Colors.white,
+                )),
       ),
       placeholder: (context, url) => const Center(
-        child: CircularProgressIndicator(),
+        child: CupertinoActivityIndicator(),
       ),
     );
   }

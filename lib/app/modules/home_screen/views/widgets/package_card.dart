@@ -46,9 +46,10 @@ class PackageCard extends StatelessWidget {
           CustomButton(
             title: LocalKeys.kDetails.tr,
             onPress: onTap,
-            width: 130.w,
+            height: 48.h,
+            width: 100.w,
             style: Get.textTheme.caption!.copyWith(color: blackColor),
-            color: const Color(0xffF4EC64),
+            color: const Color.fromARGB(255, 244, 206, 100),
           ),
         ],
       ),

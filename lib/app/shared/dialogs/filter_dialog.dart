@@ -23,7 +23,7 @@ class FilterDialog extends StatelessWidget {
         child: Column(
           children: [
             Container(
-              width: 374.w,
+              width: 350.w,
               height: 55.h,
               color: primaryColor,
               padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -53,7 +53,7 @@ class FilterDialog extends StatelessWidget {
                     padding: EdgeInsets.only(top: 30.h, bottom: 17.h),
                     child: CustomDropDown(
                       currentValue: "",
-                      title:LocalKeys.kDuration.tr,
+                      title: LocalKeys.kDuration.tr,
                       items: const [],
                       hintText: "",
                       onChanged: (v) {},
@@ -80,7 +80,7 @@ class FilterDialog extends StatelessWidget {
                   ),
                   SizedBox(
                     height: 120.h,
-                    width: 374.w,
+                    width: 350.w,
                     child: const RangeSliderPicker(),
                   ),
                   SizedBox(

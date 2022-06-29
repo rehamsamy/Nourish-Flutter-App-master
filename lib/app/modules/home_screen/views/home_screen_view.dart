@@ -161,7 +161,6 @@ class HomeScreenView extends GetView<HomeScreenController> {
                             itemBuilder: (context, index) {
                               return MealCard(
                                 title: "Name",
-                                color: Colors.transparent,
                                 image: "",
                               );
                             },
@@ -197,7 +196,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                             physics: const BouncingScrollPhysics(),
                             scrollDirection: Axis.horizontal,
                             itemBuilder: (context, index) =>
-                                MealLoading(100.w, 100.h),
+                                MealLoading(220.w, 140.h),
                           ));
                     }
                   }),

@@ -1,11 +1,9 @@
-
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/views/shimmer_effect.dart';
 
 class MealLoading extends StatelessWidget {
-  double width,height;
-  MealLoading(this.width, this.height);
+  final double width, height;
+  const MealLoading(this.width, this.height, {Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
