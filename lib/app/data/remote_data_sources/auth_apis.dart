@@ -43,7 +43,6 @@ class AuthApis {
 
   Future<VerifyEmailModel> verifyOtpMobile(String mobile, String otp) async {
     VerifyEmailModel verifyModel = VerifyEmailModel();
-    Get.log('otp   =>' + mobile + otp);
     Map<String, dynamic>? map = {'mobile': mobile, 'code': otp};
     final request = NetworkRequest(
       type: NetworkRequestType.POST,
@@ -61,17 +60,12 @@ class AuthApis {
           verifyModel = authResponse as VerifyEmailModel;
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.setString('token', verifyModel.accessToken ?? '');
-          Get.log('token  saved  =>');
           SharedPrefService(prefs: prefs)
               .saveToken(verifyModel.accessToken ?? '');
-          Get.log('token  saved  =>' +
-              Get.find<SharedPrefService>().getToken().toString());
           return verifyModel;
         },
         badRequest: (info) {},
-        orElse: () {
-          Get.log('error  + ');
-        },
+        orElse: () {},
         invalidParameters: (x) => Get.log('error  + ' + x));
     return verifyModel;
   }
@@ -79,7 +73,6 @@ class AuthApis {
   Future<RegisterModel?> registerUser(
       String firstName, String lastName, String phone, String email) async {
     RegisterModel registerModel = RegisterModel();
-    Get.log('register data  =>  ' + firstName + lastName + email + phone);
     Map<String, dynamic>? map = {
       'first_name': firstName,
       'last_name': lastName,
@@ -112,7 +105,6 @@ class AuthApis {
   }
 
   Future<VerifyEmailModel?> verifyEmail(String? code, String? email) async {
-    Get.log('email   reg ' + code.toString() + email.toString());
     VerifyEmailModel emailModel = VerifyEmailModel();
     Map<String, dynamic>? map = {'code': code, 'email': email};
     final request = NetworkRequest(

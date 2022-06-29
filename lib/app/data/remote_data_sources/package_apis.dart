@@ -3,13 +3,14 @@ import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/package_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
 
-class PackageApis{
-  Future<List<PackageItem>?> getPackagesAccordingType(String packageType) async {
-    List<PackageItem>? packagesList=[];
+class PackageApis {
+  Future<List<PackageItem>?> getPackagesAccordingType(
+      String packageType) async {
+    List<PackageItem>? packagesList = [];
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'packages/?type=$packageType',
-      data:  NetworkRequestBody.json(
+      data: NetworkRequestBody.json(
         {
           // 'type':packageType
         },
@@ -26,13 +27,11 @@ class PackageApis{
 
     response.maybeWhen(
         ok: (response) {
-         PackageModel model=response;
-        packagesList=model.data?.packagedata;
-        Get.log('size of package  ee');
+          PackageModel model = response;
+          packagesList = model.data?.packagedata;
           return packagesList;
         },
         orElse: () {});
     return packagesList;
   }
-
 }
