@@ -16,16 +16,14 @@ List<WeeklyItem> ? searchList ;
   }
 
 onSearchTextChanged(String text) async {
+
   searchList?.clear();
   if (text.isEmpty) {
    update();
     return;
   }
 
-  packagesList?.forEach((package) {
-    if (package.name!.contains(text) || package.name!.contains(text))
-      searchList?.add(package);
-  });
+ searchList= packagesList?.where((element) => element.name!.contains(text)).toList();
 
 update();
 }
