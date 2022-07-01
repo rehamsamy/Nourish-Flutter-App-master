@@ -9,6 +9,7 @@ import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:nourish_sa/app/modules/home_screen/controllers/home_screen_controller.dart';
+import 'package:nourish_sa/app/shared/custom_network_image.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -29,7 +30,7 @@ class MainDrawer extends GetView<HomeScreenController> {
             color: primaryColor,
             child: Stack(
               children: [
-                SvgPicture.asset(
+               SvgPicture.asset(
                   Assets.kDrawer,
                   fit: BoxFit.fitWidth,
                   color: Colors.black.withOpacity(0.07),
@@ -42,12 +43,16 @@ class MainDrawer extends GetView<HomeScreenController> {
                       CircleAvatar(
                         radius: 30.w,
                         backgroundColor: whiteColor,
-                        child: SvgPicture.asset(
+                        child:    CustomNetworkImage(imageUrl: controller.profileModel?.image??'https://1.bp.blogspot.com/-3BIIq_YpmzY/YCvbdCUbXWI/AAAAAAAAKMU/aU7Pr7wLVicrrAgzon0EtGxTxtteKzjqACLcBGAsYHQ/s16000/%25D8%25B5%25D9%2588%25D8%25B1-%25D8%25A8%25D9%2586%25D8%25A7%25D8%25AA-%25D8%25AC%25D9%258A%25D8%25B1%25D9%2584%25D9%258A-13.webp',
+                          height: 24.h, width: 24.w, radius: 10,
+                        errorWidget:
+                        SvgPicture.asset(
                           Assets.kProfileIcon,
                           color: primaryColor,
                           width: 24.w,
                           height: 24.h,
                         ),
+                        )
                       ),
                       SizedBox(
                         width: 5.w,

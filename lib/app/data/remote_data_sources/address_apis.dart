@@ -1,3 +1,4 @@
+
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
@@ -71,10 +72,12 @@ class AddressApis{
       request,
       AddressModel.fromJson, // <- Function to convert API response to your model
     );
+    Get.log('ccccccc  3'+response.toString());
     response.maybeWhen(
         ok: (response) {
           AddressModel model=response as AddressModel;
-          list = model.data ;
+          list = model.data  ;
+          Get.log('ccccccc  3'+(list?.length.toString()).toString());
         },
         orElse: () {});
     return list;

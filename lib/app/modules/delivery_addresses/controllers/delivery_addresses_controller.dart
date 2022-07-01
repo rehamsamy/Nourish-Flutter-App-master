@@ -11,7 +11,7 @@ class DeliveryAddressesController extends GetxController {
   @override
   void onInit()async {
     super.onInit();
-    list=await AddressApis().getAddress() as List<AddressItem>;
+     list=await AddressApis().getAddress() as List<AddressItem>;
     isChecked = List<bool>.filled(list.length, false);
   }
 

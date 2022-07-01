@@ -16,7 +16,6 @@ List<WeeklyItem> ? searchList ;
   }
 
 onSearchTextChanged(String text) async {
-
   searchList?.clear();
   if (text.isEmpty) {
    update();

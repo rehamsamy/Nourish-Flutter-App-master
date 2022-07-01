@@ -5,9 +5,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/data/models/package_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/package_apis.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/search_item.dart';
+import 'package:nourish_sa/routes/app_pages.dart';
 
 import '../../../../app_theme.dart';
 import '../controllers/search_controller.dart';
@@ -88,8 +91,16 @@ class SearchView extends GetView<SearchController> {
                       itemCount: controller.searchList?.length,
                       shrinkWrap: true,
                       itemBuilder: (context, index) {
-                        return  SearchItem(
-                          text: controller.searchList?[index].name??' ',
+                        return  InkWell(
+                          onTap: ()async{
+                            PackageDetailModel ? model=    await PackageApis().getPackageDetail(controller.searchList?[index].id??0);
+                            if(model?.data !=null){
+                              Get.toNamed(Routes.PACKAGE_DETAILS,arguments: {'packageDetailModel':model});
+                            }
+                          },
+                          child: SearchItem(
+                            text: controller.searchList?[index].name??' ',
+                          ),
                         );
                       },
                     ),

@@ -26,7 +26,7 @@ class CreatePackageApis {
       'weight': weight,
       'weight_unit': weight_unit,
       'goal': goal,
-      'your_meals'[1]:1
+      'your_meals[]':[1].toString()
       // 'your_meals[saturday]': meals
     };
     Get.log('ccccccc 1 ' +
@@ -52,7 +52,7 @@ class CreatePackageApis {
         path: 'updateAdditionalData',
         data: NetworkRequestBody.json(map),
         headers: {
-          'Authorization': 'Bearer $token',
+          'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTY3MDkzMTYsImV4cCI6MTY1Njc5NTcxNiwibmJmIjoxNjU2NzA5MzE2LCJqdGkiOiJEMmFUQWJNV0wwS0Z2WGVwIiwic3ViIjo0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.LFCLQ-_k1gj8TfGrdqHR366rsg_jNSPCy3JbX_7eQBk',
         });
 
     Get.log('ccccccc 1 ' + request.path.toString());
