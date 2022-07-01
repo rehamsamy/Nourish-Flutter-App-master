@@ -192,8 +192,9 @@ class AuthApis {
     String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request = NetworkRequest(
       type: NetworkRequestType.POST,
-      path: 'auth/refreash',
-      data: NetworkRequestBody.json({"Authorization": "Bearer $token"}),
+      path: 'auth/refresh',
+      data: NetworkRequestBody.json({}),
+      headers: {"Authorization": "Bearer $token"}
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(

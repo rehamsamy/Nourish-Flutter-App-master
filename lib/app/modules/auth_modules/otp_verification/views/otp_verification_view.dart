@@ -107,7 +107,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                                   controller.phone ?? '', controller.otp.text)
                           as VerifyEmailModel?;
                       Get.log('xxxxxxx' + verifyEmail.toString());
-                      if (verifyEmail?.errors != null) {
+                      if (verifyEmail?.errors != null||verifyEmail?.accessToken != null) {
                         Get.log('xxxx3');
                         Get.offAllNamed(Routes.HOME_PAGE);
                         // Get.snackbar("Unknown Network error", verifyEmail.message??'');

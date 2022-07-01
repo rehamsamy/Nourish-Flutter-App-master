@@ -13,8 +13,8 @@ class AddressApis{
         required String name,
         required String address_type,
         required String area,
-        required int building,
-        required int flat,
+        required String building,
+        required String flat,
         required String street,
         required String postal_code,
         required int additional_number,
@@ -34,7 +34,7 @@ class AddressApis{
       'additional_number':additional_number,
       'delivery_instructions':delivery_instructions
     };
-       AddAddressModel addressModel = AddAddressModel();
+       AddAddressModel ?addressModel;
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request =  NetworkRequest(
         type: NetworkRequestType.POST,
@@ -50,7 +50,7 @@ class AddressApis{
     );
     response.maybeWhen(
         ok: (response) {
-          addressModel = response;
+          addressModel = response as AddAddressModel;
         },
         orElse: () {});
     return addressModel;

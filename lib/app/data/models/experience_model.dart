@@ -34,7 +34,7 @@ class ExperienceItem {
     key = json['key'];
   }
   int? id;
-  int? value;
+  double? value;
   String? key;
 
   Map<String, dynamic> toJson() {

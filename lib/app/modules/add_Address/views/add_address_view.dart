@@ -36,7 +36,7 @@ class AddAddressView extends GetView<AddAddressController> {
               children: [
                 const MapEditLocationPin(),
                 CustomInput(
-                  hint: LocalKeys.kAddressName.tr,
+                  hint: controller.address?.name??"Riyadh Province , Riyadh",
                   title: LocalKeys.kAddressName.tr,
                   textEditingController: controller.addressName,
                 ),
@@ -112,13 +112,13 @@ class AddAddressView extends GetView<AddAddressController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomInput(
-                      hint: controller.address?.street??"Al Madarah",
+                      hint: controller.address?.building??"Al Madarah",
                       title: LocalKeys.kBuilding.tr,
                       width: 176.w,
                       textEditingController: controller.addressName,
                     ),
                     CustomInput(
-                      hint: "Flat",
+                      hint: controller.address?.flat??"Flat",
                       title: LocalKeys.kFlat.tr,
                       width: 176.w,
                       textEditingController: controller.addressName,
@@ -127,7 +127,7 @@ class AddAddressView extends GetView<AddAddressController> {
                   ],
                 ),
                 CustomInput(
-                  hint:controller.address?.area?? "Riyadh Province , Riyadh",
+                  hint:controller.address?.street?? "Riyadh Province , Riyadh",
                   title: LocalKeys.kStreet.tr,
                   textEditingController: controller.addressName,
                 ),
@@ -135,7 +135,7 @@ class AddAddressView extends GetView<AddAddressController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomInput(
-                      hint: controller.address?.name??"Al Madarah",
+                      hint: controller.address?.postalCode??"Al Madarah",
                       title: LocalKeys.kPostalCode.tr,
                       width: 176.w,
                       textEditingController: controller.addressName,
@@ -149,7 +149,7 @@ class AddAddressView extends GetView<AddAddressController> {
                   ],
                 ),
                 CustomInput(
-                  hint: controller.address?.area??"Riyadh Province , Riyadh",
+                  hint: controller.address?.deliveryInstructions??"Riyadh Province , Riyadh",
                   title: LocalKeys.kDeliveryInstructions.tr,
                   textEditingController: controller.addressName,
                   secondTitle: LocalKeys.kOptional,
@@ -161,18 +161,26 @@ class AddAddressView extends GetView<AddAddressController> {
                   title: LocalKeys.kSave.tr,
                   onPress: () async{
                     AddAddressModel ? addressModel=await AddressApis()
-                        .addAddress(lat: controller.address?.lat??,
-                        lng: controller.address?.lng??,
-                        name: controller.address?.name??,
-                        address_type: controller.address?.addressType??,
-                        area: controller.address?.area??,
-                        building: controller.address?.building??,
-                        flat: controller.address?.flat??,
-                        street: controller.address?.street??,
-                        postal_code: controller.address?.postalCode??,
-                        additional_number: controller.address?.additionalNumber??,
-                        delivery_instructions: controller.address?.deliveryInstructions??);
-                    Get.back();
+                        .addAddress(lat: controller.address?.lat??0.0,
+                        lng: controller.address?.lng??32.292789,
+                        name: controller.address?.name??'stresst',
+                        address_type: controller.address?.addressType??'stresst',
+                        area: controller.address?.area??'stresst',
+                        building: controller.address?.building??'15',
+                        flat: controller.address?.flat??'10',
+                        street: controller.address?.street??'stresst',
+                        postal_code: controller.address?.postalCode??'151520',
+                        additional_number: int.parse(controller.address?.additionalNumber??'10'),
+                        delivery_instructions: controller.address?.deliveryInstructions??'stresst');
+                    String mes=addressModel?.data?.msg??'';
+                    if(addressModel?.data !=null){
+                      Get.back();
+                      Get.snackbar(' Add Your Address', mes);
+                    }else{
+                      Get.log('messss    2 '+(addressModel?.data?.toString()).toString());
+                      Get.snackbar('error', 'Plz Try again =>');
+                    }
+
                   },
                 ),
               ],

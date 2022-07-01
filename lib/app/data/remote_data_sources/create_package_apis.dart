@@ -26,7 +26,8 @@ class CreatePackageApis {
       'weight': weight,
       'weight_unit': weight_unit,
       'goal': goal,
-      'your_meals[saturday]': meals
+      'your_meals'[1]:1
+      // 'your_meals[saturday]': meals
     };
     Get.log('ccccccc 1 ' +
         gender.toString() +

@@ -46,6 +46,7 @@ class ActivityScreen extends  GetView<CustomPackageController> {
                   builder: (_,snap){
                     if(snap.hasData){
                       List<ExperienceItem>list=snap.data as List<ExperienceItem>;
+                      Get.log('cccc   '+list.length.toString());
                       if(!list.isEmpty){
                         return ListView.builder(
                           shrinkWrap: true,
@@ -71,6 +72,7 @@ class ActivityScreen extends  GetView<CustomPackageController> {
                         );
                       }
                     }else{
+                      Get.log('cccc   '+controller.experienceIndex.toString());
                       return SizedBox(
                         height: 200,
                       );

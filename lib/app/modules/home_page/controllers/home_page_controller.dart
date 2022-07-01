@@ -7,7 +7,8 @@ import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 class HomePageController extends GetxController {
   @override
   void onInit() {
-    AuthApis().refreshToken();
+    Get.log('vvvvvvv  1');
+    AuthApis().refreshToken().then((value) => Get.log('vvvvvvv  '+value));
     super.onInit();
   }
 

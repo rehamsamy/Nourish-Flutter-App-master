@@ -12,8 +12,8 @@ import '../controllers/home_page_controller.dart';
 import 'bottom_nav_bar_icon.dart';
 
 class HomePageView extends GetView<HomePageController> {
-  const HomePageView({Key? key}) : super(key: key);
-
+   HomePageView({Key? key}) : super(key: key);
+  HomePageController controller=Get.find();
   @override
   Widget build(BuildContext context) {
     return Scaffold(
