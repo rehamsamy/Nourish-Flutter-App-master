@@ -11,7 +11,6 @@ import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:nourish_sa/app/modules/add_Address/controllers/add_address_controller.dart';
 
 import '../../app_theme.dart';
-import '../core/values/localization/local_keys.dart';
 
 class MapEditLocationPin extends StatefulWidget {
   const MapEditLocationPin({Key? key}) : super(key: key);
@@ -21,11 +20,11 @@ class MapEditLocationPin extends StatefulWidget {
 }
 
 class _MapEditLocationPinState extends State<MapEditLocationPin> {
-  AddAddressController addressController=Get.find();
+  AddAddressController addressController = Get.find();
   GeoData? geoCode;
   late LocationPermission permission;
   GoogleMapController? mapController;
-  Marker markers = Marker(
+  Marker markers = const Marker(
     markerId: MarkerId('marker'),
     position: LatLng(0, 0),
     infoWindow: InfoWindow(
@@ -38,7 +37,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
   GeoData? _address;
   LatLng showLocation = const LatLng(27.7089427, 85.3086209);
 
-  Completer<GoogleMapController> _controller = Completer();
+  final Completer<GoogleMapController> _controller = Completer();
 
   LatLng _center = const LatLng(45.521563, -122.677433);
 
@@ -119,7 +118,6 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
           markers: <Marker>{markers},
         ),
       ),
-
     );
   }
 
