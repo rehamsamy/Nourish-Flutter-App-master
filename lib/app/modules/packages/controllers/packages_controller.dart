@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../../data/services/analytics_service.dart';
+
 class PackagesController extends GetxController {
   //TODO: Implement PackagesController
   RxInt selectedPackageType = 0.obs;
@@ -12,14 +14,6 @@ class PackagesController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    AnalyticsService.instance.logEvent("Packages_View");
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

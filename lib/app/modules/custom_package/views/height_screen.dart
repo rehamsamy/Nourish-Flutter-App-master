@@ -8,6 +8,7 @@ import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
 
+import '../../../data/services/analytics_service.dart';
 import 'weight_screen.dart';
 
 class HeightScreen extends GetView<CustomPackageController> {
@@ -42,7 +43,8 @@ class HeightScreen extends GetView<CustomPackageController> {
                 child: SelectorTwoCard(
                   title: LocalKeys.kFeet.tr,
                   secondTitle: LocalKeys.kCentimetre.tr,
-                 flag: 'height', key: null,
+                  flag: 'height',
+                  key: null,
                 ),
               ),
               Row(
@@ -53,17 +55,20 @@ class HeightScreen extends GetView<CustomPackageController> {
                     child: CustomInput(
                       hint: "",
                       textInputType: TextInputType.number,
-                      textEditingController: controller.heightTextEditingController,
+                      textEditingController:
+                          controller.heightTextEditingController,
                       validator: (val) {
                         if (val!.trim().isEmpty) {
                           Get.snackbar('error', 'the  height is required');
                           return 'the height is required';
-                        }else if(int.parse(val.toString())<20 ||int.parse(val.toString())>400){
-                          int  x=int.parse(val.toString());
-                          Get.snackbar('error', 'the  height must be between 20 and 300 ');
+                        } else if (int.parse(val.toString()) < 20 ||
+                            int.parse(val.toString()) > 400) {
+                          int x = int.parse(val.toString());
+                          Get.snackbar('error',
+                              'the  height must be between 20 and 300 ');
                           return 'the height must be between 20 and 300 ';
                         }
-
+                        return null;
                       },
                       width: 110.w,
                     ),
@@ -82,9 +87,9 @@ class HeightScreen extends GetView<CustomPackageController> {
                   title: LocalKeys.kContinue.tr,
                   onPress: () {
                     if (_key.currentState!.validate()) {
+                      AnalyticsService.instance.logEvent("Weight_View");
                       Get.to(WeightScreen());
                     }
-
                   }),
               SizedBox(
                 height: 111.h,

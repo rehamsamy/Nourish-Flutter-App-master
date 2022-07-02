@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -11,140 +10,155 @@ import 'package:nourish_sa/app/modules/custom_package/controllers/custom_package
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 
+import '../../../data/services/analytics_service.dart';
 import 'calcuation_screen.dart';
 import 'result_screen.dart';
 
-class ActivityScreen extends  GetView<CustomPackageController> {
+class ActivityScreen extends GetView<CustomPackageController> {
   const ActivityScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    int selectedExper=1;
+    int selectedExper = 1;
     return Scaffold(
       appBar: AppBar(
-        title:  Text('${LocalKeys.kStep.tr} 5 ${LocalKeys.kOf.tr} 7'),
+        title: Text('${LocalKeys.kStep.tr} 5 ${LocalKeys.kOf.tr} 7'),
         centerTitle: true,
         elevation: 0,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
       body: GetBuilder<CustomPackageController>(
-        builder: (_)=>
-         SingleChildScrollView(
+        builder: (_) => SingleChildScrollView(
           child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 35.w),
-            child: Column(
-              children: [
-                    SizedBox(
-                      height: 80.h,
-                    ),
-                    Text(
-                      LocalKeys.kActiveAreYou.tr,
-                      style: Get.textTheme.bodyText1,
-                    ),
-                FutureBuilder(
-                  future: ExperienceApis().getExperience(),
-                  builder: (_,snap){
-                    if(snap.hasData){
-                      List<ExperienceItem>list=snap.data as List<ExperienceItem>;
-                      if(!list.isEmpty){
-                        return ListView.builder(
-                          shrinkWrap: true,
-                            itemCount:list.length,itemBuilder: (_,index){
-                          return
-                              InkWell(
-                                onTap: (){
-                                  selectedExper=list[index].id??1;
-                                //  controller.setExperienceSelect(true);
-                                  controller.setExperienceSelect(true,index);
-                                  Get.log('cccc   '+controller.experienceIndex.toString());
-                                },
-                                child: ActivityAnswer(
-                                  title: list[index].key??'',
-                                  isSelected: true,
-                                ),
-                              );
-                        });
-                      }else{
-                        return SizedBox(
-                          height: 200,
-                          child: Center(child: Text('no experience found'),),
-                        );
-                      }
-                    }else{
-                      return SizedBox(
-                        height: 200,
-                      );
-                    }
-                  }
-                ),
-                    SizedBox(
-                      height: 123.h,
-                    ),
-                    CustomButton(
-                      title: LocalKeys.kContinue.tr,
-                      onPress: ()async {
-
-                        CreatePackageModel? packageModel= await CreatePackageApis()
-                            .createPackage(gender: controller.isMaleSelected?'male':'female',
-                            experience_id:selectedExper,
-                            date_of_birth: controller.birtdate??'',
-                            height: int.parse(controller.heightTextEditingController.text),
-                            height_unit: controller.isFeetSelected.value?'feet':'cm',
-                            weight: int.parse(controller.weightTextEditingController.text),
-                            weight_unit: controller.isPoundSelected.value?'pound':'kg',
-                            goal: 'lose_weight', meals: 1);
-
-                        if(packageModel?.data !=null){
-                          Get.to(const CalcuationScreen(),arguments: {'packageModel':packageModel});
+              padding: EdgeInsets.symmetric(horizontal: 35.w),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 80.h,
+                  ),
+                  Text(
+                    LocalKeys.kActiveAreYou.tr,
+                    style: Get.textTheme.bodyText1,
+                  ),
+                  FutureBuilder(
+                      future: ExperienceApis().getExperience(),
+                      builder: (_, snap) {
+                        if (snap.hasData) {
+                          List<ExperienceItem> list =
+                              snap.data as List<ExperienceItem>;
+                          if (!list.isEmpty) {
+                            return ListView.builder(
+                                shrinkWrap: true,
+                                itemCount: list.length,
+                                itemBuilder: (_, index) {
+                                  return InkWell(
+                                    onTap: () {
+                                      selectedExper = list[index].id ?? 1;
+                                      //  controller.setExperienceSelect(true);
+                                      controller.setExperienceSelect(
+                                          true, index);
+                                      Get.log('cccc   ' +
+                                          controller.experienceIndex
+                                              .toString());
+                                    },
+                                    child: ActivityAnswer(
+                                      title: list[index].key ?? '',
+                                      isSelected: true,
+                                    ),
+                                  );
+                                });
+                          } else {
+                            return SizedBox(
+                              height: 200,
+                              child: Center(
+                                child: Text('no experience found'),
+                              ),
+                            );
+                          }
+                        } else {
+                          return SizedBox(
+                            height: 200,
+                          );
                         }
-                      },
-                    ),
-                    SizedBox(
-                      height: 111.h,
-                    ),
-              ],
-            )
-            // Column(
-            //   mainAxisAlignment: MainAxisAlignment.center,
-            //   children: [
-            //     SizedBox(
-            //       height: 80.h,
-            //     ),
-            //     Text(
-            //       LocalKeys.kActiveAreYou.tr,
-            //       style: Get.textTheme.bodyText1,
-            //     ),
-            //     ActivityAnswer(
-            //       title: LocalKeys.kNoExperience.tr,
-            //     ),
-            //     ActivityAnswer(
-            //       title: LocalKeys.kLightExercise.tr,
-            //       isSelected: true,
-            //     ),
-            //     ActivityAnswer(
-            //       title: LocalKeys.kModerateExercise.tr,
-            //     ),
-            //     ActivityAnswer(
-            //       title: LocalKeys.kHardExercise.tr,
-            //     ),
-            //     ActivityAnswer(
-            //       title: LocalKeys.kExtremelyActive.tr,
-            //     ),
-            //     SizedBox(
-            //       height: 123.h,
-            //     ),
-            //     CustomButton(
-            //       title: LocalKeys.kContinue.tr,
-            //       onPress: () {
-            //         Get.to(const CalcuationScreen());
-            //       },
-            //     ),
-            //     SizedBox(
-            //       height: 111.h,
-            //     ),
-            //   ],
-            // ),
-          ),
+                      }),
+                  SizedBox(
+                    height: 123.h,
+                  ),
+                  CustomButton(
+                    title: LocalKeys.kContinue.tr,
+                    onPress: () async {
+                      CreatePackageModel? packageModel =
+                          await CreatePackageApis().createPackage(
+                              gender:
+                                  controller.isMaleSelected ? 'male' : 'female',
+                              experience_id: selectedExper,
+                              date_of_birth: controller.birtdate ?? '',
+                              height: int.parse(
+                                  controller.heightTextEditingController.text),
+                              height_unit: controller.isFeetSelected.value
+                                  ? 'feet'
+                                  : 'cm',
+                              weight: int.parse(
+                                  controller.weightTextEditingController.text),
+                              weight_unit: controller.isPoundSelected.value
+                                  ? 'pound'
+                                  : 'kg',
+                              goal: 'lose_weight',
+                              meals: 1);
+
+                      if (packageModel?.data != null) {
+                        AnalyticsService.instance.logEvent("Calculation_View");
+                        Get.to(const CalcuationScreen(),
+                            arguments: {'packageModel': packageModel});
+                      }
+                    },
+                  ),
+                  SizedBox(
+                    height: 111.h,
+                  ),
+                ],
+              )
+              // Column(
+              //   mainAxisAlignment: MainAxisAlignment.center,
+              //   children: [
+              //     SizedBox(
+              //       height: 80.h,
+              //     ),
+              //     Text(
+              //       LocalKeys.kActiveAreYou.tr,
+              //       style: Get.textTheme.bodyText1,
+              //     ),
+              //     ActivityAnswer(
+              //       title: LocalKeys.kNoExperience.tr,
+              //     ),
+              //     ActivityAnswer(
+              //       title: LocalKeys.kLightExercise.tr,
+              //       isSelected: true,
+              //     ),
+              //     ActivityAnswer(
+              //       title: LocalKeys.kModerateExercise.tr,
+              //     ),
+              //     ActivityAnswer(
+              //       title: LocalKeys.kHardExercise.tr,
+              //     ),
+              //     ActivityAnswer(
+              //       title: LocalKeys.kExtremelyActive.tr,
+              //     ),
+              //     SizedBox(
+              //       height: 123.h,
+              //     ),
+              //     CustomButton(
+              //       title: LocalKeys.kContinue.tr,
+              //       onPress: () {
+              //         Get.to(const CalcuationScreen());
+              //       },
+              //     ),
+              //     SizedBox(
+              //       height: 111.h,
+              //     ),
+              //   ],
+              // ),
+              ),
         ),
       ),
     );

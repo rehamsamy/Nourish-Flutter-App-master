@@ -1,20 +1,12 @@
 import 'package:get/get.dart';
 
-class SuccessOrderController extends GetxController {
-  //TODO: Implement SuccessOrderController
+import '../../../data/services/analytics_service.dart';
 
-  final count = 0.obs;
+class SuccessOrderController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
+    AnalyticsService.instance.logEvent("Success_Order_View");
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

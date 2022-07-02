@@ -81,7 +81,7 @@ class _NourishAppState extends State<NourishApp> {
           ],
           theme: ThemeData(
             scaffoldBackgroundColor: whiteColor,
-            primarySwatch: Colors.orange,
+            primarySwatch: Colors.green,
             primaryColor: primaryColor,
             fontFamily: "Roboto",
             textTheme: appTextTheme,

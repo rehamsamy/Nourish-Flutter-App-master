@@ -17,6 +17,11 @@ NetworkService networkService = NetworkService(
 class AppConstants {
   const AppConstants._();
 
+  static const String kIntercomAppID = "cagzlkvw";
+  static const String kIntercomAndroidKey =
+      "android_sdk-7a9cc8c9d823c674daf7b6c34c216607bcf24a68";
+  static const String kIntercomIosKey =
+      "ios_sdk-9cba07ad4171abee94f60e49083b888264536c61";
   static const String kBaseUrl = "https://api.eat-nourish.com/api/";
   static const String kGoogleMapsApiKey =
       "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8";

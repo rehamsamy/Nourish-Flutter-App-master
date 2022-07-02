@@ -1,5 +1,7 @@
 import 'package:get/get.dart';
 
+import '../../../data/services/analytics_service.dart';
+
 class LocationAcesssController extends GetxController {
   //TODO: Implement LocationAcesssController
 
@@ -7,17 +9,6 @@ class LocationAcesssController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    AnalyticsService.instance.logEvent("Location_Access_View");
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {
-    super.onClose();
-  }
-
-  void increment() => count.value++;
 }

@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
-import 'package:nourish_sa/app/shared/custom_outlined_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
+import '../../../data/services/analytics_service.dart';
 import 'main_goal.dart';
 
 class ResultScreen extends StatelessWidget {
@@ -142,7 +142,7 @@ class ResultScreen extends StatelessWidget {
                                 child: Text(
                                   "150 G",
                                   style: Get.textTheme.bodyText1!
-                                      .copyWith(color: Color(0xff2BB07B)),
+                                      .copyWith(color: const Color(0xff2BB07B)),
                                 ),
                               ),
                               Text(
@@ -186,7 +186,8 @@ class ResultScreen extends StatelessWidget {
                 CustomButton(
                     title: LocalKeys.kContinue.tr,
                     onPress: () {
-                      Get.to(MainGoalScreen());
+                      AnalyticsService.instance.logEvent("Main_Goal_View");
+                      Get.to(const MainGoalScreen());
                     }),
                 SizedBox(
                   height: 18.h,

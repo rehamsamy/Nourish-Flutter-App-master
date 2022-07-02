@@ -1,3 +1,4 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -12,6 +13,7 @@ import 'package:nourish_sa/app/modules/home_screen/controllers/home_screen_contr
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
+import 'package:intercom_flutter/intercom_flutter.dart';
 import '../../../../../app_theme.dart';
 import 'drawer_item.dart';
 
@@ -137,14 +139,25 @@ class MainDrawer extends GetView<HomeScreenController> {
                     icon: Assets.kLocation,
                     onTap: () {
                       Get.toNamed(Routes.ADD_ADDRESS);
-                     // Get.toNamed(Routes.DELIVERY_ADDRESSES);
+                      // Get.toNamed(Routes.DELIVERY_ADDRESSES);
                       controller.scaffoldKey!.currentState!.openEndDrawer();
                     },
                   ),
                   DrawerItem(
                     name: LocalKeys.kHelpCenter.tr,
                     icon: Assets.kQuestionHelp,
-                    onTap: () {},
+                    onTap: () async {
+                      BotToast.showLoading();
+                      // TODO if user logged register it on intercom if else unregister
+//                      if () {
+//                        await Intercom.instance.loginIdentifiedUser();
+//                      } else {
+                      await Intercom.instance.logout();
+                      await Intercom.instance.loginUnidentifiedUser();
+//                      }
+                      BotToast.closeAllLoading();
+                      await Intercom.instance.displayMessenger();
+                    },
                   ),
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 14.5.h),
@@ -195,17 +208,18 @@ class MainDrawer extends GetView<HomeScreenController> {
                   DrawerItem(
                     name: LocalKeys.kLogout.tr,
                     icon: Assets.kLogOut,
-                    onTap: () async{
-                      LoginModel model= await AuthApis().logoutUser() as LoginModel;
-                      if(model !=null){
-                        String mes=model.data?.msg??'';
-                        Get.log('log mess   => '+mes);
-                        Get.snackbar(
-                            "Logout", model.data?.msg ?? '');
-                        SharedPreferences pref=await SharedPreferences.getInstance();
-                          await SharedPrefService(prefs: pref).removeToken();
-                         Get.offAllNamed(Routes.LOGIN);
-                      }
+                    onTap: () async {
+                      LoginModel model =
+                          await AuthApis().logoutUser() as LoginModel;
+                      String mes = model.data?.msg ?? '';
+                      Get.log('log mess   => ' + mes);
+                      Get.snackbar("Logout", model.data?.msg ?? '');
+                      SharedPreferences pref =
+                          await SharedPreferences.getInstance();
+                      await SharedPrefService(prefs: pref).removeToken();
+
+                      Intercom.instance.logout();
+                      Get.offAllNamed(Routes.LOGIN);
                       controller.scaffoldKey!.currentState!.openEndDrawer();
                     },
                   ),

@@ -9,6 +9,7 @@ import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
 
+import '../../../data/services/analytics_service.dart';
 import 'activity_screen.dart';
 
 class WeightScreen extends GetView<CustomPackageController> {
@@ -20,7 +21,7 @@ class WeightScreen extends GetView<CustomPackageController> {
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
-        title:  Text('${LocalKeys.kStep.tr} 4 ${LocalKeys.kOf.tr} 7'),
+        title: Text('${LocalKeys.kStep.tr} 4 ${LocalKeys.kOf.tr} 7'),
         centerTitle: true,
         elevation: 0,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
@@ -30,8 +31,7 @@ class WeightScreen extends GetView<CustomPackageController> {
           bottom: MediaQuery.of(context).viewInsets.bottom,
         ),
         child: GetBuilder<CustomPackageController>(
-          builder:(_)=>
-           Padding(
+          builder: (_) => Padding(
             padding: EdgeInsets.symmetric(horizontal: 35.w),
             child: Form(
               key: _key,
@@ -47,10 +47,11 @@ class WeightScreen extends GetView<CustomPackageController> {
                   ),
                   Padding(
                     padding: EdgeInsets.only(top: 48.h, bottom: 28.h),
-                    child:  SelectorTwoCard(
+                    child: SelectorTwoCard(
                       title: LocalKeys.kPound.tr,
                       secondTitle: LocalKeys.kKilogram.tr,
-                      flag: 'weight', key: null,
+                      flag: 'weight',
+                      key: null,
                     ),
                   ),
                   Row(
@@ -59,19 +60,22 @@ class WeightScreen extends GetView<CustomPackageController> {
                       SizedBox(
                         child: CustomInput(
                           hint: "0",
-                          textEditingController: controller.weightTextEditingController,
+                          textEditingController:
+                              controller.weightTextEditingController,
                           textInputType: TextInputType.number,
                           width: 110.w,
-                          validator: (val){
-                          if (val!.trim().isEmpty) {
-                            Get.snackbar('error', 'the weight is required');
-                            return 'the weight is required';
-                          }else if(int.parse(val.toString())<20 ||int.parse(val.toString())>400){
-                            int  x=int.parse(val.toString());
-                            Get.snackbar('error', 'the weight must be between 20 and 400 ');
-                            return 'the weight must be between 20 and 400 ';
-                          }
-
+                          validator: (val) {
+                            if (val!.trim().isEmpty) {
+                              Get.snackbar('error', 'the weight is required');
+                              return 'the weight is required';
+                            } else if (int.parse(val.toString()) < 20 ||
+                                int.parse(val.toString()) > 400) {
+                              int x = int.parse(val.toString());
+                              Get.snackbar('error',
+                                  'the weight must be between 20 and 400 ');
+                              return 'the weight must be between 20 and 400 ';
+                            }
+                            return null;
                           },
                         ),
                       ),
@@ -103,7 +107,8 @@ class WeightScreen extends GetView<CustomPackageController> {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                         child: IconButton(
-                          icon: Icon( Icons.remove, color: Colors.white, size: 25.r),
+                          icon: Icon(Icons.remove,
+                              color: Colors.white, size: 25.r),
                           onPressed: () {
                             // if(controller.targetWeightTextEditingController.text !=null){
                             //   int x=int.parse(controller.targetWeightTextEditingController.text);
@@ -112,7 +117,6 @@ class WeightScreen extends GetView<CustomPackageController> {
                             //   }
                             //   x--;
                             // }
-
                           },
                         ),
                       ),
@@ -152,18 +156,23 @@ class WeightScreen extends GetView<CustomPackageController> {
                                 width: 110.w,
                                 height: 55.h,
                                 child: TextFormField(
-                                  keyboardType:TextInputType.number,
-                                  controller: controller.targetWeightTextEditingController,
+                                  keyboardType: TextInputType.number,
+                                  controller: controller
+                                      .targetWeightTextEditingController,
                                   style: Theme.of(context).textTheme.bodyText2,
-                                  validator: (val){
+                                  validator: (val) {
                                     if (val!.trim().isEmpty) {
-                                      Get.snackbar('error', 'the  target weight is required');
+                                      Get.snackbar('error',
+                                          'the  target weight is required');
                                       return 'the weight is required';
-                                    }else if(int.parse(val.toString())<20 ||int.parse(val.toString())>400){
-                                      int  x=int.parse(val.toString());
-                                      Get.snackbar('error', 'the target weight must be between 20 and 400 ');
+                                    } else if (int.parse(val.toString()) < 20 ||
+                                        int.parse(val.toString()) > 400) {
+                                      int x = int.parse(val.toString());
+                                      Get.snackbar('error',
+                                          'the target weight must be between 20 and 400 ');
                                       return 'the target weight must be between 20 and 400 ';
                                     }
+                                    return null;
                                   },
                                   decoration: InputDecoration(
                                     hintText: "0",
@@ -194,7 +203,8 @@ class WeightScreen extends GetView<CustomPackageController> {
                           borderRadius: BorderRadius.circular(5.r),
                         ),
                         child: IconButton(
-                          icon: Icon( Icons.add, color: Colors.white, size: 25.r),
+                          icon:
+                              Icon(Icons.add, color: Colors.white, size: 25.r),
                           onPressed: () {
                             // if(controller.targetWeightTextEditingController.text !=null){
                             //   int x=int.parse(controller.targetWeightTextEditingController.text);
@@ -211,10 +221,10 @@ class WeightScreen extends GetView<CustomPackageController> {
                   CustomButton(
                       title: LocalKeys.kContinue.tr,
                       onPress: () {
-                        if(_key.currentState!.validate()){
-                          Get.to(ActivityScreen());
+                        if (_key.currentState!.validate()) {
+                          AnalyticsService.instance.logEvent("Activity_View");
+                          Get.to(const ActivityScreen());
                         }
-
                       }),
                   SizedBox(
                     height: 111.h,

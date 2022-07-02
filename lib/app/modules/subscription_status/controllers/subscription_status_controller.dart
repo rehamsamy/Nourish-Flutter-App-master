@@ -1,23 +1,17 @@
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 
+import '../../../data/services/analytics_service.dart';
+
 class SubscriptionStatusController extends GetxController {
   //TODO: Implement SubscriptionStatusController
   Map args = Get.arguments ?? {};
-  SubscriptionDetailModel  detailModel= SubscriptionDetailModel();
-  final count = 0.obs;
+  SubscriptionDetailModel detailModel = SubscriptionDetailModel();
   @override
   void onInit() {
     super.onInit();
-    detailModel=  args['detailModel'] as SubscriptionDetailModel;
-  }
 
-  @override
-  void onReady() {
-    super.onReady();
+    AnalyticsService.instance.logEvent("Subscription_Status_View");
+    detailModel = args['detailModel'] as SubscriptionDetailModel;
   }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }

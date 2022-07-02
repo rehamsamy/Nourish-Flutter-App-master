@@ -7,9 +7,9 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/modules/custom_package/controllers/custom_package_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
-import 'package:nourish_sa/app/shared/custom_input.dart';
 
 import '../../../../app_theme.dart';
+import '../../../data/services/analytics_service.dart';
 import 'height_screen.dart';
 
 class BirthDateScreen extends GetView<CustomPackageController> {
@@ -18,13 +18,13 @@ class BirthDateScreen extends GetView<CustomPackageController> {
     String bithdate;
     return Scaffold(
       appBar: AppBar(
-        title:  Text('${LocalKeys.kStep.tr} 2 ${LocalKeys.kOf.tr} 7'),
+        title: Text('${LocalKeys.kStep.tr} 2 ${LocalKeys.kOf.tr} 7'),
         centerTitle: true,
         elevation: 0,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
       body: GetBuilder<CustomPackageController>(
-        builder: (_)=> Padding(
+        builder: (_) => Padding(
           padding: EdgeInsets.symmetric(horizontal: 35.w),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -52,16 +52,16 @@ class BirthDateScreen extends GetView<CustomPackageController> {
                   ),
                   child: DateTimePicker(
                     type: DateTimePickerType.date,
-                    firstDate:DateTime(1980),
+                    firstDate: DateTime(1980),
                     lastDate: DateTime(2022),
                     dateMask: 'yyyy-MM-dd',
-                    initialDate:DateTime(2010),
+                    initialDate: DateTime(2010),
                     style: Theme.of(context).textTheme.bodyText2,
                     onChanged: (String dat) {
                       controller.setBirthdate(dat);
                     },
                     decoration: InputDecoration(
-                     // hintText: LocalKeys.kBirthDate.tr,
+                      // hintText: LocalKeys.kBirthDate.tr,
                       hintStyle: Theme.of(context).textTheme.caption,
                       border: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(
@@ -104,12 +104,14 @@ class BirthDateScreen extends GetView<CustomPackageController> {
               CustomButton(
                   title: LocalKeys.kContinue.tr,
                   onPress: () {
-                    if(controller.birtdate!=null){
-                      Get.to(HeightScreen());
-                    }else{
-                      Get.snackbar('required', 'You must enter the birthdate',colorText: Colors.red);
-                    }
+                    if (controller.birtdate != null) {
+                      AnalyticsService.instance.logEvent("Height_View");
 
+                      Get.to(HeightScreen());
+                    } else {
+                      Get.snackbar('required', 'You must enter the birthdate',
+                          colorText: Colors.red);
+                    }
                   }),
               SizedBox(
                 height: 111.h,

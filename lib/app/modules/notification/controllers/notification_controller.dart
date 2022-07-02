@@ -1,20 +1,11 @@
 import 'package:get/get.dart';
 
-class NotificationController extends GetxController {
-  //TODO: Implement NotificationController
+import '../../../data/services/analytics_service.dart';
 
-  final count = 0.obs;
+class NotificationController extends GetxController {
   @override
   void onInit() {
+    AnalyticsService.instance.logEvent("Notification_View");
     super.onInit();
   }
-
-  @override
-  void onReady() {
-    super.onReady();
-  }
-
-  @override
-  void onClose() {}
-  void increment() => count.value++;
 }
