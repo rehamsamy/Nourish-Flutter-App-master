@@ -8,6 +8,7 @@ import 'package:geocoder2/geocoder2.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nourish_sa/app/modules/add_Address/controllers/add_address_controller.dart';
 
 import '../../app_theme.dart';
 import '../core/values/localization/local_keys.dart';
@@ -20,6 +21,7 @@ class MapEditLocationPin extends StatefulWidget {
 }
 
 class _MapEditLocationPinState extends State<MapEditLocationPin> {
+  AddAddressController addressController=Get.find();
   GeoData? geoCode;
   late LocationPermission permission;
   GoogleMapController? mapController;
@@ -117,45 +119,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
           markers: <Marker>{markers},
         ),
       ),
-      // Column(
-      //   children: [
-      //     Image.asset(
-      //       Assets.kdropPin,
-      //       width: 342.w,
-      //       fit: BoxFit.fitWidth,
-      //     ),
-      //     SizedBox(
-      //       height: 13.h,
-      //     ),
-      //     Row(
-      //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //       children: [
-      //         Row(
-      //           children: [
-      //             SvgPicture.asset(
-      //               Assets.kLocationIcon,
-      //               width: 17.w,
-      //               height: 19.h,
-      //
-      //             ),
-      //             SizedBox(
-      //               width: 10.w,
-      //             ),
-      //             Text(
-      //               LocalKeys.kEditLocationPin.tr,
-      //               style: Get.textTheme.headline3,
-      //             ),
-      //           ],
-      //         ),
-      //         Icon(
-      //           Icons.arrow_forward_ios_outlined,
-      //           size: 10.r,
-      //           color: blueGreyColor,
-      //         ),
-      //       ],
-      //     )
-      //   ],
-      // ),
+
     );
   }
 
@@ -204,16 +168,8 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
               longitude: currentLocation.longitude,
               googleMapApiKey: "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8")
           .catchError((err) => Get.log('xxx  err 1 ' + err.toString()));
+      addressController.setAddressData(_address);
       print(_address);
-
-      // geoCode.reverseGeocoding(latitude: currentLocation.latitude,
-      //     longitude: currentLocation.longitude)
-      //     .then((value) {
-      //       setState(() {
-      //         city=value.toString();
-      //       });
-      // }).catchError((error)=>print('hhhhhhhhhhhhh'+error));
-
       Get.log('xxxx  city ' + city.toString());
     }).catchError((err) => Get.log('xxx  err  ' + err.toString()));
     // return _address;

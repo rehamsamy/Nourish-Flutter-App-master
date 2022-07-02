@@ -78,6 +78,7 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
                       if (snap.hasData) {
                         List<AddressItem>? list =
                             snap.data as List<AddressItem>;
+                        Get.log('xxx  '+snap.data.toString());
                         if (list.isNotEmpty) {
                           return ListView.builder(
                               itemCount: list.length,

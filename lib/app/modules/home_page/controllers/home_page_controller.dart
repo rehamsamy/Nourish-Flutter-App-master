@@ -12,6 +12,9 @@ class HomePageController extends GetxController {
     AnalyticsService.instance.logEvent("Home_Page");
 
     AuthApis().refreshToken();
+
+    Get.log('vvvvvvv  1');
+    //  AuthApis().refreshToken().then((value) => Get.log('vvvvvvv  '+value));
     super.onInit();
   }
 

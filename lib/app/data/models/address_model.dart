@@ -25,23 +25,24 @@ class AddressModel {
 class AddressItem {
   AddressItem({
       this.id, 
-      this.lat, 
-      this.lng, 
-      this.name, 
-      this.addressType, 
-      this.area, 
-      this.building, 
-      this.flat, 
-      this.street, 
-      this.postalCode, 
-      this.additionalNumber, 
-      this.deliveryInstructions,});
+      // this.lat,
+      // this.lng,
+       this.name,
+      this.addressType,
+      this.area,
+      this.building,
+      this.flat,
+      this.street,
+      this.postalCode,
+      this.additionalNumber,
+      this.deliveryInstructions,
+  });
 
   AddressItem.fromJson(dynamic json) {
     id = json['id'];
-    lat = json['lat'];
-    lng = json['lng'];
-    name = json['name'];
+    // lat = json['lat'];
+    // lng = json['lng'];
+     name = json['name'];
     addressType = json['address_type'];
     area = json['area'];
     building = json['building'];
@@ -52,9 +53,9 @@ class AddressItem {
     deliveryInstructions = json['delivery_instructions'];
   }
   int? id;
-  double? lat;
-  double? lng;
-  String? name;
+  // double? lat;
+  // double? lng;
+   String? name;
   String? addressType;
   String? area;
   String? building;
@@ -62,13 +63,13 @@ class AddressItem {
   String? street;
   String? postalCode;
   String? additionalNumber;
-  dynamic deliveryInstructions;
+  String? deliveryInstructions;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
-    map['lat'] = lat;
-    map['lng'] = lng;
+    // map['lat'] = lat;
+    // map['lng'] = lng;
     map['name'] = name;
     map['address_type'] = addressType;
     map['area'] = area;

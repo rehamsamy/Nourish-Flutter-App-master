@@ -1,3 +1,4 @@
+//
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -46,7 +47,8 @@ class ActivityScreen extends GetView<CustomPackageController> {
                         if (snap.hasData) {
                           List<ExperienceItem> list =
                               snap.data as List<ExperienceItem>;
-                          if (!list.isEmpty) {
+                          Get.log('cccc   ' + list.length.toString());
+                          if (list.isNotEmpty) {
                             return ListView.builder(
                                 shrinkWrap: true,
                                 itemCount: list.length,
@@ -68,7 +70,7 @@ class ActivityScreen extends GetView<CustomPackageController> {
                                   );
                                 });
                           } else {
-                            return SizedBox(
+                            return const SizedBox(
                               height: 200,
                               child: Center(
                                 child: Text('no experience found'),
@@ -76,7 +78,9 @@ class ActivityScreen extends GetView<CustomPackageController> {
                             );
                           }
                         } else {
-                          return SizedBox(
+                          Get.log('cccc   ' +
+                              controller.experienceIndex.toString());
+                          return const SizedBox(
                             height: 200,
                           );
                         }
@@ -108,6 +112,7 @@ class ActivityScreen extends GetView<CustomPackageController> {
 
                       if (packageModel?.data != null) {
                         AnalyticsService.instance.logEvent("Calculation_View");
+
                         Get.to(const CalcuationScreen(),
                             arguments: {'packageModel': packageModel});
                       }

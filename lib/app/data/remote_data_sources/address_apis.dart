@@ -1,3 +1,4 @@
+
 import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_instance/get_instance.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
@@ -13,8 +14,8 @@ class AddressApis{
         required String name,
         required String address_type,
         required String area,
-        required int building,
-        required int flat,
+        required String building,
+        required String flat,
         required String street,
         required String postal_code,
         required int additional_number,
@@ -34,16 +35,15 @@ class AddressApis{
       'additional_number':additional_number,
       'delivery_instructions':delivery_instructions
     };
-    const   String token1='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTU3NDY4NjIsImV4cCI6MTY1NTc1MDQ2MiwibmJmIjoxNjU1NzQ2ODYyLCJqdGkiOiJLMmZ6TWYwZGxaZzk2MGN6Iiwic3ViIjoxNywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.uezCaWKBlwynQq-CEfIgI1RN8fkcHj5an4NzTMeOlPE';
-    AddAddressModel addressModel = AddAddressModel();
+       AddAddressModel ?addressModel;
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request =  NetworkRequest(
         type: NetworkRequestType.POST,
-        path: 'updateProfile',
+        path: 'addAddress',
         data: NetworkRequestBody.json(
          map
         ),
-        headers: {'Authorization':'Bearer $token1'}
+        headers: {'Authorization':'Bearer $token'}
     );
     final response = await networkService.execute(
       request,
@@ -51,7 +51,7 @@ class AddressApis{
     );
     response.maybeWhen(
         ok: (response) {
-          addressModel = response;
+          addressModel = response as AddAddressModel;
         },
         orElse: () {});
     return addressModel;
@@ -72,10 +72,12 @@ class AddressApis{
       request,
       AddressModel.fromJson, // <- Function to convert API response to your model
     );
+    Get.log('ccccccc  3'+response.toString());
     response.maybeWhen(
         ok: (response) {
           AddressModel model=response as AddressModel;
-          list = model.data ;
+          list = model.data  ;
+          Get.log('ccccccc  3'+(list?.length.toString()).toString());
         },
         orElse: () {});
     return list;

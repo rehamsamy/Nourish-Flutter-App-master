@@ -4,8 +4,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
+import 'package:nourish_sa/app/data/models/categories_model.dart';
+import 'package:nourish_sa/app/data/models/home_package_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
-
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
   final Size preferredSize;
@@ -61,9 +63,11 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
           ),
         ),
         InkWell(
-          onTap: () => Get.toNamed(
-            Routes.SEARCH,
-          ),
+          onTap: ()async{
+            List<WeeklyItem>? list=await HomeApis().getHomePackages();
+            Get.toNamed(
+          Routes.SEARCH, arguments: {'packagesList':list});
+              },
           child: Padding(
             padding: EdgeInsets.symmetric(
               horizontal: 16.w,

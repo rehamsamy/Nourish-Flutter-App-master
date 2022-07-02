@@ -1,8 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
-import 'package:nourish_sa/app/data/models/package_model.dart';
 
 import '../../../data/services/analytics_service.dart';
 
