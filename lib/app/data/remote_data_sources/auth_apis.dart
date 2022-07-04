@@ -61,9 +61,9 @@ class AuthApis {
           verifyModel = authResponse as VerifyEmailModel;
           SharedPreferences prefs = await SharedPreferences.getInstance();
           prefs.clear();
-          Get.log('vvvvv   1'+prefs.getString('token').toString());
+          Get.log('vvvvv   1' + prefs.getString('token').toString());
           prefs.setString('token', verifyModel.accessToken ?? '');
-          Get.log('vvvvv   2'+prefs.getString('token').toString());
+          Get.log('vvvvv   2' + prefs.getString('token').toString());
           SharedPrefService(prefs: prefs)
               .saveToken(verifyModel.accessToken ?? '');
           return verifyModel;
@@ -144,27 +144,24 @@ class AuthApis {
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
         path: 'auth/logout',
-        data: NetworkRequestBody.json(
+        data: const NetworkRequestBody.json(
           {},
         ),
-        headers: {
-          'Authorization':
-              'Bearer $token'
-        });
+        headers: {'Authorization': 'Bearer $token'});
     NetworkResponse response = await networkService.execute(
       request,
       LoginModel.fromJson, // <- Function to convert API response to your model
     );
-    response.maybeWhen(ok: (data) async{
+    response.maybeWhen(ok: (data) async {
       print('vvv' + data.toString());
       loginModel = data as LoginModel;
       SharedPreferences prefs = await SharedPreferences.getInstance();
-      print('vvv1' +  prefs.getString('token').toString());
+      print('vvv1' + prefs.getString('token').toString());
       prefs.getString('token');
 
       prefs.clear();
       Get.find<SharedPrefService>().removeToken();
-      print('vvv1' +  prefs.getString('token').toString());
+      print('vvv1' + prefs.getString('token').toString());
       return loginModel;
     }, orElse: () {
       print(response.toString());
@@ -200,18 +197,17 @@ class AuthApis {
 
 //TODO: Implement this method to get Refreshed Token
   Future<String> refreshToken() async {
-    VerifyEmailModel verifyModel = VerifyEmailModel();
+    LoginModel verifyModel = LoginModel();
     String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request = NetworkRequest(
-      type: NetworkRequestType.POST,
-      path: 'auth/refresh',
-      data: NetworkRequestBody.json({}),
-      headers: {"Authorization": "Bearer $token"}
-    );
+        type: NetworkRequestType.POST,
+        path: 'auth/refresh',
+        data: const NetworkRequestBody.json({}),
+        headers: {"Authorization": "Bearer $token"});
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      VerifyEmailModel.fromJson, // <- Function to convert API response to your model
+      LoginModel.fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(
       ok: (authResponse) async {
@@ -220,7 +216,7 @@ class AuthApis {
       },
       badRequest: (info) {},
       noAuth: (data) {
-       // refreshAppWithNewToken();
+        // refreshAppWithNewToken();
       },
       orElse: () {},
     );
