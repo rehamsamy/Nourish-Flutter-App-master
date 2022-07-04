@@ -8,7 +8,7 @@ class PaymentApis{
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'getPayments',
-      data: const NetworkRequestBody.json(
+      data: NetworkRequestBody.json(
         {},
       ),
     );

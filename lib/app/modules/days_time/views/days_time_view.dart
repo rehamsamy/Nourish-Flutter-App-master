@@ -1,5 +1,4 @@
 import 'package:date_time_picker/date_time_picker.dart';
-import 'package:dropdown_button2/custom_dropdown_button2.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -9,7 +8,6 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_dropdown.dart';
-import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
@@ -121,7 +119,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
                   dateMask: 'yyyy-MM-dd',
                   style: Theme.of(context).textTheme.bodyText2,
                   decoration: InputDecoration(
-                    hintText:  LocalKeys.kStartingDay.tr,
+                    hintText: LocalKeys.kStartingDay.tr,
                     hintStyle: Theme.of(context).textTheme.caption,
                     border: OutlineInputBorder(
                       borderRadius: BorderRadius.circular(
@@ -163,7 +161,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
             CustomDropDown(
               hintText: "",
               currentValue: "",
-              items: [],
+              items: const [],
               width: 370.w,
               onChanged: (v) {},
               title: LocalKeys.kBranchTime.tr,

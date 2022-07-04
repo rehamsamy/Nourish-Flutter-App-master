@@ -15,10 +15,6 @@ class PaymentMethodsController extends GetxController {
     total = args['total'] as int;
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {}

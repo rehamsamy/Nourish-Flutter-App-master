@@ -25,7 +25,6 @@ String? x=dayName?.substring(0,3).toString();
      Get.log('ccccccc 0 '+x.toString());
     int? total=((controller.detailModel?.data?.order?.package?.priceWithTax))! +
         (controller.detailModel?.data?.order?.branch?.deliveryFees  as int);
-    ;
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kCart.tr),
@@ -273,7 +272,7 @@ String? x=dayName?.substring(0,3).toString();
                         ),
                         CartItem(
                           item: LocalKeys.kTotal.tr,
-                          value: "${total} SAR",
+                          value: "$total SAR",
                           isTotal: true,
                         ),
                         Padding(

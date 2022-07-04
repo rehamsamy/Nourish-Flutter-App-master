@@ -54,7 +54,7 @@ class MainGoalScreen extends StatelessWidget {
                 title: LocalKeys.kStart.tr,
                 onPress: () {
                   AnalyticsService.instance.logEvent("Meals_Needed_View");
-                  Get.to(MealsNeededScreen());
+                  Get.to(() => const MealsNeededScreen());
                 }),
             SizedBox(
               height: 111.h,

@@ -75,7 +75,7 @@ class CategoryProductCard extends StatelessWidget {
                       width: 8.w,
                     ),
                     Text(
-                      productCalories??'' + " ${LocalKeys.kCalories.tr}",
+                      productCalories??'' " ${LocalKeys.kCalories.tr}",
                       style: Theme.of(context)
                           .textTheme
                           .bodyText2!

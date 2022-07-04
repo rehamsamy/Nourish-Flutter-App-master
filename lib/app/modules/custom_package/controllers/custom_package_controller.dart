@@ -37,8 +37,6 @@ class CustomPackageController extends GetxController {
 
     AnalyticsService.instance.logEvent("Gender_View");
     // experiencesList = await ExperienceApis().getExperience();
-    isExperienceSelected =
-        List<bool>.filled(experiencesList.length ?? 0, false);
   }
 
   @override

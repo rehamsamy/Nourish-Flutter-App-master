@@ -4,15 +4,12 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/otp_mobile_verify_model.dart';
 import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
-import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../../../app_theme.dart';
 import '../controllers/otp_verification_controller.dart';
@@ -62,7 +59,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                             Get.textTheme.headline3!.copyWith(fontSize: 16.sp),
                       ),
                       TextSpan(
-                        text: " +1 322 322 445",
+                        text: controller.phone,
                         style: Get.textTheme.headline3!
                             .copyWith(fontSize: 16.sp, color: blackColor),
                       ),
@@ -100,30 +97,27 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                 child: CustomButton(
                   title: LocalKeys.kContinue.tr,
                   onPress: () async {
+                    VerifyEmailModel? verifyEmail = await AuthApis()
+                        .verifyOtpMobile(
+                            controller.phone ?? '', controller.otp.text);
                     if (controller.isLogin) {
-                      Get.log('xxxx1');
-                      VerifyEmailModel? verifyEmail = await AuthApis()
-                              .verifyOtpMobile(
-                                  controller.phone ?? '', controller.otp.text)
-                          as VerifyEmailModel?;
-                      Get.log('xxxxxxx' + verifyEmail.toString());
-                      if (verifyEmail?.errors != null||verifyEmail?.accessToken != null) {
-                        Get.log('xxxx3');
+                      if (verifyEmail.errors != null ||
+                          verifyEmail.accessToken != null) {
                         Get.offAllNamed(Routes.HOME_PAGE);
-                        // Get.snackbar("Unknown Network error", verifyEmail.message??'');
-                      }else{
-                        Get.log('xxxx4'+(verifyEmail?.message1.toString()).toString());
-                        Get.snackbar("Error occured ", verifyEmail?.message1??'The given data was invalid.');
+                      } else {
+                        Get.snackbar(
+                            "Error occured ",
+                            verifyEmail.message1 ??
+                                'The given data was invalid.');
                       }
                     } else if (controller.isEmail.value) {
                       VerifyEmailModel? verifyEmail = await AuthApis()
                           .verifyOtpMobile(
-                          controller.phone ?? '', controller.otp.text)
-                      as VerifyEmailModel?;
-                      if (verifyEmail != null) {
-                        Get.offAllNamed(Routes.CHANGE_EMAIL,arguments: {'otp':controller.otp.text});
-                         Get.snackbar("Unknown Network error", verifyEmail.message??'');
-                      }
+                              controller.phone ?? '', controller.otp.text);
+                      Get.offAllNamed(Routes.CHANGE_EMAIL,
+                          arguments: {'otp': controller.otp.text});
+                      Get.snackbar(
+                          "Unknown Network error", verifyEmail.message ?? '');
 
                       // Get.offAllNamed(Routes.LOGIN);
                     } else {
@@ -136,11 +130,11 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
               InkWell(
                 onTap: () async {
                   ResendOtpModel? otpModel =
-                      await AuthApis().resendOtpMobile(controller.phone ?? '') as ResendOtpModel;
+                      await AuthApis().resendOtpMobile(controller.phone ?? '');
                   if (otpModel.data != null) {
                     Get.snackbar("Resend Otp Code", otpModel.data?.msg ?? '');
                     Get.log('ccccccc0');
-                  }else{
+                  } else {
                     Get.log('ccccccc');
                   }
                 },
@@ -194,13 +188,15 @@ class EmailCodeDialog extends GetView<OtpVerificationController> {
             ),
             Padding(
               padding: EdgeInsets.only(top: 30.h, bottom: 13.h),
-              child: CustomButton(title: "Resend Code", onPress: () async{
-               ResendOtpModel? otpModel=await AuthApis().resendOtpMobile(controller.phone??'') as ResendOtpModel;
-               if(otpModel.data !=null){
-                 Get.snackbar("Resend Otp Code", otpModel.data?.msg??'');
-               }
-
-              }),
+              child: CustomButton(
+                  title: "Resend Code",
+                  onPress: () async {
+                    ResendOtpModel? otpModel = await AuthApis()
+                        .resendOtpMobile(controller.phone ?? '');
+                    if (otpModel.data != null) {
+                      Get.snackbar("Resend Otp Code", otpModel.data?.msg ?? '');
+                    }
+                  }),
             ),
             InkWell(
               onTap: () => Get.toNamed(Routes.CHANGE_EMAIL),

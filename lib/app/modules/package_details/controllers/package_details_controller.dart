@@ -16,10 +16,6 @@ class PackageDetailsController extends GetxController {
     packageDetailModel = map['packageDetailModel'];
   }
 
-  @override
-  void onReady() {
-    super.onReady();
-  }
 
   @override
   void onClose() {}

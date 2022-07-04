@@ -14,8 +14,8 @@ class  SubscriptionApis{
   //  const   String token1='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTU4NDA4ODQsImV4cCI6MTY1NTg0NDQ4NCwibmJmIjoxNjU1ODQwODg0LCJqdGkiOiJKaDRBWVdUaFY4UllGT0VlIiwic3ViIjo0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.upAtipt4siOdS_MatWb_zh0JX85kHkGZo_j_2rtMM0s';
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
-      path: '$subscriptionType',
-      data:  NetworkRequestBody.json(
+      path: subscriptionType,
+      data:  const NetworkRequestBody.json(
         {},
       ),
         headers: {'Authorization':'Bearer $token'}
@@ -85,7 +85,7 @@ Get.log('subscrip  =>'+response.toString());
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
         path: 'subscriptionDetails/23',
-        data:  NetworkRequestBody.json(
+        data:  const NetworkRequestBody.json(
          {}
         ),
         headers: {'Authorization':'Bearer $token'}

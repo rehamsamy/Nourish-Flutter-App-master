@@ -1,4 +1,3 @@
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -7,7 +6,6 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/profile_model.dart';
 import 'package:nourish_sa/app/data/models/update_profile_model.dart';
-import 'package:nourish_sa/app/data/models/user_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/profile_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -134,12 +132,10 @@ class ProfileView extends GetView<ProfileController> {
                                         mobile: controller.phone.text,
                                         email: controller.email.text,)
                                 as UpdateProfileModel;
-                            if (updateModel != null) {
-                              String? mes=updateModel.data?.msg.toString();
-                              Get.log('updated   =>'+mes.toString());
-                              Get.snackbar("Unknown Network error",
-                                  updateModel.data?.msg ?? '');
-                            }
+                            String? mes=updateModel.data?.msg.toString();
+                            Get.log('updated   =>'+mes.toString());
+                            Get.snackbar("Unknown Network error",
+                                updateModel.data?.msg ?? '');
                             Get.dialog(const OTPDialog());
                           },
                         ),

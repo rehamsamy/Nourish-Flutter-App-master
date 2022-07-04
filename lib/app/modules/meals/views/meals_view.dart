@@ -113,7 +113,7 @@ class MealsView extends GetView<MealsController> {
                             snap.data as List<ProductItem>;
                         Get.log(
                             '****** ' + controller.categoryId.value.toString());
-                        if (list.length > 0) {
+                        if (list.isNotEmpty) {
                           return ListView.builder(
                               itemCount: list.length,
                               physics: const NeverScrollableScrollPhysics(),
@@ -152,7 +152,7 @@ class MealsView extends GetView<MealsController> {
                               )));
                         }
                       } else {
-                        return SizedBox(
+                        return const SizedBox(
                           height: 200,
                         );
                       }

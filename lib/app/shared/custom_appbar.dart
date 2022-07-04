@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
-import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
 import 'package:nourish_sa/routes/app_pages.dart';

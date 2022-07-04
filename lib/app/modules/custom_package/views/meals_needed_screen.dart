@@ -3,22 +3,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/modules/custom_package/views/selector_two_card.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
-import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/selection_card.dart';
-import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
-import 'weight_screen.dart';
-
 class MealsNeededScreen extends StatelessWidget {
-  MealsNeededScreen({Key? key}) : super(key: key);
+  const MealsNeededScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text('${LocalKeys.kStep.tr} 7 ${LocalKeys.kOf.tr} 7'),
+        title: Text('${LocalKeys.kStep.tr} 7 ${LocalKeys.kOf.tr} 7'),
         centerTitle: true,
         elevation: 0,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
@@ -67,7 +62,7 @@ class MealsNeededScreen extends StatelessWidget {
             ),
             const Spacer(),
             CustomButton(
-              title: LocalKeys.kContinue.tr,
+                title: LocalKeys.kContinue.tr,
                 onPress: () {
                   Get.until((route) => Get.currentRoute == Routes.HOME_PAGE);
                 }),

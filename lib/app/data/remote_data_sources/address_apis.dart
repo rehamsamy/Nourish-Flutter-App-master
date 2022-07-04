@@ -64,7 +64,7 @@ class AddressApis{
     final request =  NetworkRequest(
         type: NetworkRequestType.GET,
         path: 'getAddresses',
-        data: NetworkRequestBody.json(
+        data: const NetworkRequestBody.json(
             {}),
         headers: {'Authorization':'Bearer $token'}
     );

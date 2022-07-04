@@ -57,7 +57,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                 builder: (_,snapshot){
                   if(snapshot.hasData){
                     List<PaymentItem> ? list=snapshot.data as List<PaymentItem>;
-                    if(list.length>0){
+                    if(list.isNotEmpty){
                       return  ListView.builder(
                         itemCount: list.length,
                         shrinkWrap: true,
@@ -71,10 +71,10 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                         },
                       );
                     }else{
-                      return SizedBox(height: 200,child: Center(child: Text('no payment found'),),);
+                      return const SizedBox(height: 200,child: Center(child: Text('no payment found'),),);
                     }
                   }else{
-                    return SizedBox(height: 200,);
+                    return const SizedBox(height: 200,);
                   }
 
                 }

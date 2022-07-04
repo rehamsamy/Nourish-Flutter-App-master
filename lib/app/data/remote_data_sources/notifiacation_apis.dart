@@ -1,4 +1,3 @@
-import 'package:get/get_core/src/get_main.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/notification_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
@@ -9,7 +8,7 @@ class NotificationApis {
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'notifications',
-      data: const NetworkRequestBody.json(
+      data: NetworkRequestBody.json(
         {},
       ),
     );

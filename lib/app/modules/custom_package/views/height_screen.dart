@@ -6,7 +6,6 @@ import 'package:nourish_sa/app/modules/custom_package/controllers/custom_package
 import 'package:nourish_sa/app/modules/custom_package/views/selector_two_card.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
-import 'package:nourish_sa/app_theme.dart';
 
 import '../../../data/services/analytics_service.dart';
 import 'weight_screen.dart';
@@ -88,7 +87,7 @@ class HeightScreen extends GetView<CustomPackageController> {
                   onPress: () {
                     if (_key.currentState!.validate()) {
                       AnalyticsService.instance.logEvent("Weight_View");
-                      Get.to(WeightScreen());
+                      Get.to(() => WeightScreen());
                     }
                   }),
               SizedBox(

@@ -79,7 +79,7 @@ class AllPackagesBody extends GetView<PackagesController> {
               builder: (_, snap) {
                 if (snap.hasData) {
                   List<PackageItem> packagesList=snap.data as List<PackageItem>;
-                  if(packagesList.length>0) {
+                  if(packagesList.isNotEmpty) {
                     return ListView.builder(
                       itemCount: packagesList.length,
                       shrinkWrap: true,
@@ -96,7 +96,7 @@ class AllPackagesBody extends GetView<PackagesController> {
                           child: PackageInfoCard(
                             image: packagesList[index].image ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-                            options: [
+                            options: const [
                               "From 1145 to 2125 Calories",
                               "5 Days x 4 Weeks",
                               "Pause anytime",
@@ -109,7 +109,7 @@ class AllPackagesBody extends GetView<PackagesController> {
                       },
                     );
                   }else{
-                    return SizedBox(
+                    return const SizedBox(
                       height: 300,
                       child: Center(
                         child: Text('no package found'),
@@ -117,7 +117,7 @@ class AllPackagesBody extends GetView<PackagesController> {
                     );
                   }
                 } else {
-                  return SizedBox(
+                  return const SizedBox(
                     height: 300,
                   );
                 }

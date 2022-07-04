@@ -8,7 +8,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
-import 'package:nourish_sa/main.dart';
 import 'package:nourish_sa/nourish_app.dart';
 
 void main() {
