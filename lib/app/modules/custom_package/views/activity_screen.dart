@@ -4,16 +4,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/create_package_model.dart';
-import 'package:nourish_sa/app/data/models/experience_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/create_package_apis.dart';
-import 'package:nourish_sa/app/data/remote_data_sources/experience_apis.dart';
 import 'package:nourish_sa/app/modules/custom_package/controllers/custom_package_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 
 import '../../../data/services/analytics_service.dart';
 import 'calcuation_screen.dart';
-import 'result_screen.dart';
 
 class ActivityScreen extends GetView<CustomPackageController> {
   const ActivityScreen({Key? key}) : super(key: key);
@@ -41,50 +38,21 @@ class ActivityScreen extends GetView<CustomPackageController> {
                     LocalKeys.kActiveAreYou.tr,
                     style: Get.textTheme.bodyText1,
                   ),
-                  FutureBuilder(
-                      future: ExperienceApis().getExperience(),
-                      builder: (_, snap) {
-                        if (snap.hasData) {
-                          List<ExperienceItem> list =
-                              snap.data as List<ExperienceItem>;
-                          Get.log('cccc   ' + list.length.toString());
-                          if (list.isNotEmpty) {
-                            return ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: list.length,
-                                itemBuilder: (_, index) {
-                                  return InkWell(
-                                    onTap: () {
-                                      selectedExper = list[index].id ?? 1;
-                                      //  controller.setExperienceSelect(true);
-                                      controller.setExperienceSelect(
-                                          true, index);
-                                      Get.log('cccc   ' +
-                                          controller.experienceIndex
-                                              .toString());
-                                    },
-                                    child: ActivityAnswer(
-                                      title: list[index].key ?? '',
-                                      isSelected: true,
-                                    ),
-                                  );
-                                });
-                          } else {
-                            return const SizedBox(
-                              height: 200,
-                              child: Center(
-                                child: Text('no experience found'),
-                              ),
-                            );
-                          }
-                        } else {
-                          Get.log('cccc   ' +
-                              controller.experienceIndex.toString());
-                          return const SizedBox(
-                            height: 200,
-                          );
-                        }
-                      }),
+                  ListView.builder(
+                    shrinkWrap: true,
+                    itemCount: controller.experiencesList.length,
+                    itemBuilder: (_, index) {
+                      return InkWell(
+                        onTap: () {
+                          controller.setExperienceIndex(index);
+                        },
+                        child: ActivityAnswer(
+                          title: controller.experiencesList[index].key ?? '',
+                          isSelected: index == controller.experienceIndex,
+                        ),
+                      );
+                    },
+                  ),
                   SizedBox(
                     height: 123.h,
                   ),
