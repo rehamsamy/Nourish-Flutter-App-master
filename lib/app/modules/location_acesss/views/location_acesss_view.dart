@@ -1,15 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
+import 'package:location/location.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/map_edit_location.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
+import '../../add_Address/controllers/add_address_controller.dart';
 import '../controllers/location_acesss_controller.dart';
 
 class LocationAcesssView extends GetView<LocationAcesssController> {
-  const LocationAcesssView({Key? key}) : super(key: key);
+  LocationAcesssView({Key? key}) : super(key: key);
+
+  AddAddressController Controller = Get.put(AddAddressController());
   @override
   Widget build(BuildContext context) {
     Get.log('Page =>  address');
@@ -20,8 +25,8 @@ class LocationAcesssView extends GetView<LocationAcesssController> {
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
       body: SizedBox(
-        width: Get.width,
-        height: Get.height,
+        width: context.width,
+        height: context.height,
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 35.w),
           child: Column(
@@ -50,8 +55,12 @@ class LocationAcesssView extends GetView<LocationAcesssController> {
                 padding: EdgeInsets.only(top: 120.h, bottom: 34.h),
                 child: CustomButton(
                   title: LocalKeys.kAllowLocationAccess.tr,
-                  onPress: () {
-                    Get.offAllNamed(Routes.LOGIN);
+                  onPress: () async {
+                    // Get.offAllNamed(Routes.LOGIN);
+                    var permission = await Geolocator.checkPermission();
+                    permission == PermissionStatus.granted
+                        ? Get.offNamed(Routes.ADD_ADDRESS)
+                        : await Geolocator.requestPermission();
                   },
                 ),
               ),
