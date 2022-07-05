@@ -1,4 +1,9 @@
 class LocalKeys {
+  static const String kError = "Error ";
+
+  static const String kLocationAccessError =
+      "Location Access Error please check your location settings and try again";
+
   const LocalKeys._();
 
   static const String kNext = "Next";

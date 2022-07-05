@@ -11,7 +11,7 @@ NetworkService networkService = NetworkService(
     'Content-Type': 'application/json',
     'Accept': 'application/json',
     'Authorization': 'Bearer $token',
-    'Language': 'en',
+    'Language': Get.locale?.languageCode ?? 'en',
   },
 );
 

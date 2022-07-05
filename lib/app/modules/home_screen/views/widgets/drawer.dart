@@ -32,7 +32,7 @@ class MainDrawer extends GetView<HomeScreenController> {
             color: primaryColor,
             child: Stack(
               children: [
-               SvgPicture.asset(
+                SvgPicture.asset(
                   Assets.kDrawer,
                   fit: BoxFit.fitWidth,
                   color: Colors.black.withOpacity(0.07),
@@ -43,19 +43,21 @@ class MainDrawer extends GetView<HomeScreenController> {
                   child: Row(
                     children: [
                       CircleAvatar(
-                        radius: 30.w,
-                        backgroundColor: whiteColor,
-                        child:    CustomNetworkImage(imageUrl: controller.profileModel?.image??'https://1.bp.blogspot.com/-3BIIq_YpmzY/YCvbdCUbXWI/AAAAAAAAKMU/aU7Pr7wLVicrrAgzon0EtGxTxtteKzjqACLcBGAsYHQ/s16000/%25D8%25B5%25D9%2588%25D8%25B1-%25D8%25A8%25D9%2586%25D8%25A7%25D8%25AA-%25D8%25AC%25D9%258A%25D8%25B1%25D9%2584%25D9%258A-13.webp',
-                          height: 24.h, width: 24.w, radius: 10,
-                        errorWidget:
-                        SvgPicture.asset(
-                          Assets.kProfileIcon,
-                          color: primaryColor,
-                          width: 24.w,
-                          height: 24.h,
-                        ),
-                        )
-                      ),
+                          radius: 30.w,
+                          backgroundColor: whiteColor,
+                          child: CustomNetworkImage(
+                            imageUrl: controller.profileModel?.image ??
+                                'https://1.bp.blogspot.com/-3BIIq_YpmzY/YCvbdCUbXWI/AAAAAAAAKMU/aU7Pr7wLVicrrAgzon0EtGxTxtteKzjqACLcBGAsYHQ/s16000/%25D8%25B5%25D9%2588%25D8%25B1-%25D8%25A8%25D9%2586%25D8%25A7%25D8%25AA-%25D8%25AC%25D9%258A%25D8%25B1%25D9%2584%25D9%258A-13.webp',
+                            height: 24.h,
+                            width: 24.w,
+                            radius: 10,
+                            errorWidget: SvgPicture.asset(
+                              Assets.kProfileIcon,
+                              color: primaryColor,
+                              width: 24.w,
+                              height: 24.h,
+                            ),
+                          )),
                       SizedBox(
                         width: 5.w,
                       ),
@@ -199,7 +201,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              Get.locale!.languageCode == "ar"
+                              Get.locale!.languageCode != "ar"
                                   ? LocalKeys.kEnglish
                                   : LocalKeys.kArabic,
                               style: Get.textTheme.caption!
