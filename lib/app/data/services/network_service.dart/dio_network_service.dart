@@ -1,7 +1,10 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
+import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/services/logging_interceptor.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
 part 'dio_network_service.freezed.dart';
 
 @freezed

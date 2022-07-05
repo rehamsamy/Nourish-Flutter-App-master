@@ -101,11 +101,11 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                         .verifyOtpMobile(
                             controller.phone ?? '', controller.otp.text)
                         .then((value) {
-                      value.accessToken != null ||
-                              value.accessToken?.trim() != ""
+                      value?.accessToken != null ||
+                              value?.accessToken?.trim() != ""
                           ? Get.offAllNamed(Routes.HOME_PAGE)
                           : Get.snackbar(
-                              LocalKeys.kError, value.errors.toString());
+                              LocalKeys.kError, value!.errors.toString());
                       return null;
                     });
                   },

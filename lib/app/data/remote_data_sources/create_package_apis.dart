@@ -2,7 +2,6 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/create_package_model.dart';
 import '../services/network_service.dart/dio_network_service.dart';
-
 class CreatePackageApis {
   Future<CreatePackageModel?> createPackage({
     required String gender,
@@ -32,31 +31,12 @@ class CreatePackageApis {
       'your_meals[2]': dinnerMeals,
       // 'your_meals[saturday]': meals
     };
-    Get.log('ccccccc 1 ' +
-            gender.toString() +
-            ' ===  ' +
-            experience_id.toString() +
-            '  ===  ' +
-            date_of_birth.toString() +
-            '---- ' +
-            height.toString() +
-            ' ===  ' +
-            height_unit.toString() +
-            '  === ' +
-            weight.toString() +
-            '-===' +
-            weight_unit.toString() +
-            '====' +
-            goal.toString() +
-            '----'
-        // meals.toString()
-        );
 
     final request = NetworkRequest(
       type: NetworkRequestType.POST,
       path: 'updateAdditionalData',
       data: NetworkRequestBody.json(map),
-    );
+     );
 
     Get.log('ccccccc 1 ' + request.path.toString());
     // Execute a request and convert response to your model:

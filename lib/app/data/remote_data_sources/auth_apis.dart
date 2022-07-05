@@ -37,21 +37,21 @@ class AuthApis {
     return loginModel;
   }
 
-  Future<VerifyEmailModel> verifyOtpMobile(String mobile, String otp) async {
-    VerifyEmailModel verifyModel = VerifyEmailModel();
+  Future<VerifyEmailModel?> verifyOtpMobile(String mobile, String otp) async {
+    VerifyEmailModel? verifyModel;
     Map<String, dynamic>? map = {'mobile': mobile, 'code': otp};
     final request = NetworkRequest(
-      type: NetworkRequestType.POST,
-      path: 'auth/verifyMobileOTP',
-      data: NetworkRequestBody.json(map),
-    );
+        type: NetworkRequestType.POST,
+        path: 'auth/verifyMobileOTP',
+        data: NetworkRequestBody.json(map),
+        headers: null);
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
       VerifyEmailModel
           .fromJson, // <- Function to convert API response to your model
     );
-
+    print("VerifyEmailModel model 1 " + response.toString());
     response.maybeWhen(
         ok: (authResponse) async {
           VerifyEmailModel model = authResponse;
@@ -129,15 +129,14 @@ class AuthApis {
   }
 
   Future<LoginModel?> logoutUser() async {
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     LoginModel? loginModel = LoginModel();
-    final request = NetworkRequest(
-        type: NetworkRequestType.POST,
-        path: 'auth/logout',
-        data: const NetworkRequestBody.json(
-          {},
-        ),
-        headers: {'Authorization': 'Bearer $token'});
+    final request = const NetworkRequest(
+      type: NetworkRequestType.POST,
+      path: 'auth/logout',
+      data: NetworkRequestBody.json(
+        {},
+      ),
+    );
     NetworkResponse response = await networkService.execute(
       request,
       LoginModel.fromJson, // <- Function to convert API response to your model
@@ -145,13 +144,7 @@ class AuthApis {
     response.maybeWhen(ok: (data) async {
       print('vvv' + data.toString());
       loginModel = data as LoginModel;
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-      print('vvv1' + prefs.getString('token').toString());
-      prefs.getString('token');
-
-      prefs.clear();
       Get.find<SharedPrefService>().removeToken();
-      print('vvv1' + prefs.getString('token').toString());
       return loginModel;
     }, orElse: () {
       //  print(response.toString());
