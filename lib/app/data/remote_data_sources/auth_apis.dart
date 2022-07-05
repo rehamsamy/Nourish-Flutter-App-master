@@ -55,7 +55,7 @@ class AuthApis {
     response.maybeWhen(
         ok: (authResponse) async {
           VerifyEmailModel model = authResponse;
-          print("VerifyEmailModel model" + model.accessToken.toString());
+          //print("VerifyEmailModel model" + model.accessToken.toString());
           Get.find<SharedPrefService>().saveToken(model.accessToken ?? "");
           print(model.accessToken.toString() +
               " ===" +
@@ -90,6 +90,7 @@ class AuthApis {
     response.maybeWhen(
         ok: (response) {
           registerModel = response;
+
           return registerModel;
         },
         badRequest: (info) {},
@@ -118,11 +119,7 @@ class AuthApis {
     response.maybeWhen(
         ok: (authResponse) async {
           emailModel = authResponse;
-          SharedPreferences prefs = await SharedPreferences.getInstance();
-          prefs.setString('token', emailModel.accessToken ?? '');
-          SharedPrefService(prefs: prefs)
-              .saveToken(emailModel.accessToken ?? '');
-
+          Get.find<SharedPrefService>().saveToken(emailModel.accessToken ?? "");
           return emailModel;
         },
         badRequest: (info) {},
@@ -157,8 +154,8 @@ class AuthApis {
       print('vvv1' + prefs.getString('token').toString());
       return loginModel;
     }, orElse: () {
-      print(response.toString());
-      print("data");
+      //  print(response.toString());
+      //  print("data");
     });
     return loginModel;
   }
@@ -188,7 +185,7 @@ class AuthApis {
     return resendOtpModel;
   }
 
-//TODO: Implement this method to get Refreshed Token
+/*//TODO: Implement this method to get Refreshed Token
   Future<String> refreshToken() async {
     LoginModel verifyModel = LoginModel();
     String? token = Get.find<SharedPrefService>().getToken() ?? '';
@@ -214,5 +211,5 @@ class AuthApis {
       orElse: () {},
     );
     return token ?? "";
-  }
+  }*/
 }

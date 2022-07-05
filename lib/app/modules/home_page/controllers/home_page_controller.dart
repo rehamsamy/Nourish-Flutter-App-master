@@ -2,7 +2,6 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 
 import '../../../data/services/analytics_service.dart';
 
@@ -11,10 +10,10 @@ class HomePageController extends GetxController {
   void onInit() {
     AnalyticsService.instance.logEvent("Home_Page");
 
-    AuthApis().refreshToken();
+    //AuthApis().refreshToken();
 
     Get.log('vvvvvvv  1');
-    //  AuthApis().refreshToken().then((value) => Get.log('vvvvvvv  '+value));
+    //AuthApis().refreshToken().then((value) => Get.log('vvvvvvv  '+value));
     super.onInit();
   }
 
