@@ -76,9 +76,9 @@ class ActivityScreen extends GetView<CustomPackageController> {
                                   ? 'pound'
                                   : 'kg',
                               goal: 'lose_weight',
-                              breakfastMeals: 0,
-                              launchMeals: 0,
-                              dinnerMeals: 0);
+                              breakfastMeals: 1,
+                              launchMeals: 2,
+                              dinnerMeals: 3);
 
                       if (packageModel?.data != null) {
                         AnalyticsService.instance.logEvent("Calculation_View");

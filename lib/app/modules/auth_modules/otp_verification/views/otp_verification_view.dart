@@ -103,7 +103,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                         .then((value) {
                       value?.accessToken != null ||
                               value?.accessToken?.trim() != ""
-                          ? Get.offAllNamed(Routes.HOME_PAGE)
+                          ? Get.offAll(Routes.HOME_PAGE)
                           : Get.snackbar(
                               LocalKeys.kError, value!.errors.toString());
                       return null;

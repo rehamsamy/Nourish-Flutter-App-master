@@ -7,6 +7,7 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
+import 'package:nourish_sa/app/data/services/localization_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:nourish_sa/app/modules/home_screen/controllers/home_screen_controller.dart';
@@ -65,35 +66,37 @@ class MainDrawer extends GetView<HomeScreenController> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            LocalKeys.kVisitorUser.tr,
+                            controller.profileModel?.name ?? '',
                             style: Get.textTheme.headline1!
                                 .copyWith(color: whiteColor),
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
-                          InkWell(
-                            onTap: () {
-                              controller.scaffoldKey!.currentState!
-                                  .openEndDrawer();
+                          controller.profileModel?.id == null
+                              ? InkWell(
+                                  onTap: () {
+                                    controller.scaffoldKey!.currentState!
+                                        .openEndDrawer();
 
-                              Get.toNamed(Routes.LOGIN);
-                            },
-                            child: Container(
-                              width: 133.w,
-                              height: 32.h,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.w),
-                                color: whiteColor,
-                              ),
-                              child: Text(
-                                LocalKeys.kLoginorSignup.tr,
-                                style: Get.textTheme.caption!
-                                    .copyWith(color: blackColor),
-                              ),
-                            ),
-                          )
+                                    Get.toNamed(Routes.LOGIN);
+                                  },
+                                  child: Container(
+                                    width: 133.w,
+                                    height: 32.h,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.w),
+                                      color: whiteColor,
+                                    ),
+                                    child: Text(
+                                      LocalKeys.kLoginorSignup.tr,
+                                      style: Get.textTheme.caption!
+                                          .copyWith(color: blackColor),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox()
                         ],
                       )
                     ],
@@ -169,7 +172,10 @@ class MainDrawer extends GetView<HomeScreenController> {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 14.5.h),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        //change language
+                        Get.find<LocalizationService>().setLocale(false);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
