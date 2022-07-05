@@ -85,7 +85,7 @@ class HomePageView extends GetView<HomePageController> {
           index: controller.currentIndex.value,
           children: [
             HomeScreenView(),
-            MealsView(),
+            const MealsView(),
             const PackagesView(),
             ProfileView(),
           ],

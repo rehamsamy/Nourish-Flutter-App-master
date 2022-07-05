@@ -1,4 +1,4 @@
-package com.example.nourish_sa
+package com.eatnourish.nourish_sa
 
 import io.flutter.embedding.android.FlutterActivity
 

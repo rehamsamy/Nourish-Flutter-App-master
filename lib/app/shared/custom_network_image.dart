@@ -2,8 +2,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
-import 'package:nourish_sa/app/core/values/assets.dart';
-import 'package:nourish_sa/app_theme.dart';
 
 class CustomNetworkImage extends StatelessWidget {
   const CustomNetworkImage(

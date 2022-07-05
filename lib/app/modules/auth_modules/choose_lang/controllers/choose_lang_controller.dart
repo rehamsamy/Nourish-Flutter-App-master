@@ -15,7 +15,6 @@ class ChooseLangController extends GetxController {
 
   onChangeLang() {
     isSelected.value = !isSelected.value;
-    Get.find<LocalizationService>()
-        .setLocale(!Get.find<LocalizationService>().isAr() ? "ar" : "en");
+    Get.find<LocalizationService>().setLocale();
   }
 }

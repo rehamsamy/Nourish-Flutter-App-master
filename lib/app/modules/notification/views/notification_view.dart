@@ -50,7 +50,7 @@ class NotificationView extends GetView<NotificationController> {
                 builder: (_,snap) {
                   if(snap.hasData){
                     List<NotificationItem>? notificationsList = snap.data as List<NotificationItem>;
-                    if(notificationsList.length>0){
+                    if(notificationsList.isNotEmpty){
                       return    Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 2.w),
@@ -87,10 +87,10 @@ class NotificationView extends GetView<NotificationController> {
                         ),
                       );
                     }else{
-                      return Expanded(child: Center(child: Text('no notification found'),));
+                      return const Expanded(child: Center(child: Text('no notification found'),));
                     }
                   }else{
-                    return Expanded(child: SizedBox(height: 200,));
+                    return const Expanded(child: SizedBox(height: 200,));
                   }
 
 

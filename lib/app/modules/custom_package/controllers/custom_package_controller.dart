@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/experience_model.dart';
-import 'package:nourish_sa/app/data/remote_data_sources/experience_apis.dart';
 
 import '../../../data/services/analytics_service.dart';
 
@@ -21,7 +21,13 @@ class CustomPackageController extends GetxController {
   RxBool isFeetSelected = false.obs;
   RxBool isPoundSelected = true.obs;
   RxBool isKilogramSelected = false.obs;
-  List<ExperienceItem>? experiencesList;
+  List<ExperienceItem> experiencesList = [
+    ExperienceItem(id: 1, key: LocalKeys.kNoExperience.tr),
+    ExperienceItem(id: 2, key: LocalKeys.kLightExercise.tr),
+    ExperienceItem(id: 3, key: LocalKeys.kModerateExercise.tr),
+    ExperienceItem(id: 4, key: LocalKeys.kHardExercise.tr),
+    ExperienceItem(id: 5, key: LocalKeys.kExtremelyActive.tr),
+  ];
   List<bool>? isExperienceSelected;
   int experienceIndex = 0;
   final count = 0.obs;
@@ -30,14 +36,7 @@ class CustomPackageController extends GetxController {
     super.onInit();
 
     AnalyticsService.instance.logEvent("Gender_View");
-    experiencesList = await ExperienceApis().getExperience();
-    isExperienceSelected =
-        List<bool>.filled(experiencesList?.length ?? 0, false);
-  }
-
-  @override
-  void onReady() {
-    super.onReady();
+    // experiencesList = await ExperienceApis().getExperience();
   }
 
   @override

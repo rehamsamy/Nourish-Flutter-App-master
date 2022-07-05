@@ -15,7 +15,7 @@ class MyShimmerEffectUI extends StatelessWidget {
     this.baseColor,
     this.highlightColor,
     this.seconds,
-  }) : this.shapeBorder = const RoundedRectangleBorder();
+  }) : shapeBorder = const RoundedRectangleBorder();
 
   const MyShimmerEffectUI.circular(
       {this.width = double.infinity,
@@ -23,7 +23,7 @@ class MyShimmerEffectUI extends StatelessWidget {
         this.baseColor,
         this.highlightColor,
         this.seconds})
-      : this.shapeBorder = const CircleBorder();
+      : shapeBorder = const CircleBorder();
 
   @override
   Widget build(BuildContext context) => Shimmer.fromColors(

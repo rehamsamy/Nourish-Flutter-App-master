@@ -187,7 +187,7 @@ class ResultScreen extends StatelessWidget {
                     title: LocalKeys.kContinue.tr,
                     onPress: () {
                       AnalyticsService.instance.logEvent("Main_Goal_View");
-                      Get.to(const MainGoalScreen());
+                      Get.to(() => const MainGoalScreen());
                     }),
                 SizedBox(
                   height: 18.h,

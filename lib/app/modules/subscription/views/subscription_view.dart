@@ -64,7 +64,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                         if (snap.hasData) {
                           List<SubscriptionItem>? list =
                               snap.data as List<SubscriptionItem>;
-                          if (list.length > 0) {
+                          if (list.isNotEmpty) {
                             return ListView.builder(
                               itemCount: list.length,
                               padding: EdgeInsets.only(bottom: 35.h),
@@ -91,7 +91,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                         child: PackageInfoCard(
                                           image: list[index].package?.image ??
                                               'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
-                                          options: ["sdads", "saddsa"],
+                                          options: const ["sdads", "saddsa"],
                                           title:
                                               list[index].package?.name ?? '',
                                           priceWithVat: list[index]
@@ -113,7 +113,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                                       .package
                                                       ?.image ??
                                                   'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
-                                              options: [
+                                              options: const [
                                                 "dsasad",
                                                 "asdas",
                                                 "saddsa"
@@ -155,15 +155,15 @@ class SubscriptionView extends GetView<SubscriptionController> {
                               },
                             );
                           } else {
-                            return SizedBox(
+                            return const SizedBox(
                               height: 300,
-                              child: const Center(
+                              child: Center(
                                 child: Text('empty subscription'),
                               ),
                             );
                           }
                         } else {
-                          return SizedBox(
+                          return const SizedBox(
                             height: 300,
                           );
                         }

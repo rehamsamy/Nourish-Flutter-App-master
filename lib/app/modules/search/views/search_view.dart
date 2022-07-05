@@ -6,9 +6,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
-import 'package:nourish_sa/app/data/models/package_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/package_apis.dart';
-import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/search_item.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
@@ -27,7 +25,7 @@ class SearchView extends GetView<SearchController> {
             //   hint: LocalKeys.kSearch.tr,
             //   textEditingController: controller.searchController,
             // ),
-            child: Container(
+            child: SizedBox(
               height:50 ,
               child: TextFormField(
                 controller:  controller.searchController,

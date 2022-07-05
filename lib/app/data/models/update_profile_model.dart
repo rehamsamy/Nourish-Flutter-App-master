@@ -1,9 +1,9 @@
 import 'package:nourish_sa/app/data/models/profile_model.dart';
-import 'package:nourish_sa/app/data/models/user_model.dart';
 
 class UpdateProfileModel {
   UpdateProfileModel({
-      this.data,});
+    this.data,
+  });
 
   UpdateProfileModel.fromJson(dynamic json) {
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
@@ -17,13 +17,13 @@ class UpdateProfileModel {
     }
     return map;
   }
-
 }
 
 class Data {
   Data({
-      this.user, 
-      this.msg,});
+    this.user,
+    this.msg,
+  });
 
   Data.fromJson(dynamic json) {
     user = json['user'] != null ? ProfileModel.fromJson(json['user']) : null;
@@ -40,6 +40,4 @@ class Data {
     map['msg'] = msg;
     return map;
   }
-
 }
-

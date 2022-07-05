@@ -9,7 +9,7 @@ class HomeApis {
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'categories',
-      data: const NetworkRequestBody.json(
+      data: NetworkRequestBody.json(
         {},
       ),
     );
@@ -35,7 +35,7 @@ class HomeApis {
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homePackages',
-      data: const NetworkRequestBody.json(
+      data: NetworkRequestBody.json(
         {},
       ),
     );

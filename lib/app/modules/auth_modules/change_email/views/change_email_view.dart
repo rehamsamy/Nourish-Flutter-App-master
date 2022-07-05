@@ -58,9 +58,7 @@ class ChangeEmailView extends GetView<ChangeEmailController> {
                 title: LocalKeys.kSave.tr,
                 onPress: () async{
                   VerifyEmailModel model= await AuthApis().verifyEmail(controller.otp, controller.email.text) as VerifyEmailModel;
-                  if(model !=null){
-                    Get.offAllNamed(Routes.HOME_PAGE);
-                  }
+                  Get.offAllNamed(Routes.HOME_PAGE);
                 //  Get.offAllNamed(Routes.HOME_PAGE);
                 },
               ),

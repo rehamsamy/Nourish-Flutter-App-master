@@ -107,7 +107,7 @@ class BirthDateScreen extends GetView<CustomPackageController> {
                     if (controller.birtdate != null) {
                       AnalyticsService.instance.logEvent("Height_View");
 
-                      Get.to(HeightScreen());
+                      Get.to(() => HeightScreen());
                     } else {
                       Get.snackbar('required', 'You must enter the birthdate',
                           colorText: Colors.red);

@@ -1,47 +1,47 @@
 {
-    "project_info": {
-      "project_number": "1047857111996",
-      "project_id": "nourish-136a1",
-      "storage_bucket": "nourish-136a1.appspot.com"
-    },
-    "client": [
-      {
-        "client_info": {
-          "mobilesdk_app_id": "1:1047857111996:android:6bffabd0bcd45b501641b9",
-          "android_client_info": {
-            "package_name": "com.eatnourish.nourish_sa"
+  "project_info": {
+    "project_number": "1047857111996",
+    "project_id": "nourish-136a1",
+    "storage_bucket": "nourish-136a1.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1047857111996:android:6bffabd0bcd45b501641b9",
+        "android_client_info": {
+          "package_name": "com.eatnourish.nourish_sa"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1047857111996-4gne0pporae61gs3fpqm82dran8sfsuj.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.eatnourish.nourish_sa",
+            "certificate_hash": "d260d52cf77e39a0e65edf5a2e71fabe3bf45262"
           }
         },
-        "oauth_client": [
-          {
-            "client_id": "1047857111996-4gne0pporae61gs3fpqm82dran8sfsuj.apps.googleusercontent.com",
-            "client_type": 1,
-            "android_info": {
-              "package_name": "com.eatnourish.nourish_sa",
-              "certificate_hash": "d260d52cf77e39a0e65edf5a2e71fabe3bf45262"
+        {
+          "client_id": "1047857111996-hnmckkm9v4jnimi0r0n46rnku7hn61l9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB7pS-_sxaX6bAE-Rj5BjP0DHKrt23FKcA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1047857111996-hnmckkm9v4jnimi0r0n46rnku7hn61l9.apps.googleusercontent.com",
+              "client_type": 3
             }
-          },
-          {
-            "client_id": "1047857111996-hnmckkm9v4jnimi0r0n46rnku7hn61l9.apps.googleusercontent.com",
-            "client_type": 3
-          }
-        ],
-        "api_key": [
-          {
-            "current_key": "AIzaSyB7pS-_sxaX6bAE-Rj5BjP0DHKrt23FKcA"
-          }
-        ],
-        "services": {
-          "appinvite_service": {
-            "other_platform_oauth_client": [
-              {
-                "client_id": "1047857111996-hnmckkm9v4jnimi0r0n46rnku7hn61l9.apps.googleusercontent.com",
-                "client_type": 3
-              }
-            ]
-          }
+          ]
         }
       }
-    ],
-    "configuration_version": "1"
-  }
+    }
+  ],
+  "configuration_version": "1"
+}

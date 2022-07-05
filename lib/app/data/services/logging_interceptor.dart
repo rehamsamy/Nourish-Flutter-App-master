@@ -31,6 +31,7 @@ final dioLoggerInterceptor =
   logger.i(
       "└------------------------------------------------------------------------------");
   handler.next(response);
+
   // return response; // continue
 }, onError: (DioError error, handler) async {
   logger.wtf("---------------------------------------");

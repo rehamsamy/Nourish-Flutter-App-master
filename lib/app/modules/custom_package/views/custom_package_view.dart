@@ -74,7 +74,7 @@ class CustomPackageView extends GetView<CustomPackageController> {
                     Get.log('1111111' + gender.toString());
 
                     AnalyticsService.instance.logEvent("BirthDate_View");
-                    Get.to(BirthDateScreen());
+                    Get.to(() => BirthDateScreen());
                   } else {
                     Get.snackbar('required', 'You must choose the gender',
                         colorText: Colors.red);

@@ -68,8 +68,8 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () => token == null ? const SplashView() :  HomePageView(),
-      binding: token == null ? SplashBinding() : HomePageBinding(),
+      page: () => token == "" ? const SplashView() : const HomePageView(),
+      binding: token == "" ? SplashBinding() : HomePageBinding(),
     ),
     GetPage(
       name: _Paths.ON_BOARDING,
@@ -88,7 +88,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.HOME_PAGE,
-      page: () =>  HomePageView(),
+      page: () => const HomePageView(),
       binding: HomePageBinding(),
     ),
     GetPage(
@@ -203,7 +203,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOCATION_ACESSS,
-      page: () => const LocationAcesssView(),
+      page: () => LocationAcesssView(),
       binding: LocationAcesssBinding(),
     ),
   ];

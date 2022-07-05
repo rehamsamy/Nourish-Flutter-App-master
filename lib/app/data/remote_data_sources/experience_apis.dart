@@ -10,7 +10,7 @@ class ExperienceApis{
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'getExperience',
-      data: const NetworkRequestBody.json(
+      data: NetworkRequestBody.json(
         {},
       ),
       headers: null

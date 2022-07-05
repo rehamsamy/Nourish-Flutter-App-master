@@ -10,7 +10,7 @@ class PackageApis{
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'packages/?type=$packageType',
-      data:  NetworkRequestBody.json(
+      data:  const NetworkRequestBody.json(
         {
           // 'type':packageType
         },
@@ -42,7 +42,7 @@ class PackageApis{
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'packageDetails/$packageId',
-      data:  NetworkRequestBody.json(
+      data:  const NetworkRequestBody.json(
         {
           // 'type':packageType
         },

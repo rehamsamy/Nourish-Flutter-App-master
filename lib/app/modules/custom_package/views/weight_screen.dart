@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
@@ -223,7 +222,7 @@ class WeightScreen extends GetView<CustomPackageController> {
                       onPress: () {
                         if (_key.currentState!.validate()) {
                           AnalyticsService.instance.logEvent("Activity_View");
-                          Get.to(const ActivityScreen());
+                          Get.to(() => const ActivityScreen());
                         }
                       }),
                   SizedBox(
