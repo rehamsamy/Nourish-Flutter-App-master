@@ -26,9 +26,11 @@ class CreatePackageApis {
       'weight': weight,
       'weight_unit': weight_unit,
       'goal': goal,
-      'your_meals[0]': breakfastMeals,
-      'your_meals[1]': launchMeals,
-      'your_meals[2]': dinnerMeals,
+   'your_meals': [1]
+      // 'your_meals[0]': breakfastMeals,
+      // 'your_meals[1]': launchMeals,
+      // 'your_meals[2]': dinnerMeals,
+
       // 'your_meals[saturday]': meals
     };
 
@@ -45,6 +47,7 @@ class CreatePackageApis {
       CreatePackageModel
           .fromJson, // <- Function to convert API response to your model
     );
+    Get.log('ccccccc 2' + response.toString());
     response.maybeWhen(
         ok: (model) {
           Get.log('ccccccc 2' + model.toString());

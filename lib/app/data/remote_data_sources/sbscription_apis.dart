@@ -84,7 +84,7 @@ Get.log('subscrip  =>'+response.toString());
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
-        path: 'subscriptionDetails/23',
+        path: 'subscriptionDetails/$subscripId',
         data:  const NetworkRequestBody.json(
          {}
         ),
@@ -103,7 +103,7 @@ Get.log('subscrip  =>'+response.toString());
           detailModel=response;
           return detailModel;
         },
-        orElse: () {});
+        orElse: () {},);
     return detailModel;
   }
 

@@ -76,7 +76,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                               await SubscriptionApis()
                                                   .subscriptionDetails(
                                                       subscripId:
-                                                          list[index].id);
+                                                          list[index].id).catchError((err)=>print('errrrrrr '+err));
                                           if (detailModel.data != null) {
                                             Get.toNamed(
                                                 Routes.SUBSCRIPTION_DETAILS,

@@ -90,6 +90,9 @@ class Saturday {
   String? mealType;
   Product? product;
 
+
+
+
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;

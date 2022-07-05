@@ -82,8 +82,8 @@ class ActivityScreen extends GetView<CustomPackageController> {
 
                       if (packageModel?.data != null) {
                         AnalyticsService.instance.logEvent("Calculation_View");
-
-                        Get.to(const CalcuationScreen(),
+                    Get.to('success==== ');
+                        Get.to(()=>const CalcuationScreen(),
                             arguments: {'packageModel': packageModel});
                       }
                     },
