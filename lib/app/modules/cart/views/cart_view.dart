@@ -200,13 +200,17 @@ String? x=dayName?.substring(0,3).toString();
               SizedBox(
                 height: 25.h,
               ),
-              ListView.builder(
-                itemCount:2,
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, inedx) {
-                  return  MealsSummeryCard(controller.detailModel?.data?.meals?.saturday?[inedx]);
-                },
+              GetBuilder<CartController>(
+                builder: (_)=> ListView.builder(
+                  itemCount:controller.detailModel?.data?.meals?.saturday?.length,
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemBuilder: (context, inedx) {
+                    Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
+
+                    return  MealsSummeryCard(controller.detailModel?.data?.meals?.saturday?[inedx]);
+                  },
+                ),
               ),
               controller.isSubscribtion
                   ? const SizedBox.shrink()

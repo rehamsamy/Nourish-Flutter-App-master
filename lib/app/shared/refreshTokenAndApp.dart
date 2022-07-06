@@ -2,8 +2,6 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
-import '../data/remote_data_sources/auth_apis.dart';
-
 Future refreshAppWithNewToken() async {
   //call token service
   String token = Get.find<SharedPrefService>().getToken.toString();
@@ -11,6 +9,6 @@ Future refreshAppWithNewToken() async {
     Get.offAllNamed(Routes.LOGIN);
     Get.snackbar("Not Authorized".tr, "Please Login");
   } else {
-    return AuthApis().refreshToken().then((value) => Get.forceAppUpdate());
+    //return AuthApis().refreshToken().then((value) => Get.forceAppUpdate());
   }
 }

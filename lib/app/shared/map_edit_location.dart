@@ -150,7 +150,7 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
         ],
       );
 
-  getLocation() async {
+  Future<GeoData?> getLocation() async {
     permission = await Geolocator.requestPermission();
     Geolocator.getCurrentPosition(desiredAccuracy: LocationAccuracy.high)
         .then((currloc) async {
@@ -162,14 +162,14 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
         _center = LatLng(currentLocation.latitude, currentLocation.longitude);
       });
       _address = await Geocoder2.getDataFromCoordinates(
-              latitude: currentLocation.latitude,
-              longitude: currentLocation.longitude,
-              googleMapApiKey: "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8")
-          .catchError((err) => Get.log('xxx  err 1 ' + err.toString()));
+          latitude: currentLocation.latitude,
+          longitude: currentLocation.longitude,
+          googleMapApiKey:
+              "AIzaSyCXFEuYNLDNZVkJN3SwCeMNYiIbc4AJDG8"); //       .catchError((err) => Get.log('xxx  err 1 ' + err.toString()));
       addressController.setAddressData(_address);
       print(_address);
       Get.log('xxxx  city ' + city.toString());
     }).catchError((err) => Get.log('xxx  err  ' + err.toString()));
-    // return _address;
+    return _address;
   }
 }

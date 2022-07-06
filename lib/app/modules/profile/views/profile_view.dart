@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
@@ -21,7 +22,7 @@ class ProfileView extends GetView<ProfileController> {
     Get.log('page  => profile');
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Setting'),
+        title: const Text('Settings'),
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
         leading: InkWell(
@@ -35,10 +36,10 @@ class ProfileView extends GetView<ProfileController> {
           builder: (_, snap) {
             if (snap.hasData) {
               ProfileModel userModel = snap.data as ProfileModel;
-              controller.email.text=userModel.email??'';
-              controller.phone.text=userModel.mobile??'';
-              controller.lastName.text=userModel.lastName??'';
-              controller.firstName.text=userModel.firstName??'';
+              controller.email.text = userModel.email ?? '';
+              controller.phone.text = userModel.mobile ?? '';
+              controller.lastName.text = userModel.lastName ?? '';
+              controller.firstName.text = userModel.firstName ?? '';
               return SizedBox(
                 width: Get.width,
                 height: Get.height,
@@ -62,8 +63,17 @@ class ProfileView extends GetView<ProfileController> {
                                     shape: BoxShape.circle,
                                     color: greyColor,
                                   ),
-                                  child: Image.network(userModel.image ??
-                                      'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSX4wVGjMQ37PaO4PdUVEAliSLi8-c2gJ1zvQ&usqp=CAU')),
+                                  child: CachedNetworkImage(
+                                    imageUrl: userModel.image ?? "",
+                                    fit: BoxFit.cover,
+                                    placeholder: (context, url) =>
+                                        const CupertinoActivityIndicator(),
+                                    errorWidget: (context, url, error) => Icon(
+                                      CupertinoIcons.photo_camera_solid,
+                                      size: 60.w,
+                                      //  color: Colors.green,
+                                    ),
+                                  )),
                               PositionedDirectional(
                                 bottom: 0,
                                 end: 5,
@@ -125,15 +135,15 @@ class ProfileView extends GetView<ProfileController> {
                         CustomButton(
                           title: LocalKeys.kSave.tr,
                           onPress: () async {
-                            UpdateProfileModel  updateModel = await ProfileApis()
-                                    .updateProfileInfo(
-                                        first_name: controller.firstName.text,
-                                        last_name: controller.lastName.text,
-                                        mobile: controller.phone.text,
-                                        email: controller.email.text,)
-                                as UpdateProfileModel;
-                            String? mes=updateModel.data?.msg.toString();
-                            Get.log('updated   =>'+mes.toString());
+                            UpdateProfileModel updateModel =
+                                await ProfileApis().updateProfileInfo(
+                              first_name: controller.firstName.text,
+                              last_name: controller.lastName.text,
+                              mobile: controller.phone.text,
+                              email: controller.email.text,
+                            ) as UpdateProfileModel;
+                            String? mes = updateModel.data?.msg.toString();
+                            Get.log('updated   =>' + mes.toString());
                             Get.snackbar("Unknown Network error",
                                 updateModel.data?.msg ?? '');
                             Get.dialog(const OTPDialog());

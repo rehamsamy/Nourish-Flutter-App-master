@@ -97,35 +97,17 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                 child: CustomButton(
                   title: LocalKeys.kContinue.tr,
                   onPress: () async {
-                    VerifyEmailModel? verifyEmail = await AuthApis()
+                    VerifyEmailModel? verifyOtp = await AuthApis()
                         .verifyOtpMobile(
-                            controller.phone ?? '', controller.otp.text);
-                    if (controller.isLogin) {
-                      Get.log('step 1 ');
-                      if (verifyEmail?.accessToken != null) {
-                        Get.log('step 2 ');
-                        Get.offAllNamed(Routes.HOME_PAGE);
-                      } else {
-                       // Get.log('step 3 '+ verifyEmail?.accessToken.toString());
-                        Get.snackbar(
-                            "Error occured ",
-                            verifyEmail?.message1 ??
-                                'The given data was invalid.');
-                      }
-                    } else if (controller.isEmail.value) {
-                      VerifyEmailModel? verifyEmail = await AuthApis()
-                          .verifyOtpMobile(
-                              controller.phone ?? '', controller.otp.text);
-                      Get.offAllNamed(Routes.CHANGE_EMAIL,
-                          arguments: {'otp': controller.otp.text});
-                      Get.snackbar(
-                          "Unknown Network error", verifyEmail?.message ?? '');
-
-                      // Get.offAllNamed(Routes.LOGIN);
-                    } else {
-                      Get.log('xxxx3');
-                      controller.isEmail.value = true;
-                    }
+                            controller.phone ?? '', controller.otp.text)
+                        .then((value) {
+                      value?.accessToken != null ||
+                              value?.accessToken?.trim() != ""
+                          ? Get.offAll(Routes.HOME_PAGE)
+                          : Get.snackbar(
+                              LocalKeys.kError, value!.errors.toString());
+                      return null;
+                    });
                   },
                 ),
               ),

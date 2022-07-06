@@ -1,6 +1,7 @@
 import '../local_keys.dart';
 
 Map<String, String> en = {
+  LocalKeys.kLocationAccessError: LocalKeys.kLocationAccessError,
   LocalKeys.kContinue: 'Continue',
   LocalKeys.kSubmit: 'Submit',
 
@@ -247,6 +248,5 @@ Map<String, String> en = {
       "Note: Follow Your Mail To Receive Receipt ",
   LocalKeys.kStartDate: "Start Date",
 
-    LocalKeys.kNoInternetConnection:"No Internet Connection",
-
+  LocalKeys.kNoInternetConnection: "No Internet Connection",
 };

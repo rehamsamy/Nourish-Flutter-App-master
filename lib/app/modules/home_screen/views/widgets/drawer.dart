@@ -7,6 +7,7 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
+import 'package:nourish_sa/app/data/services/localization_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:nourish_sa/app/modules/home_screen/controllers/home_screen_controller.dart';
@@ -32,7 +33,7 @@ class MainDrawer extends GetView<HomeScreenController> {
             color: primaryColor,
             child: Stack(
               children: [
-               SvgPicture.asset(
+                SvgPicture.asset(
                   Assets.kDrawer,
                   fit: BoxFit.fitWidth,
                   color: Colors.black.withOpacity(0.07),
@@ -43,19 +44,21 @@ class MainDrawer extends GetView<HomeScreenController> {
                   child: Row(
                     children: [
                       CircleAvatar(
-                        radius: 30.w,
-                        backgroundColor: whiteColor,
-                        child:    CustomNetworkImage(imageUrl: controller.profileModel?.image??'https://1.bp.blogspot.com/-3BIIq_YpmzY/YCvbdCUbXWI/AAAAAAAAKMU/aU7Pr7wLVicrrAgzon0EtGxTxtteKzjqACLcBGAsYHQ/s16000/%25D8%25B5%25D9%2588%25D8%25B1-%25D8%25A8%25D9%2586%25D8%25A7%25D8%25AA-%25D8%25AC%25D9%258A%25D8%25B1%25D9%2584%25D9%258A-13.webp',
-                          height: 24.h, width: 24.w, radius: 10,
-                        errorWidget:
-                        SvgPicture.asset(
-                          Assets.kProfileIcon,
-                          color: primaryColor,
-                          width: 24.w,
-                          height: 24.h,
-                        ),
-                        )
-                      ),
+                          radius: 30.w,
+                          backgroundColor: whiteColor,
+                          child: CustomNetworkImage(
+                            imageUrl: controller.profileModel?.image ??
+                                'https://1.bp.blogspot.com/-3BIIq_YpmzY/YCvbdCUbXWI/AAAAAAAAKMU/aU7Pr7wLVicrrAgzon0EtGxTxtteKzjqACLcBGAsYHQ/s16000/%25D8%25B5%25D9%2588%25D8%25B1-%25D8%25A8%25D9%2586%25D8%25A7%25D8%25AA-%25D8%25AC%25D9%258A%25D8%25B1%25D9%2584%25D9%258A-13.webp',
+                            height: 24.h,
+                            width: 24.w,
+                            radius: 10,
+                            errorWidget: SvgPicture.asset(
+                              Assets.kProfileIcon,
+                              color: primaryColor,
+                              width: 24.w,
+                              height: 24.h,
+                            ),
+                          )),
                       SizedBox(
                         width: 5.w,
                       ),
@@ -63,35 +66,37 @@ class MainDrawer extends GetView<HomeScreenController> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            LocalKeys.kVisitorUser.tr,
+                            controller.profileModel?.name ?? '',
                             style: Get.textTheme.headline1!
                                 .copyWith(color: whiteColor),
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
-                          InkWell(
-                            onTap: () {
-                              controller.scaffoldKey!.currentState!
-                                  .openEndDrawer();
+                          controller.profileModel?.id == null
+                              ? InkWell(
+                                  onTap: () {
+                                    controller.scaffoldKey!.currentState!
+                                        .openEndDrawer();
 
-                              Get.toNamed(Routes.LOGIN);
-                            },
-                            child: Container(
-                              width: 133.w,
-                              height: 32.h,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(5.w),
-                                color: whiteColor,
-                              ),
-                              child: Text(
-                                LocalKeys.kLoginorSignup.tr,
-                                style: Get.textTheme.caption!
-                                    .copyWith(color: blackColor),
-                              ),
-                            ),
-                          )
+                                    Get.toNamed(Routes.LOGIN);
+                                  },
+                                  child: Container(
+                                    width: 133.w,
+                                    height: 32.h,
+                                    alignment: Alignment.center,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.w),
+                                      color: whiteColor,
+                                    ),
+                                    child: Text(
+                                      LocalKeys.kLoginorSignup.tr,
+                                      style: Get.textTheme.caption!
+                                          .copyWith(color: blackColor),
+                                    ),
+                                  ),
+                                )
+                              : const SizedBox()
                         ],
                       )
                     ],
@@ -167,7 +172,10 @@ class MainDrawer extends GetView<HomeScreenController> {
                   Padding(
                     padding: EdgeInsets.symmetric(vertical: 14.5.h),
                     child: InkWell(
-                      onTap: () {},
+                      onTap: () {
+                        //change language
+                        Get.find<LocalizationService>().setLocale(false);
+                      },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
@@ -199,7 +207,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                             ),
                             alignment: Alignment.center,
                             child: Text(
-                              Get.locale!.languageCode == "ar"
+                              Get.locale!.languageCode != "ar"
                                   ? LocalKeys.kEnglish
                                   : LocalKeys.kArabic,
                               style: Get.textTheme.caption!

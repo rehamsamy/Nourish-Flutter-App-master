@@ -7,8 +7,11 @@ class SharedPrefService extends GetxService {
   String? token;
 
   Future<bool> saveToken(String token) async {
-    token = token;
-    return await prefs.setString("token", token);
+    return await prefs.setString("token", token).then((value) {
+      token = token;
+      Get.forceAppUpdate();
+      return value;
+    });
   }
 
   String? getToken() {

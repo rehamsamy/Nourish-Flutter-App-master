@@ -38,14 +38,13 @@ class AuthApis {
   }
 
   Future<VerifyEmailModel?> verifyOtpMobile(String mobile, String otp) async {
-    VerifyEmailModel ? verifyModel;
+    VerifyEmailModel? verifyModel;
     Map<String, dynamic>? map = {'mobile': mobile, 'code': otp};
     final request = NetworkRequest(
-      type: NetworkRequestType.POST,
-      path: 'auth/verifyMobileOTP',
-      data: NetworkRequestBody.json(map),
-      headers: null
-    );
+        type: NetworkRequestType.POST,
+        path: 'auth/verifyMobileOTP',
+        data: NetworkRequestBody.json(map),
+        headers: null);
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
@@ -55,9 +54,12 @@ class AuthApis {
     print("VerifyEmailModel model 1 " + response.toString());
     response.maybeWhen(
         ok: (authResponse) async {
-          verifyModel = authResponse;
-          Get.find<SharedPrefService>().saveToken(verifyModel?.accessToken ?? "");
-      return verifyModel;
+          VerifyEmailModel model = authResponse;
+          //print("VerifyEmailModel model" + model.accessToken.toString());
+          Get.find<SharedPrefService>().saveToken(model.accessToken ?? "");
+          print(model.accessToken.toString() +
+              " ===" +
+              Get.find<SharedPrefService>().getToken().toString());
         },
         badRequest: (info) {},
         orElse: () {},
@@ -88,6 +90,7 @@ class AuthApis {
     response.maybeWhen(
         ok: (response) {
           registerModel = response;
+
           return registerModel;
         },
         badRequest: (info) {},
@@ -127,13 +130,13 @@ class AuthApis {
 
   Future<LoginModel?> logoutUser() async {
     LoginModel? loginModel = LoginModel();
-    final request = NetworkRequest(
-        type: NetworkRequestType.POST,
-        path: 'auth/logout',
-        data: const NetworkRequestBody.json(
-          {},
-        ),
-       );
+    final request = const NetworkRequest(
+      type: NetworkRequestType.POST,
+      path: 'auth/logout',
+      data: NetworkRequestBody.json(
+        {},
+      ),
+    );
     NetworkResponse response = await networkService.execute(
       request,
       LoginModel.fromJson, // <- Function to convert API response to your model
@@ -144,8 +147,8 @@ class AuthApis {
       Get.find<SharedPrefService>().removeToken();
       return loginModel;
     }, orElse: () {
-      print(response.toString());
-      print("data");
+      //  print(response.toString());
+      //  print("data");
     });
     return loginModel;
   }
@@ -175,7 +178,7 @@ class AuthApis {
     return resendOtpModel;
   }
 
-//TODO: Implement this method to get Refreshed Token
+/*//TODO: Implement this method to get Refreshed Token
   Future<String> refreshToken() async {
     LoginModel verifyModel = LoginModel();
     String? token = Get.find<SharedPrefService>().getToken() ?? '';
@@ -201,5 +204,5 @@ class AuthApis {
       orElse: () {},
     );
     return token ?? "";
-  }
+  }*/
 }
