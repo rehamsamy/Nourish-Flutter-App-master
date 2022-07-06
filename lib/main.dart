@@ -26,6 +26,7 @@ void main() async {
   Get.put(SharedPrefService(prefs: pref));
   Get.put(LocalizationService());
 
+
   final messaging = FCMConfig.instance.messaging;
   late NotificationSettings settings;
   if (Platform.isIOS) {
@@ -53,6 +54,7 @@ void main() async {
     final token = await FCMConfig.instance.messaging.getToken();
     debugPrint("token $token");
   }
+  //Get.find<LocalizationServices>
   SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp])
       .then((_) {
     runApp(const NourishApp());

@@ -7,7 +7,7 @@ Map<String, String> en = {
 
   LocalKeys.kAdd: 'Add',
   LocalKeys.kEdit: 'Edit',
-  LocalKeys.kRequiredField: 'Required field',
+  LocalKeys.kRequiredField: 'Required Field',
   LocalKeys.kLogout: 'Logout',
 
   LocalKeys.kNext: "Next",
@@ -15,15 +15,15 @@ Map<String, String> en = {
   LocalKeys.kCalories: "Calories",
   LocalKeys.kBreakfast: "Breakfast",
   LocalKeys.kEditLocationPin: "Edit Location Pin",
-  LocalKeys.kViewAll: "view all",
+  LocalKeys.kViewAll: "View All",
   LocalKeys.kLocation: "Location",
-  LocalKeys.kEnablePinyourLocation: "Enable & Pin your Location",
+  LocalKeys.kEnablePinyourLocation: "Enable & Pin Your Location",
   LocalKeys.kEnable: "Enable",
   LocalKeys.kFilters: "Filters",
   LocalKeys.kDuration: "Duration",
   LocalKeys.kListOfCategory: "List Of Category",
   LocalKeys.kPriceRange: "Price Range",
-  LocalKeys.kNoDeliverHere: "Sorry , we don't deliver here yet",
+  LocalKeys.kNoDeliverHere: "Sorry, we don't deliver here yet",
   LocalKeys.kKnowMoreAboutSubscriptions:
       "Continue to app to learn more about our subscribtions",
   LocalKeys.kReceiptFromTheBranch: "Receipt From The Branch",
@@ -42,8 +42,8 @@ Map<String, String> en = {
   LocalKeys.kFlat: "Flat",
   LocalKeys.kOptional: "Optional",
   LocalKeys.kStreet: "Street",
-  LocalKeys.kPostalCode: "Next",
-  LocalKeys.kAdditionalNumber: "Next",
+  LocalKeys.kPostalCode: "Postal Code",
+  LocalKeys.kAdditionalNumber: "Additinal Number",
   LocalKeys.kDeliveryInstructions: "Delivery Instructions",
   LocalKeys.kSave: "Save",
 
@@ -59,7 +59,7 @@ Map<String, String> en = {
   LocalKeys.kName: "Name",
   LocalKeys.kLogin: "Login",
   LocalKeys.kPhone: "Phone",
-  LocalKeys.kSignUpHere: "Signup here",
+  LocalKeys.kSignUpHere: "Sign Up Here",
 
 // OnBoarding
   LocalKeys.kGetStarted: "Get Started",
@@ -73,20 +73,20 @@ Map<String, String> en = {
 
   // Otp
   LocalKeys.kFillOTP: "Fill OTP",
-  LocalKeys.kEmailOtp: "send verification code to email message",
-  LocalKeys.kResendOTP: "Resend OTP Again?",
+  LocalKeys.kEmailOtp: "Send Verification Code To Email Message",
+  LocalKeys.kResendOTP: "Resend OTP?",
   LocalKeys.kSentOTPTo: "We Sent Verification Code to Your",
   LocalKeys.kEmailAddress: "Email Address",
   LocalKeys.kMobileNumber: "Mobile Number",
 
   // Register
-  LocalKeys.kSignUp: "Signup",
+  LocalKeys.kSignUp: "Sign Up",
   LocalKeys.kFirstName: "First Name",
   LocalKeys.kLastName: "Last Name",
   LocalKeys.kPhoneNumber: "Phone Number",
   LocalKeys.kHaveAccount: "Have an Account? ",
   LocalKeys.kPrivacyPolicy: 'Privacy Policy',
-  LocalKeys.kTermsConditions: 'terms & Conditions',
+  LocalKeys.kTermsConditions: 'Terms & Conditions',
   LocalKeys.kAnd: "And",
   LocalKeys.kReadAndAgreed: "I have read and agreed to the ",
 
@@ -94,7 +94,7 @@ Map<String, String> en = {
   LocalKeys.kCart: "Cart",
   LocalKeys.kYourPackages: "Your Packages",
   LocalKeys.kDays: "Days",
-  LocalKeys.kSubTotal: "Sub Total:",
+  LocalKeys.kSubTotal: "Subtotal:",
   LocalKeys.kDelivery: "Delivery:",
   LocalKeys.kTax: "Tax:",
   LocalKeys.kEnterCouponCode: "Enter Coupon Code",
@@ -103,7 +103,7 @@ Map<String, String> en = {
   LocalKeys.kDiscount: "Discount:",
 
 // Custom Package
-  LocalKeys.kActiveAreYou: "How Active Are You?",
+  LocalKeys.kActiveAreYou: "How Active You Are?",
   LocalKeys.kNoExperience: "No Experience",
   LocalKeys.kLightExercise: "Light Exercise: 1-2 Workouts/Week",
   LocalKeys.kModerateExercise: "Moderate Exercise: 3-5 Workouts/Week",
@@ -114,27 +114,27 @@ Map<String, String> en = {
   LocalKeys.kOf: "Of",
   LocalKeys.kSelectbirthdate: "Select birth date",
   LocalKeys.kBirthDate: "Birth Date",
-  LocalKeys.kChooseGender: "Choose gender",
+  LocalKeys.kChooseGender: "Choose Gender",
   LocalKeys.kWoman: "Woman",
   LocalKeys.kMan: "Man",
   LocalKeys.kSelectheight: "Select height",
   LocalKeys.kFeet: "Feet",
   LocalKeys.kCentimetre: "Centimetre",
-  LocalKeys.kCm: "Cm",
-  LocalKeys.kChoosemaingoal: "Choose main goal",
+  LocalKeys.kCm: "cm",
+  LocalKeys.kChoosemaingoal: "Choose Main Goal",
   LocalKeys.kLoseWeight: "Lose Weight",
   LocalKeys.kKeepFit: "Keep Fit",
   LocalKeys.kStart: "Start",
   LocalKeys.kMealsYouNeed: "Meals You Need",
   LocalKeys.kLunch: "Lunch",
   LocalKeys.kDinner: "Dinner",
-  LocalKeys.kYourResulat: "Your Resulat",
+  LocalKeys.kYourResulat: "Your Resulats",
   LocalKeys.kTargetMacronutrientsRange: "Target Macronutrients Range:",
   LocalKeys.kCaloriesDay: "Calories/Day",
-  LocalKeys.kSelectweight: "Select weight",
+  LocalKeys.kSelectweight: "Select Weight",
   LocalKeys.kPound: "Pound",
   LocalKeys.kKilogram: "Kilogram",
-  LocalKeys.kKg: "Kg",
+  LocalKeys.kKg: "kg",
   LocalKeys.kTargetWeight: "What's Your Target Weight?",
 
   // Days Times
@@ -142,10 +142,10 @@ Map<String, String> en = {
   LocalKeys.kBranchTime: "Branch Time",
 
   // Addresses
-  LocalKeys.kAddnewaddress: "Add new address",
+  LocalKeys.kAddnewaddress: "Add New Address",
 
   //Delivery time
-  LocalKeys.kDeliverytime: "Delivery time",
+  LocalKeys.kDeliverytime: "Delivery Time",
 
   // Home
   LocalKeys.kHome: "Home",
@@ -157,15 +157,15 @@ Map<String, String> en = {
   LocalKeys.kMenus: "Menus",
   LocalKeys.kDetails: "Details",
   LocalKeys.kVisitorUser: "Visitor User",
-  LocalKeys.kLoginorSignup: "Login or Sign up",
+  LocalKeys.kLoginorSignup: "Login or Sign Up",
   LocalKeys.kAddressBook: "Address Book",
   LocalKeys.kHelpCenter: "Help Center",
   LocalKeys.kLanguage: "Language",
 
   // Location Access
   LocalKeys.kMealReceive: "Where would you like to receive your meals?",
-  LocalKeys.kAllowLocation: 'To Find Your Delivery Address Easily, Tap "Allow"',
-  LocalKeys.kAllowLocationAccess: "Allow Location access",
+  LocalKeys.kAllowLocation: 'To find your delivery address easily, tap "Allow"',
+  LocalKeys.kAllowLocationAccess: "Allow Location Access",
 
   // Menu
   LocalKeys.kMenuCategories: "Menu Categories",
@@ -199,7 +199,7 @@ Map<String, String> en = {
   LocalKeys.kPaymentMethod: "Payment Method",
   LocalKeys.kSelectPaymentMethod: "Select Payment Method",
   LocalKeys.kTotalPayment: "Total Payment",
-  LocalKeys.kcashondelivery: "cash on delivery",
+  LocalKeys.kcashondelivery: "Cash On Delivery",
   LocalKeys.kCheckout: "Checkout",
   LocalKeys.kOr: "Or",
 
@@ -216,7 +216,7 @@ Map<String, String> en = {
   LocalKeys.kCancelSubscribtion: "Cancel Subscribtion",
   LocalKeys.kMealsDetails: "Meals Details",
   LocalKeys.kChangeDeliveryTime: "Change Delivery Time",
-  LocalKeys.koffice: "office",
+  LocalKeys.koffice: "Office",
   LocalKeys.kChangeDeliveryLocation: "Change Delivery Location",
   LocalKeys.kSubscriptionStatus: "Subscription Status",
   LocalKeys.kActive: "Active",
@@ -226,7 +226,7 @@ Map<String, String> en = {
   LocalKeys.kViewMap: "View Map",
   LocalKeys.kPickupType: "Pickup Type",
   LocalKeys.kCancelSubscriptionDialog:
-      "Are You Sure For Cancel Your Subscription",
+      "Are you sure to cancel your subscription?",
   LocalKeys.kCancel: "Cancel",
   LocalKeys.kBack: "Back",
   LocalKeys.kcurrentlyunsubscribed:
@@ -240,10 +240,10 @@ Map<String, String> en = {
   LocalKeys.kSubscription: "Subscription",
   LocalKeys.kRenewFrom: "Renew From",
   LocalKeys.kRenewWithSameDetails: "Renew With Same Details",
-  LocalKeys.kRenewwithNewdetails: "Renew with New details",
+  LocalKeys.kRenewwithNewdetails: "Renew With New Details",
   LocalKeys.kCongratulation: "Congratulation!",
   LocalKeys.kSubscriptionSubmitted: "Subscription Submitted",
-  LocalKeys.ksubscriptionno: "subscription no",
+  LocalKeys.ksubscriptionno: "Subscription No.",
   LocalKeys.kNoteFollowMailReceiveReceipt:
       "Note: Follow Your Mail To Receive Receipt ",
   LocalKeys.kStartDate: "Start Date",

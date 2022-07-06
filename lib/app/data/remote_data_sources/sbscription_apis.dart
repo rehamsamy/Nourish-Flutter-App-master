@@ -11,7 +11,6 @@ class  SubscriptionApis{
   Future<List<SubscriptionItem>?> getSubscriptionAccordingType(String subscriptionType) async {
     List<SubscriptionItem>? list=[];
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
-  //  const   String token1='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTU4NDA4ODQsImV4cCI6MTY1NTg0NDQ4NCwibmJmIjoxNjU1ODQwODg0LCJqdGkiOiJKaDRBWVdUaFY4UllGT0VlIiwic3ViIjo0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.upAtipt4siOdS_MatWb_zh0JX85kHkGZo_j_2rtMM0s';
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: subscriptionType,
@@ -21,6 +20,7 @@ class  SubscriptionApis{
         headers: {'Authorization':'Bearer $token'}
     );
     // Execute a request and convert response to your model:
+    Get.log('================  '+token.toString());
     final response = await networkService.execute(
       request,
       SubscriptionModel
@@ -51,6 +51,7 @@ Get.log('subscrip  =>'+response.toString());
    };
     PauseSubscriptionModel pauseModel=PauseSubscriptionModel();
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    Get.log('================  '+token.toString());
       final request = NetworkRequest(
         type: NetworkRequestType.POST,
         path: 'pauseSubscription',
