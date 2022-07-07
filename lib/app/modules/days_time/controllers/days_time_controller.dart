@@ -9,6 +9,7 @@ class DaysTimeController extends GetxController {
   Color ? mycolor;
   bool ? isSelected;
   int ? index;
+  List<String> selectedDays=[];
   List<int> selectedItems = [];
   @override
   void onInit() {
@@ -27,4 +28,6 @@ class DaysTimeController extends GetxController {
       update();
 
   }
+
+
 }

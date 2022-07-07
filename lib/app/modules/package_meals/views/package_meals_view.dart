@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
@@ -9,7 +8,6 @@ import 'package:nourish_sa/app/shared/dinner_animted_container.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_select_card.dart';
 import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
 import 'package:nourish_sa/routes/app_pages.dart';
-
 import '../../../../app_theme.dart';
 import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -63,10 +61,10 @@ class PackageMealsView extends GetView<PackageMealsController> {
                             isSelected: false,
                             title: LocalKeys.kLunch.tr,
                           ),
-                          DinnerAnimatedContainer(
-                            isSelected: false,
-                            title: LocalKeys.kSnacks.tr,
-                          ),
+                          // DinnerAnimatedContainer(
+                          //   isSelected: false,
+                          //   title: LocalKeys.kSnacks.tr,
+                          // ),
                         ],
                       ),
                     ),

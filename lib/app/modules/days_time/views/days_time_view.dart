@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/branch_model.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
@@ -15,12 +16,28 @@ import '../controllers/days_time_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DaysTimeView extends GetView<DaysTimeController> {
-   DaysTimeView({Key? key}) : super(key: key);
+  // DaysTimeView({Key? key}) : super(key: key);
   PackageDetailModel? packageDetailModel;
+ int daysCount=0;
+ int ?daysStart;
+ List<BranchItem>? branches;
+  List<String>  selectedDays=[];
+ List<String>  branchTime=[];
   @override
   Widget build(BuildContext context) {
     packageDetailModel=PackageDetailsView.packageDetailModel;
-    return Scaffold(
+    daysCount=packageDetailModel?.data?.daysNumberOfWeek??0;
+    branches=packageDetailModel?.data?.branches;
+    daysStart=int.parse(packageDetailModel?.data?.daysBeforeStart??'');
+    branchTime.clear();
+    int length=packageDetailModel?.data?.branches?.length??0;
+    if(length>0){
+      packageDetailModel?.data?.branches?[0].pickupPeriods?.map((e) =>
+          branchTime.add(e.period??'')
+      ).toList();
+      Get.log('sizee 1   '+(branches?[0].pickupPeriods?.length.toString()).toString()+ '  ${branchTime.length}');
+    }
+      return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
         title: Image.asset(
@@ -62,6 +79,13 @@ class DaysTimeView extends GetView<DaysTimeController> {
                         return InkWell(
                           onTap: (){
                             controller.toggleSelection(index);
+                            Get.log('you must choose day after ${packageDetailModel?.data?.id.toString()} days');
+                            if(daysCount>controller.selectedItems.length){
+                              Get.snackbar('Error', 'You must choose $daysCount days only');
+                            }else{
+                              selectedDays.add(AppConstants.days.elementAt(index));
+                              Get.log('xxx      $selectedDays');
+                            }
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(
@@ -115,6 +139,15 @@ class DaysTimeView extends GetView<DaysTimeController> {
                   ),
                 ),
                 child: DateTimePicker(
+                  onChanged: (val){
+                  DateTime x=  DateTime.parse(val);
+                    final date2 = DateTime.now();
+                    final difference = daysBetween(x, date2);
+                    Get.log('xxx      $daysStart');
+                    if(difference<daysStart!){
+                      Get.snackbar('Error', 'you must choose day after $daysStart days');
+                    }
+                  },
                   type: DateTimePickerType.date,
                   firstDate: DateTime.now(),
                   lastDate: DateTime(2100),
@@ -156,14 +189,26 @@ class DaysTimeView extends GetView<DaysTimeController> {
                         color: lightGreyColor,
                       ),
                     ),
+
                   ),
                 ),
               ),
             ),
+
+            // DropdownButton<String>(
+            //   items: branchTime.map((String value) {
+            //     return DropdownMenuItem<String>(
+            //       value: value,
+            //       child: Text(value),
+            //     );
+            //   }).toList(),
+            //   onChanged: (_) {},
+            // ),
+
             CustomDropDown(
               hintText: "",
-              currentValue: "",
-              items: const [],
+              currentValue:'aaaaaaa',
+              items:branchTime,
               width: 370.w,
               onChanged: (v) {},
               title: LocalKeys.kBranchTime.tr,
@@ -171,11 +216,24 @@ class DaysTimeView extends GetView<DaysTimeController> {
             const Spacer(),
             CustomButton(
               title: LocalKeys.kContinue.tr,
-              onPress: () => Get.toNamed(Routes.PACKAGE_MEALS),
+              onPress: () => Get.toNamed(Routes.PACKAGE_MEALS,arguments: {'selectedDays':selectedDays}),
             ),
           ],
         ),
       ),
     );
   }
+
+   int daysBetween(DateTime from, DateTime to) {
+     from = DateTime(from.year, from.month, from.day);
+     to = DateTime(to.year, to.month, to.day);
+     Get.log('from  $from   to  $to');
+     return (from.difference(to).inHours / 24).round();
+   }
+
+
+  // getSelectedDays(){
+  //   selectedDays.add(AppConstants.days.elementAt(controller.))
+  // }
+
 }

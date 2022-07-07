@@ -16,8 +16,8 @@ class DinnerAnimatedContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return AnimatedContainer(
       duration: const Duration(seconds: 1),
-      width: isSelected ? 90.w : 84.w,
-      height: isSelected ? 102.h : 93.h,
+      width: isSelected ? 120.w : 100.w,
+      height: isSelected ? 115.h : 93.h,
       margin:
           EdgeInsetsDirectional.only(end: 10.w, top: isSelected ? 0.h : 9.h),
       decoration: BoxDecoration(

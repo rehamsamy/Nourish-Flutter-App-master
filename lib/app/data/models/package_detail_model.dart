@@ -1,3 +1,5 @@
+import 'package:nourish_sa/app/data/models/branch_model.dart';
+
 class PackageDetailModel {
   PackageDetailModel({
       this.data,});
@@ -55,7 +57,7 @@ class Data {
     if (json['branches'] != null) {
       branches = [];
       json['branches'].forEach((v) {
-       // branches?.add(dynamic.fromJson(v));
+        branches?.add(BranchItem.fromJson(v));
       });
     }
     if (json['breakfasts'] != null) {
@@ -88,7 +90,7 @@ class Data {
   String? daysBeforeStart;
   String? name;
   List<Descriptions>? descriptions;
-  List<dynamic>? branches;
+  List<BranchItem>? branches;
   List<Breakfasts>? breakfasts;
   List<Lunches>? lunches;
   List<Dinners>? dinners;
