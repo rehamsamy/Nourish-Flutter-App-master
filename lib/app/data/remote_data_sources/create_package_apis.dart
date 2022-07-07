@@ -1,7 +1,10 @@
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/create_package_model.dart';
+import 'package:nourish_sa/app/data/services/logging_interceptor.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import '../services/network_service.dart/dio_network_service.dart';
+
 class CreatePackageApis {
   Future<CreatePackageModel?> createPackage({
     required String gender,
@@ -12,11 +15,10 @@ class CreatePackageApis {
     required int weight,
     required String weight_unit,
     required String goal,
-    int? breakfastMeals,
-    int? launchMeals,
-    int? dinnerMeals,
+    required List selectedMeals,
   }) async {
     CreatePackageModel? packageModel = CreatePackageModel();
+    logger.wtf(goal);
     Map<String, dynamic> map = {
       'gender': gender,
       'experience_id': experience_id,
@@ -26,9 +28,7 @@ class CreatePackageApis {
       'weight': weight,
       'weight_unit': weight_unit,
       'goal': goal,
-      'your_meals[0]': breakfastMeals,
-      'your_meals[1]': launchMeals,
-      'your_meals[2]': dinnerMeals,
+      'your_meals': selectedMeals,
       // 'your_meals[saturday]': meals
     };
 
@@ -36,7 +36,11 @@ class CreatePackageApis {
       type: NetworkRequestType.POST,
       path: 'updateAdditionalData',
       data: NetworkRequestBody.json(map),
-     );
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ${Get.find<SharedPrefService>().getToken()}',
+      },
+    );
 
     Get.log('ccccccc 1 ' + request.path.toString());
     // Execute a request and convert response to your model:

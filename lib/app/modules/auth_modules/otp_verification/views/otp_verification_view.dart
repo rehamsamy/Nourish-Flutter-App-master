@@ -101,9 +101,10 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                         .verifyOtpMobile(
                             controller.phone ?? '', controller.otp.text)
                         .then((value) {
+                      // Get.forceAppUpdate();
                       value?.accessToken != null ||
                               value?.accessToken?.trim() != ""
-                          ? Get.offAll(Routes.HOME_PAGE)
+                          ? Get.offAllNamed(Routes.HOME_PAGE)
                           : Get.snackbar(
                               LocalKeys.kError, value!.errors.toString());
                       return null;

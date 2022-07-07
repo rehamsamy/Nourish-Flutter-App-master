@@ -3,11 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/custom_package/views/activity_screen.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/selection_card.dart';
-import 'package:nourish_sa/routes/app_pages.dart';
 
-class MealsNeededScreen extends StatelessWidget {
+import '../controllers/custom_package_controller.dart';
+
+class MealsNeededScreen extends GetView<CustomPackageController> {
   const MealsNeededScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -34,8 +36,10 @@ class MealsNeededScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 30.h, bottom: 16.h),
               child: SelectionCard(
                 image: Assets.kBurgerDrinkIcon,
-                isSelected: true,
-                onTap: () {},
+                isSelected: false,
+                onTap: () {
+                  controller.setMealsNeeded(1);
+                },
                 title: LocalKeys.kBreakfast.tr,
                 isWithBG: true,
                 isWithCheckBox: true,
@@ -44,7 +48,9 @@ class MealsNeededScreen extends StatelessWidget {
             SelectionCard(
               image: Assets.kFood,
               isSelected: false,
-              onTap: () {},
+              onTap: () {
+                controller.setMealsNeeded(2);
+              },
               isWithCheckBox: true,
               title: LocalKeys.kLunch.tr,
               isWithBG: true,
@@ -55,7 +61,9 @@ class MealsNeededScreen extends StatelessWidget {
             SelectionCard(
               image: Assets.kCheese,
               isSelected: false,
-              onTap: () {},
+              onTap: () {
+                controller.setMealsNeeded(3);
+              },
               isWithCheckBox: true,
               isWithBG: true,
               title: LocalKeys.kDinner.tr,
@@ -64,7 +72,8 @@ class MealsNeededScreen extends StatelessWidget {
             CustomButton(
                 title: LocalKeys.kContinue.tr,
                 onPress: () {
-                  Get.until((route) => Get.currentRoute == Routes.HOME_PAGE);
+                  //Get.until((route) => Get.currentRoute == Routes.HOME_PAGE);
+                  Get.to(() => const ActivityScreen());
                 }),
             SizedBox(
               height: 111.h,

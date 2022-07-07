@@ -60,32 +60,44 @@ class ActivityScreen extends GetView<CustomPackageController> {
                     title: LocalKeys.kContinue.tr,
                     onPress: () async {
                       CreatePackageModel? packageModel =
-                          await CreatePackageApis().createPackage(
-                              gender:
-                                  controller.isMaleSelected ? 'male' : 'female',
-                              experience_id: selectedExper,
-                              date_of_birth: controller.birtdate ?? '',
-                              height: int.parse(
-                                  controller.heightTextEditingController.text),
-                              height_unit: controller.isFeetSelected.value
-                                  ? 'feet'
-                                  : 'cm',
-                              weight: int.parse(
-                                  controller.weightTextEditingController.text),
-                              weight_unit: controller.isPoundSelected.value
-                                  ? 'pound'
-                                  : 'kg',
-                              goal: 'lose_weight',
-                              breakfastMeals: 1,
-                              launchMeals: 2,
-                              dinnerMeals: 3);
-
-                      if (packageModel?.data != null) {
+                          await CreatePackageApis()
+                              .createPackage(
+                                  gender: controller
+                                          .isMaleSelected
+                                      ? 'male'
+                                      : 'female',
+                                  experience_id: selectedExper,
+                                  date_of_birth: controller.birtdate ?? '',
+                                  height:
+                                      int
+                                          .parse(
+                                              controller
+                                                  .heightTextEditingController
+                                                  .text),
+                                  height_unit:
+                                      controller
+                                              .isFeetSelected.value
+                                          ? 'feet'
+                                          : 'cm',
+                                  weight:
+                                      int
+                                          .parse(
+                                              controller
+                                                  .weightTextEditingController
+                                                  .text),
+                                  weight_unit: controller.isPoundSelected.value
+                                      ? 'pound'
+                                      : 'kg',
+                                  goal: controller.mainGoal,
+                                  selectedMeals: controller.selectedMeals)
+                              .then((value) {
                         AnalyticsService.instance.logEvent("Calculation_View");
-
-                        Get.to(const CalcuationScreen(),
-                            arguments: {'packageModel': packageModel});
-                      }
+                        controller.packageModel = value;
+                        Get.to(
+                          () => const CalcuationScreen(),
+                        );
+                        return value;
+                      });
                     },
                   ),
                   SizedBox(

@@ -9,9 +9,10 @@ import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
 import '../../../data/services/analytics_service.dart';
+import '../controllers/custom_package_controller.dart';
 import 'main_goal.dart';
 
-class ResultScreen extends StatelessWidget {
+class ResultScreen extends GetView<CustomPackageController> {
   const ResultScreen({Key? key}) : super(key: key);
 
   @override
@@ -65,7 +66,7 @@ class ResultScreen extends StatelessWidget {
                       Padding(
                         padding: EdgeInsets.only(top: 30.h, bottom: 3.h),
                         child: Text(
-                          "3000",
+                          "3330",
                           style: Get.textTheme.headline6,
                         ),
                       ),

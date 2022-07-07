@@ -18,9 +18,11 @@ class CalcuationScreen extends StatefulWidget {
 class _CalcuationScreenState extends State<CalcuationScreen> {
   @override
   void initState() {
-    Future.delayed(const Duration(seconds: 1)).then((value) {
+    Future.delayed(const Duration(
+      seconds: 2,
+    )).then((value) {
       AnalyticsService.instance.logEvent("Result_View");
-      Get.off(const ResultScreen());
+      Get.off(() => const ResultScreen());
     });
     super.initState();
   }

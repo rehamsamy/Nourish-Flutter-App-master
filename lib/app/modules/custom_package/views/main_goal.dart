@@ -7,9 +7,10 @@ import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/selection_card.dart';
 
 import '../../../data/services/analytics_service.dart';
+import '../controllers/custom_package_controller.dart';
 import 'meals_needed_screen.dart';
 
-class MainGoalScreen extends StatelessWidget {
+class MainGoalScreen extends GetView<CustomPackageController> {
   const MainGoalScreen({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -36,17 +37,21 @@ class MainGoalScreen extends StatelessWidget {
               padding: EdgeInsets.only(top: 30.h, bottom: 16.h),
               child: SelectionCard(
                 image: Assets.kkilos,
-                isSelected: true,
+                isSelected: controller.mainGoal == 'lose_weight',
                 isWithBG: true,
-                onTap: () {},
+                onTap: () {
+                  controller.mainGoal = "lose_weight";
+                },
                 title: LocalKeys.kLoseWeight.tr,
               ),
             ),
             SelectionCard(
               image: Assets.kFitnessIcon,
-              isSelected: false,
+              isSelected: controller.mainGoal == 'keep_fit',
               isWithBG: true,
-              onTap: () {},
+              onTap: () {
+                controller.mainGoal = "keep_fit";
+              },
               title: LocalKeys.kKeepFit.tr,
             ),
             const Spacer(),

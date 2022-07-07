@@ -3,13 +3,13 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/modules/custom_package/controllers/custom_package_controller.dart';
+import 'package:nourish_sa/app/modules/custom_package/views/main_goal.dart';
 import 'package:nourish_sa/app/modules/custom_package/views/selector_two_card.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
 
 import '../../../data/services/analytics_service.dart';
-import 'activity_screen.dart';
 
 class WeightScreen extends GetView<CustomPackageController> {
   WeightScreen({Key? key}) : super(key: key);
@@ -222,7 +222,7 @@ class WeightScreen extends GetView<CustomPackageController> {
                       onPress: () {
                         if (_key.currentState!.validate()) {
                           AnalyticsService.instance.logEvent("Activity_View");
-                          Get.to(() => const ActivityScreen());
+                          Get.to(() => const MainGoalScreen());
                         }
                       }),
                   SizedBox(

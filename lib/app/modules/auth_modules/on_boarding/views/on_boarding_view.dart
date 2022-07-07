@@ -112,7 +112,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                             .jumpToPage(controller.currentPage.value + 1);
                       } else {
                         Get.find<SharedPrefService>().saveIsFirstTime();
-                        Get.offAllNamed(Routes.LOCATION_ACESSS);
+                        Get.offAllNamed(Routes.LOGIN);
                       }
                     },
                   )),
