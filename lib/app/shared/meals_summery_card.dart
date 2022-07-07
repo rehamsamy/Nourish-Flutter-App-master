@@ -38,7 +38,7 @@ class MealsSummeryCard extends StatelessWidget {
                 width: 12.w,
               ),
               Text(
-                LocalKeys.kBreakfast.tr,
+               saturday?.mealType?? LocalKeys.kBreakfast.tr,
                 style: Get.textTheme.bodyText1,
               ),
             ],

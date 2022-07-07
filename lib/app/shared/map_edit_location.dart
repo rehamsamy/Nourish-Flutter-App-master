@@ -156,7 +156,6 @@ class _MapEditLocationPinState extends State<MapEditLocationPin> {
         .then((currloc) async {
       setState(() {
         currentLocation = currloc;
-
         mapController?.animateCamera(CameraUpdate.newLatLngZoom(
             LatLng(currentLocation.latitude, currentLocation.longitude), 18));
         _center = LatLng(currentLocation.latitude, currentLocation.longitude);

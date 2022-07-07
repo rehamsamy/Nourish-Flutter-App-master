@@ -7,6 +7,7 @@ class PackageDetailsController extends GetxController {
   //TODO: Implement PackageDetailsController
   Map map = Get.arguments;
   PackageDetailModel? packageDetailModel;
+  static PackageDetailModel? x;
 
   final count = 0.obs;
   @override
@@ -14,6 +15,7 @@ class PackageDetailsController extends GetxController {
     super.onInit();
     AnalyticsService.instance.logEvent("Package_Details_View");
     packageDetailModel = map['packageDetailModel'];
+    x=packageDetailModel;
   }
 
 

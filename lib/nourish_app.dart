@@ -65,6 +65,9 @@ class _NourishAppState extends State<NourishApp> {
           locale: Get.locale,
           translations: Messages(),
           defaultTransition: Transition.fadeIn,
+          // locale: LocalizationService().isAr()
+          //     ? const Locale('ar')
+          //     : const Locale('en');
           fallbackLocale: Messages.fallbackLocale,
           supportedLocales: Messages.supportedLocales,
           builder: (context, child) {

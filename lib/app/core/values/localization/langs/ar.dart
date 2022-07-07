@@ -245,4 +245,5 @@ Map<String, String> ar = {
   LocalKeys.kNoteFollowMailReceiveReceipt: 'ملاحظة: تابع بريدك لاستلام الإيصال',
   LocalKeys.kStartDate: 'تاريخ البدء',
   LocalKeys.kNoInternetConnection: 'لا يوجد اتصال بالشبكة',
+
 };

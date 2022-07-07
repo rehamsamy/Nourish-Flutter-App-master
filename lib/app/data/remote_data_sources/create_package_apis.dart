@@ -49,6 +49,7 @@ class CreatePackageApis {
       CreatePackageModel
           .fromJson, // <- Function to convert API response to your model
     );
+    Get.log('ccccccc 2' + response.toString());
     response.maybeWhen(
         ok: (model) {
           Get.log('ccccccc 2' + model.toString());
