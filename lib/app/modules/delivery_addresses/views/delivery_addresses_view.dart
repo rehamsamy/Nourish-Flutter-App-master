@@ -109,11 +109,9 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
                             ),
                           );
                         }
-                      }
-                      {
+                      }else{
                         Timer.run(() =>
                             Get.snackbar('error ', 'error => no data found'));
-
                         return const SizedBox(
                           height: 200,
                         );
@@ -176,7 +174,7 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
               child: CustomButton(
                   title: LocalKeys.kContinue.tr,
                   onPress: () {
-                    Get.toNamed(Routes.DAYS_TIME);
+                    Get.toNamed(Routes.DAYS_TIME,);
                     // Get.bottomSheet(const NoDeliveryHereBottomSheet());
                   }),
             ),

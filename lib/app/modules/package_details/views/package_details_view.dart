@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
 import 'package:nourish_sa/app/shared/dialogs/enable_location_dialog.dart';
@@ -11,8 +12,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../controllers/package_details_controller.dart';
 
 class PackageDetailsView extends GetView<PackageDetailsController> {
+ static PackageDetailModel? packageDetailModel;
   @override
   Widget build(BuildContext context) {
+    packageDetailModel=controller.packageDetailModel;
     return Scaffold(
       appBar: AppBar(
         title: Text(

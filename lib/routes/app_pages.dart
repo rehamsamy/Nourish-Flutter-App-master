@@ -148,7 +148,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DAYS_TIME,
-      page: () => const DaysTimeView(),
+      page: () =>  DaysTimeView(),
       binding: DaysTimeBinding(),
     ),
     GetPage(
