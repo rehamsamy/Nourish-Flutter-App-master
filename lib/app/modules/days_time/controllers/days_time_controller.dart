@@ -6,10 +6,10 @@ import '../../../data/services/analytics_service.dart';
 
 class DaysTimeController extends GetxController {
   final TextEditingController startDayController = TextEditingController();
-  Color ? mycolor;
-  bool ? isSelected;
-  int ? index;
-  List<String> selectedDays=[];
+  Color? mycolor;
+  bool? isSelected;
+  int? index;
+  List<String> selectedDays = [];
   List<int> selectedItems = [];
   @override
   void onInit() {
@@ -17,17 +17,24 @@ class DaysTimeController extends GetxController {
     super.onInit();
   }
 
-
+  List branchTimeSelectedValues = [];
 
   void toggleSelection(int index) {
-    if (selectedItems.contains(index)){
+    if (selectedItems.contains(index)) {
       selectedItems.remove(index);
     } else {
       selectedItems.add(index);
     }
-      update();
-
+    update();
   }
 
-
+  void toggleBranchTimeSelection(value) {
+    if (branchTimeSelectedValues.contains(value)) {
+      branchTimeSelectedValues.remove(value);
+    } else {
+      branchTimeSelectedValues.add(value);
+    }
+    print(value);
+    update();
+  }
 }
