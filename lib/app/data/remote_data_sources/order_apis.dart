@@ -39,4 +39,54 @@ class OrderApis{
     return orderPeriodModel;
   }
 
+
+  Future<ChangeOrderPeriodModel?> addOrder({required String start_date,
+                                            required int package_id,
+                                            required String delivery_type,
+                                            required int branch_id,
+                                            required int address_id,
+                                            required int period_id,
+                                            required int payment_id,
+
+
+
+                                            }) async {
+    ChangeOrderPeriodModel orderPeriodModel=ChangeOrderPeriodModel();
+    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+
+    Map<String, dynamic>? map = {
+      'start_date': start_date,
+      'package_id': package_id,
+      'delivery_type':delivery_type,
+      'branch_id':branch_id,
+      'address_id':address_id,
+      'period_id':period_id,
+      'payment_id':payment_id
+
+    };
+    final request = NetworkRequest(
+        type: NetworkRequestType.POST,
+        path: 'changeOrderPeriod',
+        data: NetworkRequestBody.json(map),
+        headers: {
+          'Authorization':'Bearer $token',
+        }
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      ChangeOrderPeriodModel.fromJson, // <- Function to convert API response to your model
+    );
+    response.maybeWhen(
+        ok: (response) {
+          orderPeriodModel=response;
+          return orderPeriodModel;
+        },
+        badRequest: (info) {},
+        orElse: () {});
+
+    return orderPeriodModel;
+  }
+
+
 }

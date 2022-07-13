@@ -13,8 +13,12 @@ import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageMealsView extends GetView<PackageMealsController> {
+  int total=0;
   @override
   Widget build(BuildContext context) {
+   total= (controller.extraLunchPrice*controller.lunchSelected)+
+        (controller.extraBreakfastPrice*controller.breakfastSelected)+
+        (controller.extraDinnerPrice*controller.dinnerSelected);
     return Scaffold(
         appBar: AppBar(
           title: Text(LocalKeys.kSelectMeals.tr),
@@ -288,7 +292,9 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 CustomButton(
                     title: LocalKeys.kContinue.tr,
                     onPress: () {
-                      Get.toNamed(Routes.CART, arguments: false);
+                     // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
+                      Get.log('vvvvv  '+total.toString());
+                      Get.toNamed(Routes.PAYMENT_METHODS,arguments: {'total':total});
                     }),
                 SizedBox(
                   height: 42.h,
