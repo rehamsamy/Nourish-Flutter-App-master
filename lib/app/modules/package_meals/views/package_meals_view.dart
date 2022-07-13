@@ -95,17 +95,22 @@ class PackageMealsView extends GetView<PackageMealsController> {
                     ),
                   ),
                 ),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 22.h),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        LocalKeys.kPriceForAdditionalPackages.tr,
-                        style: Get.textTheme.headline3,
-                      ),
-                      const Text("500 SAR")
-                    ],
+                GetBuilder<PackageMealsController>(
+                  builder: (_)=>Padding(
+                    padding: EdgeInsets.symmetric(vertical: 22.h),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(
+                          LocalKeys.kPriceForAdditionalPackages.tr,
+                          style: Get.textTheme.headline3,
+                        ),
+                         Text('${(controller.extraLunchPrice*controller.lunchSelected)+
+                             (controller.extraBreakfastPrice*controller.breakfastSelected)+
+                             (controller.extraDinnerPrice*controller.dinnerSelected)
+                         } SAR')
+                      ],
+                    ),
                   ),
                 ),
                 SizedBox(

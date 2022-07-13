@@ -9,18 +9,18 @@ class PackageMealsController extends GetxController {
   int dinnerSelected=1;
   int lunchSelected=1;
   int breakfastSelected=1;
-  int? extraDinnerPrice;
-  int? extraBreakfastPrice;
-  int? extraLunchPrice;
+  int extraDinnerPrice=0;
+  int extraBreakfastPrice=0;
+  int extraLunchPrice=0;
   bool isMealSelected=false;
   int selectedIndex=0;
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
     selectedDays=map['selectedDays'];
-    extraDinnerPrice=PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice;
-    extraBreakfastPrice=PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice;
-    extraLunchPrice=PackageDetailsView.packageDetailModel?.data?.extraLunchPrice;
+    extraDinnerPrice=PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice??0;
+    extraBreakfastPrice=PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice??0;
+    extraLunchPrice=PackageDetailsView.packageDetailModel?.data?.extraLunchPrice??0;
     super.onInit();
   }
 
