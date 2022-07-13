@@ -58,6 +58,7 @@ class EnableLocationDialog extends StatelessWidget {
               title: LocalKeys.kEnable.tr,
               onPress: () {
                 Get.back();
+
                 Get.toNamed(Routes.DELIVERY_ADDRESSES);
               },
             ),
