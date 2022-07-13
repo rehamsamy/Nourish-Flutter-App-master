@@ -110,8 +110,8 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
                           );
                         }
                       }else{
-                        Timer.run(() =>
-                            Get.snackbar('error ', 'error => no data found'));
+                        // Timer.run(() =>
+                        //     Get.snackbar('error ', 'error => no data found'));
                         return const SizedBox(
                           height: 200,
                         );

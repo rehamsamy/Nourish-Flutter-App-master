@@ -36,36 +36,61 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   padding: EdgeInsets.only(top: 11.h),
                   child: PackageCaleroiesDetails(),
                 ),
-                SizedBox(
-                  width: Get.width,
-                  height: 102.h,
-                  child: OverflowBox(
-                    maxWidth: Get.width,
-                    minWidth: Get.width,
-                    child: SizedBox(
-                      height: 102.h,
-                      width: Get.width,
-                      child: ListView(
-                        padding: EdgeInsets.symmetric(horizontal: 27.w),
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          DinnerAnimatedContainer(
-                            isSelected: false,
-                            title: LocalKeys.kDinner.tr,
-                          ),
-                          DinnerAnimatedContainer(
-                            isSelected: true,
-                            title: LocalKeys.kBreakfast.tr,
-                          ),
-                          DinnerAnimatedContainer(
-                            isSelected: false,
-                            title: LocalKeys.kLunch.tr,
-                          ),
-                          // DinnerAnimatedContainer(
-                          //   isSelected: false,
-                          //   title: LocalKeys.kSnacks.tr,
-                          // ),
-                        ],
+                GetBuilder<PackageMealsController>(
+                  builder: (_)=> SizedBox(
+                    width: Get.width,
+                    height: 102.h,
+                    child: OverflowBox(
+                      maxWidth: Get.width,
+                      minWidth: Get.width,
+                      child: SizedBox(
+                        height: 102.h,
+                        width: Get.width,
+                        child: ListView(
+                         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                         padding: EdgeInsets.symmetric(horizontal: 27.w),
+                         scrollDirection: Axis.horizontal,
+                          children: [
+                            InkWell(
+                              onTap: (){
+                                controller.changeMealSelected(0);
+                              },
+                              child: DinnerAnimatedContainer(
+                                isSelected:  controller.isMealSelected,
+                                title: LocalKeys.kDinner.tr,
+                               type: 'dinner',
+                                  titleValue:'${controller.dinnerSelected}'
+
+                              ),
+                            ),
+                            InkWell(
+                                onTap: (){
+                                  controller.changeMealSelected(1);
+                                },
+                              child: DinnerAnimatedContainer(
+                                  isSelected:  controller.isMealSelected,
+                                title: LocalKeys.kBreakfast.tr,
+                                  type: 'breakfast',
+                                titleValue:'${controller.breakfastSelected}'
+                              ),
+                            ),
+                            InkWell(
+                                onTap: (){
+                                  controller.changeMealSelected(2);
+                                },
+                              child: DinnerAnimatedContainer(
+                                  isSelected:  controller.isMealSelected,
+                                title: LocalKeys.kLunch.tr,
+                                  type: 'lunch',
+                                  titleValue:'${controller.lunchSelected}'
+                              ),
+                            ),
+                            // DinnerAnimatedContainer(
+                            //   isSelected: false,
+                            //   title: LocalKeys.kSnacks.tr,
+                            // ),
+                          ],
+                        ),
                       ),
                     ),
                   ),
