@@ -10,14 +10,15 @@ class PackageDetailsController extends GetxController {
   static PackageDetailModel? x;
 
   final count = 0.obs;
+
+  String selectedPlanType = '';
   @override
   void onInit() {
     super.onInit();
     AnalyticsService.instance.logEvent("Package_Details_View");
     packageDetailModel = map['packageDetailModel'];
-    x=packageDetailModel;
+    x = packageDetailModel;
   }
-
 
   @override
   void onClose() {}
