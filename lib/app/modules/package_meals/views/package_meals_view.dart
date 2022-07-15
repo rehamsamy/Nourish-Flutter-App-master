@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
 import 'package:nourish_sa/app/shared/dinner_animted_container.dart';
@@ -37,7 +38,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   child: PackageCaleroiesDetails(),
                 ),
                 GetBuilder<PackageMealsController>(
-                  builder: (_)=> SizedBox(
+                  builder: (_) => SizedBox(
                     width: Get.width,
                     height: 102.h,
                     child: OverflowBox(
@@ -46,44 +47,45 @@ class PackageMealsView extends GetView<PackageMealsController> {
                       child: SizedBox(
                         height: 102.h,
                         width: Get.width,
-                        child: ListView(
-                         // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                         padding: EdgeInsets.symmetric(horizontal: 27.w),
-                         scrollDirection: Axis.horizontal,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
                             InkWell(
-                              onTap: (){
-                                controller.changeMealSelected(0);
+                              onTap: () {
+                                controller.changeMealSelected(1);
                               },
                               child: DinnerAnimatedContainer(
-                                isSelected:  controller.isMealSelected,
-                                title: LocalKeys.kDinner.tr,
-                               type: 'dinner',
-                                  titleValue:'${controller.dinnerSelected}'
-
-                              ),
+                                  isSelected: controller.isMealSelected == 1,
+                                  title: LocalKeys.kDinner.tr,
+                                  type: 'dinner',
+                                  canAddMore:
+                                      controller.extraDinnerPrice != null,
+                                  titleValue: '${controller.dinnerSelected}'),
                             ),
                             InkWell(
-                                onTap: (){
-                                  controller.changeMealSelected(1);
-                                },
+                              onTap: () {
+                                controller.changeMealSelected(2);
+                              },
                               child: DinnerAnimatedContainer(
-                                  isSelected:  controller.isMealSelected,
-                                title: LocalKeys.kBreakfast.tr,
+                                  isSelected: controller.isMealSelected == 2,
+                                  title: LocalKeys.kBreakfast.tr,
                                   type: 'breakfast',
-                                titleValue:'${controller.breakfastSelected}'
-                              ),
+                                  canAddMore:
+                                      controller.extraBreakfastPrice != null,
+                                  titleValue:
+                                      '${controller.breakfastSelected}'),
                             ),
                             InkWell(
-                                onTap: (){
-                                  controller.changeMealSelected(2);
-                                },
+                              onTap: () {
+                                controller.changeMealSelected(3);
+                              },
                               child: DinnerAnimatedContainer(
-                                  isSelected:  controller.isMealSelected,
-                                title: LocalKeys.kLunch.tr,
+                                  isSelected: controller.isMealSelected == 3,
+                                  title: LocalKeys.kLunch.tr,
                                   type: 'lunch',
-                                  titleValue:'${controller.lunchSelected}'
-                              ),
+                                  canAddMore:
+                                      controller.extraLunchPrice != null,
+                                  titleValue: '${controller.lunchSelected}'),
                             ),
                             // DinnerAnimatedContainer(
                             //   isSelected: false,
@@ -96,7 +98,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   ),
                 ),
                 GetBuilder<PackageMealsController>(
-                  builder: (_)=>Padding(
+                  builder: (_) => Padding(
                     padding: EdgeInsets.symmetric(vertical: 22.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -105,10 +107,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
                           LocalKeys.kPriceForAdditionalPackages.tr,
                           style: Get.textTheme.headline3,
                         ),
-                         Text('${(controller.extraLunchPrice*controller.lunchSelected)+
-                             (controller.extraBreakfastPrice*controller.breakfastSelected)+
-                             (controller.extraDinnerPrice*controller.dinnerSelected)
-                         } SAR')
+                        Text(
+                            '${(controller.extraLunchPrice ?? 0 * controller.lunchSelected) + (controller.extraBreakfastPrice ?? 0 * controller.breakfastSelected) + (controller.extraDinnerPrice ?? 0 * controller.dinnerSelected)} SAR')
                       ],
                     ),
                   ),
@@ -288,7 +288,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 CustomButton(
                     title: LocalKeys.kContinue.tr,
                     onPress: () {
-                      Get.toNamed(Routes.CART, arguments: false);
+                      Get.toNamed(Routes.CART,
+                          arguments: SubscriptionDetailModel());
                     }),
                 SizedBox(
                   height: 42.h,
