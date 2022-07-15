@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
 import 'package:nourish_sa/app/shared/dinner_animted_container.dart';
@@ -232,35 +233,36 @@ class PackageMealsView extends GetView<PackageMealsController> {
                     ],
                   ),
                 ),
-                ListView.builder(
-                  itemCount: 3,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  padding: EdgeInsets.symmetric(vertical: 31.h),
-                  itemBuilder: (context, index) {
-                    return InkWell(
-                      onTap: () => Get.dialog(
-                        MealInfoDialog(
-                          image: "",
-                          title: "dsads",
-                          desc:
-                              "Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,",
-                          values: {
-                            LocalKeys.kCarb.tr: "500",
-                            LocalKeys.kProtein.tr: "500",
-                            LocalKeys.kProtein.tr: "500",
-                            LocalKeys.kCalories.tr: "500"
-                          },
+                GetBuilder<PackageDetailsController>(
+                  builder: (_)=>ListView.builder(
+                    itemCount: controller.newMealsList?.length,
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    padding: EdgeInsets.symmetric(vertical: 31.h),
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () => Get.dialog(
+                          MealInfoDialog(
+                            image: controller.newMealsList?[index].image??'',
+                            title: controller.newMealsList?[index].name,
+                            desc:controller.newMealsList?[index].description,
+                            values: {
+                              LocalKeys.kCarb.tr: controller.newMealsList?[index].carb.toString()??'0.0',
+                              LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'',
+                              LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'',
+                              LocalKeys.kCalories.tr: controller.newMealsList?[index].calories.toString()??''
+                            },
+                          ),
                         ),
-                      ),
-                      child: const MealSelectCard(
-                        caleries: "250",
-                        image: "",
-                        isSelected: false,
-                        title: "dsads",
-                      ),
-                    );
-                  },
+                        child:  MealSelectCard(
+                          caleries: controller.newMealsList?[index].calories.toString()??'',
+                          image: controller.newMealsList?[index].image??'',
+                          isSelected: false,
+                          title: controller.newMealsList?[index].name??'',
+                        ),
+                      );
+                    },
+                  ),
                 ),
                 Container(
                   width: Get.width,
