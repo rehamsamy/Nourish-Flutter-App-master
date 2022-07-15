@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
+import 'package:nourish_sa/app/data/services/locator_service.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
 import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
 import 'package:nourish_sa/app/shared/selection_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nourish_sa/routes/app_pages.dart';
 import '../controllers/package_details_controller.dart';
 
 class PackageDetailsView extends GetView<PackageDetailsController> {
@@ -53,7 +55,8 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 child: SelectionCard(
                   image: Assets.kRestaurantIcon,
                   isSelected: controller.selectedPlanType == 'branch',
-                  onTap: () {
+                  onTap: () async {
+                    PostionLocator.determinePosition();
                     controller.selectedPlanType = 'branch';
                     controller.update();
                   },
@@ -63,9 +66,12 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
               SelectionCard(
                 image: Assets.kDeliveryCarFood,
                 isSelected: controller.selectedPlanType == 'delivery',
-                onTap: () {
+                onTap: () async {
                   controller.selectedPlanType = 'delivery';
+
                   controller.update();
+                  await PostionLocator.determinePosition()
+                      .then((value) => Get.toNamed(Routes.DELIVERY_ADDRESSES));
                 },
                 title: LocalKeys.kDelivery.tr,
               ),

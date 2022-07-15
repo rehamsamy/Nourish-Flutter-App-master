@@ -80,7 +80,8 @@ class DaysTimeView extends GetView<DaysTimeController> {
                       itemBuilder: (context, index) {
                         return InkWell(
                           onTap: () {
-                            controller.toggleSelection(index);
+                            controller.toggleSelection(
+                                index, controller.branchDays[index]);
                           },
                           child: Padding(
                             padding: EdgeInsets.symmetric(

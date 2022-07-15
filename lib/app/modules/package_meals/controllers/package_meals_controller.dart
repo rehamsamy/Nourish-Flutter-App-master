@@ -4,97 +4,75 @@ import 'package:nourish_sa/app/modules/package_details/views/package_details_vie
 import '../../../data/services/analytics_service.dart';
 
 class PackageMealsController extends GetxController {
-  List<String> selectedDays=[];
-  Map map=Get.arguments;
-  int dinnerSelected=1;
-  int lunchSelected=1;
-  int breakfastSelected=1;
-  int extraDinnerPrice=0;
-  int extraBreakfastPrice=0;
-  int extraLunchPrice=0;
-  bool isMealSelected=false;
-  int selectedIndex=0;
+  List<String> selectedDays = [];
+  Map map = Get.arguments;
+  int dinnerSelected = 1;
+  int lunchSelected = 1;
+  int breakfastSelected = 1;
+  int? extraDinnerPrice = 0;
+  int? extraBreakfastPrice = 0;
+  int? extraLunchPrice = 0;
+  int isMealSelected = 0;
+  int selectedIndex = 0;
+  int addtionalPackagePrice = 0;
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
-    selectedDays=map['selectedDays'];
-    extraDinnerPrice=PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice??0;
-    extraBreakfastPrice=PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice??0;
-    extraLunchPrice=PackageDetailsView.packageDetailModel?.data?.extraLunchPrice??0;
+    selectedDays = map['selectedDays'];
+    extraDinnerPrice =
+        PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice;
+    extraBreakfastPrice =
+        PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice;
+    extraLunchPrice =
+        PackageDetailsView.packageDetailModel?.data?.extraLunchPrice;
     super.onInit();
   }
 
-
-  changeDinnerValue(String flag){
-    Get.log('cccc  11  => '+flag);
-    if(extraDinnerPrice !=null||extraDinnerPrice!=0){
-      Get.log('cccc 11 ');
-      if(flag=='plus'){
-        dinnerSelected++;
-      }else{
-        if(dinnerSelected==1){
-          dinnerSelected=1;
-        }else{
-          dinnerSelected--;
-        }
-      }
-    }else{
-      dinnerSelected=1;
-    }
-    update();
-  }
-
-
-
-changeLunchValue(String flag){
-  Get.log('cccc  22  => '+flag);
-  if(extraLunchPrice !=null||extraLunchPrice!=0){
-    Get.log('cccc 22 ');
-    if(flag=='plus'){
-      lunchSelected++;
-    }else{
-      if(lunchSelected==1){
-        lunchSelected=1;
-      }else{
-        lunchSelected--;
-      }
-    }
-  }else{
-    lunchSelected=1;
-  }
-  update();
-}
-
-
-
-changeBreakfastValue(String flag){
-    Get.log('cccc  33  => '+flag);
-  if(extraBreakfastPrice !=null||extraBreakfastPrice!=0){
-    Get.log('cccc 33 ');
-    if(flag=='plus'){
+  addMeal(String meal) {
+    if (meal == 'dinner') {
+      dinnerSelected++;
+    } else if (meal == 'breakfast') {
       breakfastSelected++;
-    }else{
-      if(breakfastSelected==1){
-        breakfastSelected=1;
-      }else{
-        breakfastSelected--;
+    } else if (meal == 'lunch') {
+      lunchSelected++;
+    }
+    addtionalPackagePrice = (extraLunchPrice ?? 0 * lunchSelected) +
+        (extraBreakfastPrice ?? 0 * breakfastSelected) +
+        (extraDinnerPrice ?? 0 * dinnerSelected);
+
+    update();
+  }
+
+  removeMeal(String meal) {
+    if (meal == 'dinner') {
+      dinnerSelected--;
+      if (dinnerSelected == 0) {
+        dinnerSelected = 1;
+        isMealSelected = 0;
+      }
+    } else if (meal == 'breakfast') {
+      breakfastSelected--;
+      if (breakfastSelected == 0) {
+        breakfastSelected = 1;
+
+        isMealSelected = 0;
+      }
+    } else if (meal == 'lunch') {
+      lunchSelected--;
+      if (lunchSelected == 0) {
+        lunchSelected = 1;
+        isMealSelected = 0;
       }
     }
-  }else{
-    breakfastSelected=1;
-  }
-  update();
-}
-changeMealSelected(int index){
-  //  selectedIndex=index;
-    Get.log('index =>  '+index.toString()+'sel   '+selectedIndex.toString());
-    if(index==selectedIndex){
-      isMealSelected=!isMealSelected;
-    }else{
-      isMealSelected=false;
-    }
+
+    addtionalPackagePrice = (extraLunchPrice ?? 0 * lunchSelected) +
+        (extraBreakfastPrice ?? 0 * breakfastSelected) +
+        (extraDinnerPrice ?? 0 * dinnerSelected);
     update();
-}
+  }
 
-
+  changeMealSelected(int index) {
+    isMealSelected = index;
+    update();
+  }
 }

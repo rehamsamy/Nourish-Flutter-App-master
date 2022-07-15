@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
 import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import '../../app_theme.dart';
 
@@ -11,20 +10,19 @@ class DinnerAnimatedContainer extends GetView<PackageMealsController> {
     required this.title,
     required this.type,
     required this.titleValue,
+    required this.canAddMore,
     Key? key,
   }) : super(key: key);
   final bool isSelected;
   final String title;
   final String type;
   final String titleValue;
-
-
+  final bool canAddMore;
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<PackageMealsController>(
-      builder: (_)=> AnimatedContainer(
-        duration: const Duration(seconds: 1),
+      builder: (_) => AnimatedContainer(
+        duration: const Duration(milliseconds: 500),
         width: isSelected ? 120.w : 110.w,
         height: isSelected ? 115.h : 93.h,
         margin:
@@ -58,22 +56,16 @@ class DinnerAnimatedContainer extends GetView<PackageMealsController> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   InkWell(
-                    onTap: (){
-                      Get.log('111111');
-                      if (type == 'dinner') {
-                        controller.changeDinnerValue('minus');
-                      }else if(type=='breakfast'){
-                        controller.changeBreakfastValue('minus');
-                      }else{
-                        controller.changeLunchValue('minus');
+                    onTap: () {
+                      if (canAddMore) {
+                        _.removeMeal(type);
                       }
-                      //
                     },
                     child: Container(
                       width: 21.w,
                       height: 21.h,
-                      decoration: const BoxDecoration(
-                        color: greyColor,
+                      decoration: BoxDecoration(
+                        color: canAddMore ? primaryColor : greyColor,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(
@@ -84,25 +76,20 @@ class DinnerAnimatedContainer extends GetView<PackageMealsController> {
                     ),
                   ),
                   Text(
-                    '${titleValue}',
+                    titleValue,
                     style: Get.textTheme.bodyText1,
                   ),
                   InkWell(
                     onTap: () {
-                      if (type == 'dinner') {
-                        controller.changeDinnerValue('plus');
-                      } else if (type == 'breakfast') {
-                        controller.changeBreakfastValue('plus');
-                      } else {
-                        controller.changeLunchValue('plus');
+                      if (canAddMore) {
+                        _.addMeal(type);
                       }
-                      //
                     },
                     child: Container(
                       width: 21.w,
                       height: 21.h,
-                      decoration: const BoxDecoration(
-                        color: greyColor,
+                      decoration: BoxDecoration(
+                        color: canAddMore ? primaryColor : greyColor,
                         shape: BoxShape.circle,
                       ),
                       child: Icon(

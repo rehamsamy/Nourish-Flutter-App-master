@@ -18,12 +18,29 @@ class DaysTimeController extends GetxController {
   }
 
   List branchTimeSelectedValues = [];
+  List branchDays = [
+    'sunday',
+    'monday',
+    'tuesday',
+    'wednesday',
+    'thursday',
+    'friday',
+    'saturday',
+  ];
+  Map<String, dynamic> daysTimeSelectedValues = {};
 
-  void toggleSelection(int index) {
+  void toggleSelection(int index, String dayName) {
     if (selectedItems.contains(index)) {
       selectedItems.remove(index);
+      daysTimeSelectedValues.remove(dayName);
     } else {
       selectedItems.add(index);
+      daysTimeSelectedValues[dayName] = {
+        'breakfast': 0,
+        'lunch': 0,
+        'dinner': 0,
+      };
+      print(daysTimeSelectedValues);
     }
     update();
   }

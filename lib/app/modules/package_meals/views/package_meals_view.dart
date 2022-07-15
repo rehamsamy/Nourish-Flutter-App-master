@@ -14,6 +14,8 @@ import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageMealsView extends GetView<PackageMealsController> {
+  const PackageMealsView({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -108,7 +110,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
                           style: Get.textTheme.headline3,
                         ),
                         Text(
-                            '${(controller.extraLunchPrice ?? 0 * controller.lunchSelected) + (controller.extraBreakfastPrice ?? 0 * controller.breakfastSelected) + (controller.extraDinnerPrice ?? 0 * controller.dinnerSelected)} SAR')
+                          '${controller.addtionalPackagePrice} SAR',
+                        )
                       ],
                     ),
                   ),
