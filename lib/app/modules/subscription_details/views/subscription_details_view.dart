@@ -231,7 +231,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                     isEnd: true,
                     onTap: () => Get.toNamed(
                       Routes.CART,
-                        arguments: {'isSubscribtion':false,
+                        arguments: {'isSubscribtion':true,
                           'detailModel':controller.detailModel}
                     ),
                     valueWidget: Icon(

@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
 import 'package:nourish_sa/app/shared/dinner_animted_container.dart';
@@ -291,8 +290,12 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 CustomButton(
                     title: LocalKeys.kContinue.tr,
                     onPress: () {
-                      Get.toNamed(Routes.CART,
-                          arguments: SubscriptionDetailModel());
+                      // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
+                      Get.log('vvvvv  ' +
+                          controller.addtionalPackagePrice.toString());
+                      Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
+                        'total': controller.addtionalPackagePrice
+                      });
                     }),
                 SizedBox(
                   height: 42.h,
