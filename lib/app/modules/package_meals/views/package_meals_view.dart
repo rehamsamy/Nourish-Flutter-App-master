@@ -233,37 +233,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                     ],
                   ),
                 ),
-                GetBuilder<PackageDetailsController>(
-                  builder: (_)=>ListView.builder(
-                    itemCount: controller.newMealsList?.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(vertical: 31.h),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () => Get.dialog(
-                          MealInfoDialog(
-                            image: controller.newMealsList?[index].image??'',
-                            title: controller.newMealsList?[index].name,
-                            desc:controller.newMealsList?[index].description,
-                            values: {
-                              LocalKeys.kCarb.tr: controller.newMealsList?[index].carb.toString()??'0.0',
-                              LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'',
-                              LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'',
-                              LocalKeys.kCalories.tr: controller.newMealsList?[index].calories.toString()??''
-                            },
-                          ),
-                        ),
-                        child:  MealSelectCard(
-                          caleries: controller.newMealsList?[index].calories.toString()??'',
-                          image: controller.newMealsList?[index].image??'',
-                          isSelected: false,
-                          title: controller.newMealsList?[index].name??'',
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                getMealsProductsList(),
                 Container(
                   width: Get.width,
                   height: 66.h,
@@ -306,6 +276,46 @@ class PackageMealsView extends GetView<PackageMealsController> {
             ),
           ),
         ));
+  }
+
+  getMealsProductsList() {
+    int length=controller.newMealsList?.length??0;
+    if(length>0){
+      return   GetBuilder<PackageDetailsController>(
+        builder: (_)=>ListView.builder(
+          itemCount: controller.newMealsList?.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(vertical: 31.h),
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () => Get.dialog(
+                MealInfoDialog(
+                  image: controller.newMealsList?[index].image??'',
+                  title: controller.newMealsList?[index].name,
+                  desc:controller.newMealsList?[index].description,
+                  values: {
+                    LocalKeys.kCarb.tr: controller.newMealsList?[index].carb.toString()??'0.0',
+                    LocalKeys.kProtein.tr: controller.newMealsList?[index].fat.toString()??'0',
+                    LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'0',
+                    LocalKeys.kCalories.tr: controller.newMealsList?[index].calories.toString()??'0'
+                  },
+                ),
+              ),
+              child:  MealSelectCard(
+                caleries: controller.newMealsList?[index].calories.toString()??'',
+                image: controller.newMealsList?[index].image??'',
+                isSelected: false,
+                title: controller.newMealsList?[index].name??'',
+              ),
+            );
+          },
+        ),
+      );
+    }else{
+      return SizedBox(height: 100,child: Center(child: Text('no products found'),),);
+    }
+
   }
 }
 
