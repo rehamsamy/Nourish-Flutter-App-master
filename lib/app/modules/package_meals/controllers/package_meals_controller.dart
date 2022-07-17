@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
@@ -22,7 +21,7 @@ class PackageMealsController extends GetxController {
   List<MealsModel>? dinnersList;
   List<MealsModel>? _newMealsList;
 
-  String ? selectedMeal;
+  String? selectedMeal;
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
@@ -33,12 +32,12 @@ class PackageMealsController extends GetxController {
         PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice;
     extraLunchPrice =
         PackageDetailsView.packageDetailModel?.data?.extraLunchPrice;
-    breakfastsList=PackageDetailsView.packageDetailModel?.data?.breakfasts;
-    lunchesList=PackageDetailsView.packageDetailModel?.data?.lunches;
-    dinnersList=PackageDetailsView.packageDetailModel?.data?.dinners;
-    _newMealsList=dinnersList;
+    breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
+    lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
+    dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
+    _newMealsList = dinnersList;
 
-    Get.log('bbb '+(breakfastsList?.length.toString()).toString());
+    Get.log('bbb ' + (breakfastsList?.length.toString()).toString());
     super.onInit();
   }
 
@@ -58,7 +57,7 @@ class PackageMealsController extends GetxController {
   }
 
   removeMeal(String meal) {
-    selectedMeal=meal;
+    selectedMeal = meal;
     if (meal == 'dinner') {
       dinnerSelected--;
       if (dinnerSelected == 0) {
@@ -69,7 +68,6 @@ class PackageMealsController extends GetxController {
       breakfastSelected--;
       if (breakfastSelected == 0) {
         breakfastSelected = 1;
-
         isMealSelected = 0;
       }
     } else if (meal == 'lunch') {
@@ -89,25 +87,24 @@ class PackageMealsController extends GetxController {
   changeMealSelected(int index) {
     isMealSelected = index;
     getList(index);
-    Get.log('bbb mm  '+(index).toString());
+    Get.log('bbb mm  ' + (index).toString());
     update();
   }
 
   List<MealsModel>? get newMealsList {
-    Get.log('bbb mm  '+(_newMealsList?.length.toString()).toString());
+    Get.log('bbb mm  ' + (_newMealsList?.length.toString()).toString());
     return _newMealsList;
   }
 
-    getList(int index){
-  if(index==1){
-    _newMealsList=dinnersList;
-  }else if(index==2){
-    _newMealsList=breakfastsList;
-  }else if(index==3){
-    _newMealsList=lunchesList;
+  getList(int index) {
+    if (index == 1) {
+      _newMealsList = dinnersList;
+    } else if (index == 2) {
+      _newMealsList = breakfastsList;
+    } else if (index == 3) {
+      _newMealsList = lunchesList;
+    }
+    update();
+    Get.log('bbb ' + ((_newMealsList?[0].name).toString()));
   }
-  update();
-  Get.log('bbb '+((_newMealsList?[0].name).toString()));
-}
-
 }
