@@ -41,7 +41,7 @@ class PackageApis{
     PackageDetailModel ? detailModel;
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
-      path: 'packageDetails/5',
+      path: 'packageDetails/$packageId',
       data:  const NetworkRequestBody.json(
         {},
       ),
