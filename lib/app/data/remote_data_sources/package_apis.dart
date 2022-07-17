@@ -43,10 +43,9 @@ class PackageApis{
       type: NetworkRequestType.GET,
       path: 'packageDetails/5',
       data:  const NetworkRequestBody.json(
-        {
-          // 'type':packageType
-        },
+        {},
       ),
+      headers: null
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(

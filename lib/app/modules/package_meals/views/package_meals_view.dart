@@ -281,7 +281,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
   getMealsProductsList() {
     int length=controller.newMealsList?.length??0;
     if(length>0){
-      return   GetBuilder<PackageDetailsController>(
+      return   GetBuilder<PackageMealsController>(
         builder: (_)=>ListView.builder(
           itemCount: controller.newMealsList?.length,
           shrinkWrap: true,
