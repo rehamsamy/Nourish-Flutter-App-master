@@ -95,7 +95,6 @@ class Data {
   List<MealsModel>? lunches;
   List<MealsModel>? dinners;
 
-
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
@@ -140,7 +139,7 @@ class MealsModel {
       this.price, 
       this.name, 
       this.description, 
-      this.pivot2,});
+      this.pivot,});
 
   MealsModel.fromJson(dynamic json) {
     id = json['id'];
@@ -153,7 +152,7 @@ class MealsModel {
     price = json['price'];
     name = json['name'];
     description = json['description'];
-    pivot2 = json['pivot'] != null ? Pivot2.fromJson(json['pivot']) : null;
+    pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
   }
   int? id;
   String? image;
@@ -165,7 +164,7 @@ class MealsModel {
   int? price;
   String? name;
   String? description;
-  Pivot2? pivot2;
+  Pivot? pivot;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -179,173 +178,13 @@ class MealsModel {
     map['price'] = price;
     map['name'] = name;
     map['description'] = description;
-    if (pivot2 != null) {
-      map['pivot'] = pivot2?.toJson();
+    if (pivot != null) {
+      map['pivot'] = pivot?.toJson();
     }
     return map;
   }
 
 }
-
-class Pivot2 {
-  Pivot2({
-      this.packageId, 
-      this.productId,});
-
-  Pivot2.fromJson(dynamic json) {
-    packageId = json['package_id'];
-    productId = json['product_id'];
-  }
-  int? packageId;
-  int? productId;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['package_id'] = packageId;
-    map['product_id'] = productId;
-    return map;
-  }
-
-}
-
-//class Lunches {
-//   Lunches({
-//       this.id,
-//       this.image,
-//       this.calories,
-//       this.fat,
-//       this.protein,
-//       this.carb,
-//       this.weight,
-//       this.price,
-//       this.name,
-//       this.description,
-//       this.pivot1,});
-//
-//   Lunches.fromJson(dynamic json) {
-//     id = json['id'];
-//     image = json['image'];
-//     calories = json['calories'];
-//     fat = json['fat'];
-//     protein = json['protein'];
-//     carb = json['carb'];
-//     weight = json['weight'];
-//     price = json['price'];
-//     name = json['name'];
-//     description = json['description'];
-//     pivot1 = json['pivot'] != null ? Pivot1.fromJson(json['pivot']) : null;
-//   }
-//   int? id;
-//   String? image;
-//   int? calories;
-//   int? fat;
-//   int? protein;
-//   int? carb;
-//   int? weight;
-//   int? price;
-//   String? name;
-//   String? description;
-//   Pivot1? pivot1;
-//
-//   Map<String, dynamic> toJson() {
-//     final map = <String, dynamic>{};
-//     map['id'] = id;
-//     map['image'] = image;
-//     map['calories'] = calories;
-//     map['fat'] = fat;
-//     map['protein'] = protein;
-//     map['carb'] = carb;
-//     map['weight'] = weight;
-//     map['price'] = price;
-//     map['name'] = name;
-//     map['description'] = description;
-//     if (pivot1 != null) {
-//       map['pivot'] = pivot1?.toJson();
-//     }
-//     return map;
-//   }
-//
-// }
-
-class Pivot1 {
-  Pivot1({
-      this.packageId, 
-      this.productId,});
-
-  Pivot1.fromJson(dynamic json) {
-    packageId = json['package_id'];
-    productId = json['product_id'];
-  }
-  int? packageId;
-  int? productId;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['package_id'] = packageId;
-    map['product_id'] = productId;
-    return map;
-  }
-
-}
-
-// class Breakfasts {
-//   Breakfasts({
-//       this.id,
-//       this.image,
-//       this.calories,
-//       this.fat,
-//       this.protein,
-//       this.carb,
-//       this.weight,
-//       this.price,
-//       this.name,
-//       this.description,
-//       this.pivot,});
-//
-//   Breakfasts.fromJson(dynamic json) {
-//     id = json['id'];
-//     image = json['image'];
-//     calories = json['calories'];
-//     fat = json['fat'];
-//     protein = json['protein'];
-//     carb = json['carb'];
-//     weight = json['weight'];
-//     price = json['price'];
-//     name = json['name'];
-//     description = json['description'];
-//     pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
-//   }
-//   int? id;
-//   String? image;
-//   int? calories;
-//   int? fat;
-//   int? protein;
-//   int? carb;
-//   int? weight;
-//   int? price;
-//   String? name;
-//   String? description;
-//   Pivot? pivot;
-//
-//   Map<String, dynamic> toJson() {
-//     final map = <String, dynamic>{};
-//     map['id'] = id;
-//     map['image'] = image;
-//     map['calories'] = calories;
-//     map['fat'] = fat;
-//     map['protein'] = protein;
-//     map['carb'] = carb;
-//     map['weight'] = weight;
-//     map['price'] = price;
-//     map['name'] = name;
-//     map['description'] = description;
-//     if (pivot != null) {
-//       map['pivot'] = pivot?.toJson();
-//     }
-//     return map;
-//   }
-//
-// }
 
 class Pivot {
   Pivot({

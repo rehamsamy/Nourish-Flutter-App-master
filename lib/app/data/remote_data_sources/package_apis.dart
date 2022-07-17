@@ -41,12 +41,11 @@ class PackageApis{
     PackageDetailModel ? detailModel;
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
-      path: 'packageDetails/$packageId',
+      path: 'packageDetails/5',
       data:  const NetworkRequestBody.json(
-        {
-          // 'type':packageType
-        },
+        {},
       ),
+      headers: null
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(

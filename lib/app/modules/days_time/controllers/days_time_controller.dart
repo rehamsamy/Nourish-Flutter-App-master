@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/app_constants.dart';
 
 import '../../../data/services/analytics_service.dart';
 
@@ -9,8 +10,9 @@ class DaysTimeController extends GetxController {
   Color? mycolor;
   bool? isSelected;
   int? index;
-  List<String> selectedDays = [];
   List<int> selectedItems = [];
+
+
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Days_Time_View");
@@ -40,18 +42,19 @@ class DaysTimeController extends GetxController {
         'lunch': 0,
         'dinner': 0,
       };
-      print(daysTimeSelectedValues);
+      Get.log('mmmm   ' + AppConstants.days.toString());
+
+      update();
     }
-    update();
+  }
+    void toggleBranchTimeSelection(value) {
+      if (branchTimeSelectedValues.contains(value)) {
+        branchTimeSelectedValues.remove(value);
+      } else {
+        branchTimeSelectedValues.add(value);
+      }
+      print(value);
+      update();
+    }
   }
 
-  void toggleBranchTimeSelection(value) {
-    if (branchTimeSelectedValues.contains(value)) {
-      branchTimeSelectedValues.remove(value);
-    } else {
-      branchTimeSelectedValues.add(value);
-    }
-    print(value);
-    update();
-  }
-}

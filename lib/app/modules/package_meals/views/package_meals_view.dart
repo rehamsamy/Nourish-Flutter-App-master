@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/days_time/controllers/days_time_controller.dart';
 import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
@@ -14,7 +15,7 @@ import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageMealsView extends GetView<PackageMealsController> {
-  const PackageMealsView({Key? key}) : super(key: key);
+    PackageMealsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
                       height: 44.w + 18.h,
                       width: Get.width,
                       child: ListView.builder(
-                        itemCount: AppConstants.days.length,
+                        //itemCount: AppConstants.days.length,
+                        itemCount: controller.selectedDays.length,
                         padding: EdgeInsetsDirectional.only(start: 22.w),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -161,19 +163,19 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.r),
-                                    color: AppConstants.days[index] == "Sat"
+                                    color: controller.selectedDays[index] == "Sat"
                                         ? primaryColor
                                         : whiteColor,
                                     border: Border.all(
-                                      color: AppConstants.days[index] == "Sat"
+                                      color: controller.selectedDays[index] == "Sat"
                                           ? primaryColor
                                           : lightGreyColor,
                                     ),
                                   ),
                                   child: Text(
-                                    AppConstants.days[index],
+                                    controller.selectedDays[index],
                                     style: Get.textTheme.headline3!.copyWith(
-                                      color: AppConstants.days[index] == "Sat"
+                                      color:controller.selectedDays[index] == "Sat"
                                           ? whiteColor
                                           : lightGreyColor,
                                     ),
@@ -182,7 +184,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                 SizedBox(
                                   height: 6.h,
                                 ),
-                                AppConstants.days[index] == "Sat"
+                                controller.selectedDays == "Sat"
                                     ? CustomPaint(
                                         painter: TrianglePainter(
                                           strokeColor: greyColor,
@@ -233,37 +235,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                     ],
                   ),
                 ),
-                GetBuilder<PackageDetailsController>(
-                  builder: (_)=>ListView.builder(
-                    itemCount: controller.newMealsList?.length,
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    padding: EdgeInsets.symmetric(vertical: 31.h),
-                    itemBuilder: (context, index) {
-                      return InkWell(
-                        onTap: () => Get.dialog(
-                          MealInfoDialog(
-                            image: controller.newMealsList?[index].image??'',
-                            title: controller.newMealsList?[index].name,
-                            desc:controller.newMealsList?[index].description,
-                            values: {
-                              LocalKeys.kCarb.tr: controller.newMealsList?[index].carb.toString()??'0.0',
-                              LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'',
-                              LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'',
-                              LocalKeys.kCalories.tr: controller.newMealsList?[index].calories.toString()??''
-                            },
-                          ),
-                        ),
-                        child:  MealSelectCard(
-                          caleries: controller.newMealsList?[index].calories.toString()??'',
-                          image: controller.newMealsList?[index].image??'',
-                          isSelected: false,
-                          title: controller.newMealsList?[index].name??'',
-                        ),
-                      );
-                    },
-                  ),
-                ),
+                getMealsProductsList(),
                 Container(
                   width: Get.width,
                   height: 66.h,
@@ -306,6 +278,46 @@ class PackageMealsView extends GetView<PackageMealsController> {
             ),
           ),
         ));
+  }
+
+  getMealsProductsList() {
+    int length=controller.newMealsList?.length??0;
+    if(length>0){
+      return   GetBuilder<PackageMealsController>(
+        builder: (_)=>ListView.builder(
+          itemCount: controller.newMealsList?.length,
+          shrinkWrap: true,
+          physics: const NeverScrollableScrollPhysics(),
+          padding: EdgeInsets.symmetric(vertical: 31.h),
+          itemBuilder: (context, index) {
+            return InkWell(
+              onTap: () => Get.dialog(
+                MealInfoDialog(
+                  image: controller.newMealsList?[index].image??'',
+                  title: controller.newMealsList?[index].name,
+                  desc:controller.newMealsList?[index].description,
+                  values: {
+                    LocalKeys.kCarb.tr: controller.newMealsList?[index].carb.toString()??'0.0',
+                    LocalKeys.kProtein.tr: controller.newMealsList?[index].fat.toString()??'0',
+                    LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'0',
+                    LocalKeys.kCalories.tr: controller.newMealsList?[index].calories.toString()??'0'
+                  },
+                ),
+              ),
+              child:  MealSelectCard(
+                caleries: controller.newMealsList?[index].calories.toString()??'',
+                image: controller.newMealsList?[index].image??'',
+                isSelected: false,
+                title: controller.newMealsList?[index].name??'',
+              ),
+            );
+          },
+        ),
+      );
+    }else{
+      return SizedBox(height: 100,child: Center(child: Text('no products found'),),);
+    }
+
   }
 }
 

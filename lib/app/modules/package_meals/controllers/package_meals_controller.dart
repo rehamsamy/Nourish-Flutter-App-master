@@ -19,7 +19,7 @@ class PackageMealsController extends GetxController {
   List<MealsModel>? breakfastsList;
   List<MealsModel>? lunchesList;
   List<MealsModel>? dinnersList;
-  List<MealsModel>? newMealsList;
+  List<MealsModel>? _newMealsList;
 
   String? selectedMeal;
   @override
@@ -35,13 +35,13 @@ class PackageMealsController extends GetxController {
     breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
+    _newMealsList = dinnersList;
 
     Get.log('bbb ' + (breakfastsList?.length.toString()).toString());
     super.onInit();
   }
 
   addMeal(String meal) {
-    selectedMeal = meal;
     if (meal == 'dinner') {
       dinnerSelected++;
     } else if (meal == 'breakfast') {
@@ -86,34 +86,25 @@ class PackageMealsController extends GetxController {
 
   changeMealSelected(int index) {
     isMealSelected = index;
-    getList();
+    getList(index);
+    Get.log('bbb mm  ' + (index).toString());
     update();
   }
 
-  // List<MealsModel>? get newMealsList {
-  //   if(selectedMeal=='dinner'){
-  //     Get.log('bbb '+(dinnersList?.length.toString()).toString());
-  //     return dinnersList;
-  //   }else if(selectedMeal=='breakfast'){
-  //     return breakfastsList;
-  //   }else{
-  //     return lunchesList;
-  //   }
-  //
-  // }
+  List<MealsModel>? get newMealsList {
+    Get.log('bbb mm  ' + (_newMealsList?.length.toString()).toString());
+    return _newMealsList;
+  }
 
-  List<MealsModel>? getList() {
-    if (selectedMeal == 'dinner') {
-      Get.log('bbb ' + (dinnersList?.length.toString()).toString());
-      newMealsList = dinnersList;
-      update();
-      return newMealsList;
-    } else if (selectedMeal == 'breakfast') {
-      newMealsList = breakfastsList;
-      update();
-      return breakfastsList;
-    } else {
-      return lunchesList;
+  getList(int index) {
+    if (index == 1) {
+      _newMealsList = dinnersList;
+    } else if (index == 2) {
+      _newMealsList = breakfastsList;
+    } else if (index == 3) {
+      _newMealsList = lunchesList;
     }
+    update();
+    Get.log('bbb ' + ((_newMealsList?[0].name).toString()));
   }
 }

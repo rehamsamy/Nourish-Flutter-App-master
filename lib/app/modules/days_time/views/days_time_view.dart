@@ -17,14 +17,17 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DaysTimeView extends GetView<DaysTimeController> {
   // DaysTimeView({Key? key}) : super(key: key);
   PackageDetailModel? packageDetailModel;
+ // static List<String> selectedDays = [];
   int daysCount = 0;
   int? daysStart;
   List<BranchItem>? branches;
   List<String> selectedDays = [];
   List<String> branchTime = [];
+  int differenceValue = 0;
 
   @override
   Widget build(BuildContext context) {
+    Get.log('sizee 1   '+daysCount.toString());
     packageDetailModel = PackageDetailsView.packageDetailModel;
     daysCount = packageDetailModel?.data?.daysNumberOfWeek ?? 0;
     branches = packageDetailModel?.data?.branches;
@@ -35,9 +38,6 @@ class DaysTimeView extends GetView<DaysTimeController> {
       packageDetailModel?.data?.branches?[0].pickupPeriods
           ?.map((e) => branchTime.add(e.period ?? ''))
           .toList();
-      Get.log('sizee 1   ' +
-          (branches?[0].pickupPeriods?.length.toString()).toString() +
-          '  ${branchTime.length}');
     }
     return Scaffold(
       resizeToAvoidBottomInset: false,
@@ -147,11 +147,8 @@ class DaysTimeView extends GetView<DaysTimeController> {
                     DateTime x = DateTime.parse(val);
                     final date2 = DateTime.now();
                     final difference = daysBetween(x, date2);
+                    differenceValue=difference;
                     Get.log('xxx      $daysStart');
-                    if (difference < daysStart!) {
-                      Get.snackbar(
-                          'Error', 'you must choose day after $daysStart days');
-                    }
                   },
                   type: DateTimePickerType.date,
                   firstDate: DateTime.now(),
@@ -237,13 +234,28 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 ],
               ),
             ),
-
             const Spacer(),
             CustomButton(
               title: LocalKeys.kContinue.tr,
               onPress: () {
-                return Get.toNamed(Routes.PACKAGE_MEALS,
-                    arguments: {'selectedDays': selectedDays});
+                if (differenceValue < daysStart! ) {
+                  Get.snackbar(
+                      'Error', 'you must choose day after $daysStart days');
+                }
+
+                if(daysCount>controller.selectedItems.length||daysCount<controller.selectedItems.length){
+                  Get.snackbar(
+                      'Error', 'you must choose  $daysCount days');
+                }
+                if(differenceValue > daysStart! && daysCount==controller.selectedItems.length){
+                  selectedDays.clear();
+                  for (int i = 0; i < controller.selectedItems.length; i++){
+                    selectedDays.add(AppConstants.days[i]);
+                  }
+                  print('1111  x ' + selectedDays.toString());
+                  return Get.toNamed(Routes.PACKAGE_MEALS,
+                      arguments: {'selectedDays': selectedDays});
+                }
               },
             ),
           ],
