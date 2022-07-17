@@ -17,6 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DaysTimeView extends GetView<DaysTimeController> {
   // DaysTimeView({Key? key}) : super(key: key);
   PackageDetailModel? packageDetailModel;
+ // static List<String> selectedDays = [];
   int daysCount = 0;
   int? daysStart;
   List<BranchItem>? branches;
@@ -241,12 +242,17 @@ class DaysTimeView extends GetView<DaysTimeController> {
                   Get.snackbar(
                       'Error', 'you must choose day after $daysStart days');
                 }
-                Get.log('mmmm   '+controller.selectedItems.length.toString());
+
                 if(daysCount>controller.selectedItems.length||daysCount<controller.selectedItems.length){
                   Get.snackbar(
                       'Error', 'you must choose  $daysCount days');
                 }
                 if(differenceValue > daysStart! && daysCount==controller.selectedItems.length){
+                  selectedDays.clear();
+                  for (int i = 0; i < controller.selectedItems.length; i++){
+                    selectedDays.add(AppConstants.days[i]);
+                  }
+                  print('1111  x ' + selectedDays.toString());
                   return Get.toNamed(Routes.PACKAGE_MEALS,
                       arguments: {'selectedDays': selectedDays});
                 }

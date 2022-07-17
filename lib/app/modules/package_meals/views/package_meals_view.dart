@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/days_time/controllers/days_time_controller.dart';
 import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
@@ -14,7 +15,7 @@ import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageMealsView extends GetView<PackageMealsController> {
-  const PackageMealsView({Key? key}) : super(key: key);
+    PackageMealsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -145,7 +146,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
                       height: 44.w + 18.h,
                       width: Get.width,
                       child: ListView.builder(
-                        itemCount: AppConstants.days.length,
+                        //itemCount: AppConstants.days.length,
+                        itemCount: controller.selectedDays.length,
                         padding: EdgeInsetsDirectional.only(start: 22.w),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -161,19 +163,19 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                   alignment: Alignment.center,
                                   decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(7.r),
-                                    color: AppConstants.days[index] == "Sat"
+                                    color: controller.selectedDays[index] == "Sat"
                                         ? primaryColor
                                         : whiteColor,
                                     border: Border.all(
-                                      color: AppConstants.days[index] == "Sat"
+                                      color: controller.selectedDays[index] == "Sat"
                                           ? primaryColor
                                           : lightGreyColor,
                                     ),
                                   ),
                                   child: Text(
-                                    AppConstants.days[index],
+                                    controller.selectedDays[index],
                                     style: Get.textTheme.headline3!.copyWith(
-                                      color: AppConstants.days[index] == "Sat"
+                                      color:controller.selectedDays[index] == "Sat"
                                           ? whiteColor
                                           : lightGreyColor,
                                     ),
@@ -182,7 +184,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                 SizedBox(
                                   height: 6.h,
                                 ),
-                                AppConstants.days[index] == "Sat"
+                                controller.selectedDays == "Sat"
                                     ? CustomPaint(
                                         painter: TrianglePainter(
                                           strokeColor: greyColor,
