@@ -21,7 +21,7 @@ class PackageMealsController extends GetxController {
   List<MealsModel>? dinnersList;
   List<MealsModel>? newMealsList;
 
-  String ? selectedMeal;
+  String? selectedMeal;
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
@@ -32,16 +32,16 @@ class PackageMealsController extends GetxController {
         PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice;
     extraLunchPrice =
         PackageDetailsView.packageDetailModel?.data?.extraLunchPrice;
-    breakfastsList=PackageDetailsView.packageDetailModel?.data?.breakfasts;
-    lunchesList=PackageDetailsView.packageDetailModel?.data?.lunches;
-    dinnersList=PackageDetailsView.packageDetailModel?.data?.dinners;
+    breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
+    lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
+    dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
 
-    Get.log('bbb '+(breakfastsList?.length.toString()).toString());
+    Get.log('bbb ' + (breakfastsList?.length.toString()).toString());
     super.onInit();
   }
 
   addMeal(String meal) {
-    selectedMeal=meal;
+    selectedMeal = meal;
     if (meal == 'dinner') {
       dinnerSelected++;
     } else if (meal == 'breakfast') {
@@ -57,7 +57,7 @@ class PackageMealsController extends GetxController {
   }
 
   removeMeal(String meal) {
-    selectedMeal=meal;
+    selectedMeal = meal;
     if (meal == 'dinner') {
       dinnerSelected--;
       if (dinnerSelected == 0) {
@@ -68,7 +68,6 @@ class PackageMealsController extends GetxController {
       breakfastSelected--;
       if (breakfastSelected == 0) {
         breakfastSelected = 1;
-
         isMealSelected = 0;
       }
     } else if (meal == 'lunch') {
@@ -103,20 +102,18 @@ class PackageMealsController extends GetxController {
   //
   // }
 
-  List<MealsModel>?  getList(){
-  if(selectedMeal=='dinner'){
-    Get.log('bbb '+(dinnersList?.length.toString()).toString());
-    newMealsList=dinnersList;
-    update();
-    return newMealsList;
-  }else if(selectedMeal=='breakfast'){
-    newMealsList=breakfastsList;
-    update();
-    return breakfastsList;
-  }else{
-    return lunchesList;
+  List<MealsModel>? getList() {
+    if (selectedMeal == 'dinner') {
+      Get.log('bbb ' + (dinnersList?.length.toString()).toString());
+      newMealsList = dinnersList;
+      update();
+      return newMealsList;
+    } else if (selectedMeal == 'breakfast') {
+      newMealsList = breakfastsList;
+      update();
+      return breakfastsList;
+    } else {
+      return lunchesList;
+    }
   }
-
-}
-
 }
