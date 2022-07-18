@@ -242,6 +242,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 ),
               ),
               child: MealSelectCard(
+                id: controller.newMealsList?[index].id ?? 0,
                 caleries:
                     controller.newMealsList?[index].calories.toString() ?? '',
                 image: controller.newMealsList?[index].image ?? '',
