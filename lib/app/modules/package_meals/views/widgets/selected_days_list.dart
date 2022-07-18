@@ -71,7 +71,8 @@ class SelectedDaysListView extends StatelessWidget {
                         SizedBox(
                           height: 6.h,
                         ),
-                        controller.selectedDays == controller.currentDay
+                        controller.selectedDays.keys.elementAt(index) ==
+                                controller.currentDay
                             ? CustomPaint(
                                 painter: TrianglePainter(
                                   strokeColor: greyColor,
