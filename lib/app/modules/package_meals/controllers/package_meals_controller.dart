@@ -5,7 +5,7 @@ import 'package:nourish_sa/app/modules/package_details/views/package_details_vie
 import '../../../data/services/analytics_service.dart';
 
 class PackageMealsController extends GetxController {
-  List<String> selectedDays = [];
+  Map<String, dynamic> selectedDays = {};
   Map map = Get.arguments;
   int dinnerSelected = 1;
   int lunchSelected = 1;
@@ -20,12 +20,13 @@ class PackageMealsController extends GetxController {
   List<MealsModel>? lunchesList;
   List<MealsModel>? dinnersList;
   List<MealsModel>? _newMealsList;
-
+  String currentDay = "";
   String? selectedMeal;
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
     selectedDays = map['selectedDays'];
+    currentDay = selectedDays.keys.first;
     extraDinnerPrice =
         PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice;
     extraBreakfastPrice =
@@ -100,6 +101,11 @@ class PackageMealsController extends GetxController {
     } else if (index == 3) {
       _newMealsList = lunchesList;
     }
+    update();
+  }
+
+  selectDay(String day) {
+    currentDay = day;
     update();
   }
 }

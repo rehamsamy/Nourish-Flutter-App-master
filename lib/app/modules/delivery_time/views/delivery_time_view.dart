@@ -16,7 +16,7 @@ class DeliveryTimeView extends GetView<DeliveryTimeController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(LocalKeys.kDeliverytime.tr),
+        title: Text(LocalKeys.kDeliverytime.tr),
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
@@ -39,7 +39,7 @@ class DeliveryTimeView extends GetView<DeliveryTimeController> {
                   alignment: Alignment.center,
                   padding: EdgeInsets.symmetric(horizontal: 8.w),
                   child: Text(
-                    controller.workTime?[0].period??"7 am to 11 am",
+                    controller.workTime?[0].period ?? "7 am to 11 am",
                     style: Get.textTheme.caption!.copyWith(
                       color: whiteColor,
                     ),
@@ -51,66 +51,64 @@ class DeliveryTimeView extends GetView<DeliveryTimeController> {
               height: 20.h,
             ),
             SubscriptionBorderedContainer(
-              child: Expanded(
                 child: ListView.builder(
-                    shrinkWrap: true,itemCount:  controller.workTime?.length,
-                itemBuilder: (_,index){
-                  return Column(
-                    children: [
-                      Row(
+                    shrinkWrap: true,
+                    itemCount: controller.workTime?.length,
+                    itemBuilder: (_, index) {
+                      return Column(
                         children: [
-                          Container(
-                            width: 16.w,
-                            height: 16.h,
-                            padding: EdgeInsets.all(2.w),
-                            decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                border: Border.all(
-                                  color: primaryColor,
-                                )),
-                            child: const CircleAvatar(
-                              backgroundColor: primaryColor,
+                          Row(
+                            children: [
+                              Container(
+                                width: 16.w,
+                                height: 16.h,
+                                padding: EdgeInsets.all(2.w),
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    border: Border.all(
+                                      color: primaryColor,
+                                    )),
+                                child: const CircleAvatar(
+                                  backgroundColor: primaryColor,
+                                ),
+                              ),
+                              SizedBox(
+                                width: 11.w,
+                              ),
+                              Text(
+                                controller.workTime?[index].period ??
+                                    'ffffffff',
+                                style: Get.textTheme.headline3!
+                                    .copyWith(color: blackColor),
+                              ),
+                            ],
+                          ),
+                          Padding(
+                            padding: EdgeInsets.symmetric(
+                              vertical: 7.5.h,
+                            ),
+                            child: const Divider(
+                              color: lightGreyColor,
                             ),
                           ),
-                          SizedBox(
-                            width: 11.w,
-                          ),
-                          Text(
-                            controller.workTime?[index].period?? 'ffffffff',
-                            style: Get.textTheme.headline3!
-                                .copyWith(color: blackColor),
-                          ),
                         ],
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(
-                          vertical: 7.5.h,
-                        ),
-                        child: const Divider(
-                          color: lightGreyColor,
-                        ),
-                      ),
-                    ],
-                  );
-                }),
-              )
-
-            ),
+                      );
+                    })),
             const Spacer(),
             CustomButton(
               title: LocalKeys.kContinue.tr,
-              onPress: () async{
-                ChangeOrderPeriodModel ? periodModel=  await OrderApis().changeOrderPeriod
-                  (controller.orderId, controller.periodId) as ChangeOrderPeriodModel;
-                if(periodModel.data !=null){
+              onPress: () async {
+                ChangeOrderPeriodModel? periodModel = await OrderApis()
+                        .changeOrderPeriod(
+                            controller.orderId, controller.periodId)
+                    as ChangeOrderPeriodModel;
+                if (periodModel.data != null) {
                   Get.snackbar(
-                      "Change Order Period", periodModel.data?.msg?? '');
-                 // Get.back();
-                }else{
+                      "Change Order Period", periodModel.data?.msg ?? '');
+                  // Get.back();
+                } else {
                   Get.snackbar('Change Order Period', 'error => plz try again');
                 }
-
-
               },
             ),
           ],

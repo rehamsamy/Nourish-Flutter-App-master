@@ -1,9 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/modules/days_time/controllers/days_time_controller.dart';
-import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
+import 'package:nourish_sa/app/modules/package_meals/views/widgets/selected_days_list.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
 import 'package:nourish_sa/app/shared/dinner_animted_container.dart';
@@ -15,7 +13,7 @@ import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageMealsView extends GetView<PackageMealsController> {
-    PackageMealsView({Key? key}) : super(key: key);
+  const PackageMealsView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -136,75 +134,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 SizedBox(
                   height: 27.h,
                 ),
-                SizedBox(
-                  width: Get.width,
-                  height: 44.w + 18.h,
-                  child: OverflowBox(
-                    maxWidth: Get.width,
-                    minWidth: Get.width,
-                    child: SizedBox(
-                      height: 44.w + 18.h,
-                      width: Get.width,
-                      child: ListView.builder(
-                        //itemCount: AppConstants.days.length,
-                        itemCount: controller.selectedDays.length,
-                        padding: EdgeInsetsDirectional.only(start: 22.w),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.w,
-                            ),
-                            child: Column(
-                              children: [
-                                Container(
-                                  width: 44.w,
-                                  height: 44.w,
-                                  alignment: Alignment.center,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(7.r),
-                                    color: controller.selectedDays[index] == "Sat"
-                                        ? primaryColor
-                                        : whiteColor,
-                                    border: Border.all(
-                                      color: controller.selectedDays[index] == "Sat"
-                                          ? primaryColor
-                                          : lightGreyColor,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    controller.selectedDays[index],
-                                    style: Get.textTheme.headline3!.copyWith(
-                                      color:controller.selectedDays[index] == "Sat"
-                                          ? whiteColor
-                                          : lightGreyColor,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 6.h,
-                                ),
-                                controller.selectedDays == "Sat"
-                                    ? CustomPaint(
-                                        painter: TrianglePainter(
-                                          strokeColor: greyColor,
-                                          strokeWidth: 10,
-                                          paintingStyle: PaintingStyle.fill,
-                                        ),
-                                        child: SizedBox(
-                                          height: 12.h,
-                                          width: 16.w,
-                                        ),
-                                      )
-                                    : const SizedBox.shrink(),
-                              ],
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
-                ),
+                const SelectedDaysListView(),
                 Container(
                   width: 373.w,
                   decoration: BoxDecoration(
@@ -281,10 +211,10 @@ class PackageMealsView extends GetView<PackageMealsController> {
   }
 
   getMealsProductsList() {
-    int length=controller.newMealsList?.length??0;
-    if(length>0){
-      return   GetBuilder<PackageMealsController>(
-        builder: (_)=>ListView.builder(
+    int length = controller.newMealsList?.length ?? 0;
+    if (length > 0) {
+      return GetBuilder<PackageMealsController>(
+        builder: (_) => ListView.builder(
           itemCount: controller.newMealsList?.length,
           shrinkWrap: true,
           physics: const NeverScrollableScrollPhysics(),
@@ -293,31 +223,43 @@ class PackageMealsView extends GetView<PackageMealsController> {
             return InkWell(
               onTap: () => Get.dialog(
                 MealInfoDialog(
-                  image: controller.newMealsList?[index].image??'',
+                  image: controller.newMealsList?[index].image ?? '',
                   title: controller.newMealsList?[index].name,
-                  desc:controller.newMealsList?[index].description,
+                  desc: controller.newMealsList?[index].description,
                   values: {
-                    LocalKeys.kCarb.tr: controller.newMealsList?[index].carb.toString()??'0.0',
-                    LocalKeys.kFat.tr: controller.newMealsList?[index].fat.toString()??'0',
-                    LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'0',
-                    LocalKeys.kCalories.tr: controller.newMealsList?[index].calories.toString()??'0'
+                    LocalKeys.kCarb.tr:
+                        controller.newMealsList?[index].carb.toString() ??
+                            '0.0',
+                    LocalKeys.kFat.tr:
+                        controller.newMealsList?[index].fat.toString() ?? '0',
+                    LocalKeys.kProtein.tr:
+                        controller.newMealsList?[index].protein.toString() ??
+                            '0',
+                    LocalKeys.kCalories.tr:
+                        controller.newMealsList?[index].calories.toString() ??
+                            '0'
                   },
                 ),
               ),
-              child:  MealSelectCard(
-                caleries: controller.newMealsList?[index].calories.toString()??'',
-                image: controller.newMealsList?[index].image??'',
+              child: MealSelectCard(
+                caleries:
+                    controller.newMealsList?[index].calories.toString() ?? '',
+                image: controller.newMealsList?[index].image ?? '',
                 isSelected: false,
-                title: controller.newMealsList?[index].name??'',
+                title: controller.newMealsList?[index].name ?? '',
               ),
             );
           },
         ),
       );
-    }else{
-      return SizedBox(height: 100,child: Center(child: Text('no products found'),),);
+    } else {
+      return const SizedBox(
+        height: 100,
+        child: Center(
+          child: Text('no products found'),
+        ),
+      );
     }
-
   }
 }
 

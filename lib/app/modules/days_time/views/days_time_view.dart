@@ -17,7 +17,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class DaysTimeView extends GetView<DaysTimeController> {
   // DaysTimeView({Key? key}) : super(key: key);
   PackageDetailModel? packageDetailModel;
- // static List<String> selectedDays = [];
+  // static List<String> selectedDays = [];
   int daysCount = 0;
   int? daysStart;
   List<BranchItem>? branches;
@@ -27,7 +27,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.log('sizee 1   '+daysCount.toString());
+    Get.log('sizee 1   ' + daysCount.toString());
     packageDetailModel = PackageDetailsView.packageDetailModel;
     daysCount = packageDetailModel?.data?.daysNumberOfWeek ?? 0;
     branches = packageDetailModel?.data?.branches;
@@ -147,7 +147,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
                     DateTime x = DateTime.parse(val);
                     final date2 = DateTime.now();
                     final difference = daysBetween(x, date2);
-                    differenceValue=difference;
+                    differenceValue = difference;
                     Get.log('xxx      $daysStart');
                   },
                   type: DateTimePickerType.date,
@@ -238,23 +238,26 @@ class DaysTimeView extends GetView<DaysTimeController> {
             CustomButton(
               title: LocalKeys.kContinue.tr,
               onPress: () {
-                if (differenceValue < daysStart! ) {
+                if (differenceValue < daysStart!) {
                   Get.snackbar(
                       'Error', 'you must choose day after $daysStart days');
                 }
 
-                if(daysCount>controller.selectedItems.length||daysCount<controller.selectedItems.length){
-                  Get.snackbar(
-                      'Error', 'you must choose  $daysCount days');
+                if (daysCount > controller.selectedItems.length ||
+                    daysCount < controller.selectedItems.length) {
+                  Get.snackbar('Error', 'you must choose  $daysCount days');
                 }
-                if(differenceValue > daysStart! && daysCount==controller.selectedItems.length){
+                if (differenceValue > daysStart! &&
+                    daysCount == controller.selectedItems.length) {
                   selectedDays.clear();
-                  for (int i = 0; i < controller.selectedItems.length; i++){
-                    selectedDays.add(AppConstants.days[controller.selectedItems[i]]);
+                  for (int i = 0; i < controller.selectedItems.length; i++) {
+                    selectedDays
+                        .add(AppConstants.days[controller.selectedItems[i]]);
                   }
-                  print('1111  x ' + selectedDays.toString()+'      222   '+controller.selectedItems.toString());
-                  return Get.toNamed(Routes.PACKAGE_MEALS,
-                      arguments: {'selectedDays': selectedDays});
+                  // print('1111  x ' + selectedDays.toString()+'      222   '+controller.selectedItems.toString());
+                  return Get.toNamed(Routes.PACKAGE_MEALS, arguments: {
+                    'selectedDays': controller.daysTimeSelectedValues
+                  });
                 }
               },
             ),

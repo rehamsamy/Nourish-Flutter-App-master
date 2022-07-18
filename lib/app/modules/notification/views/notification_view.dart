@@ -16,7 +16,7 @@ class NotificationView extends GetView<NotificationController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  Text(LocalKeys.kNotifications.tr),
+        title: Text(LocalKeys.kNotifications.tr),
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
@@ -46,56 +46,61 @@ class NotificationView extends GetView<NotificationController> {
               height: 20.h,
             ),
             FutureBuilder(
-              future: NotificationApis().getNotifications(),
-                builder: (_,snap) {
-                  if(snap.hasData){
-                    List<NotificationItem>? notificationsList = snap.data as List<NotificationItem>;
-                    if(notificationsList.isNotEmpty){
-                      return    Expanded(
+                future: NotificationApis().getNotifications(),
+                builder: (_, snap) {
+                  if (snap.hasData) {
+                    List<NotificationItem>? notificationsList =
+                        snap.data as List<NotificationItem>;
+                    if (notificationsList.isNotEmpty) {
+                      return Expanded(
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 2.w),
                           child: ListView.builder(
-                              itemCount:notificationsList.length
-                              ,itemBuilder: (context, index) {
-                            return Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  height: 20.h,
-                                ),
-                                Text(
-                                  notificationsList[index].text??"New Updates Coming ",
-                                  style: Get.textTheme.headline3!
-                                      .copyWith(color: blackColor),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.only(top: 6.h, bottom: 11.h),
-                                  child: Text(
-                                    notificationsList[index].time?? "5 hours ago",
-                                    style: Get.textTheme.subtitle1!
-                                        .copyWith(color: primaryColor),
-                                  ),
-                                ),
-                                Container(
-                                  width: Get.width,
-                                  height: 1,
-                                  color: greyColor,
-                                ),
-                              ],
-                            );
-                          }),
+                              itemCount: notificationsList.length,
+                              itemBuilder: (context, index) {
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    SizedBox(
+                                      height: 20.h,
+                                    ),
+                                    Text(
+                                      notificationsList[index].text ??
+                                          "New Updates Coming ",
+                                      style: Get.textTheme.headline3!
+                                          .copyWith(color: blackColor),
+                                    ),
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          top: 6.h, bottom: 11.h),
+                                      child: Text(
+                                        notificationsList[index].time ??
+                                            "5 hours ago",
+                                        style: Get.textTheme.subtitle1!
+                                            .copyWith(color: primaryColor),
+                                      ),
+                                    ),
+                                    Container(
+                                      width: Get.width,
+                                      height: 1,
+                                      color: greyColor,
+                                    ),
+                                  ],
+                                );
+                              }),
                         ),
                       );
-                    }else{
-                      return const Expanded(child: Center(child: Text('no notification found'),));
+                    } else {
+                      return const Center(
+                        child: Text('no notification found'),
+                      );
                     }
-                  }else{
-                    return const Expanded(child: SizedBox(height: 200,));
+                  } else {
+                    return const SizedBox(
+                      height: 200,
+                    );
                   }
-
-
-                }
-            ),
+                }),
           ],
         ),
       ),
