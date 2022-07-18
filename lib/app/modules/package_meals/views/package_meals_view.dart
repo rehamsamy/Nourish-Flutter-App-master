@@ -53,19 +53,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                           children: [
                             InkWell(
                               onTap: () {
-                                controller.changeMealSelected(1);
-                              },
-                              child: DinnerAnimatedContainer(
-                                  isSelected: controller.isMealSelected == 1,
-                                  title: LocalKeys.kDinner.tr,
-                                  type: 'dinner',
-                                  canAddMore:
-                                      controller.extraDinnerPrice != null,
-                                  titleValue: '${controller.dinnerSelected}'),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                controller.changeMealSelected(2);
+                                controller.changeMealSelected(2, "breakfast");
                               },
                               child: DinnerAnimatedContainer(
                                   isSelected: controller.isMealSelected == 2,
@@ -76,9 +64,10 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                   titleValue:
                                       '${controller.breakfastSelected}'),
                             ),
+
                             InkWell(
                               onTap: () {
-                                controller.changeMealSelected(3);
+                                controller.changeMealSelected(3, 'lunch');
                               },
                               child: DinnerAnimatedContainer(
                                   isSelected: controller.isMealSelected == 3,
@@ -88,6 +77,19 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                       controller.extraLunchPrice != null,
                                   titleValue: '${controller.lunchSelected}'),
                             ),
+                            InkWell(
+                              onTap: () {
+                                controller.changeMealSelected(1, "dinner");
+                              },
+                              child: DinnerAnimatedContainer(
+                                  isSelected: controller.isMealSelected == 1,
+                                  title: LocalKeys.kDinner.tr,
+                                  type: 'dinner',
+                                  canAddMore:
+                                      controller.extraDinnerPrice != null,
+                                  titleValue: '${controller.dinnerSelected}'),
+                            ),
+
                             // DinnerAnimatedContainer(
                             //   isSelected: false,
                             //   title: LocalKeys.kSnacks.tr,

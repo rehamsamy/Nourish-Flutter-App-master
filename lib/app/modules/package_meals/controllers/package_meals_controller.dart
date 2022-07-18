@@ -83,7 +83,8 @@ class PackageMealsController extends GetxController {
     update();
   }
 
-  changeMealSelected(int index) {
+  changeMealSelected(int index, String meal) {
+    selectedMeal = meal;
     isMealSelected = index;
     getList(index);
     update();
