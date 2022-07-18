@@ -298,7 +298,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   desc:controller.newMealsList?[index].description,
                   values: {
                     LocalKeys.kCarb.tr: controller.newMealsList?[index].carb.toString()??'0.0',
-                    LocalKeys.kProtein.tr: controller.newMealsList?[index].fat.toString()??'0',
+                    LocalKeys.kFat.tr: controller.newMealsList?[index].fat.toString()??'0',
                     LocalKeys.kProtein.tr: controller.newMealsList?[index].protein.toString()??'0',
                     LocalKeys.kCalories.tr: controller.newMealsList?[index].calories.toString()??'0'
                   },

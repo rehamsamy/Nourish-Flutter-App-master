@@ -36,8 +36,6 @@ class PackageMealsController extends GetxController {
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
     _newMealsList = dinnersList;
-
-    Get.log('bbb ' + (breakfastsList?.length.toString()).toString());
     super.onInit();
   }
 
@@ -87,12 +85,10 @@ class PackageMealsController extends GetxController {
   changeMealSelected(int index) {
     isMealSelected = index;
     getList(index);
-    Get.log('bbb mm  ' + (index).toString());
     update();
   }
 
   List<MealsModel>? get newMealsList {
-    Get.log('bbb mm  ' + (_newMealsList?.length.toString()).toString());
     return _newMealsList;
   }
 
@@ -105,6 +101,5 @@ class PackageMealsController extends GetxController {
       _newMealsList = lunchesList;
     }
     update();
- //   Get.log('bbb ' + ((_newMealsList?[0].name).toString()));
   }
 }
