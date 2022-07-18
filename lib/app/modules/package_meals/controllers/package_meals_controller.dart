@@ -105,6 +105,6 @@ class PackageMealsController extends GetxController {
       _newMealsList = lunchesList;
     }
     update();
-    Get.log('bbb ' + ((_newMealsList?[0].name).toString()));
+ //   Get.log('bbb ' + ((_newMealsList?[0].name).toString()));
   }
 }

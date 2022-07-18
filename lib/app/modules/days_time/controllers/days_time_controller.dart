@@ -44,8 +44,8 @@ class DaysTimeController extends GetxController {
       };
       Get.log('mmmm   ' + AppConstants.days.toString());
 
-      update();
     }
+    update();
   }
     void toggleBranchTimeSelection(value) {
       if (branchTimeSelectedValues.contains(value)) {

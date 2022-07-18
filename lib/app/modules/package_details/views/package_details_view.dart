@@ -68,7 +68,6 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 isSelected: controller.selectedPlanType == 'delivery',
                 onTap: () async {
                   controller.selectedPlanType = 'delivery';
-
                   controller.update();
                   await PostionLocator.determinePosition()
                       .then((value) => Get.toNamed(Routes.DELIVERY_ADDRESSES));

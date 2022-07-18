@@ -250,9 +250,9 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 if(differenceValue > daysStart! && daysCount==controller.selectedItems.length){
                   selectedDays.clear();
                   for (int i = 0; i < controller.selectedItems.length; i++){
-                    selectedDays.add(AppConstants.days[i]);
+                    selectedDays.add(AppConstants.days[controller.selectedItems[i]]);
                   }
-                  print('1111  x ' + selectedDays.toString());
+                  print('1111  x ' + selectedDays.toString()+'      222   '+controller.selectedItems.toString());
                   return Get.toNamed(Routes.PACKAGE_MEALS,
                       arguments: {'selectedDays': selectedDays});
                 }
