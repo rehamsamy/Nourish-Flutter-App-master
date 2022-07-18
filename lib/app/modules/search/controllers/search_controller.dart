@@ -8,7 +8,7 @@ class SearchController extends GetxController {
   TextEditingController searchController = TextEditingController();
   Map map = Get.arguments;
   List<WeeklyItem>? packagesList;
-  List<WeeklyItem>? searchList;
+  List<WeeklyItem>? searchList=[];
 
   @override
   void onInit() {
@@ -24,12 +24,17 @@ class SearchController extends GetxController {
       return;
     }
 
-    packagesList?.forEach((package) {
-      if (package.name!.contains(text) || package.name!.contains(text)) {
-        searchList?.add(package);
-      }
-    });
-
+   searchList= packagesList?.where((element) => element.name!.contains(text)).toList();
+    // packagesList?.forEach((package) {
+    //   if (package.name!.contains(text)) {
+    //     searchList?.add(package);
+         Get.log('cc    '+text.toString()+'      lllll     '+searchList.toString());
+    //   }
+    // });
+  Get.log('cc    '+text.toString());
     update();
   }
 }
+// return allProducts
+//     .where((element) => element.name.contains(text))
+// .toList();
