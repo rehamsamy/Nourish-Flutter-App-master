@@ -91,7 +91,7 @@ class _MealSelectCardState extends State<MealSelectCard> {
                           setState(() {
                             widget.isSelected = true;
                             controller.selectedDays[controller.currentDay]
-                                [controller.selectedMeal] = widget.id;
+                                [controller.selectedMeal] = [widget.id];
                           });
                           print(controller.selectedDays);
                         },

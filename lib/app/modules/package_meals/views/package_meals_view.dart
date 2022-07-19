@@ -2,14 +2,15 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/selected_days_list.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
 import 'package:nourish_sa/app/shared/dinner_animted_container.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_select_card.dart';
 import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
-import 'package:nourish_sa/routes/app_pages.dart';
 import '../../../../app_theme.dart';
+import '../../../data/remote_data_sources/order_apis.dart';
 import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -113,7 +114,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                             style: Get.textTheme.headline3,
                           ),
                           Text(
-                            '${controller.addtionalPackagePrice} SAR',
+                            '${(controller.addtionalPackagePrice) - (controller.packagePrice ?? 0)} SAR',
                           )
                         ],
                       ),
@@ -197,13 +198,26 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   ),
                   CustomButton(
                       title: LocalKeys.kContinue.tr,
-                      onPress: () {
-                        // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
+                      onPress: () async {
+                        await OrderApis().addOrder(
+                          delivery_type: "delivery",
+                          package_id:
+                              PackageDetailsView.packageDetailModel?.data?.id ??
+                                  0,
+                          address_id: 1,
+                          payment_id: 1,
+                          branch_id: 2,
+                          start_date: "2024-07-16",
+                          period_id: 1,
+                          selectedDays: controller.selectedDays,
+                        );
+
+                        /*     // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
                         Get.log('vvvvv  ' +
                             controller.addtionalPackagePrice.toString());
                         Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
-                          'total': controller.addtionalPackagePrice
-                        });
+                          'total': controller.totalPackagePrice,
+                     */
                       }),
                   SizedBox(
                     height: 42.h,

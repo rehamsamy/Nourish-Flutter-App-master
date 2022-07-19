@@ -11,7 +11,6 @@ class DaysTimeController extends GetxController {
   int? index;
   List<int> selectedItems = [];
 
-
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Days_Time_View");
@@ -37,23 +36,22 @@ class DaysTimeController extends GetxController {
     } else {
       selectedItems.add(index);
       daysTimeSelectedValues[dayName] = {
-        'breakfast': 0,
-        'lunch': 0,
-        'dinner': 0,
+        'breakfast': [],
+        'lunch': [],
+        'dinner': [],
       };
       Get.log('Selected Days   ' + daysTimeSelectedValues.toString());
-
     }
     update();
   }
-    void toggleBranchTimeSelection(value) {
-      if (branchTimeSelectedValues.contains(value)) {
-        branchTimeSelectedValues.remove(value);
-      } else {
-        branchTimeSelectedValues.add(value);
-      }
-      print(value);
-      update();
-    }
-  }
 
+  void toggleBranchTimeSelection(value) {
+    if (branchTimeSelectedValues.contains(value)) {
+      branchTimeSelectedValues.remove(value);
+    } else {
+      branchTimeSelectedValues.add(value);
+    }
+    print(value);
+    update();
+  }
+}
