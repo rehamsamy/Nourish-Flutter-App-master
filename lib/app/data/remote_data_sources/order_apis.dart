@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
+import 'package:nourish_sa/app/data/models/add_order_model.dart';
 import 'package:nourish_sa/app/data/models/change_order_period_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
@@ -16,7 +17,7 @@ class OrderApis {
     };
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
-        path: 'changeOrderPeriod',
+        path: 'addOrder',
         data: NetworkRequestBody.json(map),
         headers: {
           'Authorization': 'Bearer $token',
@@ -70,7 +71,7 @@ class OrderApis {
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      ChangeOrderPeriodModel
+      AddOrderModel
           .fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(

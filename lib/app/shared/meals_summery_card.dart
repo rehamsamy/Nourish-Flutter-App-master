@@ -10,7 +10,7 @@ import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import '../../app_theme.dart';
 
 class MealsSummeryCard extends StatelessWidget {
-  Saturday ? saturday;
+  MealsDayModel ? saturday;
   MealsSummeryCard(this.saturday);
 
   @override
