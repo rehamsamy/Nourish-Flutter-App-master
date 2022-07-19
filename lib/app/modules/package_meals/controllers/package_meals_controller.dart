@@ -16,12 +16,14 @@ class PackageMealsController extends GetxController {
   int isMealSelected = 0;
   int selectedIndex = 0;
   int addtionalPackagePrice = 0;
+  int totalPackagePrice = 0;
   List<MealsModel>? breakfastsList;
   List<MealsModel>? lunchesList;
   List<MealsModel>? dinnersList;
   List<MealsModel>? _newMealsList;
   String currentDay = "";
   String? selectedMeal;
+  int ? packagePrice;
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
@@ -33,6 +35,7 @@ class PackageMealsController extends GetxController {
         PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice;
     extraLunchPrice =
         PackageDetailsView.packageDetailModel?.data?.extraLunchPrice;
+    packagePrice=PackageDetailsView.packageDetailModel?.data?.priceWithTax;
     breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
@@ -48,10 +51,11 @@ class PackageMealsController extends GetxController {
     } else if (meal == 'lunch') {
       lunchSelected++;
     }
-    addtionalPackagePrice = (extraLunchPrice ?? 0 * lunchSelected) +
-        (extraBreakfastPrice ?? 0 * breakfastSelected) +
-        (extraDinnerPrice ?? 0 * dinnerSelected);
-
+    update();
+    addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
+        ((extraBreakfastPrice ?? 0 )* breakfastSelected) +
+        ((extraDinnerPrice ?? 0 )* dinnerSelected);
+    totalPackagePrice=addtionalPackagePrice+(packagePrice ?? 0);
     update();
   }
 
@@ -77,9 +81,10 @@ class PackageMealsController extends GetxController {
       }
     }
 
-    addtionalPackagePrice = (extraLunchPrice ?? 0 * lunchSelected) +
-        (extraBreakfastPrice ?? 0 * breakfastSelected) +
-        (extraDinnerPrice ?? 0 * dinnerSelected);
+    addtionalPackagePrice = ((extraLunchPrice ?? 0 )* lunchSelected) +
+        ((extraBreakfastPrice ?? 0) * breakfastSelected) +
+        ((extraDinnerPrice ?? 0 )* dinnerSelected);
+    totalPackagePrice=addtionalPackagePrice+(packagePrice ?? 0);
     update();
   }
 

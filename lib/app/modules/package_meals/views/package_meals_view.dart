@@ -26,187 +26,189 @@ class PackageMealsView extends GetView<PackageMealsController> {
         body: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 27.w),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                SizedBox(
-                  height: 24.h,
-                ),
-                Text(LocalKeys.kResultforYour.tr,
-                    style: Get.textTheme.headline1),
-                Padding(
-                  padding: EdgeInsets.only(top: 11.h),
-                  child: PackageCaleroiesDetails(),
-                ),
-                GetBuilder<PackageMealsController>(
-                  builder: (_) => SizedBox(
-                    width: Get.width,
-                    height: 102.h,
-                    child: OverflowBox(
-                      maxWidth: Get.width,
-                      minWidth: Get.width,
-                      child: SizedBox(
-                        height: 102.h,
-                        width: Get.width,
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            InkWell(
-                              onTap: () {
-                                controller.changeMealSelected(2, "breakfast");
-                              },
-                              child: DinnerAnimatedContainer(
-                                  isSelected: controller.isMealSelected == 2,
-                                  title: LocalKeys.kBreakfast.tr,
-                                  type: 'breakfast',
-                                  canAddMore:
-                                      controller.extraBreakfastPrice != null,
-                                  titleValue:
-                                      '${controller.breakfastSelected}'),
-                            ),
+            child: GetBuilder<PackageMealsController>(
+              builder: (_)=>Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  SizedBox(
+                    height: 24.h,
+                  ),
+                  Text(LocalKeys.kResultforYour.tr,
+                      style: Get.textTheme.headline1),
+                  Padding(
+                    padding: EdgeInsets.only(top: 11.h),
+                    child: PackageCaleroiesDetails(),
+                  ),
+                  GetBuilder<PackageMealsController>(
+                    builder: (_) => SizedBox(
+                      width: Get.width,
+                      height: 102.h,
+                      child: OverflowBox(
+                        maxWidth: Get.width,
+                        minWidth: Get.width,
+                        child: SizedBox(
+                          height: 102.h,
+                          width: Get.width,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              InkWell(
+                                onTap: () {
+                                  controller.changeMealSelected(2, "breakfast");
+                                },
+                                child: DinnerAnimatedContainer(
+                                    isSelected: controller.isMealSelected == 2,
+                                    title: LocalKeys.kBreakfast.tr,
+                                    type: 'breakfast',
+                                    canAddMore:
+                                        controller.extraBreakfastPrice != null,
+                                    titleValue:
+                                        '${controller.breakfastSelected}'),
+                              ),
 
-                            InkWell(
-                              onTap: () {
-                                controller.changeMealSelected(3, 'lunch');
-                              },
-                              child: DinnerAnimatedContainer(
-                                  isSelected: controller.isMealSelected == 3,
-                                  title: LocalKeys.kLunch.tr,
-                                  type: 'lunch',
-                                  canAddMore:
-                                      controller.extraLunchPrice != null,
-                                  titleValue: '${controller.lunchSelected}'),
-                            ),
-                            InkWell(
-                              onTap: () {
-                                controller.changeMealSelected(1, "dinner");
-                              },
-                              child: DinnerAnimatedContainer(
-                                  isSelected: controller.isMealSelected == 1,
-                                  title: LocalKeys.kDinner.tr,
-                                  type: 'dinner',
-                                  canAddMore:
-                                      controller.extraDinnerPrice != null,
-                                  titleValue: '${controller.dinnerSelected}'),
-                            ),
+                              InkWell(
+                                onTap: () {
+                                  controller.changeMealSelected(3, 'lunch');
+                                },
+                                child: DinnerAnimatedContainer(
+                                    isSelected: controller.isMealSelected == 3,
+                                    title: LocalKeys.kLunch.tr,
+                                    type: 'lunch',
+                                    canAddMore:
+                                        controller.extraLunchPrice != null,
+                                    titleValue: '${controller.lunchSelected}'),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  controller.changeMealSelected(1, "dinner");
+                                },
+                                child: DinnerAnimatedContainer(
+                                    isSelected: controller.isMealSelected == 1,
+                                    title: LocalKeys.kDinner.tr,
+                                    type: 'dinner',
+                                    canAddMore:
+                                        controller.extraDinnerPrice != null,
+                                    titleValue: '${controller.dinnerSelected}'),
+                              ),
 
-                            // DinnerAnimatedContainer(
-                            //   isSelected: false,
-                            //   title: LocalKeys.kSnacks.tr,
-                            // ),
-                          ],
+                              // DinnerAnimatedContainer(
+                              //   isSelected: false,
+                              //   title: LocalKeys.kSnacks.tr,
+                              // ),
+                            ],
+                          ),
                         ),
                       ),
                     ),
                   ),
-                ),
-                GetBuilder<PackageMealsController>(
-                  builder: (_) => Padding(
-                    padding: EdgeInsets.symmetric(vertical: 22.h),
+                  GetBuilder<PackageMealsController>(
+                    builder: (_) => Padding(
+                      padding: EdgeInsets.symmetric(vertical: 22.h),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            LocalKeys.kPriceForAdditionalPackages.tr,
+                            style: Get.textTheme.headline3,
+                          ),
+                          Text(
+                            '${controller.addtionalPackagePrice} SAR',
+                          )
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(
+                    width: Get.width,
+                    height: 2.h,
+                    child: OverflowBox(
+                      maxWidth: Get.width,
+                      minWidth: Get.width,
+                      child: const Divider(),
+                    ),
+                  ),
+                  SizedBox(
+                    height: 18.h,
+                  ),
+                  Text(
+                    LocalKeys.kDays.tr,
+                    style: Get.textTheme.headline1,
+                  ),
+                  SizedBox(
+                    height: 27.h,
+                  ),
+                  const SelectedDaysListView(),
+                  Container(
+                    width: 373.w,
+                    decoration: BoxDecoration(
+                      border: Border.all(color: greyColor),
+                    ),
+                    padding: EdgeInsets.only(
+                        top: 14.h, bottom: 9.h, left: 27.w, right: 27.w),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      children: [
+                        DayMealBenefitsValues(
+                          title: LocalKeys.kCarb.tr,
+                          value: "500",
+                        ),
+                        DayMealBenefitsValues(
+                          title: LocalKeys.kProtein.tr,
+                          value: "500",
+                        ),
+                        DayMealBenefitsValues(
+                          title: LocalKeys.kProtein.tr,
+                          value: "500",
+                        ),
+                        DayMealBenefitsValues(
+                          title: LocalKeys.kCalories.tr,
+                          value: "500",
+                        ),
+                      ],
+                    ),
+                  ),
+                  getMealsProductsList(),
+                  Container(
+                    width: Get.width,
+                    height: 66.h,
+                    margin: EdgeInsets.only(bottom: 56.h),
+                    padding: EdgeInsets.symmetric(horizontal: 13.w),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(8.r),
+                      border: Border.all(color: primaryColor),
+                    ),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          LocalKeys.kPriceForAdditionalPackages.tr,
-                          style: Get.textTheme.headline3,
+                          LocalKeys.kPackagePrice.tr,
+                          style: Get.textTheme.headline3!
+                              .copyWith(color: primaryColor),
                         ),
                         Text(
-                          '${controller.addtionalPackagePrice} SAR',
-                        )
+                          "${controller.totalPackagePrice} SAR",
+                          style: Get.textTheme.headline1!
+                              .copyWith(color: primaryColor),
+                        ),
                       ],
                     ),
                   ),
-                ),
-                SizedBox(
-                  width: Get.width,
-                  height: 2.h,
-                  child: OverflowBox(
-                    maxWidth: Get.width,
-                    minWidth: Get.width,
-                    child: const Divider(),
+                  CustomButton(
+                      title: LocalKeys.kContinue.tr,
+                      onPress: () {
+                        // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
+                        Get.log('vvvvv  ' +
+                            controller.addtionalPackagePrice.toString());
+                        Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
+                          'total': controller.addtionalPackagePrice
+                        });
+                      }),
+                  SizedBox(
+                    height: 42.h,
                   ),
-                ),
-                SizedBox(
-                  height: 18.h,
-                ),
-                Text(
-                  LocalKeys.kDays.tr,
-                  style: Get.textTheme.headline1,
-                ),
-                SizedBox(
-                  height: 27.h,
-                ),
-                const SelectedDaysListView(),
-                Container(
-                  width: 373.w,
-                  decoration: BoxDecoration(
-                    border: Border.all(color: greyColor),
-                  ),
-                  padding: EdgeInsets.only(
-                      top: 14.h, bottom: 9.h, left: 27.w, right: 27.w),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      DayMealBenefitsValues(
-                        title: LocalKeys.kCarb.tr,
-                        value: "500",
-                      ),
-                      DayMealBenefitsValues(
-                        title: LocalKeys.kProtein.tr,
-                        value: "500",
-                      ),
-                      DayMealBenefitsValues(
-                        title: LocalKeys.kProtein.tr,
-                        value: "500",
-                      ),
-                      DayMealBenefitsValues(
-                        title: LocalKeys.kCalories.tr,
-                        value: "500",
-                      ),
-                    ],
-                  ),
-                ),
-                getMealsProductsList(),
-                Container(
-                  width: Get.width,
-                  height: 66.h,
-                  margin: EdgeInsets.only(bottom: 56.h),
-                  padding: EdgeInsets.symmetric(horizontal: 13.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(8.r),
-                    border: Border.all(color: primaryColor),
-                  ),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(
-                        LocalKeys.kPackagePrice.tr,
-                        style: Get.textTheme.headline3!
-                            .copyWith(color: primaryColor),
-                      ),
-                      Text(
-                        "2000 SAR",
-                        style: Get.textTheme.headline1!
-                            .copyWith(color: primaryColor),
-                      ),
-                    ],
-                  ),
-                ),
-                CustomButton(
-                    title: LocalKeys.kContinue.tr,
-                    onPress: () {
-                      // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
-                      Get.log('vvvvv  ' +
-                          controller.addtionalPackagePrice.toString());
-                      Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
-                        'total': controller.addtionalPackagePrice
-                      });
-                    }),
-                SizedBox(
-                  height: 42.h,
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ));
