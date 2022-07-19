@@ -52,43 +52,42 @@ class NotificationView extends GetView<NotificationController> {
                     List<NotificationItem>? notificationsList =
                         snap.data as List<NotificationItem>;
                     if (notificationsList.isNotEmpty) {
-                      return Expanded(
-                        child: Padding(
-                          padding: EdgeInsets.symmetric(horizontal: 2.w),
-                          child: ListView.builder(
-                              itemCount: notificationsList.length,
-                              itemBuilder: (context, index) {
-                                return Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    SizedBox(
-                                      height: 20.h,
+                      return Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 2.w),
+                        child: ListView.builder(
+                          shrinkWrap: true,
+                            itemCount: notificationsList.length,
+                            itemBuilder: (context, index) {
+                              return Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 20.h,
+                                  ),
+                                  Text(
+                                    notificationsList[index].text ??
+                                        "New Updates Coming ",
+                                    style: Get.textTheme.headline3!
+                                        .copyWith(color: blackColor),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.only(
+                                        top: 6.h, bottom: 11.h),
+                                    child: Text(
+                                      notificationsList[index].time ??
+                                          "5 hours ago",
+                                      style: Get.textTheme.subtitle1!
+                                          .copyWith(color: primaryColor),
                                     ),
-                                    Text(
-                                      notificationsList[index].text ??
-                                          "New Updates Coming ",
-                                      style: Get.textTheme.headline3!
-                                          .copyWith(color: blackColor),
-                                    ),
-                                    Padding(
-                                      padding: EdgeInsets.only(
-                                          top: 6.h, bottom: 11.h),
-                                      child: Text(
-                                        notificationsList[index].time ??
-                                            "5 hours ago",
-                                        style: Get.textTheme.subtitle1!
-                                            .copyWith(color: primaryColor),
-                                      ),
-                                    ),
-                                    Container(
-                                      width: Get.width,
-                                      height: 1,
-                                      color: greyColor,
-                                    ),
-                                  ],
-                                );
-                              }),
-                        ),
+                                  ),
+                                  Container(
+                                    width: Get.width,
+                                    height: 1,
+                                    color: greyColor,
+                                  ),
+                                ],
+                              );
+                            }),
                       );
                     } else {
                       return const Center(

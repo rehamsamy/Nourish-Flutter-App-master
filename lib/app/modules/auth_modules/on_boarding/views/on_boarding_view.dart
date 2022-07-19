@@ -35,8 +35,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                   controller: controller.pageController,
                   itemCount: controller.data.length,
                   scrollDirection: Axis.horizontal,
-                  onPageChanged: (value) =>
-                      controller.currentPage.value = value,
+                  onPageChanged: (value) => controller.currentPage.value = value,
                   itemBuilder: (context, index) {
                     return Padding(
                       padding: EdgeInsets.symmetric(horizontal: 25.w),
@@ -80,9 +79,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                     itemBuilder: (context, index) {
                       return Obx(
                         () => Container(
-                          width: controller.currentPage.value == index
-                              ? 22.w
-                              : 12.w,
+                          width: controller.currentPage.value == index ? 22.w : 12.w,
                           height: 5.h,
                           margin: EdgeInsetsDirectional.only(end: 4.w),
                           decoration: BoxDecoration(
@@ -106,10 +103,8 @@ class OnBoardingView extends GetView<OnBoardingController> {
                         ? LocalKeys.kGetStarted.tr
                         : LocalKeys.kNext.tr,
                     onPress: () {
-                      if ((controller.currentPage.value + 1) !=
-                          controller.data.length) {
-                        controller.pageController
-                            .jumpToPage(controller.currentPage.value + 1);
+                      if ((controller.currentPage.value + 1) != controller.data.length) {
+                        controller.pageController.jumpToPage(controller.currentPage.value + 1);
                       } else {
                         Get.find<SharedPrefService>().saveIsFirstTime();
                         Get.offAllNamed(Routes.LOGIN);
@@ -128,10 +123,7 @@ class OnBoardingView extends GetView<OnBoardingController> {
                       },
                       child: Text(
                         LocalKeys.kSkip.tr,
-                        style: Theme.of(context)
-                            .textTheme
-                            .bodyText2!
-                            .copyWith(fontSize: 15.sp),
+                        style: Theme.of(context).textTheme.bodyText2!.copyWith(fontSize: 15.sp),
                       ),
                     ),
             ),
