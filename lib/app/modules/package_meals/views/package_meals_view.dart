@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
@@ -6,7 +7,6 @@ import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
 import 'package:nourish_sa/app/shared/dinner_animted_container.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_select_card.dart';
-import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../../../../app_theme.dart';
 import '../controllers/package_meals_controller.dart';
@@ -34,10 +34,11 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 ),
                 Text(LocalKeys.kResultforYour.tr,
                     style: Get.textTheme.headline1),
-                Padding(
+                /*   Padding(
                   padding: EdgeInsets.only(top: 11.h),
                   child: PackageCaleroiesDetails(),
                 ),
+               */
                 GetBuilder<PackageMealsController>(
                   builder: (_) => SizedBox(
                     width: Get.width,
@@ -222,34 +223,37 @@ class PackageMealsView extends GetView<PackageMealsController> {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(vertical: 31.h),
           itemBuilder: (context, index) {
-            return InkWell(
-              onTap: () => Get.dialog(
-                MealInfoDialog(
-                  image: controller.newMealsList?[index].image ?? '',
-                  title: controller.newMealsList?[index].name,
-                  desc: controller.newMealsList?[index].description,
-                  values: {
-                    LocalKeys.kCarb.tr:
-                        controller.newMealsList?[index].carb.toString() ??
-                            '0.0',
-                    LocalKeys.kFat.tr:
-                        controller.newMealsList?[index].fat.toString() ?? '0',
-                    LocalKeys.kProtein.tr:
-                        controller.newMealsList?[index].protein.toString() ??
-                            '0',
-                    LocalKeys.kCalories.tr:
-                        controller.newMealsList?[index].calories.toString() ??
-                            '0'
-                  },
+            return FadeInRight(
+              duration: Duration(milliseconds: 100 * index),
+              child: InkWell(
+                onTap: () => Get.dialog(
+                  MealInfoDialog(
+                    image: controller.newMealsList?[index].image ?? '',
+                    title: controller.newMealsList?[index].name,
+                    desc: controller.newMealsList?[index].description,
+                    values: {
+                      LocalKeys.kCarb.tr:
+                          controller.newMealsList?[index].carb.toString() ??
+                              '0.0',
+                      LocalKeys.kFat.tr:
+                          controller.newMealsList?[index].fat.toString() ?? '0',
+                      LocalKeys.kProtein.tr:
+                          controller.newMealsList?[index].protein.toString() ??
+                              '0',
+                      LocalKeys.kCalories.tr:
+                          controller.newMealsList?[index].calories.toString() ??
+                              '0'
+                    },
+                  ),
                 ),
-              ),
-              child: MealSelectCard(
-                id: controller.newMealsList?[index].id ?? 0,
-                caleries:
-                    controller.newMealsList?[index].calories.toString() ?? '',
-                image: controller.newMealsList?[index].image ?? '',
-                isSelected: false,
-                title: controller.newMealsList?[index].name ?? '',
+                child: MealSelectCard(
+                  id: controller.newMealsList?[index].id ?? 0,
+                  caleries:
+                      controller.newMealsList?[index].calories.toString() ?? '',
+                  image: controller.newMealsList?[index].image ?? '',
+                  isSelected: false,
+                  title: controller.newMealsList?[index].name ?? '',
+                ),
               ),
             );
           },

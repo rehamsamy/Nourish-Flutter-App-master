@@ -93,6 +93,7 @@ class _MealSelectCardState extends State<MealSelectCard> {
                             controller.selectedDays[controller.currentDay]
                                 [controller.selectedMeal] = widget.id;
                           });
+                          print(controller.selectedDays);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(

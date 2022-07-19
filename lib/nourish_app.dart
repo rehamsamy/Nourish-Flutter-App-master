@@ -184,6 +184,11 @@ class _NourishAppState extends State<NourishApp> {
               ),
             ),
           ),
+          onInit: () async {
+            /*   if (token != null || token != "") {
+              await AuthApis().refreshToken();
+            }*/
+          },
         );
       },
     );

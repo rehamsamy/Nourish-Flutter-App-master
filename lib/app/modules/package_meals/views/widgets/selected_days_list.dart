@@ -1,3 +1,4 @@
+import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -29,63 +30,67 @@ class SelectedDaysListView extends StatelessWidget {
               padding: EdgeInsetsDirectional.only(start: 22.w),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () => controller
-                      .selectDay(controller.selectedDays.keys.elementAt(index)),
-                  child: Padding(
-                    padding: EdgeInsets.symmetric(
-                      horizontal: 5.w,
-                    ),
-                    child: Column(
-                      children: [
-                        Container(
-                          width: 44.w,
-                          height: 44.w,
-                          alignment: Alignment.center,
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(7.r),
-                            color:
-                                controller.selectedDays.keys.elementAt(index) ==
-                                        controller.currentDay
-                                    ? primaryColor
-                                    : whiteColor,
-                            border: Border.all(
+                return FadeIn(
+                  child: GestureDetector(
+                    onTap: () => controller.selectDay(
+                        controller.selectedDays.keys.elementAt(index)),
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 5.w,
+                      ),
+                      child: Column(
+                        children: [
+                          Container(
+                            width: 55.w,
+                            height: 44.w,
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7.r),
                               color: controller.selectedDays.keys
                                           .elementAt(index) ==
                                       controller.currentDay
                                   ? primaryColor
-                                  : lightGreyColor,
+                                  : whiteColor,
+                              border: Border.all(
+                                color: controller.selectedDays.keys
+                                            .elementAt(index) ==
+                                        controller.currentDay
+                                    ? primaryColor
+                                    : lightGreyColor,
+                              ),
+                            ),
+                            child: Text(
+                              controller.selectedDays.keys
+                                  .elementAt(index)
+                                  .substring(0, 3),
+                              style: Get.textTheme.headline3!.copyWith(
+                                color: controller.selectedDays.keys
+                                            .elementAt(index) ==
+                                        controller.currentDay
+                                    ? whiteColor
+                                    : lightGreyColor,
+                              ),
                             ),
                           ),
-                          child: Text(
-                            controller.selectedDays.keys.elementAt(index),
-                            style: Get.textTheme.headline3!.copyWith(
-                              color: controller.selectedDays.keys
-                                          .elementAt(index) ==
-                                      controller.currentDay
-                                  ? whiteColor
-                                  : lightGreyColor,
-                            ),
+                          SizedBox(
+                            height: 6.h,
                           ),
-                        ),
-                        SizedBox(
-                          height: 6.h,
-                        ),
-                        controller.selectedDays.keys.elementAt(index) ==
-                                controller.currentDay
-                            ? CustomPaint(
-                                painter: TrianglePainter(
-                                  strokeColor: greyColor,
-                                  strokeWidth: 10,
-                                  paintingStyle: PaintingStyle.fill,
-                                ),
-                                child: SizedBox(
-                                  height: 12.h,
-                                  width: 16.w,
-                                ),
-                              )
-                            : const SizedBox.shrink(),
-                      ],
+                          controller.selectedDays.keys.elementAt(index) ==
+                                  controller.currentDay
+                              ? CustomPaint(
+                                  painter: TrianglePainter(
+                                    strokeColor: greyColor,
+                                    strokeWidth: 10,
+                                    paintingStyle: PaintingStyle.fill,
+                                  ),
+                                  child: SizedBox(
+                                    height: 12.h,
+                                    width: 16.w,
+                                  ),
+                                )
+                              : const SizedBox.shrink(),
+                        ],
+                      ),
                     ),
                   ),
                 );

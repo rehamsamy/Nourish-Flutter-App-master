@@ -53,6 +53,7 @@ class AuthApis {
           VerifyEmailModel model = authResponse;
           //print("VerifyEmailModel model" + model.accessToken.toString());
           Get.find<SharedPrefService>().saveToken(model.accessToken ?? "");
+          token = model.accessToken ?? "";
         },
         badRequest: (info) {},
         orElse: () {},
@@ -170,11 +171,11 @@ class AuthApis {
     );
     return resendOtpModel;
   }
-
-/*//TODO: Implement this method to get Refreshed Token
+/*
+//TODO: Implement this method to get Refreshed Token
   Future<String> refreshToken() async {
     LoginModel verifyModel = LoginModel();
-    String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    // String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
         path: 'auth/refresh',
