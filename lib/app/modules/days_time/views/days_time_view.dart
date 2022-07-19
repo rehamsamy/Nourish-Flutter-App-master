@@ -60,6 +60,14 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 style: Get.textTheme.headline1,
               ),
             ),
+
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+                '${LocalKeys.kDaySelectCount.tr} $daysCount',
+                style: TextStyle(fontSize: 12),
+              ),
+            ),
             SizedBox(
               height: 27.h,
             ),
@@ -129,6 +137,13 @@ class DaysTimeView extends GetView<DaysTimeController> {
               child: Text(
                 LocalKeys.kStartingDay.tr,
                 style: Theme.of(context).textTheme.headline3,
+              ),
+            ),
+            Align(
+              alignment: AlignmentDirectional.centerStart,
+              child: Text(
+              ' ${LocalKeys.kStartDayDate.tr} $daysStart',
+                style: TextStyle(fontSize: 12),
               ),
             ),
             Padding(

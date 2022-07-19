@@ -222,6 +222,8 @@ Map<String, String> ar = {
   LocalKeys.kActive: 'مُفعّل',
   LocalKeys.kRenew: 'تجديد',
   LocalKeys.kRemainingDays: 'الأيام المتبقية',
+  LocalKeys.kDaySelectCount: 'يجب ان تختار',
+  LocalKeys.kStartDayDate: 'يجب ان تختار تاريخ بعد',
   LocalKeys.kBranch: 'الفرع',
   LocalKeys.kViewMap: 'مشاهدة الخريطة',
   LocalKeys.kPickupType: 'نوع الاستلام',

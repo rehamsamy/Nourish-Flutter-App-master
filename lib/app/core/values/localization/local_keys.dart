@@ -89,6 +89,8 @@ class LocalKeys {
   static const String kCart = "Cart";
   static const String kYourPackages = "Your Packages";
   static const String kDays = "Days";
+  static const String kDaySelectCount = "you must choose ";
+  static const String kStartDayDate = "you must choose day after";
   static const String kSubTotal = "Sub Total:";
   static const String kDelivery = "Delivery";
   static const String kTax = "Tax";
