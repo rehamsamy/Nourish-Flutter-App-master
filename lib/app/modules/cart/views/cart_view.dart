@@ -206,7 +206,7 @@ String? x=dayName?.substring(0,3).toString();
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, inedx) {
-                    Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
+                   // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
 
                     return  MealsSummeryCard(controller.detailModel?.data?.meals?.saturday?[inedx]);
                   },

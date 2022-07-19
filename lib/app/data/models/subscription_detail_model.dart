@@ -19,7 +19,7 @@ class SubscriptionDetailModel {
 
 class Data {
   Data({
-      this.order, 
+      this.order,
       this.meals,});
 
   Data.fromJson(dynamic json) {
@@ -50,11 +50,44 @@ class Meals {
     if (json['saturday'] != null) {
       saturday = [];
       json['saturday'].forEach((v) {
-        saturday?.add(Saturday.fromJson(v));
+        saturday?.add(MealsDayModel.fromJson(v));
       });
     }
+    if (json['sunday'] != null) {
+      saturday = [];
+      json['sunday'].forEach((v) {
+        saturday?.add(MealsDayModel.fromJson(v));
+      });
+    }
+    if (json['monday'] != null) {
+      saturday = [];
+      json['monday'].forEach((v) {
+        saturday?.add(MealsDayModel.fromJson(v));
+      });
+    }
+    if (json['thursday'] != null) {
+      saturday = [];
+      json['thursday'].forEach((v) {
+        saturday?.add(MealsDayModel.fromJson(v));
+      });
+    }
+    if (json['tuesday'] != null) {
+      saturday = [];
+      json['tuesday'].forEach((v) {
+        saturday?.add(MealsDayModel.fromJson(v));
+      });
+    }  if (json['friday'] != null) {
+      saturday = [];
+      json['friday'].forEach((v) {
+        saturday?.add(MealsDayModel.fromJson(v));
+      });
+    }
+
+
+
+
   }
-  List<Saturday>? saturday;
+  List<MealsDayModel>? saturday;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -66,16 +99,16 @@ class Meals {
 
 }
 
-class Saturday {
-  Saturday({
-      this.id, 
-      this.orderId, 
-      this.productId, 
-      this.day, 
-      this.mealType, 
+class MealsDayModel {
+  MealsDayModel({
+      this.id,
+      this.orderId,
+      this.productId,
+      this.day,
+      this.mealType,
       this.product,});
 
-  Saturday.fromJson(dynamic json) {
+  MealsDayModel.fromJson(dynamic json) {
     id = json['id'];
     orderId = json['order_id'];
     productId = json['product_id'];
@@ -89,9 +122,6 @@ class Saturday {
   String? day;
   String? mealType;
   Product? product;
-
-
-
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -110,15 +140,15 @@ class Saturday {
 
 class Product {
   Product({
-      this.id, 
-      this.image, 
-      this.calories, 
-      this.fat, 
-      this.protein, 
-      this.carb, 
-      this.weight, 
-      this.price, 
-      this.name, 
+      this.id,
+      this.image,
+      this.calories,
+      this.fat,
+      this.protein,
+      this.carb,
+      this.weight,
+      this.price,
+      this.name,
       this.description,});
 
   Product.fromJson(dynamic json) {
@@ -163,23 +193,23 @@ class Product {
 
 class Order {
   Order({
-      this.id, 
-      this.branchId, 
-      this.addressId, 
-      this.deliveryType, 
-      this.periodId, 
-      this.startDate, 
-      this.endDate, 
-      this.userId, 
-      this.packageId, 
-      this.userName, 
-      this.packageName, 
-      this.branchName, 
-      this.activeStatus, 
-      this.package, 
-      this.branch, 
-      this.address, 
-      this.period, 
+      this.id,
+      this.branchId,
+      this.addressId,
+      this.deliveryType,
+      this.periodId,
+      this.startDate,
+      this.endDate,
+      this.userId,
+      this.packageId,
+      this.userName,
+      this.packageName,
+      this.branchName,
+      this.activeStatus,
+      this.package,
+      this.branch,
+      this.address,
+      this.period,
       this.user,});
 
   Order.fromJson(dynamic json) {
@@ -258,23 +288,23 @@ class Order {
 
 class User {
   User({
-      this.id, 
-      this.nameEn, 
-      this.email, 
-      this.emailVerifiedAt, 
-      this.type, 
-      this.nameAr, 
-      this.image, 
-      this.status, 
-      this.mobile, 
-      this.smsCode, 
-      this.emailVerifyCode, 
-      this.verified, 
-      this.locale, 
-      this.deviceToken, 
-      this.name, 
-      this.firstName, 
-      this.lastName, 
+      this.id,
+      this.nameEn,
+      this.email,
+      this.emailVerifiedAt,
+      this.type,
+      this.nameAr,
+      this.image,
+      this.status,
+      this.mobile,
+      this.smsCode,
+      this.emailVerifyCode,
+      this.verified,
+      this.locale,
+      this.deviceToken,
+      this.name,
+      this.firstName,
+      this.lastName,
       this.additionalData,});
 
   User.fromJson(dynamic json) {
@@ -343,7 +373,7 @@ class User {
 
 class Period {
   Period({
-      this.id, 
+      this.id,
       this.period,});
 
   Period.fromJson(dynamic json) {
@@ -364,17 +394,17 @@ class Period {
 
 class Address {
   Address({
-      this.id, 
-      this.lat, 
-      this.lng, 
-      this.name, 
-      this.addressType, 
-      this.area, 
-      this.building, 
-      this.flat, 
-      this.street, 
-      this.postalCode, 
-      this.additionalNumber, 
+      this.id,
+      this.lat,
+      this.lng,
+      this.name,
+      this.addressType,
+      this.area,
+      this.building,
+      this.flat,
+      this.street,
+      this.postalCode,
+      this.additionalNumber,
       this.deliveryInstructions,});
 
   Address.fromJson(dynamic json) {
@@ -425,21 +455,21 @@ class Address {
 
 class Branch {
   Branch({
-      this.id, 
-      this.googleAddress, 
-      this.mobile, 
-      this.coverageArea, 
-      this.lat, 
-      this.lng, 
-      this.branchCapacity, 
-      this.branchPickupCapacity, 
-      this.deliveryFees, 
-      this.delivery, 
-      this.pickup, 
-      this.name, 
-      this.address, 
-      this.pickupPeriods, 
-      this.deliveryPeriods, 
+      this.id,
+      this.googleAddress,
+      this.mobile,
+      this.coverageArea,
+      this.lat,
+      this.lng,
+      this.branchCapacity,
+      this.branchPickupCapacity,
+      this.deliveryFees,
+      this.delivery,
+      this.pickup,
+      this.name,
+      this.address,
+      this.pickupPeriods,
+      this.deliveryPeriods,
       this.workTimes,});
 
   Branch.fromJson(dynamic json) {
@@ -523,23 +553,27 @@ class Branch {
 
 class WorkTimes {
   WorkTimes({
-      this.id, 
-      this.data, 
+      this.id,
+      this.dataEn,
+      this.dataAr,
       this.branchId,});
 
   WorkTimes.fromJson(dynamic json) {
     id = json['id'];
-    data = json['data'];
+    dataEn = json['data_en'];
+    dataAr = json['data_ar'];
     branchId = json['branch_id'];
   }
   int? id;
-  String? data;
+  String? dataEn;
+  String? dataAr;
   int? branchId;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
-    map['data'] = data;
+    map['data_en'] = dataEn;
+    map['data_ar'] = dataAr;
     map['branch_id'] = branchId;
     return map;
   }
@@ -548,37 +582,37 @@ class WorkTimes {
 
 class DeliveryPeriods {
   DeliveryPeriods({
-      this.id, 
-      this.period, 
-      this.pivot1,});
+      this.id,
+      this.period,
+      this.pivot,});
 
   DeliveryPeriods.fromJson(dynamic json) {
     id = json['id'];
     period = json['period'];
-    pivot1 = json['pivot'] != null ? Pivot1.fromJson(json['pivot']) : null;
+    pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
   }
   int? id;
   String? period;
-  Pivot1? pivot1;
+  Pivot? pivot;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['id'] = id;
     map['period'] = period;
-    if (pivot1 != null) {
-      map['pivot'] = pivot1?.toJson();
+    if (pivot != null) {
+      map['pivot'] = pivot?.toJson();
     }
     return map;
   }
 
 }
 
-class Pivot1 {
-  Pivot1({
-      this.branchId, 
+class Pivot {
+  Pivot({
+      this.branchId,
       this.periodId,});
 
-  Pivot1.fromJson(dynamic json) {
+  Pivot.fromJson(dynamic json) {
     branchId = json['branch_id'];
     periodId = json['period_id'];
   }
@@ -596,8 +630,8 @@ class Pivot1 {
 
 class PickupPeriods {
   PickupPeriods({
-      this.id, 
-      this.period, 
+      this.id,
+      this.period,
       this.pivot,});
 
   PickupPeriods.fromJson(dynamic json) {
@@ -621,35 +655,16 @@ class PickupPeriods {
 
 }
 
-class Pivot {
-  Pivot({
-      this.branchId, 
-      this.periodId,});
 
-  Pivot.fromJson(dynamic json) {
-    branchId = json['branch_id'];
-    periodId = json['period_id'];
-  }
-  int? branchId;
-  int? periodId;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['branch_id'] = branchId;
-    map['period_id'] = periodId;
-    return map;
-  }
-
-}
 
 class Package {
   Package({
-      this.id, 
-      this.image, 
-      this.tax, 
-      this.priceWithTax, 
-      this.type, 
-      this.daysNumberOfWeek, 
+      this.id,
+      this.image,
+      this.tax,
+      this.priceWithTax,
+      this.type,
+      this.daysNumberOfWeek,
       this.name,});
 
   Package.fromJson(dynamic json) {

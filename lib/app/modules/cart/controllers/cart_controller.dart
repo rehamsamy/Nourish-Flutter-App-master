@@ -11,11 +11,11 @@ class CartController extends GetxController {
   void onInit() {
     super.onInit();
     AnalyticsService.instance.logEvent("Cart_View");
-     //  isSubscribtion = args['isSubscribtion'] as bool;
-  //  if(isSubscribtion ==true){
-    //  detailModel = args['detailModel'] as SubscriptionDetailModel;
+      isSubscribtion = args['isSubscribtion'] as bool;
+   if(isSubscribtion ==true){
+     detailModel = args['detailModel'] as SubscriptionDetailModel;
       String name = detailModel?.data?.order?.package?.name ?? '';
-   // }
+    }
 
     update();
   }

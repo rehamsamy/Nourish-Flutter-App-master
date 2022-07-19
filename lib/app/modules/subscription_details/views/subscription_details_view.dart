@@ -215,7 +215,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                               width: 100,
                               child: Text(
                                 controller.detailModel.data?.order?.branch
-                                        ?.workTimes?[0].data ??
+                                        ?.workTimes?[0].dataEn??
                                     '7 am to 11 am',
                                 style: Get.textTheme.caption,
                               ),
