@@ -94,6 +94,8 @@ Map<String, String> en = {
   LocalKeys.kCart: "Cart",
   LocalKeys.kYourPackages: "Your Packages",
   LocalKeys.kDays: "Days",
+LocalKeys.kDaySelectCount :"you must choose ",
+LocalKeys.kStartDayDate : "you must choose day after",
   LocalKeys.kSubTotal: "Subtotal:",
   LocalKeys.kDelivery: "Delivery:",
   LocalKeys.kTax: "Tax:",
