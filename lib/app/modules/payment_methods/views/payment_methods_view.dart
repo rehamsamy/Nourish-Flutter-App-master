@@ -109,7 +109,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                       payment_id: selectedPaymentId??0,
                       branch_id: 2,
                       start_date: DaysTimeView.startDate??'',
-                      period_id: DaysTimeView.selectedBranchPeriodId??0,
+                      period_id: DaysTimeView.selectedBranchPeriodId??1,
                       selectedDays: PackageMealsController.selectedDays,
                     );
                   if(orderModel?.data !=null){
