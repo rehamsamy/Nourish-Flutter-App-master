@@ -171,6 +171,7 @@ class CartView extends GetView<CartController> {
                             child: InkWell(
                               onTap: (){
                                 controller.changeMealSelected(index,controller.daysList[index]);
+                              //  Get.log('ffff   '+controller.daySelected.toString()+'  l  '+controller.daysList[index].toString());
                               },
                               child: Container(
                                 width: 44.w,
@@ -178,22 +179,20 @@ class CartView extends GetView<CartController> {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(7.r),
-                                  color: AppConstants.days[index] ==
-                                          controller.daySelected
+                                  color: index== controller.isMealSelected
                                       ? primaryColor
                                       : whiteColor,
                                   border: Border.all(
-                                    color: AppConstants.days[index] ==
-                                        controller.daySelected
+                                  color:  index== controller.isMealSelected
                                         ? primaryColor
-                                        : lightGreyColor,
+                                        : lightGreyColor
                                   ),
                                 ),
                                 child: Text(
-                                  AppConstants.days[index],
+                                 controller.daysList[index],
                                   style: Get.textTheme.headline3!.copyWith(
-                                    color: AppConstants.days[index] ==
-                                        controller.daySelected
+                                    color: index ==
+                                        controller.isMealSelected
                                         ? whiteColor
                                         : lightGreyColor,
                                   ),
@@ -214,6 +213,7 @@ class CartView extends GetView<CartController> {
                   child:
                 ListView.builder(
                     itemCount: controller.newMealsList?.length,
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
                       // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());

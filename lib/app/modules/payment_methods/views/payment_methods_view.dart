@@ -29,102 +29,110 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 27.w,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 24.h, bottom: 13.h),
-                child: Container(
-                  width: 373.w,
-                  height: 84.h,
-                  padding: EdgeInsets.symmetric(horizontal: 12.w),
-                  color: const Color(0xff00707A),
-                  alignment: Alignment.center,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Text(LocalKeys.kTotalPayment.tr,
-                          style: Get.textTheme.button),
-                      Text("${controller.total}", style: Get.textTheme.button)
-                    ],
+      body: GetBuilder<PaymentMethodsController>(
+        builder: (_)=>
+        Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 27.w,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 24.h, bottom: 13.h),
+                  child: Container(
+                    width: 373.w,
+                    height: 84.h,
+                    padding: EdgeInsets.symmetric(horizontal: 12.w),
+                    color: const Color(0xff00707A),
+                    alignment: Alignment.center,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        Text(LocalKeys.kTotalPayment.tr,
+                            style: Get.textTheme.button),
+                        Text("${controller.total}", style: Get.textTheme.button)
+                      ],
+                    ),
                   ),
                 ),
-              ),
-              Text(
-                LocalKeys.kSelectPaymentMethod.tr,
-                style: Get.textTheme.headline1,
-              ),
-              FutureBuilder(
-                future: PaymentApis().getPaymentMethods(),
-                builder: (_,snapshot){
-                  if(snapshot.hasData){
-                    List<PaymentItem> ? list=snapshot.data as List<PaymentItem>;
-                    if(list.isNotEmpty){
-                      return  ListView.builder(
-                        itemCount: list.length,
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        itemBuilder: (context, index) {
-                          selectedPaymentId=list[index].id;
-                          return  PaymentMethodItem(
-                            image: list[index].logo??'https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png',
-                            name: list[index].name??"masterCard",
-                            isSelected: false,
-                          );
-                        },
-                      );
-                    }else{
-                      return const SizedBox(height: 200,child: Center(child: Text('no payment found'),),);
-                    }
-                  }else{
-                    return const SizedBox(height: 200,);
-                  }
-
-                }
-
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 26.h),
-                child: const OrDivider(),
-              ),
-              PaymentMethodItem(
-                image: "",
-                name: LocalKeys.kcashondelivery.tr,
-                isSelected: true,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 46.h),
-                child: CustomButton(
-                  title: LocalKeys.kCheckout.tr,
-                  onPress: () async{
-                  AddOrderModel ? orderModel=  await OrderApis().addOrder(
-                      delivery_type: "delivery",
-                      package_id: PackageDetailsView.packageDetailModel?.data?.id ?? 0,
-                      address_id: DeliveryAddressesView.selectedAddressId??0,
-                      payment_id: selectedPaymentId??0,
-                      branch_id: 2,
-                      start_date: DaysTimeView.startDate??'',
-                      period_id: DaysTimeView.selectedBranchPeriodId??1,
-                      selectedDays: PackageMealsController.selectedDays,
-                    );
-                  if(orderModel?.data !=null){
-                    Get.snackbar('Add Order', orderModel?.data?.msg??'');
-                    Get.offNamedUntil(
-                        Routes.SUCCESS_ORDER, (route) => route.isFirst);
-                  }else{
-                    Get.snackbar('Add Order', orderModel?.message??'');
-                  }
-
-
-                  },
+                Text(
+                  LocalKeys.kSelectPaymentMethod.tr,
+                  style: Get.textTheme.headline1,
                 ),
-              ),
-            ],
+                FutureBuilder(
+                  future: PaymentApis().getPaymentMethods(),
+                  builder: (_,snapshot){
+                    if(snapshot.hasData){
+                      List<PaymentItem> ? list=snapshot.data as List<PaymentItem>;
+                      if(list.isNotEmpty){
+                        return  ListView.builder(
+                          itemCount: list.length,
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          itemBuilder: (context, index) {
+                            selectedPaymentId=list[index].id;
+                            return  InkWell(
+                              onTap: (){
+                                controller.changeSelectedPaymentIndex(index);
+                              },
+                              child: PaymentMethodItem(
+                                image: list[index].logo??'https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png',
+                                name: list[index].name??"masterCard",
+                                isSelected: controller.selectPaymentId==index?true:false,
+                              ),
+                            );
+                          },
+                        );
+                      }else{
+                        return const SizedBox(height: 200,child: Center(child: Text('no payment found'),),);
+                      }
+                    }else{
+                      return const SizedBox(height: 200,);
+                    }
+
+                  }
+
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 26.h),
+                  child: const OrDivider(),
+                ),
+                PaymentMethodItem(
+                  image: "",
+                  name: LocalKeys.kcashondelivery.tr,
+                  isSelected: true,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 46.h),
+                  child: CustomButton(
+                    title: LocalKeys.kCheckout.tr,
+                    onPress: () async{
+                    AddOrderModel ? orderModel=  await OrderApis().addOrder(
+                        delivery_type: "delivery",
+                        package_id: PackageDetailsView.packageDetailModel?.data?.id ?? 0,
+                        address_id: DeliveryAddressesView.selectedAddressId??0,
+                        payment_id: selectedPaymentId??0,
+                        branch_id: 2,
+                        start_date: DaysTimeView.startDate??'',
+                        period_id: DaysTimeView.selectedBranchPeriodId??1,
+                        selectedDays: PackageMealsController.selectedDays,
+                      );
+                    if(orderModel?.data !=null){
+                      Get.snackbar('Add Order', orderModel?.data?.msg??'');
+                      Get.offNamedUntil(
+                          Routes.SUCCESS_ORDER, (route) => route.isFirst);
+                    }else{
+                      Get.snackbar('Add Order', orderModel?.message??'');
+                    }
+
+
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

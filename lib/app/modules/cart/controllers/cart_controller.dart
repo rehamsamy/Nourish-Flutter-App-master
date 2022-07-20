@@ -15,7 +15,7 @@ class CartController extends GetxController {
   List<MealDay>? mondayList;
   List<MealDay>? tuesdayList;
   List<MealDay>? _newMealsList;
-  String?daySelected;
+  String?selectedDay;
   List<String> daysList=[];
   int isMealSelected = 0;
 
@@ -25,16 +25,14 @@ class CartController extends GetxController {
     super.onInit();
     AnalyticsService.instance.logEvent("Cart_View");
       isSubscribtion = args['isSubscribtion'] as bool;
-   if(isSubscribtion ==true){
+   if(isSubscribtion !=null){
      Get.log('cccc  '+isSubscribtion.toString());
      detailModel = args['detailModel'] as SubscriptionDetailModel;
      sundayList=detailModel?.data?.meals?.sunday;
      saturdayList=detailModel?.data?.meals?.saturday;
      mondayList=detailModel?.data?.meals?.monday;
      tuesdayList=detailModel?.data?.meals?.tuesday;
-
      _newMealsList=sundayList;
-
      getDaysList();
       String name = detailModel?.data?.order?.package?.name ?? '';
     }
@@ -63,7 +61,7 @@ class CartController extends GetxController {
 
   changeMealSelected(int index,String day) {
     isMealSelected = index;
-    daySelected=day;
+    selectedDay=day;
     Get.log('llll  '+index.toString());
     getList(index);
     update();
@@ -83,5 +81,7 @@ class CartController extends GetxController {
     if(tuesdayList !=null){
       daysList.add('tue');
     }
+
+    update();
   }
 }

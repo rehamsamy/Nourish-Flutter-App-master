@@ -6,6 +6,7 @@ class PaymentMethodsController extends GetxController {
   //TODO: Implement PaymentMethodsController
   Map args = Get.arguments ?? {};
   int? total;
+  int ?selectPaymentId;
 
   final count = 0.obs;
   @override
@@ -19,4 +20,9 @@ class PaymentMethodsController extends GetxController {
   @override
   void onClose() {}
   void increment() => count.value++;
-}
+
+  changeSelectedPaymentIndex(int newVal)
+  {
+    selectPaymentId=newVal;
+    update();
+  }}

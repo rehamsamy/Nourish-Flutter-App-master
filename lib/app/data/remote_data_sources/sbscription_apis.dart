@@ -82,14 +82,13 @@ Get.log('subscrip  =>'+response.toString());
   Future<SubscriptionDetailModel> subscriptionDetails({required int ?subscripId}) async {
 
     SubscriptionDetailModel detailModel=SubscriptionDetailModel();
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
-        path: 'subscriptionDetails/28',
+        path: 'subscriptionDetails/$subscripId',
         data:  const NetworkRequestBody.json(
          {}
         ),
-        headers: {'Authorization':'Bearer $token'}
+
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
