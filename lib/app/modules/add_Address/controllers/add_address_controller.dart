@@ -7,6 +7,15 @@ import 'package:nourish_sa/app/data/services/analytics_service.dart';
 
 class AddAddressController extends GetxController {
   TextEditingController addressName = TextEditingController();
+  String addressType = "Home";
+  TextEditingController area = TextEditingController();
+  TextEditingController building = TextEditingController();
+  TextEditingController flat = TextEditingController();
+  TextEditingController street = TextEditingController();
+  TextEditingController postalCode = TextEditingController();
+  TextEditingController additionalNumber = TextEditingController();
+  TextEditingController deliveryInstructions = TextEditingController();
+
   Address? address;
 
   Position? location;

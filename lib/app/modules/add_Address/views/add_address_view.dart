@@ -29,14 +29,14 @@ class AddAddressView extends GetView<AddAddressController> {
       ),
       body: SingleChildScrollView(
         child: GetBuilder<AddAddressController>(
-          builder: (_)=> Padding(
+          builder: (_) => Padding(
             padding: EdgeInsets.symmetric(horizontal: 29.w, vertical: 16.h),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const MapEditLocationPin(),
                 CustomInput(
-                  hint: controller.address?.name??"Riyadh Province , Riyadh",
+                  hint: controller.address?.name ?? "Riyadh Province , Riyadh",
                   title: LocalKeys.kAddressName.tr,
                   textEditingController: controller.addressName,
                 ),
@@ -47,64 +47,90 @@ class AddAddressView extends GetView<AddAddressController> {
                 SizedBox(
                   height: 12.h,
                 ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Container(
-                      width: 176.w,
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.r),
-                          border: Border.all(color: primaryColor)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            Assets.kHouseIcon,
-                            width: 24.w,
-                            height: 21.h,
+                GetBuilder<AddAddressController>(
+                  builder: (controller) => Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          controller.addressType = "home";
+                          controller.update();
+                        },
+                        child: Container(
+                          width: 176.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.r),
+                              border: Border.all(
+                                  color: controller.addressType == "home"
+                                      ? primaryColor
+                                      : greyColor,
+                                  width: controller.addressType == "home"
+                                      ? 2.r
+                                      : 1.r)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                Assets.kHouseIcon,
+                                width: 24.w,
+                                height: 21.h,
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Text(
+                                LocalKeys.kHome.tr,
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 10.w,
-                          ),
-                          Text(
-                            LocalKeys.kHome.tr,
-                            style: Theme.of(context).textTheme.headline3,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                    Container(
-                      width: 176.w,
-                      height: 50.h,
-                      decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(8.r),
-                          border: Border.all(color: primaryColor)),
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          SvgPicture.asset(
-                            Assets.kSkyscraperIcon,
-                            width: 24.w,
-                            height: 21.h,
+                      InkWell(
+                        onTap: () {
+                          controller.addressType = "office";
+                          controller.update();
+                        },
+                        child: Container(
+                          width: 176.w,
+                          height: 50.h,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(8.r),
+                              border: Border.all(
+                                  color: controller.addressType == "office"
+                                      ? primaryColor
+                                      : greyColor,
+                                  width: controller.addressType == "office"
+                                      ? 2.r
+                                      : 1.r)),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              SvgPicture.asset(
+                                Assets.kSkyscraperIcon,
+                                width: 24.w,
+                                height: 21.h,
+                              ),
+                              SizedBox(
+                                width: 10.w,
+                              ),
+                              Text(
+                                LocalKeys.kOffice.tr,
+                                style: Theme.of(context).textTheme.headline3,
+                              ),
+                            ],
                           ),
-                          SizedBox(
-                            width: 10.w,
-                          ),
-                          Text(
-                            LocalKeys.kOffice.tr,
-                            style: Theme.of(context).textTheme.headline3,
-                          ),
-                        ],
+                        ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 SizedBox(
                   height: 17.h,
                 ),
                 CustomInput(
-                  hint: controller.address?.area??"Riyadh Province , Riyadh",
+                  hint: controller.address?.area ?? "Riyadh Province , Riyadh",
                   title: LocalKeys.kArea.tr,
                   textEditingController: controller.addressName,
                 ),
@@ -112,13 +138,13 @@ class AddAddressView extends GetView<AddAddressController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomInput(
-                      hint: controller.address?.building??"Al Madarah",
+                      hint: controller.address?.building ?? "Al Madarah",
                       title: LocalKeys.kBuilding.tr,
                       width: 176.w,
                       textEditingController: controller.addressName,
                     ),
                     CustomInput(
-                      hint: controller.address?.flat??"Flat",
+                      hint: controller.address?.flat ?? "Flat",
                       title: LocalKeys.kFlat.tr,
                       width: 176.w,
                       textEditingController: controller.addressName,
@@ -127,7 +153,8 @@ class AddAddressView extends GetView<AddAddressController> {
                   ],
                 ),
                 CustomInput(
-                  hint:controller.address?.street?? "Riyadh Province , Riyadh",
+                  hint:
+                      controller.address?.street ?? "Riyadh Province , Riyadh",
                   title: LocalKeys.kStreet.tr,
                   textEditingController: controller.addressName,
                 ),
@@ -135,13 +162,13 @@ class AddAddressView extends GetView<AddAddressController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     CustomInput(
-                      hint: controller.address?.postalCode??"Al Madarah",
+                      hint: controller.address?.postalCode ?? "Al Madarah",
                       title: LocalKeys.kPostalCode.tr,
                       width: 176.w,
                       textEditingController: controller.addressName,
                     ),
                     CustomInput(
-                      hint:controller.address?.postalCode?? "26256",
+                      hint: controller.address?.postalCode ?? "26256",
                       title: LocalKeys.kAdditionalNumber.tr,
                       width: 176.w,
                       textEditingController: controller.addressName,
@@ -149,7 +176,8 @@ class AddAddressView extends GetView<AddAddressController> {
                   ],
                 ),
                 CustomInput(
-                  hint: controller.address?.deliveryInstructions??"Riyadh Province , Riyadh",
+                  hint: controller.address?.deliveryInstructions ??
+                      "Riyadh Province , Riyadh",
                   title: LocalKeys.kDeliveryInstructions.tr,
                   textEditingController: controller.addressName,
                   secondTitle: LocalKeys.kOptional,
@@ -159,28 +187,33 @@ class AddAddressView extends GetView<AddAddressController> {
                 ),
                 CustomButton(
                   title: LocalKeys.kSave.tr,
-                  onPress: () async{
-                    AddAddressModel ? addressModel=await AddressApis()
-                        .addAddress(lat: controller.address?.lat??0.0,
-                        lng: controller.address?.lng??32.292789,
-                        name: controller.address?.name??'stresst',
-                        address_type: controller.address?.addressType??'stresst',
-                        area: controller.address?.area??'stresst',
-                        building: controller.address?.building??'15',
-                        flat: controller.address?.flat??'10',
-                        street: controller.address?.street??'stresst',
-                        postal_code: controller.address?.postalCode??'151520',
-                        additional_number: int.parse(controller.address?.additionalNumber??'10'),
-                        delivery_instructions: controller.address?.deliveryInstructions??'stresst');
-                    String mes=addressModel?.data?.msg??'';
-                    if(addressModel?.data !=null){
+                  onPress: () async {
+                    AddAddressModel? addressModel = await AddressApis()
+                        .addAddress(
+                            lat: controller.address?.lat ?? 31.1,
+                            lng: controller.address?.lng ?? 31.1,
+                            name: controller.address?.name ??
+                                controller.addressName.text,
+                            address_type: controller.addressType,
+                            area: controller.area.text,
+                            building: controller.building.text,
+                            flat: controller.flat.text,
+                            street: controller.street.text,
+                            postal_code: controller.postalCode.text,
+                            additional_number: int.parse(
+                                controller.address?.additionalNumber ?? '10'),
+                            delivery_instructions:
+                                controller.address?.deliveryInstructions ??
+                                    'stresst');
+                    String mes = addressModel?.data?.msg ?? '';
+                    if (addressModel?.data != null) {
                       Get.back();
                       Get.snackbar(' Add Your Address', mes);
-                    }else{
-                      Get.log('messss    2 '+(addressModel?.data?.toString()).toString());
+                    } else {
+                      Get.log('messss    2 ' +
+                          (addressModel?.data?.toString()).toString());
                       Get.snackbar('error', 'Plz Try again =>');
                     }
-
                   },
                 ),
               ],

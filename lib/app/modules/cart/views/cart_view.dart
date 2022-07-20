@@ -14,17 +14,18 @@ import '../controllers/cart_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartView extends GetView<CartController> {
-  SubscriptionDetailModel ? detailModel;
+  SubscriptionDetailModel? detailModel;
   @override
   Widget build(BuildContext context) {
-     detailModel=controller.detailModel;
-     Meals ?meals=detailModel?.data?.meals;
-     Product? product=detailModel?.data?.meals?.saturday?[0].product;
-     String ?dayName=detailModel?.data?.meals?.saturday?[0].day;
-String? x=dayName?.substring(0,3).toString();
-     Get.log('ccccccc 0 '+x.toString());
-    int? total=((controller.detailModel?.data?.order?.package?.priceWithTax))! +
-        (controller.detailModel?.data?.order?.branch?.deliveryFees  as int);
+    detailModel = controller.detailModel;
+    Meals? meals = detailModel?.data?.meals;
+    //Product? product=detailModel?.data?.meals?.saturday?[0].;
+    String? dayName = detailModel?.data?.meals?.saturday?[0].day;
+    String? x = dayName?.substring(0, 3).toString();
+    Get.log('ccccccc 0 ' + x.toString());
+    int? total =
+        ((controller.detailModel?.data?.order?.package?.priceWithTax))! +
+            (controller.detailModel?.data?.order?.branch?.deliveryFees as int);
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kCart.tr),
@@ -75,7 +76,7 @@ String? x=dayName?.substring(0,3).toString();
                                 width: 6.w,
                               ),
                               Text(
-                                "${product?.carb}% Carb",
+                                /* ${product?.carb} */ "26% Carb",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -94,7 +95,7 @@ String? x=dayName?.substring(0,3).toString();
                                 width: 6.w,
                               ),
                               Text(
-                                "${product?.fat}% Fat",
+                                /* ${product?.carb} */ "% Fat",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -113,7 +114,7 @@ String? x=dayName?.substring(0,3).toString();
                                 width: 6.w,
                               ),
                               Text(
-                                "${product?.protein}% Protein",
+                                /* ${product?.carb} */ "% Protein",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -132,7 +133,7 @@ String? x=dayName?.substring(0,3).toString();
                                 width: 6.w,
                               ),
                               Text(
-                                "${product?.calories.toString()}% Calories",
+                                /* ${product?.carb} */ "% Calories",
                                 style: Get.textTheme.button!
                                     .copyWith(fontSize: 12.sp),
                               ),
@@ -173,11 +174,13 @@ String? x=dayName?.substring(0,3).toString();
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.r),
-                              color: AppConstants.days[index] == dayName?.substring(0,3)
+                              color: AppConstants.days[index] ==
+                                      dayName?.substring(0, 3)
                                   ? primaryColor
                                   : whiteColor,
                               border: Border.all(
-                                color: AppConstants.days[index] == dayName?.substring(0,3)
+                                color: AppConstants.days[index] ==
+                                        dayName?.substring(0, 3)
                                     ? primaryColor
                                     : lightGreyColor,
                               ),
@@ -185,7 +188,8 @@ String? x=dayName?.substring(0,3).toString();
                             child: Text(
                               AppConstants.days[index],
                               style: Get.textTheme.headline3!.copyWith(
-                                color: AppConstants.days[index] == dayName?.substring(0,3)
+                                color: AppConstants.days[index] ==
+                                        dayName?.substring(0, 3)
                                     ? whiteColor
                                     : lightGreyColor,
                               ),
@@ -201,14 +205,16 @@ String? x=dayName?.substring(0,3).toString();
                 height: 25.h,
               ),
               GetBuilder<CartController>(
-                builder: (_)=> ListView.builder(
-                  itemCount:controller.detailModel?.data?.meals?.saturday?.length,
+                builder: (_) => ListView.builder(
+                  itemCount:
+                      controller.detailModel?.data?.meals?.saturday?.length,
                   shrinkWrap: true,
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, inedx) {
-                   // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
+                    // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
 
-                    return  MealsSummeryCard(controller.detailModel?.data?.meals?.saturday?[inedx]);
+                    return MealsSummeryCard(
+                        controller.detailModel?.data?.meals?.saturday?[inedx]);
                   },
                 ),
               ),
@@ -218,15 +224,18 @@ String? x=dayName?.substring(0,3).toString();
                       children: [
                         CartItem(
                           item: LocalKeys.kSubTotal.tr,
-                          value: "${controller.detailModel?.data?.order?.package?.priceWithTax} SAR",
+                          value:
+                              "${controller.detailModel?.data?.order?.package?.priceWithTax} SAR",
                         ),
                         CartItem(
                           item: "${LocalKeys.kDelivery.tr}:",
-                          value: "${controller.detailModel?.data?.order?.branch?.deliveryFees} SAR",
+                          value:
+                              "${controller.detailModel?.data?.order?.branch?.deliveryFees} SAR",
                         ),
                         CartItem(
                           item: LocalKeys.kTax.tr,
-                          value: "${controller.detailModel?.data?.order?.package?.tax} SAR",
+                          value:
+                              "${controller.detailModel?.data?.order?.package?.tax} SAR",
                         ),
                         Padding(
                           padding: EdgeInsets.only(top: 21.h, bottom: 15.h),
@@ -284,7 +293,8 @@ String? x=dayName?.substring(0,3).toString();
                           child: CustomButton(
                             title: LocalKeys.kContinue.tr,
                             onPress: () {
-                              Get.toNamed(Routes.PAYMENT_METHODS,arguments: {'total':total});
+                              Get.toNamed(Routes.PAYMENT_METHODS,
+                                  arguments: {'total': total});
                             },
                           ),
                         ),
@@ -335,8 +345,8 @@ class CartItem extends StatelessWidget {
 
 class WhiteSpacesInputFormatter extends TextInputFormatter {
   @override
-  TextEditingValue formatEditUpdate(TextEditingValue oldValue,
-                     TextEditingValue newValue){
+  TextEditingValue formatEditUpdate(
+      TextEditingValue oldValue, TextEditingValue newValue) {
     var text = newValue.text;
     if (newValue.selection.baseOffset == 0) {
       return newValue;

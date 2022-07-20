@@ -171,8 +171,8 @@ class AuthApis {
     );
     return resendOtpModel;
   }
-/*
-//TODO: Implement this method to get Refreshed Token
+
+/*//TODO: Implement this method to get Refreshed Token
   Future<String> refreshToken() async {
     LoginModel verifyModel = LoginModel();
     // String? token = Get.find<SharedPrefService>().getToken() ?? '';
