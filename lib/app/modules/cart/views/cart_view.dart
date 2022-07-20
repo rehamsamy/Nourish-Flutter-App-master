@@ -31,276 +31,281 @@ class CartView extends GetView<CartController> {
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(
-          horizontal: 27.w,
-        ),
-        child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Padding(
-                padding: EdgeInsets.only(top: 24.h, bottom: 13.h),
-                child: Text(LocalKeys.kYourPackages.tr,
-                    style: Get.textTheme.headline1),
-              ),
-              controller.isSubscribtion
-                  ? Container(
-                      width: 358.w,
-                      margin: EdgeInsets.only(bottom: 30.h, top: 11.h),
-                      decoration: BoxDecoration(
-                        color: primaryColor,
-                        borderRadius: BorderRadius.circular(5.r),
-                      ),
-                      padding: EdgeInsets.symmetric(
-                          horizontal: 12.w, vertical: 16.h),
-                      child: Wrap(
-                        alignment: WrapAlignment.spaceEvenly,
-                        crossAxisAlignment: WrapCrossAlignment.start,
-                        direction: Axis.horizontal,
-                        runAlignment: WrapAlignment.start,
-                        spacing: 50.w,
-                        runSpacing: 10.h,
-                        children: [
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.kBookmark,
-                                width: 9.w,
-                                height: 11.h,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 6.w,
-                              ),
-                              Text(
-                                /* ${product?.carb} */ "26% Carb",
-                                style: Get.textTheme.button!
-                                    .copyWith(fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.kBookmark,
-                                width: 9.w,
-                                height: 11.h,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 6.w,
-                              ),
-                              Text(
-                                /* ${product?.carb} */ "% Fat",
-                                style: Get.textTheme.button!
-                                    .copyWith(fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.kBookmark,
-                                width: 9.w,
-                                height: 11.h,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 6.w,
-                              ),
-                              Text(
-                                /* ${product?.carb} */ "% Protein",
-                                style: Get.textTheme.button!
-                                    .copyWith(fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                          Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              SvgPicture.asset(
-                                Assets.kBookmark,
-                                width: 9.w,
-                                height: 11.h,
-                                color: Colors.white,
-                              ),
-                              SizedBox(
-                                width: 6.w,
-                              ),
-                              Text(
-                                /* ${product?.carb} */ "% Calories",
-                                style: Get.textTheme.button!
-                                    .copyWith(fontSize: 12.sp),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    )
-                  : const SizedBox.shrink(),
-              Text(
-                LocalKeys.kDays.tr,
-                style: Get.textTheme.headline1,
-              ),
-              SizedBox(
-                height: 17.h,
-              ),
-              SizedBox(
-                width: Get.width,
-                height: 44.w,
-                child: OverflowBox(
-                  maxWidth: Get.width,
-                  minWidth: Get.width,
-                  child: SizedBox(
-                    height: 44.w,
-                    width: Get.width,
-                    child: ListView.builder(
-                      itemCount: AppConstants.days.length,
-                      padding: EdgeInsetsDirectional.only(start: 22.w),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return Padding(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 5.w,
-                          ),
-                          child: Container(
-                            width: 44.w,
-                            height: 44.w,
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.r),
-                              color: AppConstants.days[index] ==
-                                      dayName?.substring(0, 3)
-                                  ? primaryColor
-                                  : whiteColor,
-                              border: Border.all(
-                                color: AppConstants.days[index] ==
-                                        dayName?.substring(0, 3)
-                                    ? primaryColor
-                                    : lightGreyColor,
+      body: GetBuilder<CartController>(
+        builder: (_)=> Padding(
+          padding: EdgeInsets.symmetric(
+            horizontal: 27.w,
+          ),
+          child: SingleChildScrollView(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Padding(
+                  padding: EdgeInsets.only(top: 24.h, bottom: 13.h),
+                  child: Text(LocalKeys.kYourPackages.tr,
+                      style: Get.textTheme.headline1),
+                ),
+                controller.isSubscribtion
+                    ? Container(
+                        width: 358.w,
+                        margin: EdgeInsets.only(bottom: 30.h, top: 11.h),
+                        decoration: BoxDecoration(
+                          color: primaryColor,
+                          borderRadius: BorderRadius.circular(5.r),
+                        ),
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 12.w, vertical: 16.h),
+                        child: Wrap(
+                          alignment: WrapAlignment.spaceEvenly,
+                          crossAxisAlignment: WrapCrossAlignment.start,
+                          direction: Axis.horizontal,
+                          runAlignment: WrapAlignment.start,
+                          spacing: 50.w,
+                          runSpacing: 10.h,
+                          children: [
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.kBookmark,
+                                  width: 9.w,
+                                  height: 11.h,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 6.w,
+                                ),
+                                Text(
+                                  /* ${product?.carb} */ "26% Carb",
+                                  style: Get.textTheme.button!
+                                      .copyWith(fontSize: 12.sp),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.kBookmark,
+                                  width: 9.w,
+                                  height: 11.h,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 6.w,
+                                ),
+                                Text(
+                                  /* ${product?.carb} */ "% Fat",
+                                  style: Get.textTheme.button!
+                                      .copyWith(fontSize: 12.sp),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.kBookmark,
+                                  width: 9.w,
+                                  height: 11.h,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 6.w,
+                                ),
+                                Text(
+                                  /* ${product?.carb} */ "% Protein",
+                                  style: Get.textTheme.button!
+                                      .copyWith(fontSize: 12.sp),
+                                ),
+                              ],
+                            ),
+                            Row(
+                              mainAxisSize: MainAxisSize.min,
+                              children: [
+                                SvgPicture.asset(
+                                  Assets.kBookmark,
+                                  width: 9.w,
+                                  height: 11.h,
+                                  color: Colors.white,
+                                ),
+                                SizedBox(
+                                  width: 6.w,
+                                ),
+                                Text(
+                                  /* ${product?.carb} */ "% Calories",
+                                  style: Get.textTheme.button!
+                                      .copyWith(fontSize: 12.sp),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      )
+                    : const SizedBox.shrink(),
+                Text(
+                  LocalKeys.kDays.tr,
+                  style: Get.textTheme.headline1,
+                ),
+                SizedBox(
+                  height: 17.h,
+                ),
+                SizedBox(
+                  width: Get.width,
+                  height: 44.w,
+                  child: OverflowBox(
+                    maxWidth: Get.width,
+                    minWidth: Get.width,
+                    child: SizedBox(
+                      height: 44.w,
+                      width: Get.width,
+                      child: ListView.builder(
+                        itemCount: controller.daysList.length,
+                        padding: EdgeInsetsDirectional.only(start: 22.w),
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) {
+                          return Padding(
+                            padding: EdgeInsets.symmetric(
+                              horizontal: 5.w,
+                            ),
+                            child: InkWell(
+                              onTap: (){
+                                controller.changeMealSelected(index,controller.daysList[index]);
+                              },
+                              child: Container(
+                                width: 44.w,
+                                height: 44.w,
+                                alignment: Alignment.center,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7.r),
+                                  color: AppConstants.days[index] ==
+                                          controller.daySelected
+                                      ? primaryColor
+                                      : whiteColor,
+                                  border: Border.all(
+                                    color: AppConstants.days[index] ==
+                                        controller.daySelected
+                                        ? primaryColor
+                                        : lightGreyColor,
+                                  ),
+                                ),
+                                child: Text(
+                                  AppConstants.days[index],
+                                  style: Get.textTheme.headline3!.copyWith(
+                                    color: AppConstants.days[index] ==
+                                        controller.daySelected
+                                        ? whiteColor
+                                        : lightGreyColor,
+                                  ),
+                                ),
                               ),
                             ),
-                            child: Text(
-                              AppConstants.days[index],
-                              style: Get.textTheme.headline3!.copyWith(
-                                color: AppConstants.days[index] ==
-                                        dayName?.substring(0, 3)
-                                    ? whiteColor
-                                    : lightGreyColor,
-                              ),
-                            ),
-                          ),
-                        );
-                      },
+                          );
+                        },
+                      ),
                     ),
                   ),
                 ),
-              ),
-              SizedBox(
-                height: 25.h,
-              ),
-                  gfffffff
-              // GetBuilder<CartController>(
-              //   builder: (_) => ListView.builder(
-              //     itemCount:
-              //         controller.detailModel?.data?.meals?.saturday?.length,
-              //     shrinkWrap: true,
-              //     physics: const NeverScrollableScrollPhysics(),
-              //     itemBuilder: (context, inedx) {
-              //       // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
-              //       return MealsSummeryCard( controller.detailModel?.data?.meals?.saturday?[inedx]);
-              //       // return MealsSummeryCard(
-              //       //     controller.detailModel?.data?.meals?.saturday?[inedx]);
-              //     },
-              //   ),
-              // ),
-              controller.isSubscribtion
-                  ? const SizedBox.shrink()
-                  : Column(
-                      children: [
-                        CartItem(
-                          item: LocalKeys.kSubTotal.tr,
-                          value:
-                              "${controller.detailModel?.data?.order?.package?.priceWithTax} SAR",
-                        ),
-                        CartItem(
-                          item: "${LocalKeys.kDelivery.tr}:",
-                          value:
-                              "${controller.detailModel?.data?.order?.branch?.deliveryFees} SAR",
-                        ),
-                        CartItem(
-                          item: LocalKeys.kTax.tr,
-                          value:
-                              "${controller.detailModel?.data?.order?.package?.tax} SAR",
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 21.h, bottom: 15.h),
-                          child: TextFormField(
-                            maxLines: 1,
-                            showCursor: true,
-                            cursorHeight: 5.h,
-                            keyboardType: TextInputType.text,
-                            inputFormatters: [
-                              WhiteSpacesInputFormatter(),
-                            ],
-                            decoration: InputDecoration(
-                              fillColor: Colors.white,
-                              filled: true,
-                              hintText: LocalKeys.kEnterCouponCode.tr,
-                              contentPadding: EdgeInsets.all(20.h),
-                              hintStyle: Theme.of(context).textTheme.caption,
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(5.w),
-                                borderSide: BorderSide(
-                                  color: primaryColor,
-                                  width: 1.w,
-                                ),
-                              ),
-                              suffixIcon: InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  height: 42.h,
-                                  width: 87.06.w,
-                                  decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(5.sp),
+                SizedBox(
+                  height: 25.h,
+                ),
+                SizedBox(
+                  height: 400,
+                  child:
+                ListView.builder(
+                    itemCount: controller.newMealsList?.length,
+                    shrinkWrap: true,
+                    itemBuilder: (context, inedx) {
+                      // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
+                      return MealsSummeryCard( controller.newMealsList?[inedx]);
+                    },
+                  ),
+                ),
+
+                controller.isSubscribtion
+                    ? const SizedBox.shrink()
+                    : Column(
+                        children: [
+                          CartItem(
+                            item: LocalKeys.kSubTotal.tr,
+                            value:
+                                "${controller.detailModel?.data?.order?.package?.priceWithTax} SAR",
+                          ),
+                          CartItem(
+                            item: "${LocalKeys.kDelivery.tr}:",
+                            value:
+                                "${controller.detailModel?.data?.order?.branch?.deliveryFees} SAR",
+                          ),
+                          CartItem(
+                            item: LocalKeys.kTax.tr,
+                            value:
+                                "${controller.detailModel?.data?.order?.package?.tax} SAR",
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 21.h, bottom: 15.h),
+                            child: TextFormField(
+                              maxLines: 1,
+                              showCursor: true,
+                              cursorHeight: 5.h,
+                              keyboardType: TextInputType.text,
+                              inputFormatters: [
+                                WhiteSpacesInputFormatter(),
+                              ],
+                              decoration: InputDecoration(
+                                fillColor: Colors.white,
+                                filled: true,
+                                hintText: LocalKeys.kEnterCouponCode.tr,
+                                contentPadding: EdgeInsets.all(20.h),
+                                hintStyle: Theme.of(context).textTheme.caption,
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(5.w),
+                                  borderSide: BorderSide(
                                     color: primaryColor,
+                                    width: 1.w,
                                   ),
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    LocalKeys.kApply.tr,
-                                    style: Theme.of(context).textTheme.button,
+                                ),
+                                suffixIcon: InkWell(
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 42.h,
+                                    width: 87.06.w,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(5.sp),
+                                      color: primaryColor,
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      LocalKeys.kApply.tr,
+                                      style: Theme.of(context).textTheme.button,
+                                    ),
                                   ),
                                 ),
                               ),
                             ),
                           ),
-                        ),
-                        CartItem(
-                          item: LocalKeys.kDiscount.tr,
-                          value: "5,0 SAR",
-                        ),
-                        CartItem(
-                          item: LocalKeys.kTotal.tr,
-                          value: "$total SAR",
-                          isTotal: true,
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(top: 35.h, bottom: 24.h),
-                          child: CustomButton(
-                            title: LocalKeys.kContinue.tr,
-                            onPress: () {
-                              Get.toNamed(Routes.PAYMENT_METHODS,
-                                  arguments: {'total': total});
-                            },
+                          CartItem(
+                            item: LocalKeys.kDiscount.tr,
+                            value: "5,0 SAR",
                           ),
-                        ),
-                      ],
-                    ),
-            ],
+                          CartItem(
+                            item: LocalKeys.kTotal.tr,
+                            value: "$total SAR",
+                            isTotal: true,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(top: 35.h, bottom: 24.h),
+                            child: CustomButton(
+                              title: LocalKeys.kContinue.tr,
+                              onPress: () {
+                                Get.toNamed(Routes.PAYMENT_METHODS,
+                                    arguments: {'total': total});
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+              ],
+            ),
           ),
         ),
       ),

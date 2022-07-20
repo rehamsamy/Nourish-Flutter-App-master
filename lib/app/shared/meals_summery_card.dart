@@ -10,8 +10,9 @@ import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import '../../app_theme.dart';
 
 class MealsSummeryCard extends StatelessWidget {
-  MealDay ? saturday;
-  MealsSummeryCard(this.saturday);
+
+  MealDay ? mealDay;
+  MealsSummeryCard(this.mealDay);
 
   @override
   Widget build(BuildContext context) {
@@ -38,7 +39,7 @@ class MealsSummeryCard extends StatelessWidget {
                 width: 12.w,
               ),
               Text(
-                LocalKeys.kBreakfast.tr,
+               mealDay?.mealType??'',
                 style: Get.textTheme.bodyText1,
               ),
             ],
@@ -50,7 +51,7 @@ class MealsSummeryCard extends StatelessWidget {
             physics: const NeverScrollableScrollPhysics(),
             itemBuilder: (context, index) {
               return FoodItem(
-                title: "EGGS",
+                title:mealDay?.product?.name??'',desc :mealDay?.product?.description??'',
                 isEnd: index == 1,
               );
             },
@@ -62,9 +63,10 @@ class MealsSummeryCard extends StatelessWidget {
 }
 
 class FoodItem extends StatelessWidget {
-  const FoodItem({required this.title, this.isEnd = false, Key? key})
+  const FoodItem({required this.title,required this.desc, this.isEnd = false, Key? key})
       : super(key: key);
   final String title;
+  final String desc;
   final bool isEnd;
   @override
   Widget build(BuildContext context) {
@@ -86,8 +88,8 @@ class FoodItem extends StatelessWidget {
             SizedBox(
               width: 10.w,
             ),
-            const Text(
-              "Eggs",
+             Text(
+              title,
             ),
           ],
         ),
