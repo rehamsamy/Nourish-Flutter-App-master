@@ -12,6 +12,7 @@ Logger logger = Logger(
 );
 final dioLoggerInterceptor =
     InterceptorsWrapper(onRequest: (RequestOptions options, handler) {
+  handler.next(options); //continue
   String headers = "";
   options.headers.forEach((key, value) {
     headers += "| $key: $value";
@@ -24,20 +25,20 @@ final dioLoggerInterceptor =
 | Headers:\n$headers''');
   logger.v(
       "├------------------------------------------------------------------------------");
-  handler.next(options); //continue
 }, onResponse: (Response response, handler) async {
+  handler.next(response);
   logger.i(
       "| [DIO] Response [code ${response.statusCode}]: ${response.data.toString()}");
   logger.i(
       "└------------------------------------------------------------------------------");
-  handler.next(response);
 
   // return response; // continue
 }, onError: (DioError error, handler) async {
+  handler.next(error); //continue
+
   logger.wtf("---------------------------------------");
   logger.wtf(
       "| [DIO] Error: ${error.error}: ${error.response?.toString()}", error);
   logger.wtf(
       "└------------------------------------------------------------------------------");
-  handler.next(error); //continue
 });
