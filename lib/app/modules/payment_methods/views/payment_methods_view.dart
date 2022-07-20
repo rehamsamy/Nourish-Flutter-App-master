@@ -2,8 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/models/add_order_model.dart';
 import 'package:nourish_sa/app/data/models/payment_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/order_apis.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/payment_apis.dart';
+import 'package:nourish_sa/app/modules/days_time/views/days_time_view.dart';
+import 'package:nourish_sa/app/modules/delivery_addresses/views/delivery_addresses_view.dart';
+import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
+import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import 'package:nourish_sa/app/modules/payment_methods/views/widgets/or.dart';
 import 'package:nourish_sa/app/modules/payment_methods/views/widgets/payment_method_item.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
@@ -16,6 +22,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
 
   @override
   Widget build(BuildContext context) {
+    int ? selectedPaymentId;
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kPaymentMethod.tr),
@@ -63,6 +70,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                         shrinkWrap: true,
                         physics: const NeverScrollableScrollPhysics(),
                         itemBuilder: (context, index) {
+                          selectedPaymentId=list[index].id;
                           return  PaymentMethodItem(
                             image: list[index].logo??'https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png',
                             name: list[index].name??"masterCard",
@@ -93,9 +101,26 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                 padding: EdgeInsets.symmetric(vertical: 46.h),
                 child: CustomButton(
                   title: LocalKeys.kCheckout.tr,
-                  onPress: () {
+                  onPress: () async{
+                  AddOrderModel ? orderModel=  await OrderApis().addOrder(
+                      delivery_type: "delivery",
+                      package_id: PackageDetailsView.packageDetailModel?.data?.id ?? 0,
+                      address_id: DeliveryAddressesView.selectedAddressId??0,
+                      payment_id: selectedPaymentId??0,
+                      branch_id: 2,
+                      start_date: DaysTimeView.startDate??'',
+                      period_id: DaysTimeView.selectedBranchPeriodId??0,
+                      selectedDays: PackageMealsController.selectedDays,
+                    );
+                  if(orderModel?.data !=null){
+                    Get.snackbar('Add Order', orderModel?.data?.msg??'');
                     Get.offNamedUntil(
                         Routes.SUCCESS_ORDER, (route) => route.isFirst);
+                  }else{
+                    Get.snackbar('Add Order', orderModel?.message??'');
+                  }
+
+
                   },
                 ),
               ),

@@ -16,6 +16,7 @@ import '../controllers/delivery_addresses_controller.dart';
 
 class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
   const DeliveryAddressesView({Key? key}) : super(key: key);
+  static int? selectedAddressId;
 
   @override
   Widget build(BuildContext context) {
@@ -83,6 +84,7 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
                           return ListView.builder(
                               itemCount: list.length,
                               itemBuilder: (_, index) {
+                                selectedAddressId=list[index].id;
                                 return Column(
                                   children: [
                                     SelectionCheckBox(
