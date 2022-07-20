@@ -24,6 +24,8 @@ class DaysTimeView extends GetView<DaysTimeController> {
   List<String> selectedDays = [];
   List<String> branchTime = [];
   int differenceValue = 0;
+  static int ? selectedBranchPeriodId;
+  static String ? startDate;
 
   @override
   Widget build(BuildContext context) {
@@ -159,6 +161,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 ),
                 child: DateTimePicker(
                   onChanged: (val) {
+                    startDate=val;
                     DateTime x = DateTime.parse(val);
                     final date2 = DateTime.now();
                     final difference = daysBetween(x, date2);
@@ -241,6 +244,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
                                     .contains(value),
                                 onSelected: (l) {
                                   controller.toggleBranchTimeSelection(value);
+                                  selectedBranchPeriodId=controller.branchTimeSelectedValues[1];
                                 },
                               ))
                           .toList(),

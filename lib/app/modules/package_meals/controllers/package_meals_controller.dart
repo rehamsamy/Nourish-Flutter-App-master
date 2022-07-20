@@ -5,7 +5,7 @@ import 'package:nourish_sa/app/modules/package_details/views/package_details_vie
 import '../../../data/services/analytics_service.dart';
 
 class PackageMealsController extends GetxController {
-  Map<String, dynamic> selectedDays = {};
+ static Map<String, dynamic> selectedDays = {};
   Map map = Get.arguments;
   int dinnerSelected = 1;
   int lunchSelected = 1;
