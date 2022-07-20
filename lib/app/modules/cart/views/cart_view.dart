@@ -14,18 +14,17 @@ import '../controllers/cart_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartView extends GetView<CartController> {
-  SubscriptionDetailModel? detailModel;
+  // SubscriptionDetailModel? detailModel;
   @override
   Widget build(BuildContext context) {
-    detailModel = controller.detailModel;
+     SubscriptionDetailModel? detailModel = controller.detailModel;
     Meals? meals = detailModel?.data?.meals;
     //Product? product=detailModel?.data?.meals?.saturday?[0].;
-    String? dayName = detailModel?.data?.meals?.saturday?[0].day;
+     String? dayName = detailModel?.data?.meals?.saturday?[0].day;
     String? x = dayName?.substring(0, 3).toString();
-    Get.log('ccccccc 0 ' + x.toString());
-    int? total =
+     int? total =
         ((controller.detailModel?.data?.order?.package?.priceWithTax))! +
-            (controller.detailModel?.data?.order?.branch?.deliveryFees as int);
+             (controller.detailModel?.data?.order?.branch?.deliveryFees as int);
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kCart.tr),
@@ -204,20 +203,21 @@ class CartView extends GetView<CartController> {
               SizedBox(
                 height: 25.h,
               ),
-              GetBuilder<CartController>(
-                builder: (_) => ListView.builder(
-                  itemCount:
-                      controller.detailModel?.data?.meals?.saturday?.length,
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  itemBuilder: (context, inedx) {
-                    // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
-                    return MealsSummeryCard();
-                    /*return MealsSummeryCard(
-                        controller.detailModel?.data?.meals?.saturday?[inedx]);*/
-                  },
-                ),
-              ),
+                  gfffffff
+              // GetBuilder<CartController>(
+              //   builder: (_) => ListView.builder(
+              //     itemCount:
+              //         controller.detailModel?.data?.meals?.saturday?.length,
+              //     shrinkWrap: true,
+              //     physics: const NeverScrollableScrollPhysics(),
+              //     itemBuilder: (context, inedx) {
+              //       // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
+              //       return MealsSummeryCard( controller.detailModel?.data?.meals?.saturday?[inedx]);
+              //       // return MealsSummeryCard(
+              //       //     controller.detailModel?.data?.meals?.saturday?[inedx]);
+              //     },
+              //   ),
+              // ),
               controller.isSubscribtion
                   ? const SizedBox.shrink()
                   : Column(

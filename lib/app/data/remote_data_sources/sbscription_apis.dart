@@ -85,7 +85,7 @@ Get.log('subscrip  =>'+response.toString());
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
-        path: 'subscriptionDetails/$subscripId',
+        path: 'subscriptionDetails/28',
         data:  const NetworkRequestBody.json(
          {}
         ),
