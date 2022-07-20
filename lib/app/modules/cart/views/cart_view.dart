@@ -212,9 +212,9 @@ class CartView extends GetView<CartController> {
                   physics: const NeverScrollableScrollPhysics(),
                   itemBuilder: (context, inedx) {
                     // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
-
-                    return MealsSummeryCard(
-                        controller.detailModel?.data?.meals?.saturday?[inedx]);
+                    return MealsSummeryCard();
+                    /*return MealsSummeryCard(
+                        controller.detailModel?.data?.meals?.saturday?[inedx]);*/
                   },
                 ),
               ),
