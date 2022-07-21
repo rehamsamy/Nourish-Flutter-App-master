@@ -113,7 +113,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                             style: Get.textTheme.headline3,
                           ),
                           Text(
-                            '${(controller.addtionalPackagePrice) - (controller.packagePrice ?? 0)} SAR',
+                            '${(controller.addtionalPackagePrice)} SAR',
                           )
                         ],
                       ),
@@ -204,9 +204,39 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
                           'total': controller.totalPackagePrice,
                      */
-                        Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
-                          'total': controller.totalPackagePrice,
-                        });
+                        for (int i = 0;
+                            i < PackageMealsController.selectedDays.keys.length;
+                            i++) {
+                          if (PackageMealsController.selectedDays[
+                              PackageMealsController.selectedDays.keys
+                                  .elementAt(i)] is! List<int>) {
+                            Get.snackbar(
+                              "Please select meal",
+                              "please select the meal in each day ${PackageMealsController.selectedDays.keys.elementAt(i).toString()}",
+                              backgroundColor: Colors.red,
+                              colorText: Colors.white,
+                              snackPosition: SnackPosition.BOTTOM,
+                              duration: const Duration(seconds: 2),
+                              icon: const Icon(
+                                Icons.error,
+                                color: Colors.white,
+                              ),
+                              borderRadius: 8.r,
+                              borderColor: Colors.red,
+                              borderWidth: 1.w,
+                              margin: EdgeInsets.only(bottom: 8.h),
+                              padding: EdgeInsets.only(
+                                  left: 16.w,
+                                  right: 16.w,
+                                  top: 8.h,
+                                  bottom: 8.h),
+                            );
+                          } else {
+                            Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
+                              'total': controller.totalPackagePrice,
+                            });
+                          }
+                        }
                       }),
                   SizedBox(
                     height: 42.h,
