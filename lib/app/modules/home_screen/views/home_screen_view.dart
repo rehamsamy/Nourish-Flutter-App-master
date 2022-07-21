@@ -42,135 +42,64 @@ class HomeScreenView extends GetView<HomeScreenController> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Padding(
+              /*  Padding(
                 padding: EdgeInsets.only(
                     top: 35.h, bottom: 15.h, left: 27.w, right: 27.w),
                 child: Text(
                   LocalKeys.kPerfectPackages.tr,
                   style: Get.textTheme.headline1,
                 ),
-              ),
-              SizedBox(
-                width: Get.width,
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 27.w),
-                  child: Row(
-                    crossAxisAlignment: CrossAxisAlignment.center,
-                    children: [
-                      SizedBox(
-                        width: 313.w,
-                        child: InkWell(
-                          onTap: () => Get.offNamed(Routes.SEARCH,
-                            arguments: {'packagesList':homePackagesList}
-                          ),
-                          child: Container(
-                            height: 53.h,
-                            width: 374.w,
-                            decoration: BoxDecoration(
-                              color: const Color(0xffF2F2F2),
-                              borderRadius: BorderRadius.circular(9.r),
-                            ),
-                            child: Row(
-                              children: [
-                                Padding(
-                                  padding: EdgeInsetsDirectional.only(
-                                    start: 13.w,
-                                    end: 10.6.w,
-                                  ),
-                                  child: SvgPicture.asset(
-                                    Assets.kSearch,
-                                    width: 22.h,
-                                    color: const Color(0xff9C9C9D),
-                                    height: 22.h,
-                                  ),
-                                ),
-                                Text(
-                                  "${LocalKeys.kSearch.tr} . . . ",
-                                  style: Get.textTheme.caption!.copyWith(
-                                    color: greyColor,
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(
-                        width: 6.w,
-                      ),
-                      InkWell(
-                        onTap: () {
-                          Get.dialog(const FilterDialog());
-                        },
-                        child: Container(
-                          width: 52.w,
-                          height: 53.h,
-                          padding: EdgeInsets.all(12.w),
-                          decoration: BoxDecoration(
-                            color: primaryColor,
-                            borderRadius: BorderRadius.circular(10.r),
-                          ),
-                          child: SvgPicture.asset(
-                            Assets.kfilter,
-                            height: 26.w,
-                            width: 26.w,
-                            color: Colors.white,
-                            fit: BoxFit.fill,
-                          ),
-                        ),
-                      ),
-                    ],
+              ), */
+              SearchBar(homePackagesList: homePackagesList),
+              Column(
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
+                    child: HeadlineWithViewAll(
+                      title: LocalKeys.kMenus.tr,
+                      withViewAll: true,
+                      onTap: () {
+                        Get.find<HomePageController>().changeIndex(1);
+                      },
+                    ),
                   ),
-                ),
+                  FutureBuilder(
+                      future: HomeApis().getHomeCategories(),
+                      builder: (_, snapshot) {
+                        if (snapshot.hasData) {
+                          categoriesList = snapshot.data as List<CategoryItem>;
+                          return SizedBox(
+                              width: Get.width,
+                              height: 100.h,
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: categoriesList.length,
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(horizontal: 7.w),
+                                itemBuilder: (context, index) {
+                                  return MealCard(
+                                      title: categoriesList[index].name ?? '',
+                                      color: AppConstants.colorsMenu[index % 5],
+                                      image: categoriesList[index].image ?? '');
+                                },
+                              ));
+                        } else {
+                          return SizedBox(
+                              width: Get.width,
+                              height: 100.h,
+                              child: ListView.builder(
+                                physics: const BouncingScrollPhysics(),
+                                itemCount: categoriesList.length,
+                                scrollDirection: Axis.horizontal,
+                                padding: EdgeInsets.symmetric(horizontal: 7.w),
+                                itemBuilder: (context, index) {
+                                  return MealLoading(128.w, 99.h);
+                                },
+                              ));
+                        }
+                      }),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
-                child: HeadlineWithViewAll(
-                  title: LocalKeys.kMenus.tr,
-                  withViewAll: true,
-                  onTap: () {
-                    Get.find<HomePageController>().changeIndex(1);
-                  },
-                ),
-              ),
-              FutureBuilder(
-                  future: HomeApis().getHomeCategories(),
-                  builder: (_, snapshot) {
-                    if (snapshot.hasData) {
-                      categoriesList = snapshot.data as List<CategoryItem>;
-                      return SizedBox(
-                          width: Get.width,
-                          height: 100.h,
-                          child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: categoriesList.length,
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.symmetric(horizontal: 7.w),
-                            itemBuilder: (context, index) {
-                              return MealCard(
-                                  title: categoriesList[index].name ?? '',
-                                  color: AppConstants.colorsMenu[index % 5],
-                                  image: categoriesList[index].image ?? '');
-                            },
-                          ));
-                    } else {
-                      return SizedBox(
-                          width: Get.width,
-                          height: 100.h,
-                          child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            itemCount: categoriesList.length,
-                            scrollDirection: Axis.horizontal,
-                            padding: EdgeInsets.symmetric(horizontal: 7.w),
-                            itemBuilder: (context, index) {
-                              return MealCard(
-                                title: "Name",
-                                image: "",
-                              );
-                            },
-                          ));
-                    }
-                  }),
               Padding(
                 padding: EdgeInsets.only(top: 31.h, bottom: 20.h),
                 child: HeadlineWithViewAll(
@@ -244,12 +173,14 @@ class HomeScreenView extends GetView<HomeScreenController> {
       itemBuilder: (context, index) {
         return PackageCard(
             title: homePackagesList[index].name ?? '',
-            onTap: () async{
-          PackageDetailModel ? model=    await PackageApis().getPackageDetail(homePackagesList[index].id??0);
-          if(model?.data !=null){
-            Get.toNamed(Routes.PACKAGE_DETAILS,arguments: {'packageDetailModel':model});
-          }
-            } ,
+            onTap: () async {
+              PackageDetailModel? model = await PackageApis()
+                  .getPackageDetail(homePackagesList[index].id ?? 0);
+              if (model?.data != null) {
+                Get.toNamed(Routes.PACKAGE_DETAILS,
+                    arguments: {'packageDetailModel': model});
+              }
+            },
             image: homePackagesList[index].image ?? '');
       },
       pagination: SwiperPagination(
@@ -282,6 +213,91 @@ class HomeScreenView extends GetView<HomeScreenController> {
               children: list,
             );
           },
+        ),
+      ),
+    );
+  }
+}
+
+class SearchBar extends StatelessWidget {
+  const SearchBar({
+    Key? key,
+    required this.homePackagesList,
+  }) : super(key: key);
+
+  final List<WeeklyItem> homePackagesList;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: Get.width,
+      child: Padding(
+        padding: EdgeInsets.symmetric(horizontal: 27.w),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(
+              width: 313.w,
+              child: InkWell(
+                onTap: () => Get.offNamed(Routes.SEARCH,
+                    arguments: {'packagesList': homePackagesList}),
+                child: Container(
+                  height: 53.h,
+                  width: 374.w,
+                  decoration: BoxDecoration(
+                    color: const Color(0xffF2F2F2),
+                    borderRadius: BorderRadius.circular(9.r),
+                  ),
+                  child: Row(
+                    children: [
+                      Padding(
+                        padding: EdgeInsetsDirectional.only(
+                          start: 13.w,
+                          end: 10.6.w,
+                        ),
+                        child: SvgPicture.asset(
+                          Assets.kSearch,
+                          width: 22.h,
+                          color: const Color(0xff9C9C9D),
+                          height: 22.h,
+                        ),
+                      ),
+                      Text(
+                        "${LocalKeys.kSearch.tr} . . . ",
+                        style: Get.textTheme.caption!.copyWith(
+                          color: greyColor,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
+            SizedBox(
+              width: 6.w,
+            ),
+            InkWell(
+              onTap: () {
+                Get.dialog(const FilterDialog());
+              },
+              child: Container(
+                width: 52.w,
+                height: 53.h,
+                padding: EdgeInsets.all(12.w),
+                decoration: BoxDecoration(
+                  color: primaryColor,
+                  borderRadius: BorderRadius.circular(10.r),
+                ),
+                child: SvgPicture.asset(
+                  Assets.kfilter,
+                  height: 26.w,
+                  width: 26.w,
+                  color: Colors.white,
+                  fit: BoxFit.fill,
+                ),
+              ),
+            ),
+          ],
         ),
       ),
     );

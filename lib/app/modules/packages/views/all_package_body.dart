@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -59,13 +58,13 @@ class AllPackagesBody extends GetView<PackagesController> {
           ),
         ),
         Obx(
-            ()=> TabBarSelector(
+          () => TabBarSelector(
             firstTitle: LocalKeys.kMonthly.tr,
             secondTitle: LocalKeys.kWeekly.tr,
-            selected:controller.selectedPackageType.value,
+            selected: controller.selectedPackageType.value,
             onTap: (v) {
               controller.changeSelectedPackageType(v);
-              Get.log('tab   ---- '+v.toString());
+              Get.log('tab   ---- ' + v.toString());
             },
           ),
         ),
@@ -78,8 +77,9 @@ class AllPackagesBody extends GetView<PackagesController> {
                   controller.selectedPackageType == 0 ? 'monthly' : 'weekly'),
               builder: (_, snap) {
                 if (snap.hasData) {
-                  List<PackageItem> packagesList=snap.data as List<PackageItem>;
-                  if(packagesList.isNotEmpty) {
+                  List<PackageItem> packagesList =
+                      snap.data as List<PackageItem>;
+                  if (packagesList.isNotEmpty) {
                     return ListView.builder(
                       itemCount: packagesList.length,
                       shrinkWrap: true,
@@ -87,28 +87,35 @@ class AllPackagesBody extends GetView<PackagesController> {
                       padding: EdgeInsets.symmetric(horizontal: 24.w),
                       itemBuilder: (context, index) {
                         return InkWell(
-                          onTap: () async{
-                            PackageDetailModel ? model=    await PackageApis().getPackageDetail(packagesList[index].id??0);
-                            if(model?.data !=null){
-                              Get.toNamed(Routes.PACKAGE_DETAILS,arguments: {'packageDetailModel':model});
+                          onTap: () async {
+                            PackageDetailModel? model = await PackageApis()
+                                .getPackageDetail(packagesList[index].id ?? 0);
+                            if (model?.data != null) {
+                              Get.toNamed(Routes.PACKAGE_DETAILS,
+                                  arguments: {'packageDetailModel': model});
                             }
                           },
                           child: PackageInfoCard(
                             image: packagesList[index].image ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
-                            options: const [
-                              "From 1145 to 2125 Calories",
-                              "5 Days x 4 Weeks",
-                              "Pause anytime",
-                              "1750 SAR/Month",
-                            ],
+                            options: List.generate(
+                                    packagesList[index].descriptions?.length ??
+                                        0,
+                                    (index2) =>
+                                        packagesList[index]
+                                            .descriptions?[index2]
+                                            .desc ??
+                                        "") ??
+                                [],
                             title: packagesList[index].name ?? "BreadFase",
-                            priceWithVat: packagesList[index].priceWithTax?.toString() ?? "150",
+                            priceWithVat:
+                                packagesList[index].priceWithTax?.toString() ??
+                                    "150",
                           ),
                         );
                       },
                     );
-                  }else{
+                  } else {
                     return const SizedBox(
                       height: 300,
                       child: Center(
@@ -121,9 +128,7 @@ class AllPackagesBody extends GetView<PackagesController> {
                     height: 300,
                   );
                 }
-
-  }
-    ),
+              }),
         ),
       ],
     );
