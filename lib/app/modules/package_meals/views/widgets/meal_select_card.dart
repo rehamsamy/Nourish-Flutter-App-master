@@ -91,7 +91,8 @@ class _MealSelectCardState extends State<MealSelectCard> {
                         onPressed: () {
                           setState(() {
                             widget.isSelected = true;
-                            PackageMealsController.selectedDays[controller.currentDay]
+                            PackageMealsController
+                                    .selectedDays[controller.currentDay]
                                 [controller.selectedMeal] = [widget.id];
                             PackageMealsController.selectedDays1[controller.currentDay]
                             [controller.selectedMeal]=widget.title;
@@ -104,7 +105,7 @@ class _MealSelectCardState extends State<MealSelectCard> {
 
 
                           });
-                        //  print(controller.selectedDays);
+                          print(PackageMealsController.selectedDays);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
