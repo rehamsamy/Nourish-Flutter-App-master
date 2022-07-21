@@ -301,6 +301,7 @@ class PackageCartView extends GetView<PackageCartController> {
                           ),
                         ],
                       ),
+                //
               ],
             ),
           ),
