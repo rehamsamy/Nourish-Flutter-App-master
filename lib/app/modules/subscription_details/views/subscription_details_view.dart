@@ -104,7 +104,7 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                         ),
                         SubscriptionDetailsItem(
                           title: LocalKeys.kPickupType.tr,
-                          onTap: () => Get.toNamed(Routes.DELIVERY_ADDRESSES,
+                          onTap: () => Get.offNamed(Routes.ADD_ADDRESS,
                               arguments: {
                                 'branchData',
                                 controller.detailModel.data?.order?.branch
