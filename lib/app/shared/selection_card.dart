@@ -99,13 +99,11 @@ class _SelectionCardState extends State<SelectionCard> {
                   : Theme.of(context).textTheme.bodyText2,
             ),
             if (widget.endIcon != null)
-              Expanded(
-                child: Row(
-                  children: [
-                    const Spacer(),
-                    widget.endIcon!,
-                  ],
-                ),
+              Row(
+                children: [
+                  const Spacer(),
+                  widget.endIcon!,
+                ],
               )
           ],
         ),

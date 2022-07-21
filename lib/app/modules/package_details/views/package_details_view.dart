@@ -56,6 +56,11 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                   image: Assets.kRestaurantIcon,
                   isSelected: controller.selectedPlanType == 'branch',
                   onTap: () async {
+                    Get.offNamed(Routes.ADD_ADDRESS,
+                        arguments: {
+                          'branchData',
+                          controller.packageDetailModel?.data?.branches
+                        });
                     PostionLocator.determinePosition();
                     controller.selectedPlanType = 'branch';
                     controller.update();
