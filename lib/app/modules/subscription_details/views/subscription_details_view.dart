@@ -238,8 +238,8 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                     child: SubscriptionDetailsItem(
                       title: LocalKeys.kMealsDetails.tr,
                       isEnd: true,
-                      onTap: () => Get.toNamed(Routes.CART, arguments: {
-                        'isSubscribtion': false,
+                      onTap: () => Get.toNamed(Routes.SUBSCRIPTION_CART, arguments: {
+                        'isSubscribtion': true,
                         'detailModel': controller.detailModel
                       }),
                       valueWidget: Icon(

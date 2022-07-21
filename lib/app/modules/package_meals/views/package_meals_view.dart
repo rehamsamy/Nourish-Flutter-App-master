@@ -204,8 +204,9 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
                           'total': controller.totalPackagePrice,
                      */
-                        Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
+                        Get.toNamed(Routes.PACKAGE_CART, arguments: {
                           'total': controller.totalPackagePrice,
+                          'isSubscribtion':false
                         });
                       }),
                   SizedBox(
@@ -228,6 +229,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(vertical: 31.h),
           itemBuilder: (context, index) {
+            String x=controller.newMealsList?[index].name??''.toString();
+            Get.log('vvvv 111 '+x);
             return FadeInRight(
               duration: Duration(milliseconds: 100 * index),
               child: InkWell(
@@ -252,11 +255,11 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 ),
                 child: MealSelectCard(
                   id: controller.newMealsList?[index].id ?? 0,
+                  title: controller.newMealsList?[index].name ?? '',
                   caleries:
-                      controller.newMealsList?[index].calories.toString() ?? '',
+                      controller.newMealsList?[index].description.toString() ?? '',
                   image: controller.newMealsList?[index].image ?? '',
                   isSelected: false,
-                  title: controller.newMealsList?[index].name ?? '',
                 ),
               ),
             );

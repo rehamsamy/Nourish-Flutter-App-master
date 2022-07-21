@@ -8,11 +8,12 @@ import '../../../../../app_theme.dart';
 
 class MealSelectCard extends StatefulWidget {
   MealSelectCard({
-    required this.image,
+    required this.id,
     required this.title,
+    required this.image,
     required this.caleries,
     required this.isSelected,
-    required this.id,
+
     Key? key,
   }) : super(key: key);
   final int id;
@@ -92,6 +93,16 @@ class _MealSelectCardState extends State<MealSelectCard> {
                             widget.isSelected = true;
                             PackageMealsController.selectedDays[controller.currentDay]
                                 [controller.selectedMeal] = [widget.id];
+                            PackageMealsController.selectedDays1[controller.currentDay]
+                            [controller.selectedMeal]=widget.title;
+                            Get.log('nnnn '+PackageMealsController.selectedDays1.toString()+widget.title.toString());
+
+                            // PackageMealsController.selectedDays1={
+                            //   PackageMealsController.selectedDays[controller.currentDay]:
+                            //   [controller.selectedMeal]
+                            // };
+
+
                           });
                         //  print(controller.selectedDays);
                         },

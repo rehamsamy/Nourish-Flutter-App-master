@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/app_constants.dart';
 
 import '../../../data/services/analytics_service.dart';
 
@@ -40,7 +41,8 @@ class DaysTimeController extends GetxController {
         'lunch': [],
         'dinner': [],
       };
-      Get.log('Selected Days   ' + daysTimeSelectedValues.toString());
+
+
     }
     update();
   }

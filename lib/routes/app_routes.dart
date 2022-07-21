@@ -26,7 +26,8 @@ abstract class Routes {
   static const DAYS_TIME = _Paths.DAYS_TIME;
   static const PACKAGE_DAYS = _Paths.PACKAGE_DAYS;
   static const PACKAGE_MEALS = _Paths.PACKAGE_MEALS;
-  static const CART = _Paths.CART;
+  static const PACKAGE_CART = _Paths.PACKAGE_CART;
+  static const SUBSCRIPTION_CART = _Paths.SUBSCRIPTION_CART;
   static const PAYMENT_METHODS = _Paths.PAYMENT_METHODS;
   static const SUCCESS_ORDER = _Paths.SUCCESS_ORDER;
   static const SUBSCRIPTION = _Paths.SUBSCRIPTION;
@@ -60,7 +61,8 @@ abstract class _Paths {
   static const DAYS_TIME = '/days-time';
   static const PACKAGE_DAYS = '/package-days';
   static const PACKAGE_MEALS = '/package-meals';
-  static const CART = '/cart';
+  static const PACKAGE_CART = '/package-cart';
+  static const SUBSCRIPTION_CART = '/subscription_cart';
   static const PAYMENT_METHODS = '/payment-methods';
   static const SUCCESS_ORDER = '/success-order';
   static const SUBSCRIPTION = '/subscription';

@@ -1,5 +1,9 @@
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
+import 'package:nourish_sa/app/modules/package_cart/bindings/package_cart_binding.dart';
+import 'package:nourish_sa/app/modules/package_cart/views/package_cart_view.dart';
+import 'package:nourish_sa/app/modules/supscreption_cart/bindings/cart_binding.dart';
+import 'package:nourish_sa/app/modules/supscreption_cart/views/cart_view.dart';
 
 import '../app/modules/Subscription/bindings/subscription_binding.dart';
 import '../app/modules/Subscription/views/subscription_view.dart';
@@ -17,8 +21,6 @@ import '../app/modules/auth_modules/otp_verification/bindings/otp_verification_b
 import '../app/modules/auth_modules/otp_verification/views/otp_verification_view.dart';
 import '../app/modules/auth_modules/register/bindings/register_binding.dart';
 import '../app/modules/auth_modules/register/views/register_view.dart';
-import '../app/modules/cart/bindings/cart_binding.dart';
-import '../app/modules/cart/views/cart_view.dart';
 import '../app/modules/custom_package/bindings/custom_package_binding.dart';
 import '../app/modules/custom_package/views/custom_package_view.dart';
 import '../app/modules/days_time/bindings/days_time_binding.dart';
@@ -157,9 +159,14 @@ class AppPages {
       binding: PackageMealsBinding(),
     ),
     GetPage(
-      name: _Paths.CART,
-      page: () => CartView(),
-      binding: CartBinding(),
+      name: _Paths.PACKAGE_CART,
+      page: () => PackageCartView(),
+      binding: PackageCartBinding(),
+    ),
+    GetPage(
+      name: _Paths.SUBSCRIPTION_CART,
+      page: () => SubscriptionCartView(),
+      binding: SubscriptionCartBinding(),
     ),
     GetPage(
       name: _Paths.PAYMENT_METHODS,

@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import '../../../data/services/analytics_service.dart';
 
-class CartController extends GetxController {
+class SubscriptionCartController extends GetxController {
   bool isSubscribtion = true;
   Map args = Get.arguments ;
   SubscriptionDetailModel? detailModel;
@@ -22,8 +22,7 @@ class CartController extends GetxController {
     super.onInit();
     AnalyticsService.instance.logEvent("Cart_View");
       isSubscribtion = args['isSubscribtion'] as bool;
-   if(isSubscribtion !=null){
-     Get.log('cccc  '+isSubscribtion.toString());
+   if(isSubscribtion ==true){
      detailModel = args['detailModel'] as SubscriptionDetailModel;
      sundayList=detailModel?.data?.meals?.sunday;
      saturdayList=detailModel?.data?.meals?.saturday;

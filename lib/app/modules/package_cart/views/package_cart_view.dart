@@ -6,32 +6,26 @@ import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
+import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/meals_summery_card.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../../../../app_theme.dart';
-import '../controllers/cart_controller.dart';
+import '../controllers/package_cart_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class CartView extends GetView<CartController> {
+class PackageCartView extends GetView<PackageCartController> {
   // SubscriptionDetailModel? detailModel;
   @override
   Widget build(BuildContext context) {
-     SubscriptionDetailModel? detailModel = controller.detailModel;
-    Meals? meals = detailModel?.data?.meals;
-    //Product? product=detailModel?.data?.meals?.saturday?[0].;
-     String? dayName = detailModel?.data?.meals?.saturday?[0].day;
-    String? x = dayName?.substring(0, 3).toString();
-     int? total =
-        ((controller.detailModel?.data?.order?.package?.priceWithTax))! +
-             (controller.detailModel?.data?.order?.branch?.deliveryFees as int);
+     int? total =controller.total;
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kCart.tr),
         centerTitle: true,
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
-      body: GetBuilder<CartController>(
+      body: GetBuilder<PackageCartController>(
         builder: (_)=> Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 27.w,
@@ -160,7 +154,7 @@ class CartView extends GetView<CartController> {
                       height: 44.w,
                       width: Get.width,
                       child: ListView.builder(
-                        itemCount: controller.daysList.length,
+                        itemCount: PackageMealsController.selectedDays1.keys.length,
                         padding: EdgeInsetsDirectional.only(start: 22.w),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -170,7 +164,9 @@ class CartView extends GetView<CartController> {
                             ),
                             child: InkWell(
                               onTap: (){
-                                controller.changeMealSelected(index,controller.daysList[index]);
+                               controller.changeMealSelected(index,PackageMealsController.selectedDays1.keys.elementAt(index));
+                                // controller.selectDay(
+                                //     PackageMealsController.selectedDays1.keys.elementAt(index));
                               //  Get.log('ffff   '+controller.daySelected.toString()+'  l  '+controller.daysList[index].toString());
                               },
                               child: Container(
@@ -189,7 +185,7 @@ class CartView extends GetView<CartController> {
                                   ),
                                 ),
                                 child: Text(
-                                 controller.daysList[index],
+                                    (PackageMealsController.selectedDays1.keys.elementAt(index)).substring(0,3),
                                   style: Get.textTheme.headline3!.copyWith(
                                     color: index ==
                                         controller.isMealSelected
@@ -212,12 +208,13 @@ class CartView extends GetView<CartController> {
                   height: 400,
                   child:
                 ListView.builder(
-                    itemCount: controller.newMealsList?.length,
+                    itemCount: PackageMealsController.selectedDays1.length,
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
+                      Get.log('cccc 22 '+PackageMealsController.selectedDays1['tuesday'].toString());
                       // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
-                      return MealsSummeryCard( controller.newMealsList?[inedx]);
+                      return MealsSummeryCard( inedx);
                     },
                   ),
                 ),
@@ -229,17 +226,17 @@ class CartView extends GetView<CartController> {
                           CartItem(
                             item: LocalKeys.kSubTotal.tr,
                             value:
-                                "${controller.detailModel?.data?.order?.package?.priceWithTax} SAR",
+                                "${controller.detailModel?.data?.priceWithTax} SAR",
                           ),
                           CartItem(
                             item: "${LocalKeys.kDelivery.tr}:",
                             value:
-                                "${controller.detailModel?.data?.order?.branch?.deliveryFees} SAR",
+                                "${'0'} SAR",
                           ),
                           CartItem(
                             item: LocalKeys.kTax.tr,
                             value:
-                                "${controller.detailModel?.data?.order?.package?.tax} SAR",
+                                "${controller.detailModel?.data?.tax} SAR",
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 21.h, bottom: 15.h),

@@ -6,57 +6,62 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
+import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 
 import '../../app_theme.dart';
+import '../modules/package_cart/controllers/package_cart_controller.dart';
 
-class MealsSummeryCard extends StatelessWidget {
+class MealsSummeryCard extends GetView<PackageCartController> {
 
-  MealDay ? mealDay;
-  MealsSummeryCard(this.mealDay);
+  int index;
+  MealsSummeryCard(this.index);
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 374.w,
-      margin: EdgeInsets.only(bottom: 18.h),
-      padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 11.h),
-      decoration: BoxDecoration(
-          color: lightBlueColor,
-          borderRadius: BorderRadius.circular(10.r),
-          border: Border.all(color: primaryColor)),
-      child: Column(
-        children: [
-          Row(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              SvgPicture.asset(
-                Assets.kMealItem,
-                width: 15.w,
-                height: 15.h,
-                color: primaryColor,
-              ),
-              SizedBox(
-                width: 12.w,
-              ),
-              Text(
-               mealDay?.mealType??'',
-                style: Get.textTheme.bodyText1,
-              ),
-            ],
-          ),
-          ListView.builder(
-            itemCount: 2,
-            shrinkWrap: true,
-            padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
-            physics: const NeverScrollableScrollPhysics(),
-            itemBuilder: (context, index) {
-              return FoodItem(
-                title:mealDay?.product?.name??'',desc :mealDay?.product?.description??'',
-                isEnd: index == 1,
-              );
-            },
-          ),
-        ],
+    return GetBuilder<PackageCartController>(
+      builder: (_)=> Container(
+        width: 374.w,
+        margin: EdgeInsets.only(bottom: 18.h),
+        padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 11.h),
+        decoration: BoxDecoration(
+            color: lightBlueColor,
+            borderRadius: BorderRadius.circular(10.r),
+            border: Border.all(color: primaryColor)),
+        child: Column(
+          children: [
+            Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                SvgPicture.asset(
+                  Assets.kMealItem,
+                  width: 15.w,
+                  height: 15.h,
+                  color: primaryColor,
+                ),
+                SizedBox(
+                  width: 12.w,
+                ),
+                Text(
+               PackageMealsController.selectedDays1[controller.currentDay].keys.elementAt(index),
+                  style: Get.textTheme.bodyText1,
+                ),
+              ],
+            ),
+            ListView.builder(
+              itemCount: 2,
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                Get.log('pppp  '+controller.currentDay.toString());
+                return FoodItem(
+                  title:PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(index).toString(),desc :'',
+                  isEnd: index == 1,
+                );
+              },
+            ),
+          ],
+        ),
       ),
     );
   }
