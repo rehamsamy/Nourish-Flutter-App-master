@@ -17,7 +17,7 @@ class OrderApis {
     };
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
-        path: 'addOrder',
+        path: 'changeOrderPeriod',
         data: NetworkRequestBody.json(map),
         headers: {
           'Authorization': 'Bearer $token',
