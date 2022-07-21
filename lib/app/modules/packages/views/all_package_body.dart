@@ -13,6 +13,7 @@ import 'package:nourish_sa/app/modules/packages/views/package_info_card.dart';
 import 'package:nourish_sa/app/shared/dialogs/filter_dialog.dart';
 import 'package:nourish_sa/app/shared/tab_bar_selector.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
+import 'package:shimmer/shimmer.dart';
 
 class AllPackagesBody extends GetView<PackagesController> {
   const AllPackagesBody({this.isWithFilter = true, Key? key}) : super(key: key);
@@ -99,14 +100,12 @@ class AllPackagesBody extends GetView<PackagesController> {
                             image: packagesList[index].image ??
                                 "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
                             options: List.generate(
-                                    packagesList[index].descriptions?.length ??
-                                        0,
-                                    (index2) =>
-                                        packagesList[index]
-                                            .descriptions?[index2]
-                                            .desc ??
-                                        "") ??
-                                [],
+                                packagesList[index].descriptions?.length ?? 0,
+                                (index2) =>
+                                    packagesList[index]
+                                        .descriptions?[index2]
+                                        .desc ??
+                                    ""),
                             title: packagesList[index].name ?? "BreadFase",
                             priceWithVat:
                                 packagesList[index].priceWithTax?.toString() ??
@@ -116,10 +115,16 @@ class AllPackagesBody extends GetView<PackagesController> {
                       },
                     );
                   } else {
-                    return const SizedBox(
-                      height: 300,
-                      child: Center(
-                        child: Text('no package found'),
+                    return Shimmer.fromColors(
+                      baseColor: Colors.grey.shade300,
+                      highlightColor: Colors.grey.shade100,
+                      // height: 300,
+                      child: const Center(
+                        child: PackageInfoCard(
+                            title: "BreadFase",
+                            priceWithVat: "150",
+                            image: "",
+                            options: ["1", "2", "3"]),
                       ),
                     );
                   }
