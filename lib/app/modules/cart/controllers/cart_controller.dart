@@ -1,9 +1,6 @@
-import 'dart:convert';
 
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
-
 import '../../../data/services/analytics_service.dart';
 
 class CartController extends GetxController {

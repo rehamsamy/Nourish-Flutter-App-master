@@ -49,6 +49,13 @@ class OrderApis {
       required int payment_id,
       required Map selectedDays}) async {
     AddOrderModel addOrderModel = AddOrderModel();
+  Map<String,dynamic>  days= {'saturday': {'breakfast': [], 'lunch': [], 'dinner': []},
+    'friday': {'breakfast': [], 'lunch': [], 'dinner': []}, 'thursday': {'breakfast': [],
+      'lunch': [], 'dinner': []}, 'wednesday': {'breakfast': [], 'lunch': [], 'dinner': []},
+    'tuesday': {'breakfast': [], 'lunch': [], 'dinner': [10]}};
+    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+
+    //days[sunday][breakfast][]
     print(selectedDays);
     Map<String, dynamic>? map = {
       'start_date': start_date,
@@ -64,6 +71,9 @@ class OrderApis {
         type: NetworkRequestType.POST,
         path: 'addOrder',
         data: NetworkRequestBody.json(map),
+        headers: {
+          'Authorization': 'Bearer $token',
+        }
       );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
