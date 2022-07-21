@@ -17,7 +17,7 @@ class DaysTimeController extends GetxController {
     super.onInit();
   }
 
-  List branchTimeSelectedValues = [];
+  String branchTimeSelectedValues = '';
   List branchDays = [
     'sunday',
     'monday',
@@ -47,9 +47,9 @@ class DaysTimeController extends GetxController {
 
   void toggleBranchTimeSelection(value) {
     if (branchTimeSelectedValues.contains(value)) {
-      branchTimeSelectedValues.remove(value);
+      branchTimeSelectedValues = '';
     } else {
-      branchTimeSelectedValues.add(value);
+      branchTimeSelectedValues = value;
     }
     print(value);
     update();

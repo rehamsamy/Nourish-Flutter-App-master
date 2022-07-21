@@ -12,14 +12,14 @@ class MealInfoDialog extends StatelessWidget {
       required this.values,
       Key? key})
       : super(key: key);
-  final String ? image;
-  final String ?title;
-  final String ?desc;
+  final String? image;
+  final String? title;
+  final String? desc;
   final Map<String, String>? values;
 
   @override
   Widget build(BuildContext context) {
-    String carb=values?['Carb'] as String ;
+    String carb = values?['Carb'] as String;
 
     return AlertDialog(
       scrollable: true,
@@ -39,17 +39,20 @@ class MealInfoDialog extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             CustomNetworkImage(
-                imageUrl: image??'https://image.shutterstock.com/image-vector/little-boy-happy-eat-spaghetti-260nw-687046024.jpg',
-                height: 144.h, width: 331, radius: 15.r),
+                imageUrl: image ??
+                    'https://image.shutterstock.com/image-vector/little-boy-happy-eat-spaghetti-260nw-687046024.jpg',
+                height: 144.h,
+                width: 331,
+                radius: 15.r),
             Padding(
               padding: EdgeInsets.only(top: 39.h, bottom: 27.h),
               child: Text(
-                title??'',
+                title ?? '',
                 style: Get.textTheme.headline1,
               ),
             ),
             Text(
-              desc??'',
+              desc ?? '',
               style: Get.textTheme.headline3!.copyWith(
                 fontSize: 12.sp,
               ),
@@ -62,22 +65,22 @@ class MealInfoDialog extends StatelessWidget {
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children:  [
+              children: [
                 MealKeyValue(
                   valueKey: "Carb",
-                  value:values?['Carb'] ,
+                  value: values?['Carb'] ?? "",
                 ),
                 MealKeyValue(
                   valueKey: "Fat",
-                  value: values?["Fat"],
+                  value: values?["Fat"] ?? "",
                 ),
                 MealKeyValue(
                   valueKey: "Protein",
-                  value: values?["Protein"],
+                  value: values?["Protein"] ?? "",
                 ),
                 MealKeyValue(
                   valueKey: "Calories",
-                  value: values?["Calories"],
+                  value: values?["Calories"] ?? "",
                 ),
               ],
             ),
@@ -91,8 +94,8 @@ class MealInfoDialog extends StatelessWidget {
 class MealKeyValue extends StatelessWidget {
   const MealKeyValue({required this.value, required this.valueKey, Key? key})
       : super(key: key);
-  final String ? value;
-  final String ? valueKey;
+  final String? value;
+  final String? valueKey;
 
   @override
   Widget build(BuildContext context) {
@@ -113,14 +116,14 @@ class MealKeyValue extends StatelessWidget {
               ),
             ),
             child: Text(
-              value??'',
+              value ?? '',
               style: Get.textTheme.bodyText2!.copyWith(
                 color: primaryColor,
               ),
             ),
           ),
           Text(
-            valueKey??'',
+            valueKey ?? '',
             style: Get.textTheme.bodyText2,
           ),
         ],

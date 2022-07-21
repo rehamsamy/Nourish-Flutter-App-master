@@ -2,9 +2,6 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/modules/add_Address/views/add_address_view.dart';
-import 'package:nourish_sa/app/modules/delivery_addresses/views/delivery_addresses_view.dart';
-import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/selected_days_list.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
@@ -13,7 +10,6 @@ import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_select_c
 import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../../../../app_theme.dart';
-import '../../../data/remote_data_sources/order_apis.dart';
 import '../controllers/package_meals_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -202,7 +198,6 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   CustomButton(
                       title: LocalKeys.kContinue.tr,
                       onPress: () async {
-
                         /*     // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
                         Get.log('vvvvv  ' +
                             controller.addtionalPackagePrice.toString());
@@ -210,7 +205,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
                           'total': controller.totalPackagePrice,
                      */
                         Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
-                        'total': controller.totalPackagePrice, });
+                          'total': controller.totalPackagePrice,
+                        });
                       }),
                   SizedBox(
                     height: 42.h,
@@ -238,18 +234,17 @@ class PackageMealsView extends GetView<PackageMealsController> {
                 onTap: () => Get.dialog(
                   MealInfoDialog(
                     image: controller.newMealsList?[index].image ?? '',
-                    title: controller.newMealsList?[index].name,
-                    desc: controller.newMealsList?[index].description,
+                    title: controller.newMealsList?[index].name ?? "",
+                    desc: controller.newMealsList?[index].description ?? "",
                     values: {
-                      LocalKeys.kCarb.tr:
-                          controller.newMealsList?[index].carb.toString() ??
-                              '0.0',
-                      LocalKeys.kFat.tr:
+                      'Carb': controller.newMealsList?[index].carb.toString() ??
+                          '0.0',
+                      'Fat':
                           controller.newMealsList?[index].fat.toString() ?? '0',
-                      LocalKeys.kProtein.tr:
+                      'Protein':
                           controller.newMealsList?[index].protein.toString() ??
                               '0',
-                      LocalKeys.kCalories.tr:
+                      'Calories':
                           controller.newMealsList?[index].calories.toString() ??
                               '0'
                     },

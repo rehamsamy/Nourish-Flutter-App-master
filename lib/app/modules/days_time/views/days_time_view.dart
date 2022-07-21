@@ -23,9 +23,10 @@ class DaysTimeView extends GetView<DaysTimeController> {
   List<BranchItem>? branches;
   List<String> selectedDays = [];
   List<String> branchTime = [];
+  List<int?>? branchTimeIds = [];
   int differenceValue = 0;
-  static int ? selectedBranchPeriodId;
-  static String ? startDate;
+  static int? selectedBranchPeriodId;
+  static String? startDate;
 
   @override
   Widget build(BuildContext context) {
@@ -39,6 +40,9 @@ class DaysTimeView extends GetView<DaysTimeController> {
     if (length > 0) {
       packageDetailModel?.data?.branches?[0].pickupPeriods
           ?.map((e) => branchTime.add(e.period ?? ''))
+          .toList();
+      branchTimeIds = packageDetailModel?.data?.branches?[0].pickupPeriods
+          ?.map((e) => e.id)
           .toList();
     }
     return Scaffold(
@@ -67,7 +71,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
               alignment: AlignmentDirectional.centerStart,
               child: Text(
                 '${LocalKeys.kDaySelectCount.tr} $daysCount',
-                style: TextStyle(fontSize: 12),
+                style: const TextStyle(fontSize: 12),
               ),
             ),
             SizedBox(
@@ -144,8 +148,8 @@ class DaysTimeView extends GetView<DaysTimeController> {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Text(
-              ' ${LocalKeys.kStartDayDate.tr} $daysStart',
-                style: TextStyle(fontSize: 12),
+                ' ${LocalKeys.kStartDayDate.tr} $daysStart',
+                style: const TextStyle(fontSize: 12),
               ),
             ),
             Padding(
@@ -161,7 +165,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 ),
                 child: DateTimePicker(
                   onChanged: (val) {
-                    startDate=val;
+                    startDate = val;
                     DateTime x = DateTime.parse(val);
                     final date2 = DateTime.now();
                     final difference = daysBetween(x, date2);
@@ -232,22 +236,24 @@ class DaysTimeView extends GetView<DaysTimeController> {
                     builder: (DaysTimeController controller) => Wrap(
                       spacing: 10.w,
                       runSpacing: 10.w,
-                      children: branchTime
-                          .map((String value) => FilterChip(
-                                label: Text(value,
+                      children: List.generate(
+                          branchTime.length,
+                          (index) => FilterChip(
+                                label: Text(branchTime[index],
                                     style: const TextStyle(
                                       color: Colors.white,
                                     )),
                                 selectedColor: primaryColor,
                                 backgroundColor: Colors.grey,
                                 selected: controller.branchTimeSelectedValues
-                                    .contains(value),
+                                    .contains(branchTime[index]),
                                 onSelected: (l) {
-                                  controller.toggleBranchTimeSelection(value);
-                                  selectedBranchPeriodId=controller.branchTimeSelectedValues[1];
+                                  controller.toggleBranchTimeSelection(
+                                      branchTime[index]);
+                                  selectedBranchPeriodId =
+                                      branchTimeIds?[index];
                                 },
-                              ))
-                          .toList(),
+                              )),
                     ),
                   ),
                 ],
@@ -260,24 +266,19 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 if (differenceValue < daysStart!) {
                   Get.snackbar(
                       'Error', 'you must choose day after $daysStart days');
-                }
 
+                  return 0;
+                }
                 if (daysCount > controller.selectedItems.length ||
                     daysCount < controller.selectedItems.length) {
                   Get.snackbar('Error', 'you must choose  $daysCount days');
+                  return 0;
                 }
-                if (differenceValue > daysStart! &&
-                    daysCount == controller.selectedItems.length) {
-                  selectedDays.clear();
-                  for (int i = 0; i < controller.selectedItems.length; i++) {
-                    selectedDays
-                        .add(AppConstants.days[controller.selectedItems[i]]);
-                  }
-                  // print('1111  x ' + selectedDays.toString()+'      222   '+controller.selectedItems.toString());
-                  return Get.toNamed(Routes.PACKAGE_MEALS, arguments: {
-                    'selectedDays': controller.daysTimeSelectedValues
-                  });
-                }
+
+                // print('1111  x ' + selectedDays.toString()+'      222   '+controller.selectedItems.toString());
+                return Get.toNamed(Routes.PACKAGE_MEALS, arguments: {
+                  'selectedDays': controller.daysTimeSelectedValues
+                });
               },
             ),
           ],
