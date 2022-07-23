@@ -119,8 +119,8 @@ class NetworkService {
       ..interceptors.add(dioLoggerInterceptor)
       ..options.baseUrl = baseUrl
       ..options.headers = _headers
-      ..options.connectTimeout = 10000 // 10 seconds
-      ..options.receiveTimeout = 5000; // 5 seconds
+      ..options.connectTimeout = 15000 // 15 seconds
+      ..options.receiveTimeout = 15000; // 15 seconds
     return dio;
   }
 

@@ -21,7 +21,6 @@ class CustomInput extends StatelessWidget {
     this.width,
     this.initalValue,
     Key? key,
-
   }) : super(key: key);
   final String? secondTitle;
 
@@ -36,8 +35,8 @@ class CustomInput extends StatelessWidget {
   final ValueNotifier<bool> changeObscure = ValueNotifier(true);
   final bool isPassword;
   final double? width;
-  final String?initalValue;
- //final  Function(String) onChange;
+  final String? initalValue;
+  //final  Function(String) onChange;
   final double? height;
   final int? maxLength;
   @override
@@ -68,13 +67,21 @@ class CustomInput extends StatelessWidget {
           child: ValueListenableBuilder<bool>(
             valueListenable: changeObscure,
             builder: (context, value, _) {
-              return SizedBox(
+              return Container(
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(4.r),
+                  border: Border.all(
+                    color: Theme.of(context).dividerColor,
+                    width: 1.w,
+                  ),
+                ),
                 // height: height ?? 50.h,
                 width: width ?? double.infinity,
                 child: TextFormField(
                   controller: textEditingController,
                   keyboardType: textInputType,
                   enabled: isEnabled,
+                  autovalidateMode: AutovalidateMode.onUserInteraction,
                   obscureText: !isPassword ? !value : value,
                   style: Theme.of(context).textTheme.bodyText2,
                   maxLength: maxLength,
@@ -114,7 +121,7 @@ class CustomInput extends StatelessWidget {
                           ),
                   ),
                   validator: validator,
-               //   onChanged: (val){onChange(value);},
+                  //   onChanged: (val){onChange(value);},
                   inputFormatters: [
                     if (maxLength == 10) FilteringTextInputFormatter.digitsOnly,
                   ],

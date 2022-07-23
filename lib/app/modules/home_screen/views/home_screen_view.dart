@@ -50,6 +50,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   style: Get.textTheme.headline1,
                 ),
               ), */
+              const SizedBox(height: 16),
               SearchBar(homePackagesList: homePackagesList),
               Column(
                 children: [

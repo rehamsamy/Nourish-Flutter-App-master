@@ -56,12 +56,6 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                   image: Assets.kRestaurantIcon,
                   isSelected: controller.selectedPlanType == 'branch',
                   onTap: () async {
-                    Get.offNamed(Routes.ADD_ADDRESS,
-                        arguments: {
-                          'branchData',
-                          controller.packageDetailModel?.data?.branches
-                        });
-                    PostionLocator.determinePosition();
                     controller.selectedPlanType = 'branch';
                     controller.update();
                   },
@@ -74,15 +68,20 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 onTap: () async {
                   controller.selectedPlanType = 'delivery';
                   controller.update();
-                  await PostionLocator.determinePosition()
-                      .then((value) => Get.toNamed(Routes.DELIVERY_ADDRESSES));
                 },
                 title: LocalKeys.kDelivery.tr,
               ),
               const Spacer(),
               CustomButton(
                 title: LocalKeys.kContinue.tr,
-                onPress: () {},
+                onPress: () async {
+                  if (controller.selectedPlanType == "") {
+                    Get.snackbar("Please choose plan type",
+                        "Please choose plan type before continue");
+                  }
+                  await PostionLocator.determinePosition()
+                      .then((value) => Get.toNamed(Routes.DELIVERY_ADDRESSES));
+                },
               ),
             ],
           ),

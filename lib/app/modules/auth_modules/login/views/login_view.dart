@@ -13,7 +13,6 @@ import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../controllers/login_controller.dart';
 
-
 class LoginView extends GetView<LoginController> {
   const LoginView({Key? key}) : super(key: key);
   @override
@@ -87,8 +86,8 @@ class LoginView extends GetView<LoginController> {
                   LoginModel? login =
                       await AuthApis().loginUser(controller.phone.text);
                   if (login?.data != null) {
-                    Get.snackbar(
-                        "Unknown Network error", login?.data?.msg ?? '');
+                    // // Get.snackbar(
+                    //  "Success", login?.data?.msg ?? '');
                     Get.toNamed(
                       Routes.OTP_VERIFICATION,
                       arguments: {
@@ -96,8 +95,7 @@ class LoginView extends GetView<LoginController> {
                         'phone': controller.phone.text
                       },
                     );
-                  } else {
-                  }
+                  } else {}
                 },
               ),
             ),

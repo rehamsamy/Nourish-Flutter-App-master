@@ -144,8 +144,8 @@ class ProfileView extends GetView<ProfileController> {
                             ) as UpdateProfileModel;
                             String? mes = updateModel.data?.msg.toString();
                             Get.log('updated   =>' + mes.toString());
-                            Get.snackbar("Unknown Network error",
-                                updateModel.data?.msg ?? '');
+                            // Get.snackbar("Unknown Network error",
+                            //  updateModel.data?.msg ?? '');
                             Get.dialog(const OTPDialog());
                           },
                         ),

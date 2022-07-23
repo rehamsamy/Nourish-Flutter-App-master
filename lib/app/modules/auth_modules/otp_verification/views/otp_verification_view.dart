@@ -7,6 +7,7 @@ import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:pin_input_text_field/pin_input_text_field.dart';
@@ -100,8 +101,11 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                     VerifyEmailModel? verifyOtp = await AuthApis()
                         .verifyOtpMobile(
                             controller.phone ?? '', controller.otp.text)
-                        .then((value) {
+                        .then((value) async {
                       // Get.forceAppUpdate();
+                      await Get.find<SharedPrefService>()
+                          .saveToken(value?.accessToken ?? "");
+
                       value?.accessToken != null ||
                               value?.accessToken?.trim() != ""
                           ? Get.offAllNamed(Routes.HOME_PAGE)

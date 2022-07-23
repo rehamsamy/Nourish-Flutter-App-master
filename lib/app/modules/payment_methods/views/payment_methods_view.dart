@@ -6,8 +6,10 @@ import 'package:nourish_sa/app/data/models/add_order_model.dart';
 import 'package:nourish_sa/app/data/models/payment_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/order_apis.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/payment_apis.dart';
+import 'package:nourish_sa/app/modules/add_Address/controllers/add_address_controller.dart';
 import 'package:nourish_sa/app/modules/days_time/views/days_time_view.dart';
 import 'package:nourish_sa/app/modules/delivery_addresses/views/delivery_addresses_view.dart';
+import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
 import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import 'package:nourish_sa/app/modules/payment_methods/views/widgets/or.dart';
@@ -22,7 +24,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
 
   @override
   Widget build(BuildContext context) {
-    int ? selectedPaymentId;
+    int? selectedPaymentId;
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kPaymentMethod.tr),
@@ -30,8 +32,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
       body: GetBuilder<PaymentMethodsController>(
-        builder: (_)=>
-        Padding(
+        builder: (_) => Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 27.w,
           ),
@@ -62,39 +63,48 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                   style: Get.textTheme.headline1,
                 ),
                 FutureBuilder(
-                  future: PaymentApis().getPaymentMethods(),
-                  builder: (_,snapshot){
-                    if(snapshot.hasData){
-                      List<PaymentItem> ? list=snapshot.data as List<PaymentItem>;
-                      if(list.isNotEmpty){
-                        return  ListView.builder(
-                          itemCount: list.length,
-                          shrinkWrap: true,
-                          physics: const NeverScrollableScrollPhysics(),
-                          itemBuilder: (context, index) {
-                            selectedPaymentId=list[index].id;
-                            return  InkWell(
-                              onTap: (){
-                                controller.changeSelectedPaymentIndex(index);
-                              },
-                              child: PaymentMethodItem(
-                                image: list[index].logo??'https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png',
-                                name: list[index].name??"masterCard",
-                                isSelected: controller.selectPaymentId==index?true:false,
-                              ),
-                            );
-                          },
+                    future: PaymentApis().getPaymentMethods(),
+                    builder: (_, snapshot) {
+                      if (snapshot.hasData) {
+                        List<PaymentItem>? list =
+                            snapshot.data as List<PaymentItem>;
+                        if (list.isNotEmpty) {
+                          return ListView.builder(
+                            itemCount: list.length,
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            itemBuilder: (context, index) {
+                              selectedPaymentId = list[index].id;
+                              return InkWell(
+                                onTap: () {
+                                  controller.changeSelectedPaymentIndex(index);
+                                },
+                                child: PaymentMethodItem(
+                                  image: list[index].logo ??
+                                      'https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png',
+                                  name: list[index].name ?? "masterCard",
+                                  isSelected:
+                                      controller.selectPaymentId == index
+                                          ? true
+                                          : false,
+                                ),
+                              );
+                            },
+                          );
+                        } else {
+                          return const SizedBox(
+                            height: 200,
+                            child: Center(
+                              child: Text('no payment found'),
+                            ),
+                          );
+                        }
+                      } else {
+                        return const SizedBox(
+                          height: 200,
                         );
-                      }else{
-                        return const SizedBox(height: 200,child: Center(child: Text('no payment found'),),);
                       }
-                    }else{
-                      return const SizedBox(height: 200,);
-                    }
-
-                  }
-
-                ),
+                    }),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 26.h),
                   child: const OrDivider(),
@@ -108,26 +118,28 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                   padding: EdgeInsets.symmetric(vertical: 46.h),
                   child: CustomButton(
                     title: LocalKeys.kCheckout.tr,
-                    onPress: () async{
-                    AddOrderModel ? orderModel=  await OrderApis().addOrder(
-                        delivery_type: "delivery",
-                        package_id: PackageDetailsView.packageDetailModel?.data?.id ?? 0,
-                        address_id: DeliveryAddressesView.selectedAddressId??0,
-                        payment_id: selectedPaymentId??0,
-                        branch_id: 2,
-                        start_date: DaysTimeView.startDate??'',
-                        period_id: DaysTimeView.selectedBranchPeriodId??1,
+                    onPress: () async {
+                      AddOrderModel? orderModel = await OrderApis().addOrder(
+                        delivery_type:
+                            PackageDetailsController().selectedPlanType,
+                        package_id:
+                            PackageDetailsView.packageDetailModel?.data?.id ??
+                                0,
+                        address_id:
+                            DeliveryAddressesView.selectedAddressId ?? 0,
+                        payment_id: selectedPaymentId ?? 0,
+                        branch_id: AddAddressController().branchId,
+                        start_date: DaysTimeView.startDate ?? '',
+                        period_id: DaysTimeView.selectedBranchPeriodId ?? 1,
                         selectedDays: PackageMealsController.selectedDays,
                       );
-                    if(orderModel?.data !=null){
-                      Get.snackbar('Add Order', orderModel?.data?.msg??'');
-                      Get.offNamedUntil(
-                          Routes.SUCCESS_ORDER, (route) => route.isFirst);
-                    }else{
-                      Get.snackbar('Add Order', orderModel?.message??'');
-                    }
-
-
+                      if (orderModel?.data != null) {
+                        Get.snackbar('Add Order', orderModel?.data?.msg ?? '');
+                        Get.offNamedUntil(
+                            Routes.SUCCESS_ORDER, (route) => route.isFirst);
+                      } else {
+                        Get.snackbar('Add Order', orderModel?.message ?? '');
+                      }
                     },
                   ),
                 ),

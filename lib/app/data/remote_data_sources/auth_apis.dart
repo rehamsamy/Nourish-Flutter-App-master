@@ -172,10 +172,8 @@ class AuthApis {
     return resendOtpModel;
   }
 
-/*//TODO: Implement this method to get Refreshed Token
   Future<String> refreshToken() async {
-    LoginModel verifyModel = LoginModel();
-    // String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    VerifyEmailModel data = VerifyEmailModel();
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
         path: 'auth/refresh',
@@ -184,12 +182,15 @@ class AuthApis {
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      LoginModel.fromJson, // <- Function to convert API response to your model
+      VerifyEmailModel
+          .fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(
       ok: (authResponse) async {
-        token = authResponse['access_token'];
-        Get.find<SharedPrefService>().saveToken(token ?? "");
+        data = authResponse as VerifyEmailModel;
+        token = authResponse.accessToken;
+        await Get.find<SharedPrefService>().saveToken(token ?? "");
+        Get.forceAppUpdate();
       },
       badRequest: (info) {},
       noAuth: (data) {
@@ -198,5 +199,5 @@ class AuthApis {
       orElse: () {},
     );
     return token ?? "";
-  }*/
+  }
 }

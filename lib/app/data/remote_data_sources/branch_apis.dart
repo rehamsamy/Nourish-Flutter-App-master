@@ -1,17 +1,13 @@
-import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/branch_model.dart';
-import 'package:nourish_sa/app/data/models/create_package_model.dart';
-import 'package:nourish_sa/app/data/services/network_service.dart/logging_interceptor.dart';
-import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import '../services/network_service.dart/dio_network_service.dart';
 
 class BranchApis {
   Future<List<BranchItem>?> getBranches() async {
     BranchModel? branchModel = BranchModel();
     List<BranchItem>? list;
-    final request = const NetworkRequest(
-      type: NetworkRequestType.POST,
+    const request = NetworkRequest(
+      type: NetworkRequestType.GET,
       path: 'branches',
       data: NetworkRequestBody.json({}),
     );

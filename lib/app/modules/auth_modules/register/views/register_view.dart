@@ -109,7 +109,8 @@ class RegisterView extends GetView<RegisterController> {
                     width: Get.width * 0.7,
                     child: RichText(
                       text: TextSpan(
-                        style: const TextStyle(color: Colors.black, fontSize: 36),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 36),
                         children: <TextSpan>[
                           TextSpan(
                             text: LocalKeys.kReadAndAgreed.tr,
@@ -153,14 +154,19 @@ class RegisterView extends GetView<RegisterController> {
                 padding: EdgeInsets.only(top: 26.h, bottom: 20.h),
                 child: CustomButton(
                   title: LocalKeys.kSignUp.tr,
-                  onPress: ()async {
-                    RegisterModel  model= await  AuthApis().registerUser(controller.firstName.text,
-                    controller.lastName.text,controller.phone.text,controller.email.text) as RegisterModel ;
-                    if(model.data !=null){
-                      Get.toNamed(Routes.OTP_VERIFICATION,arguments: {'phone':controller.phone.text, "isEmail": true,});
-                      Get.snackbar("Unknown Network error", model.data?.msg??'');
+                  onPress: () async {
+                    RegisterModel model = await AuthApis().registerUser(
+                        controller.firstName.text,
+                        controller.lastName.text,
+                        controller.phone.text,
+                        controller.email.text) as RegisterModel;
+                    if (model.data != null) {
+                      Get.toNamed(Routes.OTP_VERIFICATION, arguments: {
+                        'phone': controller.phone.text,
+                        "isEmail": true,
+                      });
+                      // Get.snackbar("Succe", model.data?.msg??'');
                     }
-
                   },
                 ),
               ),

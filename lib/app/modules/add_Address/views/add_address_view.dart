@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -5,7 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/add_address_model.dart';
+import 'package:nourish_sa/app/data/models/branch_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/address_apis.dart';
+import 'package:nourish_sa/app/shared/branch_select.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app/shared/map_edit_location.dart';
@@ -35,6 +38,59 @@ class AddAddressView extends GetView<AddAddressController> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const MapEditLocationPin(),
+                Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: FutureBuilder<List<BranchItem>?>(
+                    future: controller.getBranches(),
+                    builder: (context, snapshot) {
+                      if (snapshot.hasData) {
+                        controller.branches = snapshot.data!;
+                        return controller.branches.isNotEmpty
+                            ? SizedBox(
+                                height: context.height * .15,
+                                width: context.width,
+                                child: GetBuilder<AddAddressController>(
+                                  builder: (controller) => ListView.separated(
+                                    separatorBuilder: (context, index) =>
+                                        const SizedBox(
+                                      width: 8,
+                                    ),
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: controller.branches.length,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      //return branch item card
+                                      return BranchSelectCard(
+                                          title:
+                                              controller.branches[index].name ??
+                                                  "",
+                                          address: controller
+                                                  .branches[index].address ??
+                                              "",
+                                          onTap: () {
+                                            controller.setBranch(
+                                                controller.branches[index].id ??
+                                                    0);
+                                          },
+                                          selected: controller.branchId ==
+                                              controller.branches[index].id);
+                                    },
+                                  ),
+                                ),
+                              )
+                            : const SizedBox(
+                                child: Text(
+                                    "Sorry we don't deliver in your area",
+                                    style: TextStyle(color: Colors.red)),
+                              );
+                      } else {
+                        return const Center(
+                          child: CupertinoActivityIndicator(),
+                        );
+                      }
+                    },
+                  ),
+                ),
                 CustomInput(
                   hint: controller.address?.name ?? "Riyadh Province , Riyadh",
                   title: LocalKeys.kAddressName.tr,
@@ -132,7 +188,7 @@ class AddAddressView extends GetView<AddAddressController> {
                 CustomInput(
                   hint: controller.address?.area ?? "Riyadh Province , Riyadh",
                   title: LocalKeys.kArea.tr,
-                  textEditingController: controller.addressName,
+                  textEditingController: controller.area,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -141,13 +197,13 @@ class AddAddressView extends GetView<AddAddressController> {
                       hint: controller.address?.building ?? "Al Madarah",
                       title: LocalKeys.kBuilding.tr,
                       width: 176.w,
-                      textEditingController: controller.addressName,
+                      textEditingController: controller.building,
                     ),
                     CustomInput(
                       hint: controller.address?.flat ?? "Flat",
                       title: LocalKeys.kFlat.tr,
                       width: 176.w,
-                      textEditingController: controller.addressName,
+                      textEditingController: controller.flat,
                       secondTitle: LocalKeys.kOptional.tr,
                     ),
                   ],
@@ -156,7 +212,7 @@ class AddAddressView extends GetView<AddAddressController> {
                   hint:
                       controller.address?.street ?? "Riyadh Province , Riyadh",
                   title: LocalKeys.kStreet.tr,
-                  textEditingController: controller.addressName,
+                  textEditingController: controller.street,
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -165,13 +221,13 @@ class AddAddressView extends GetView<AddAddressController> {
                       hint: controller.address?.postalCode ?? "Al Madarah",
                       title: LocalKeys.kPostalCode.tr,
                       width: 176.w,
-                      textEditingController: controller.addressName,
+                      textEditingController: controller.postalCode,
                     ),
                     CustomInput(
                       hint: controller.address?.postalCode ?? "26256",
                       title: LocalKeys.kAdditionalNumber.tr,
                       width: 176.w,
-                      textEditingController: controller.addressName,
+                      textEditingController: controller.additionalNumber,
                     ),
                   ],
                 ),
@@ -179,7 +235,7 @@ class AddAddressView extends GetView<AddAddressController> {
                   hint: controller.address?.deliveryInstructions ??
                       "Riyadh Province , Riyadh",
                   title: LocalKeys.kDeliveryInstructions.tr,
-                  textEditingController: controller.addressName,
+                  textEditingController: controller.deliveryInstructions,
                   secondTitle: LocalKeys.kOptional,
                 ),
                 SizedBox(
@@ -190,8 +246,8 @@ class AddAddressView extends GetView<AddAddressController> {
                   onPress: () async {
                     AddAddressModel? addressModel = await AddressApis()
                         .addAddress(
-                            lat: controller.address?.lat ?? 31.1,
-                            lng: controller.address?.lng ?? 31.1,
+                            lat: controller.location?.latitude ?? 0.0,
+                            lng: controller.location?.longitude ?? 0.0,
                             name: controller.address?.name ??
                                 controller.addressName.text,
                             address_type: controller.addressType,
