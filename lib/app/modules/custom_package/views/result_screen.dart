@@ -98,12 +98,12 @@ class ResultScreen extends GetView<CustomPackageController> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "150 G",
+                                  '${packageModel?.data?.responseData?.carbs??'0.0'}',
                                   style: Get.textTheme.bodyText1,
                                 ),
                               ),
                               Text(
-                               '${packageModel?.data?.responseData?.carbs??'0.0'}',
+                                "Carb",
                                 style: Get.textTheme.headline3,
                               ),
                             ],
@@ -120,13 +120,13 @@ class ResultScreen extends GetView<CustomPackageController> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "150 G",
+                                  '${packageModel?.data?.responseData?.fat??'0.0'}',
                                   style: Get.textTheme.bodyText1!
                                       .copyWith(color: primaryColor),
                                 ),
                               ),
                               Text(
-                                '${packageModel?.data?.responseData?.fat??'0.0'}',
+                                "Fat",
                                 style: Get.textTheme.headline3,
                               ),
                             ],
@@ -143,13 +143,13 @@ class ResultScreen extends GetView<CustomPackageController> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  "150 G",
+                                  '${packageModel?.data?.responseData?.protein??'0.0'}',
                                   style: Get.textTheme.bodyText1!
                                       .copyWith(color: const Color(0xff2BB07B)),
                                 ),
                               ),
                               Text(
-                                '${packageModel?.data?.responseData?.protein??'0.0'}',
+                                "Protein",
                                 style: Get.textTheme.headline3,
                               ),
                             ],
