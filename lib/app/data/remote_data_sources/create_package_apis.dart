@@ -17,9 +17,10 @@ class CreatePackageApis {
     required String goal,
     required List selectedMeals,
   }) async {
-    CreatePackageModel? packageModel = CreatePackageModel();
+    CreatePackageModel? packageModel ;
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     logger.wtf(goal);
+   // Map<String,dynamic>  days= {'saturday': 1};
     Map<String, dynamic> map = {
       'gender': gender,
       'experience_id': experience_id,
@@ -43,22 +44,23 @@ class CreatePackageApis {
     );
 
     Get.log('ccccccc 1 ' + request.path.toString());
-    // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
       CreatePackageModel
           .fromJson, // <- Function to convert API response to your model
     );
-    Get.log('ccccccc 2' + response.toString());
+
+    // Execute a request and convert response to your model:
+
+    Get.log('ccccccc 2' );
     response.maybeWhen(
-        ok: (model) {
-          Get.log('ccccccc 2' + model.toString());
-          packageModel = model;
+        ok: (response) {
+          packageModel = response;
+          Get.log('ccccccc 2' + response.toString());
           return packageModel;
+
         },
-        conflict: (err) {
-          print('err' + err.toString());
-        },
+        badRequest: (info) {},
         orElse: () {});
     return packageModel;
   }

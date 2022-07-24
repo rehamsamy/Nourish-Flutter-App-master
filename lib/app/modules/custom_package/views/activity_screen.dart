@@ -89,7 +89,7 @@ class ActivityScreen extends GetView<CustomPackageController> {
                                       ? 'pound'
                                       : 'kg',
                                   goal: controller.mainGoal,
-                                  selectedMeals: controller.selectedMeals)
+                                  selectedMeals: controller.selectedMeals).catchError((err)=>Get.log('ccc    1  '+err.toString()))
                               .then((value) {
                         AnalyticsService.instance.logEvent("Calculation_View");
                         controller.packageModel = value;
