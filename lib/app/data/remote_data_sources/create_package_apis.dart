@@ -18,6 +18,7 @@ class CreatePackageApis {
     required List selectedMeals,
   }) async {
     CreatePackageModel? packageModel = CreatePackageModel();
+    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
     logger.wtf(goal);
     Map<String, dynamic> map = {
       'gender': gender,
@@ -36,10 +37,9 @@ class CreatePackageApis {
       type: NetworkRequestType.POST,
       path: 'updateAdditionalData',
       data: NetworkRequestBody.json(map),
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': 'Bearer ${Get.find<SharedPrefService>().getToken()}',
-      },
+        headers: {
+          'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTg2NjE4NTIsImV4cCI6MTY1ODc0ODI1MiwibmJmIjoxNjU4NjYxODUyLCJqdGkiOiJGblVmRnljWlVzWHJoRGFTIiwic3ViIjo0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.dh-Owz54LW2fzXV_opSHxrtmbjMwbbU0F9uliOpulyw',
+        }
     );
 
     Get.log('ccccccc 1 ' + request.path.toString());

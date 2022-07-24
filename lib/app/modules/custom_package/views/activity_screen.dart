@@ -93,8 +93,10 @@ class ActivityScreen extends GetView<CustomPackageController> {
                               .then((value) {
                         AnalyticsService.instance.logEvent("Calculation_View");
                         controller.packageModel = value;
+                        Get.snackbar('Create package', 'create package successfully');
                         Get.to(
-                          () => const CalcuationScreen(),
+                          () =>  CalcuationScreen(),
+                          arguments: {'resultModel':value}
                         );
                         return value;
                       });

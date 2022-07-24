@@ -23,7 +23,7 @@ class Data {
       this.packages,});
 
   Data.fromJson(dynamic json) {
-    responseData = json['response_data'] != null ? Response_data.fromJson(json['responseData']) : null;
+    responseData = json['response_data'] != null ? ResponseData.fromJson(json['responseData']) : null;
     if (json['packages'] != null) {
       packages = [];
       json['packages'].forEach((v) {
@@ -31,7 +31,7 @@ class Data {
       });
     }
   }
-  Response_data? responseData;
+  ResponseData? responseData;
   List<Packages>? packages;
 
   Map<String, dynamic> toJson() {
@@ -49,20 +49,20 @@ class Data {
 
 class Packages {
   Packages({
-      this.id, 
-      this.image, 
-      this.tax, 
-      this.priceWithTax, 
-      this.daysNumberOfWeek, 
-      this.special, 
-      this.specialFor, 
-      this.totalCarbs, 
-      this.totalFats, 
-      this.totalProteins, 
-      this.name, 
-      this.descriptions, 
-      this.breakfasts, 
-      this.lunches, 
+      this.id,
+      this.image,
+      this.tax,
+      this.priceWithTax,
+      this.daysNumberOfWeek,
+      this.special,
+      this.specialFor,
+      this.totalCarbs,
+      this.totalFats,
+      this.totalProteins,
+      this.name,
+      this.descriptions,
+      this.breakfasts,
+      this.lunches,
       this.dinners,});
 
   Packages.fromJson(dynamic json) {
@@ -92,13 +92,13 @@ class Packages {
     if (json['lunches'] != null) {
       lunches = [];
       json['lunches'].forEach((v) {
-      //  lunches?.add(dynamic.fromJson(v));
+        lunches?.add(Breakfasts.fromJson(v));
       });
     }
     if (json['dinners'] != null) {
       dinners = [];
       json['dinners'].forEach((v) {
-       // dinners?.add(dynamic.fromJson(v));
+        dinners?.add(Breakfasts.fromJson(v));
       });
     }
   }
@@ -150,16 +150,16 @@ class Packages {
 
 class Breakfasts {
   Breakfasts({
-      this.id, 
-      this.image, 
-      this.calories, 
-      this.fat, 
-      this.protein, 
-      this.carb, 
-      this.weight, 
-      this.price, 
-      this.name, 
-      this.description, 
+      this.id,
+      this.image,
+      this.calories,
+      this.fat,
+      this.protein,
+      this.carb,
+      this.weight,
+      this.price,
+      this.name,
+      this.description,
       this.pivot,});
 
   Breakfasts.fromJson(dynamic json) {
@@ -209,7 +209,7 @@ class Breakfasts {
 
 class Pivot {
   Pivot({
-      this.packageId, 
+      this.packageId,
       this.productId,});
 
   Pivot.fromJson(dynamic json) {
@@ -249,26 +249,30 @@ class Descriptions {
 
 }
 
-class Response_data {
-  Response_data({
+class ResponseData {
+  ResponseData({
       this.carbs, 
       this.fat, 
-      this.protein,});
+      this.protein, 
+      this.calories,});
 
-  Response_data.fromJson(dynamic json) {
+  ResponseData.fromJson(dynamic json) {
     carbs = json['carbs'];
     fat = json['fat'];
     protein = json['protein'];
+    calories = json['calories'];
   }
   double? carbs;
   double? fat;
   double? protein;
+  double? calories;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
     map['carbs'] = carbs;
     map['fat'] = fat;
     map['protein'] = protein;
+    map['calories'] = calories;
     return map;
   }
 
