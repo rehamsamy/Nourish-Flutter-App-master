@@ -1,9 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/core/values/app_constants.dart';
 
+import '../../../data/models/branch_model.dart';
+import '../../../data/models/package_detail_model.dart';
 import '../../../data/services/analytics_service.dart';
+import '../../package_details/views/package_details_view.dart';
 
 class DaysTimeController extends GetxController {
   final TextEditingController startDayController = TextEditingController();
@@ -14,11 +16,26 @@ class DaysTimeController extends GetxController {
 
   @override
   void onInit() {
-    AnalyticsService.instance.logEvent("Days_Time_View");
     super.onInit();
+    AnalyticsService.instance.logEvent("Days_Time_View");
+    packageDetailModel = PackageDetailsView.packageDetailModel;
+    daysCount = packageDetailModel?.data?.daysNumberOfWeek ?? 0;
+    branches = packageDetailModel?.data?.branches;
+    daysStart = int.parse(packageDetailModel?.data?.daysBeforeStart ?? '');
+    branchTime.clear();
+    int length = packageDetailModel?.data?.branches?.length ?? 0;
+    if (length > 0) {
+      packageDetailModel?.data?.branches?[0].pickupPeriods
+          ?.map((e) => branchTime.add(e.period ?? ''))
+          .toList();
+      branchTimeIds = packageDetailModel?.data?.branches?[0].pickupPeriods
+          ?.map((e) => e.id)
+          .toList();
+      branchTimeSelectedValue = branchTime[0];
+    }
   }
 
-  String branchTimeSelectedValues = '';
+  String branchTimeSelectedValue = '';
   List branchDays = [
     'sunday',
     'monday',
@@ -41,19 +58,29 @@ class DaysTimeController extends GetxController {
         'lunch': [],
         'dinner': [],
       };
-
-
     }
     update();
   }
 
   void toggleBranchTimeSelection(value) {
-    if (branchTimeSelectedValues.contains(value)) {
-      branchTimeSelectedValues = '';
+    if (branchTimeSelectedValue.contains(value)) {
+      branchTimeSelectedValue = '';
     } else {
-      branchTimeSelectedValues = value;
+      branchTimeSelectedValue = value;
     }
-    print(value);
     update();
   }
+
+  //---------------------------------------------------------------------------------------------------------------------
+  PackageDetailModel? packageDetailModel;
+  // static List<String> selectedDays = [];
+  int daysCount = 0;
+  int? daysStart;
+  List<BranchItem>? branches;
+  List<String> selectedDays = [];
+  List<String> branchTime = [];
+  List<int?>? branchTimeIds = [];
+  int differenceValue = 0;
+  static int? selectedBranchPeriodId;
+  static String? startDate;
 }

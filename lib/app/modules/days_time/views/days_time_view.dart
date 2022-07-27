@@ -5,46 +5,18 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/branch_model.dart';
-import 'package:nourish_sa/app/data/models/package_detail_model.dart';
-import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
+import 'package:nourish_sa/app/shared/custom_dropdown.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../controllers/days_time_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class DaysTimeView extends GetView<DaysTimeController> {
-  // DaysTimeView({Key? key}) : super(key: key);
-  PackageDetailModel? packageDetailModel;
-  // static List<String> selectedDays = [];
-  int daysCount = 0;
-  int? daysStart;
-  List<BranchItem>? branches;
-  List<String> selectedDays = [];
-  List<String> branchTime = [];
-  List<int?>? branchTimeIds = [];
-  int differenceValue = 0;
-  static int? selectedBranchPeriodId;
-  static String? startDate;
+  const DaysTimeView({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Get.log('sizee 1   ' + daysCount.toString());
-    packageDetailModel = PackageDetailsView.packageDetailModel;
-    daysCount = packageDetailModel?.data?.daysNumberOfWeek ?? 0;
-    branches = packageDetailModel?.data?.branches;
-    daysStart = int.parse(packageDetailModel?.data?.daysBeforeStart ?? '');
-    branchTime.clear();
-    int length = packageDetailModel?.data?.branches?.length ?? 0;
-    if (length > 0) {
-      packageDetailModel?.data?.branches?[0].pickupPeriods
-          ?.map((e) => branchTime.add(e.period ?? ''))
-          .toList();
-      branchTimeIds = packageDetailModel?.data?.branches?[0].pickupPeriods
-          ?.map((e) => e.id)
-          .toList();
-    }
     return Scaffold(
       resizeToAvoidBottomInset: false,
       appBar: AppBar(
@@ -70,7 +42,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Text(
-                '${LocalKeys.kDaySelectCount.tr} $daysCount',
+                '${LocalKeys.kDaySelectCount.tr} ${controller.daysCount}',
                 style: const TextStyle(fontSize: 12),
               ),
             ),
@@ -148,7 +120,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
             Align(
               alignment: AlignmentDirectional.centerStart,
               child: Text(
-                ' ${LocalKeys.kStartDayDate.tr} $daysStart',
+                ' ${LocalKeys.kStartDayDate.tr} ${controller.daysStart}',
                 style: const TextStyle(fontSize: 12),
               ),
             ),
@@ -165,12 +137,12 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 ),
                 child: DateTimePicker(
                   onChanged: (val) {
-                    startDate = val;
+                    DaysTimeController.startDate = val;
                     DateTime x = DateTime.parse(val);
                     final date2 = DateTime.now();
                     final difference = daysBetween(x, date2);
-                    differenceValue = difference;
-                    Get.log('xxx      $daysStart');
+                    controller.differenceValue = difference;
+                    Get.log('xxx      ${controller.daysStart}');
                   },
                   type: DateTimePickerType.date,
                   firstDate: DateTime.now(),
@@ -230,32 +202,24 @@ class DaysTimeView extends GetView<DaysTimeController> {
             SizedBox(
               width: Get.width,
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(LocalKeys.kBranchTime.toString()),
+                  Text(LocalKeys.kBranchTime.tr),
                   GetBuilder(
-                    builder: (DaysTimeController controller) => Wrap(
-                      spacing: 10.w,
-                      runSpacing: 10.w,
-                      children: List.generate(
-                          branchTime.length,
-                          (index) => FilterChip(
-                                label: Text(branchTime[index],
-                                    style: const TextStyle(
-                                      color: Colors.white,
-                                    )),
-                                selectedColor: primaryColor,
-                                backgroundColor: Colors.grey,
-                                selected: controller.branchTimeSelectedValues
-                                    .contains(branchTime[index]),
-                                onSelected: (l) {
-                                  controller.toggleBranchTimeSelection(
-                                      branchTime[index]);
-                                  selectedBranchPeriodId =
-                                      branchTimeIds?[index];
-                                },
-                              )),
-                    ),
-                  ),
+                      builder: (DaysTimeController controller) =>
+                          CustomDropDown(
+                              width: double.infinity,
+                              items: controller.branchTime,
+                              currentValue: controller.branchTimeSelectedValue,
+                              values: controller.branchTime
+                                  .map((e) => e.toString())
+                                  .toList(),
+                              title: (LocalKeys.kBranchTime.tr),
+                              hintText: "Select Branch Time",
+                              onChanged: (value) {
+                                controller.branchTimeSelectedValue =
+                                    value.toString();
+                              })),
                 ],
               ),
             ),
@@ -263,15 +227,16 @@ class DaysTimeView extends GetView<DaysTimeController> {
             CustomButton(
               title: LocalKeys.kContinue.tr,
               onPress: () {
-                if (differenceValue < daysStart!) {
-                  Get.snackbar(
-                      'Error', 'you must choose day after $daysStart days');
+                if (controller.differenceValue < controller.daysStart!) {
+                  Get.snackbar('Error',
+                      'you must choose day after ${controller.daysStart} days');
 
                   return 0;
                 }
-                if (daysCount > controller.selectedItems.length ||
-                    daysCount < controller.selectedItems.length) {
-                  Get.snackbar('Error', 'you must choose  $daysCount days');
+                if (controller.daysCount > controller.selectedItems.length ||
+                    controller.daysCount < controller.selectedItems.length) {
+                  Get.snackbar(
+                      'Error', 'you must choose  ${controller.daysCount} days');
                   return 0;
                 }
 

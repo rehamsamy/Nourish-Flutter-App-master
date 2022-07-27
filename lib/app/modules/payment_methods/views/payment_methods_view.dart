@@ -6,8 +6,7 @@ import 'package:nourish_sa/app/data/models/add_order_model.dart';
 import 'package:nourish_sa/app/data/models/payment_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/order_apis.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/payment_apis.dart';
-import 'package:nourish_sa/app/modules/add_Address/controllers/add_address_controller.dart';
-import 'package:nourish_sa/app/modules/days_time/views/days_time_view.dart';
+import 'package:nourish_sa/app/modules/days_time/controllers/days_time_controller.dart';
 import 'package:nourish_sa/app/modules/delivery_addresses/views/delivery_addresses_view.dart';
 import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
@@ -17,6 +16,7 @@ import 'package:nourish_sa/app/modules/payment_methods/views/widgets/payment_met
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
+import '../../branch_select/controllers/branch_select_controller.dart';
 import '../controllers/payment_methods_controller.dart';
 
 class PaymentMethodsView extends GetView<PaymentMethodsController> {
@@ -128,9 +128,10 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                         address_id:
                             DeliveryAddressesView.selectedAddressId ?? 0,
                         payment_id: selectedPaymentId ?? 0,
-                        branch_id: AddAddressController().branchId,
-                        start_date: DaysTimeView.startDate ?? '',
-                        period_id: DaysTimeView.selectedBranchPeriodId ?? 1,
+                        branch_id: BranchSelectController().branchId,
+                        start_date: DaysTimeController.startDate ?? '',
+                        period_id:
+                            DaysTimeController.selectedBranchPeriodId ?? 1,
                         selectedDays: PackageMealsController.selectedDays,
                       );
                       if (orderModel?.data != null) {

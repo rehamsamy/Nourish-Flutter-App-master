@@ -58,6 +58,10 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                   onTap: () async {
                     controller.selectedPlanType = 'branch';
                     controller.update();
+                    Get.toNamed(Routes.BRANCH_SELECT, arguments: {
+                      'packageDetailModel': controller.packageDetailModel,
+                      'selectedPlanType': controller.selectedPlanType,
+                    });
                   },
                   title: LocalKeys.kFromBranch.tr,
                 ),
@@ -68,6 +72,10 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 onTap: () async {
                   controller.selectedPlanType = 'delivery';
                   controller.update();
+                  Get.toNamed(Routes.BRANCH_SELECT, arguments: {
+                    'packageDetailModel': controller.packageDetailModel,
+                    'selectedPlanType': controller.selectedPlanType,
+                  });
                 },
                 title: LocalKeys.kDelivery.tr,
               ),

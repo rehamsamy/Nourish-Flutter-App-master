@@ -104,7 +104,6 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                             controller.phone ?? '', controller.otp.text);
                     token = await Get.find<SharedPrefService>()
                         .saveToken(verifyOtp?.accessToken ?? "");
-                    print("New Saved Token: $token");
                     if (verifyOtp?.accessToken?.isNotEmpty ?? false) {
                       loggedUser = verifyOtp?.user ?? LoggedUser();
                       Get.offAllNamed(Routes.HOME_PAGE);
