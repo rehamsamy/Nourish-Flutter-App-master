@@ -113,7 +113,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                             style: Get.textTheme.headline3,
                           ),
                           Text(
-                            '${(controller.addtionalPackagePrice) - (controller.packagePrice ?? 0)} SAR',
+                            '${(controller.addtionalPackagePrice)} SAR',
                           )
                         ],
                       ),
@@ -206,7 +206,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                      */
                         Get.toNamed(Routes.PACKAGE_CART, arguments: {
                           'total': controller.totalPackagePrice,
-                          'isSubscribtion':false
+                          'isSubscribtion': false
                         });
                       }),
                   SizedBox(
@@ -229,8 +229,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
           physics: const NeverScrollableScrollPhysics(),
           padding: EdgeInsets.symmetric(vertical: 31.h),
           itemBuilder: (context, index) {
-            String x=controller.newMealsList?[index].name??''.toString();
-            Get.log('vvvv 111 '+x);
+            String x = controller.newMealsList?[index].name ?? ''.toString();
+            Get.log('vvvv 111 ' + x);
             return FadeInRight(
               duration: Duration(milliseconds: 100 * index),
               child: InkWell(
@@ -257,7 +257,8 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   id: controller.newMealsList?[index].id ?? 0,
                   title: controller.newMealsList?[index].name ?? '',
                   caleries:
-                      controller.newMealsList?[index].description.toString() ?? '',
+                      controller.newMealsList?[index].description.toString() ??
+                          '',
                   image: controller.newMealsList?[index].image ?? '',
                   isSelected: false,
                 ),

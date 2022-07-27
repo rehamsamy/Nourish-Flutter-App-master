@@ -117,13 +117,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
                 style: Theme.of(context).textTheme.headline3,
               ),
             ),
-            Align(
-              alignment: AlignmentDirectional.centerStart,
-              child: Text(
-                ' ${LocalKeys.kStartDayDate.tr} ${controller.daysStart}',
-                style: const TextStyle(fontSize: 12),
-              ),
-            ),
+
             Padding(
               padding: EdgeInsets.only(
                 top: 7.h,
@@ -144,8 +138,11 @@ class DaysTimeView extends GetView<DaysTimeController> {
                     controller.differenceValue = difference;
                     Get.log('xxx      ${controller.daysStart}');
                   },
+                  initialDate: DateTime.now()
+                      .add(Duration(days: controller.daysStart ?? 0)),
                   type: DateTimePickerType.date,
-                  firstDate: DateTime.now(),
+                  firstDate: DateTime.now()
+                      .add(Duration(days: controller.daysStart ?? 0)),
                   lastDate: DateTime(2100),
                   dateMask: 'yyyy-MM-dd',
                   style: Theme.of(context).textTheme.bodyText2,
@@ -208,17 +205,20 @@ class DaysTimeView extends GetView<DaysTimeController> {
                   GetBuilder(
                       builder: (DaysTimeController controller) =>
                           CustomDropDown(
-                              width: double.infinity,
+                              width: context.width,
                               items: controller.branchTime,
+                              isEnabled: true,
                               currentValue: controller.branchTimeSelectedValue,
                               values: controller.branchTime
                                   .map((e) => e.toString())
                                   .toList(),
                               title: (LocalKeys.kBranchTime.tr),
-                              hintText: "Select Branch Time",
+                              hintText: "",
                               onChanged: (value) {
                                 controller.branchTimeSelectedValue =
                                     value.toString();
+                                controller.update();
+                                print(controller.branchTimeSelectedValue);
                               })),
                 ],
               ),

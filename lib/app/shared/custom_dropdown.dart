@@ -33,25 +33,19 @@ class CustomDropDown extends StatelessWidget {
         if (title != null)
           Padding(
             padding: EdgeInsets.only(bottom: 9.h),
-            child: SizedBox(
-              width: width,
-              child: Text(
-                title!,
-                style: Theme.of(context).textTheme.headline3,
-              ),
+            child: Text(
+              title!,
+              style: Theme.of(context).textTheme.headline3,
             ),
           ),
         Padding(
           padding: EdgeInsets.only(bottom: 16.h),
           child: DropdownButton2<String>(
-            hint: SizedBox(
-              width: width - 40.w,
-              child: Text(
-                hintText,
-                style: Theme.of(context).textTheme.headline1!.copyWith(
-                      fontSize: 14.sp,
-                    ),
-              ),
+            hint: Text(
+              hintText,
+              style: Theme.of(context).textTheme.headline1!.copyWith(
+                    fontSize: 14.sp,
+                  ),
             ),
             buttonWidth: width,
             buttonPadding: EdgeInsets.symmetric(
@@ -73,14 +67,11 @@ class CustomDropDown extends StatelessWidget {
             onChanged: onChanged,
             items: items.map<DropdownMenuItem<String>>((e) {
               return DropdownMenuItem(
-                child: SizedBox(
-                  width: width - 40.w,
-                  child: Text(
-                    e,
-                    maxLines: 1,
-                    overflow: TextOverflow.ellipsis,
-                    style: Theme.of(context).textTheme.caption,
-                  ),
+                child: Text(
+                  e,
+                  maxLines: 1,
+                  overflow: TextOverflow.ellipsis,
+                  style: Theme.of(context).textTheme.caption,
                 ),
                 value: values != null ? values![items.indexOf(e)] : e,
                 enabled: isEnabled,
