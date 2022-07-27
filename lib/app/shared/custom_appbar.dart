@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
+import 'package:nourish_sa/app/modules/home_screen/views/home_screen_view.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
   @override
@@ -62,9 +63,9 @@ class CustomAppBar extends StatelessWidget with PreferredSizeWidget {
         ),
         InkWell(
           onTap: ()async{
-            List<WeeklyItem>? list=await HomeApis().getHomePackages();
+            List<PackageItem>? list=await HomeApis().getHomePackages();
             Get.toNamed(
-          Routes.SEARCH, arguments: {'packagesList':list});
+          Routes.SEARCH, arguments: {'packagesList':HomeScreenView.homePackagesList});
               },
           child: Padding(
             padding: EdgeInsets.symmetric(

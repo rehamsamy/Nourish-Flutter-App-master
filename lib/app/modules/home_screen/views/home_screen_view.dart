@@ -27,7 +27,7 @@ import 'widgets/drawer.dart';
 class HomeScreenView extends GetView<HomeScreenController> {
   HomeScreenView({Key? key}) : super(key: key);
   List<CategoryItem> categoriesList = [];
-  List<WeeklyItem> homePackagesList = [];
+ static List<PackageItem> homePackagesList = [];
 
   @override
   Widget build(BuildContext context) {
@@ -115,7 +115,8 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   future: HomeApis().getHomePackages(),
                   builder: (_, snapshot) {
                     if (snapshot.hasData) {
-                      homePackagesList = snapshot.data as List<WeeklyItem>;
+                      homePackagesList = snapshot.data as List<PackageItem>;
+                      Get.log('cc    '  +    'lllll'     +(homePackagesList?.length).toString());
                       return SizedBox(
                           width: Get.width,
                           height: 185.h,
@@ -226,7 +227,7 @@ class SearchBar extends StatelessWidget {
     required this.homePackagesList,
   }) : super(key: key);
 
-  final List<WeeklyItem> homePackagesList;
+  final List<PackageItem> homePackagesList;
 
   @override
   Widget build(BuildContext context) {
@@ -240,8 +241,11 @@ class SearchBar extends StatelessWidget {
             SizedBox(
               width: 313.w,
               child: InkWell(
-                onTap: () => Get.offNamed(Routes.SEARCH,
-                    arguments: {'packagesList': homePackagesList}),
+
+                onTap: () => Get.toNamed(Routes.SEARCH,
+                    arguments: {'packagesList':HomeScreenView.homePackagesList}),
+
+
                 child: Container(
                   height: 53.h,
                   width: 374.w,

@@ -68,12 +68,16 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
   static const INITIAL = Routes.SPLASH;
-  static String? token = Get.find<SharedPrefService>().getToken() ?? '';
+  static String token = Get.find<SharedPrefService>().getToken() ??'';
 
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () => token == "" ? const SplashView() : const HomePageView(),
+      page: () {
+        Get.log('vv   0  '+token.toString());
+       return token == "" ? const SplashView() : const HomePageView();
+
+  } ,
       binding: token == "" ? SplashBinding() : HomePageBinding(),
     ),
     GetPage(

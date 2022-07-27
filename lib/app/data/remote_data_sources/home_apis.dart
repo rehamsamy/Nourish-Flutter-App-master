@@ -30,8 +30,8 @@ class HomeApis {
     return categoriesList;
   }
 
-  Future<List<WeeklyItem>?> getHomePackages() async {
-    List<WeeklyItem> weeklyList=[];
+  Future<List<PackageItem>?> getHomePackages() async {
+    List<PackageItem> weeklyList=[];
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homePackages',
@@ -50,9 +50,16 @@ class HomeApis {
 
     response.maybeWhen(
         ok: (authResponse) {
-          List<WeeklyItem> list=authResponse.data.weekly as List<WeeklyItem> ;
+          weeklyList.clear();
+          HomePackageModel ?model=authResponse;
+          List<PackageItem> ?list=authResponse.data.weekly as List<PackageItem> ;
           weeklyList=list;
-          return list;
+          int? length=model?.data?.monthly?.length;
+for (int i =0;i<length!;i++){
+  weeklyList.add((model?.data?.monthly?[i]) as PackageItem );
+}
+         //
+          return weeklyList;
         },
         orElse: () {});
     return weeklyList;

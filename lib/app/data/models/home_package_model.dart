@@ -26,18 +26,18 @@ class Data {
     if (json['weekly'] != null) {
       weekly = [];
       json['weekly'].forEach((v) {
-        weekly?.add(WeeklyItem.fromJson(v));
+        weekly?.add(PackageItem.fromJson(v));
       });
     }
     if (json['monthly'] != null) {
       monthly = [];
       json['monthly'].forEach((v) {
-        // monthly?.add(dynamic.fromJson(v));
+        monthly?.add(PackageItem.fromJson(v));
       });
     }
   }
-  List<WeeklyItem>? weekly;
-  List<dynamic>? monthly;
+  List<PackageItem>? weekly;
+  List<PackageItem>? monthly;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
@@ -52,8 +52,31 @@ class Data {
 
 }
 
-class WeeklyItem {
-  WeeklyItem({
+
+
+class Descriptions {
+  Descriptions({
+      this.id, 
+      this.desc,});
+
+  Descriptions.fromJson(dynamic json) {
+    id = json['id'];
+    desc = json['desc'];
+  }
+  int? id;
+  String? desc;
+
+  Map<String, dynamic> toJson() {
+    final map = <String, dynamic>{};
+    map['id'] = id;
+    map['desc'] = desc;
+    return map;
+  }
+
+}
+
+class PackageItem {
+  PackageItem({
       this.id, 
       this.image, 
       this.tax, 
@@ -62,7 +85,7 @@ class WeeklyItem {
       this.name, 
       this.descriptions,});
 
-  WeeklyItem.fromJson(dynamic json) {
+  PackageItem.fromJson(dynamic json) {
     id = json['id'];
     image = json['image'];
     tax = json['tax'];
@@ -100,23 +123,3 @@ class WeeklyItem {
 
 }
 
-class Descriptions {
-  Descriptions({
-      this.id, 
-      this.desc,});
-
-  Descriptions.fromJson(dynamic json) {
-    id = json['id'];
-    desc = json['desc'];
-  }
-  int? id;
-  String? desc;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['desc'] = desc;
-    return map;
-  }
-
-}

@@ -7,13 +7,13 @@ import '../../../data/services/analytics_service.dart';
 class SearchController extends GetxController {
   TextEditingController searchController = TextEditingController();
   Map map = Get.arguments;
-  List<WeeklyItem>? packagesList;
-  List<WeeklyItem>? searchList=[];
+  List<PackageItem>? packagesList=[];
+  List<PackageItem>? searchList=[];
 
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Search_View");
-    packagesList = map['packagesList'] as List<WeeklyItem>?;
+    packagesList = map['packagesList'] as List<PackageItem>?;
     super.onInit();
   }
 
@@ -24,11 +24,12 @@ class SearchController extends GetxController {
       return;
     }
 
-   searchList= packagesList?.where((element) => element.name!.contains(text)).toList();
+   searchList= packagesList?.where((element) => ((element.name) as String).toLowerCase().contains(text.toLowerCase())).toList();
+
     // packagesList?.forEach((package) {
     //   if (package.name!.contains(text)) {
     //     searchList?.add(package);
-         Get.log('cc    '+text.toString()+'      lllll     '+searchList.toString());
+         Get.log('cc    '+text.toString()+'      lllll     '+(packagesList?.length).toString());
     //   }
     // });
   Get.log('cc    '+text.toString());

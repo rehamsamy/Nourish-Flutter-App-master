@@ -6,15 +6,21 @@ import '../../../data/services/analytics_service.dart';
 
 class SplashController extends GetxController {
   SharedPrefService sharedPrefService = Get.find<SharedPrefService>();
-
+   String token = Get.find<SharedPrefService>().getToken() ??'';
   @override
   void onInit() {
     Future.delayed(const Duration(seconds: 3)).then((value) async {
       AnalyticsService.instance.logEvent("Splash_View");
+      Get.log('bb  '+token.toString());
       if (sharedPrefService.loadIsFirstTime()) {
         navigateToOnBoarding();
       } else {
-        navigateToLogin();
+        if(token==''){
+          navigateToLogin();
+        }else{
+          Get.offAllNamed(Routes.HOME_PAGE);
+        }
+
       }
     });
     super.onInit();
