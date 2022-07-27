@@ -38,6 +38,7 @@ abstract class Routes {
   static const EDIT_PROFILE = _Paths.EDIT_PROFILE;
   static const NOTIFICATION = _Paths.NOTIFICATION;
   static const LOCATION_ACESSS = _Paths.LOCATION_ACESSS;
+  static const BRANCH_SELECT = _Paths.BRANCH_SELECT;
 }
 
 abstract class _Paths {
@@ -73,4 +74,5 @@ abstract class _Paths {
   static const EDIT_PROFILE = '/edit-profile';
   static const NOTIFICATION = '/notification';
   static const LOCATION_ACESSS = '/location-acesss';
+  static const BRANCH_SELECT = '/branch-select';
 }

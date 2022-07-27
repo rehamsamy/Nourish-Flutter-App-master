@@ -1,8 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:get/get.dart' hide Response;
 import 'package:logger/logger.dart';
-import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
-import 'package:nourish_sa/app/views/network_error.dart';
 
 Logger logger = Logger(
   printer: PrettyPrinter(
@@ -37,16 +34,17 @@ final dioLoggerInterceptor =
 
   // return response; // continue
 }, onError: (DioError error, handler) async {
-  if (error.response?.data != null) {
-    if (error.response?.statusCode == 401 ||
-        error.response?.statusCode == 403) {
+  /*if (error.response?.data != null) {
+    if ((error.response?.statusCode == 401 ||
+            error.response?.statusCode == 403) &&
+        (token != null || token != "")) {
       AuthApis().refreshToken();
     } else if (error.response!.statusCode! > 500 ||
         error.response!.statusCode! == 404) {
       Get.to(() => const NetworkError());
     }
   }
-
+*/
   handler.next(error); //continue
 
   logger.wtf("---------------------------------------");

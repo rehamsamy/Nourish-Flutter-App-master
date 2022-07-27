@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/login_model.dart';
@@ -47,7 +48,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                           radius: 30.w,
                           backgroundColor: whiteColor,
                           child: CustomNetworkImage(
-                            imageUrl: controller.profileModel?.image ??
+                            imageUrl: loggedUser.image ??
                                 'https://1.bp.blogspot.com/-3BIIq_YpmzY/YCvbdCUbXWI/AAAAAAAAKMU/aU7Pr7wLVicrrAgzon0EtGxTxtteKzjqACLcBGAsYHQ/s16000/%25D8%25B5%25D9%2588%25D8%25B1-%25D8%25A8%25D9%2586%25D8%25A7%25D8%25AA-%25D8%25AC%25D9%258A%25D8%25B1%25D9%2584%25D9%258A-13.webp',
                             height: 24.h,
                             width: 24.w,
@@ -66,14 +67,14 @@ class MainDrawer extends GetView<HomeScreenController> {
                         crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
                           Text(
-                            controller.profileModel?.name ?? '',
+                            loggedUser.name ?? '',
                             style: Get.textTheme.headline1!
                                 .copyWith(color: whiteColor),
                           ),
                           SizedBox(
                             height: 4.h,
                           ),
-                          controller.profileModel?.id == null
+                          loggedUser.id == null
                               ? InkWell(
                                   onTap: () {
                                     controller.scaffoldKey!.currentState!

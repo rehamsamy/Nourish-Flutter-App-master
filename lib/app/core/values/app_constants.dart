@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
+//Network global data
 String? token = Get.find<SharedPrefService>().getToken() ?? '';
 
 NetworkService networkService = NetworkService(
@@ -10,10 +12,11 @@ NetworkService networkService = NetworkService(
   httpHeaders: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': 'Bearer $token',
+    'Authorization': 'Bearer ${Get.find<SharedPrefService>().getToken() ?? ''}',
     'Language': Get.locale?.languageCode ?? 'en',
   },
 );
+LoggedUser loggedUser = LoggedUser();
 
 class AppConstants {
   const AppConstants._();

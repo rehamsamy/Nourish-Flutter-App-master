@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
@@ -100,19 +101,17 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                   onPress: () async {
                     VerifyEmailModel? verifyOtp = await AuthApis()
                         .verifyOtpMobile(
-                            controller.phone ?? '', controller.otp.text)
-                        .then((value) async {
-                      // Get.forceAppUpdate();
-                      await Get.find<SharedPrefService>()
-                          .saveToken(value?.accessToken ?? "");
-
-                      value?.accessToken != null ||
-                              value?.accessToken?.trim() != ""
-                          ? Get.offAllNamed(Routes.HOME_PAGE)
-                          : Get.snackbar(
-                              LocalKeys.kError, value!.errors.toString());
-                      return null;
-                    });
+                            controller.phone ?? '', controller.otp.text);
+                    token = await Get.find<SharedPrefService>()
+                        .saveToken(verifyOtp?.accessToken ?? "");
+                    print("New Saved Token: $token");
+                    if (verifyOtp?.accessToken?.isNotEmpty ?? false) {
+                      loggedUser = verifyOtp?.user ?? LoggedUser();
+                      Get.offAllNamed(Routes.HOME_PAGE);
+                    } else {
+                      Get.snackbar("Error", "Something went wrong",
+                          snackPosition: SnackPosition.BOTTOM);
+                    }
                   },
                 ),
               ),

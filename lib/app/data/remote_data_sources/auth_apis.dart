@@ -5,6 +5,7 @@ import 'package:nourish_sa/app/data/models/register_model.dart';
 import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
+import 'package:restart_app/restart_app.dart';
 
 import '../services/network_service.dart/dio_network_service.dart';
 
@@ -25,7 +26,7 @@ class AuthApis {
     response.maybeWhen(
         ok: (data) {
           loginModel = data;
-          return data;
+          return loginModel;
         },
         noData: (info) {
           return null;
@@ -38,10 +39,10 @@ class AuthApis {
     VerifyEmailModel? verifyModel;
     Map<String, dynamic>? map = {'mobile': mobile, 'code': otp};
     final request = NetworkRequest(
-        type: NetworkRequestType.POST,
-        path: 'auth/verifyMobileOTP',
-        data: NetworkRequestBody.json(map),
-        headers: null);
+      type: NetworkRequestType.POST,
+      path: 'auth/verifyMobileOTP',
+      data: NetworkRequestBody.json(map),
+    );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
@@ -49,15 +50,15 @@ class AuthApis {
           .fromJson, // <- Function to convert API response to your model
     );
     response.maybeWhen(
-        ok: (authResponse) async {
-          VerifyEmailModel model = authResponse;
-          //print("VerifyEmailModel model" + model.accessToken.toString());
-          Get.find<SharedPrefService>().saveToken(model.accessToken ?? "");
-          token = model.accessToken ?? "";
+        ok: (response) {
+          verifyModel = response;
+
+          return verifyModel;
         },
         badRequest: (info) {},
-        orElse: () {},
-        invalidParameters: (x) => Get.log('error  + ' + x));
+        noData: (info) {},
+        orElse: () {});
+
     return verifyModel;
   }
 
@@ -88,9 +89,7 @@ class AuthApis {
           return registerModel;
         },
         badRequest: (info) {},
-        noData: (info) {
-          print(info);
-        },
+        noData: (info) {},
         orElse: () {});
 
     return registerModel;
@@ -113,11 +112,11 @@ class AuthApis {
     response.maybeWhen(
         ok: (authResponse) async {
           emailModel = authResponse;
-          Get.find<SharedPrefService>().saveToken(emailModel.accessToken ?? "");
           return emailModel;
         },
         badRequest: (info) {},
         orElse: () {});
+    await Get.find<SharedPrefService>().saveToken(emailModel.accessToken ?? "");
 
     return emailModel;
   }
@@ -139,6 +138,7 @@ class AuthApis {
       print('vvv' + data.toString());
       loginModel = data as LoginModel;
       Get.find<SharedPrefService>().removeToken();
+      Restart.restartApp();
       return loginModel;
     }, orElse: () {
       //  print(response.toString());
@@ -171,7 +171,7 @@ class AuthApis {
     );
     return resendOtpModel;
   }
-
+/*
   Future<String> refreshToken() async {
     VerifyEmailModel data = VerifyEmailModel();
     final request = NetworkRequest(
@@ -199,5 +199,5 @@ class AuthApis {
       orElse: () {},
     );
     return token ?? "";
-  }
+  }*/
 }

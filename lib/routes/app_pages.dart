@@ -1,5 +1,8 @@
 import 'package:get/get.dart';
+
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
+import 'package:nourish_sa/app/modules/branch_select/bindings/branch_select_binding.dart';
+import 'package:nourish_sa/app/modules/branch_select/views/branch_select_view.dart';
 import 'package:nourish_sa/app/modules/package_cart/bindings/package_cart_binding.dart';
 import 'package:nourish_sa/app/modules/package_cart/views/package_cart_view.dart';
 import 'package:nourish_sa/app/modules/supscreption_cart/bindings/cart_binding.dart';
@@ -80,7 +83,7 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.LOGIN,
-      page: () => const LoginView(),
+      page: () => LoginView(),
       binding: LoginBinding(),
     ),
     GetPage(
@@ -150,12 +153,12 @@ class AppPages {
     ),
     GetPage(
       name: _Paths.DAYS_TIME,
-      page: () =>  DaysTimeView(),
+      page: () => DaysTimeView(),
       binding: DaysTimeBinding(),
     ),
     GetPage(
       name: _Paths.PACKAGE_MEALS,
-      page: () => PackageMealsView(),
+      page: () => const PackageMealsView(),
       binding: PackageMealsBinding(),
     ),
     GetPage(
@@ -212,6 +215,11 @@ class AppPages {
       name: _Paths.LOCATION_ACESSS,
       page: () => LocationAcesssView(),
       binding: LocationAcesssBinding(),
+    ),
+    GetPage(
+      name: _Paths.BRANCH_SELECT,
+      page: () => BranchSelectView(),
+      binding: BranchSelectBinding(),
     ),
   ];
 }
