@@ -113,6 +113,7 @@ class PackageMealsController extends GetxController {
   }
 
   selectDay(String day) {
+    selectedDays1.clear();
     currentDay = day;
     selectedDays1[day] = {
       'breakfast': '',
