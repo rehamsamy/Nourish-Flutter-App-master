@@ -121,14 +121,14 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                     onPress: () async {
                       AddOrderModel? orderModel = await OrderApis().addOrder(
                         delivery_type:
-                            PackageDetailsController().selectedPlanType,
+                            PackageDetailsController.selectedPlanType,
                         package_id:
                             PackageDetailsView.packageDetailModel?.data?.id ??
                                 0,
                         address_id:
                             DeliveryAddressesView.selectedAddressId ?? 0,
                         payment_id: selectedPaymentId ?? 0,
-                        branch_id: BranchSelectController().branchId,
+                        branch_id: BranchSelectController.branchId,
                         start_date: DaysTimeController.startDate ?? '',
                         period_id:
                             DaysTimeController.selectedBranchPeriodId ?? 1,

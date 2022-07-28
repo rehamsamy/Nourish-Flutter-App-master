@@ -31,6 +31,7 @@ class PackageCartController extends GetxController {
       total=args['total'] as int;
       detailModel=PackageDetailsView.packageDetailModel;
     currentDay = PackageMealsController.selectedDays.keys.first;
+    Get.log('mmm   '+currentDay);
    // if(isSubscribtion ==false){
    //   Get.log('cccc  '+isSubscribtion.toString());
    //   detailModel = args['detailModel'] as SubscriptionDetailModel;

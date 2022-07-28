@@ -128,7 +128,7 @@ class BranchSelectView extends GetView<BranchSelectController> {
                                                 Get.toNamed(
                                                     Routes.DELIVERY_ADDRESSES);
                                               },
-                                              selected: controller.branchId ==
+                                              selected: BranchSelectController.branchId ==
                                                   controller
                                                       .branches[index].id);
                                         },

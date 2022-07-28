@@ -18,6 +18,8 @@ class MealsSummeryCard extends GetView<PackageCartController> {
 
   @override
   Widget build(BuildContext context) {
+  //  Get.log('vv   00 '+ PackageMealsController.selectedDays1[controller.currentDay].toString());
+
     return GetBuilder<PackageCartController>(
       builder: (_)=> Container(
         width: 374.w,
@@ -41,19 +43,20 @@ class MealsSummeryCard extends GetView<PackageCartController> {
                 SizedBox(
                   width: 12.w,
                 ),
-                Text(
-               PackageMealsController.selectedDays1[controller.currentDay].keys.elementAt(index),
+                Text(controller.currentDay,
+                  //PackageMealsController.selectedDays1[controller.currentDay].keys==null?'empty':
+              // PackageMealsController.selectedDays1[controller.currentDay].keys.elementAt(index),
                   style: Get.textTheme.bodyText1,
                 ),
               ],
             ),
             ListView.builder(
-              itemCount: 2,
+              itemCount: PackageMealsController.selectedDays1.length,
               shrinkWrap: true,
               padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                Get.log('pppp  '+controller.currentDay.toString());
+                Get.log('pppp  '+PackageMealsController.selectedDays1.toString());
                 return FoodItem(
                   title:PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(index).toString(),desc :'',
                   isEnd: index == 1,

@@ -121,6 +121,8 @@ class PackageMealsController extends GetxController {
       'dinner': '',
     };
     update();
+    Get.log('vv    11 '+ PackageMealsController.selectedDays1[day].keys.toString());
+
   }
 
 

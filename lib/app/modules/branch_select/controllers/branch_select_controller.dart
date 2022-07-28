@@ -12,7 +12,7 @@ class BranchSelectController extends GetxController {
   List<BranchItem> branches = [];
   Position? location;
   var mapMarkers = <Marker>[];
-  int branchId = 0;
+ static int branchId = 1;
   GoogleMapController? mapController;
   void setBranch(int id) {
     branchId = id;

@@ -11,7 +11,7 @@ class PackageDetailsController extends GetxController {
 
   final count = 0.obs;
 
-  String selectedPlanType = '';
+ static String selectedPlanType = 'delivery';
   @override
   void onInit() {
     super.onInit();

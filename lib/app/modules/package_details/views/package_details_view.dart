@@ -54,13 +54,13 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 padding: EdgeInsets.only(top: 16.h, bottom: 14.h),
                 child: SelectionCard(
                   image: Assets.kRestaurantIcon,
-                  isSelected: controller.selectedPlanType == 'branch',
+                  isSelected: PackageDetailsController.selectedPlanType == 'branch',
                   onTap: () async {
-                    controller.selectedPlanType = 'branch';
+                    PackageDetailsController.selectedPlanType = 'branch';
                     controller.update();
                     Get.toNamed(Routes.BRANCH_SELECT, arguments: {
                       'packageDetailModel': controller.packageDetailModel,
-                      'selectedPlanType': controller.selectedPlanType,
+                      'selectedPlanType': PackageDetailsController.selectedPlanType,
                     });
                   },
                   title: LocalKeys.kFromBranch.tr,
@@ -68,13 +68,13 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
               ),
               SelectionCard(
                 image: Assets.kDeliveryCarFood,
-                isSelected: controller.selectedPlanType == 'delivery',
+                isSelected: PackageDetailsController.selectedPlanType == 'delivery',
                 onTap: () async {
-                  controller.selectedPlanType = 'delivery';
+                  PackageDetailsController.selectedPlanType = 'delivery';
                   controller.update();
                   Get.toNamed(Routes.BRANCH_SELECT, arguments: {
                     'packageDetailModel': controller.packageDetailModel,
-                    'selectedPlanType': controller.selectedPlanType,
+                    'selectedPlanType': PackageDetailsController.selectedPlanType,
                   });
                 },
                 title: LocalKeys.kDelivery.tr,
@@ -83,7 +83,7 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
               CustomButton(
                 title: LocalKeys.kContinue.tr,
                 onPress: () async {
-                  if (controller.selectedPlanType == "") {
+                  if (PackageDetailsController.selectedPlanType == "") {
                     Get.snackbar("Please choose plan type",
                         "Please choose plan type before continue");
                   }
