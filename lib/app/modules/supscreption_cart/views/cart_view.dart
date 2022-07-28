@@ -8,6 +8,7 @@ import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/meals_summery_card.dart';
+import 'package:nourish_sa/app/shared/meals_summery_card1.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../../../../app_theme.dart';
 import '../controllers/cart_controller.dart';
@@ -215,7 +216,7 @@ class SubscriptionCartView extends GetView<SubscriptionCartController> {
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
                       // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
-                      return MealsSummeryCard( inedx);
+                      return MealsSummeryCard1( inedx);
                     },
                   ),
                 ),

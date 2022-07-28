@@ -86,9 +86,11 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                   if (PackageDetailsController.selectedPlanType == "") {
                     Get.snackbar("Please choose plan type",
                         "Please choose plan type before continue");
+                  }else{
+                    await PostionLocator.determinePosition()
+                        .then((value) => Get.toNamed(Routes.DELIVERY_ADDRESSES));
                   }
-                  await PostionLocator.determinePosition()
-                      .then((value) => Get.toNamed(Routes.DELIVERY_ADDRESSES));
+
                 },
               ),
             ],

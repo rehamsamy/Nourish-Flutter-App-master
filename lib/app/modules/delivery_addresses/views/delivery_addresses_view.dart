@@ -79,12 +79,12 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
                       if (snap.hasData) {
                         List<AddressItem>? list =
                             snap.data as List<AddressItem>;
-                        Get.log('xxx  '+snap.data.toString());
+
                         if (list.isNotEmpty) {
                           return ListView.builder(
                               itemCount: list.length,
                               itemBuilder: (_, index) {
-                                selectedAddressId=list[index].id;
+                               // selectedAddressId=list[index].id;
                                 return Column(
                                   children: [
                                     SelectionCheckBox(
@@ -94,6 +94,8 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
                                       onTap: (val) {
                                         controller.changeCheckBoxSelected(
                                             val ?? false, index);
+                                        selectedAddressId=list[index].id;
+                                        Get.log('selected address  ===>'+list[index].id.toString());
                                         //Get.offNamed(Routes.ADD_ADDRESS,arguments: {'addressModel':list[index]});
                                       },
                                     ),
@@ -176,7 +178,12 @@ class DeliveryAddressesView extends GetView<DeliveryAddressesController> {
               child: CustomButton(
                   title: LocalKeys.kContinue.tr,
                   onPress: () {
-                    Get.toNamed(Routes.DAYS_TIME,);
+                    Get.log('select address ==>'+selectedAddressId.toString());
+                    if(selectedAddressId!=null){
+                      Get.toNamed(Routes.DAYS_TIME,);
+                    }else{
+                      Get.snackbar('Select address', 'you must select one address');
+                    }
                     // Get.bottomSheet(const NoDeliveryHereBottomSheet());
                   }),
             ),

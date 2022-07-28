@@ -29,6 +29,7 @@ class MealSelectCard extends StatefulWidget {
 class _MealSelectCardState extends State<MealSelectCard> {
   @override
   Widget build(BuildContext context) {
+
     return Container(
       margin: EdgeInsets.only(bottom: 16.h),
       width: 357.w,
@@ -90,13 +91,14 @@ class _MealSelectCardState extends State<MealSelectCard> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                           // PackageMealsController.selectedDays1.clear();
                             widget.isSelected = true;
                             PackageMealsController
                                     .selectedDays[controller.currentDay]
                                 [controller.selectedMeal] = [widget.id];
                             PackageMealsController.selectedDays1[controller.currentDay]
                             [controller.selectedMeal]=widget.title;
-                            Get.log('nnnn '+PackageMealsController.selectedDays1.toString()+widget.title.toString());
+                            Get.log('nnnn ==>'+PackageMealsController.selectedDays1.toString()+widget.title.toString());
 
                             // PackageMealsController.selectedDays1={
                             //   PackageMealsController.selectedDays[controller.currentDay]:

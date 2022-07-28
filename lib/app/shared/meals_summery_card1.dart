@@ -7,24 +7,18 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
+import 'package:nourish_sa/app/modules/supscreption_cart/controllers/cart_controller.dart';
 
 import '../../app_theme.dart';
 import '../modules/package_cart/controllers/package_cart_controller.dart';
 
-class MealsSummeryCard extends GetView<PackageCartController> {
+class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
 
   int index;
-  MealsSummeryCard(this.index);
+  MealsSummeryCard1(this.index);
 
   @override
   Widget build(BuildContext context) {
-    Get.log('nnnn '+ controller.currentDay);
-   Map x ={'sat':{
-    'dinner':'123',
-    'breakfast':'450',
-     'lunch':'888'
-    }
-    };
 
     return GetBuilder<PackageCartController>(
       builder: (_)=> Container(
@@ -50,7 +44,7 @@ class MealsSummeryCard extends GetView<PackageCartController> {
                   width: 12.w,
                 ),
                 Text(
-                    (PackageMealsController.selectedDays1[controller.currentDay].keys.elementAt(index)),
+                    (controller.newMealsList?[index].mealType).toString(),
                  // x['sat'].keys.elementAt(index),
                   style: Get.textTheme.bodyText1,
                 ),
@@ -61,7 +55,7 @@ class MealsSummeryCard extends GetView<PackageCartController> {
           FoodItem(
             title:
             //x['sat'].values.elementAt(index)
-            PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(index).toString()
+            (controller.newMealsList?[index].orderId).toString()
             ,desc :'',
             isEnd: index == 2,
           ),

@@ -110,10 +110,11 @@ class PackageMealsController extends GetxController {
     }
     update();
     Get.log('vvvvv  '+selectedDays1.toString());
+
   }
 
   selectDay(String day) {
-    selectedDays1.clear();
+    //selectedDays1.clear();
     currentDay = day;
     selectedDays1[day] = {
       'breakfast': '',
@@ -121,7 +122,9 @@ class PackageMealsController extends GetxController {
       'dinner': '',
     };
     update();
-    Get.log('vv    11 '+ PackageMealsController.selectedDays1[day].keys.toString());
+    Get.log('vv    11 '+ selectedDays1.toString());
+    Get.log('pppp  '+PackageMealsController.selectedDays1['wednesday'].values.elementAt(0).toString());
+
 
   }
 

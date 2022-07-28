@@ -212,9 +212,7 @@ class PackageCartView extends GetView<PackageCartController> {
                     physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
-                      Get.log('cccc 22 '+PackageMealsController.selectedDays1['tuesday'].toString());
-                      // Get.log('size   '+(controller.detailModel?.data?.meals?.saturday?.length.toString()).toString());
-                      return MealsSummeryCard( inedx);
+                        return MealsSummeryCard( inedx);
                     },
                   ),
                 ),
