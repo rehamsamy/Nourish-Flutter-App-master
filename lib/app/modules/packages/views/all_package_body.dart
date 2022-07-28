@@ -8,6 +8,7 @@ import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/data/models/package_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/package_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
+import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/packages/controllers/packages_controller.dart';
 import 'package:nourish_sa/app/modules/packages/views/package_info_card.dart';
 import 'package:nourish_sa/app/shared/dialogs/filter_dialog.dart';
@@ -77,6 +78,15 @@ class AllPackagesBody extends GetView<PackagesController> {
               future: PackageApis().getPackagesAccordingType(
                   controller.selectedPackageType == 0 ? 'monthly' : 'weekly'),
               builder: (_, snap) {
+                if(snap.connectionState==ConnectionState.waiting){
+                  return  ListView.builder(itemCount: 3,
+                      shrinkWrap: true,
+                      itemBuilder: (_,index)=> Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 8),
+                        child: MealLoading(366.w, 130.h),
+                      ));
+                }
+
                 if (snap.hasData) {
                   List<PackageItem> packagesList =
                       snap.data as List<PackageItem>;
@@ -133,6 +143,7 @@ class AllPackagesBody extends GetView<PackagesController> {
                     height: 300,
                   );
                 }
+
               }),
         ),
       ],

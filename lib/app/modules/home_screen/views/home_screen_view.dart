@@ -116,7 +116,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   builder: (_, snapshot) {
                     if (snapshot.hasData) {
                       homePackagesList = snapshot.data as List<PackageItem>;
-                      Get.log('cc    '  +    'lllll'     +(homePackagesList?.length).toString());
+                      Get.log('cc    '  +    'lllll'     +(homePackagesList.length).toString());
                       return SizedBox(
                           width: Get.width,
                           height: 185.h,

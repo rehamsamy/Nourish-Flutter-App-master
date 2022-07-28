@@ -5,8 +5,10 @@ import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/data/models/subscription_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/sbscription_apis.dart';
+import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/packages/views/package_info_card.dart';
 import 'package:nourish_sa/app/shared/tab_bar_selector.dart';
+import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../controllers/subscription_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -15,8 +17,10 @@ import 'widgets/package_info_dialog.dart';
 import 'widgets/supscription_card.dart';
 
 class SubscriptionView extends GetView<SubscriptionController> {
+  SubscriptionDetailModel detailModel=SubscriptionDetailModel();
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kMySubscription.tr),
@@ -61,6 +65,14 @@ class SubscriptionView extends GetView<SubscriptionController> {
                               ? 'myCurrentSubscriptions'
                               : 'myPreviousSubscriptions'),
                       builder: (_, snap) {
+                        if(snap.connectionState==ConnectionState.waiting){
+                         // return Center(child: CircularProgressIndicator(color: primaryColor,),);
+                        return  ListView.builder(itemCount: 10,
+                          itemBuilder: (_,index)=> Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: MealLoading(366.w, 130.h),
+                          ));
+                        }
                         if (snap.hasData) {
                           List<SubscriptionItem>? list =
                               snap.data as List<SubscriptionItem>;
@@ -69,6 +81,11 @@ class SubscriptionView extends GetView<SubscriptionController> {
                               itemCount: list.length,
                               padding: EdgeInsets.only(bottom: 35.h),
                               itemBuilder: (context, index) {
+                                List<Descriptions> descriptions=list[index].package?.descriptions??[];
+                                List<String> options=[];
+                                for(int i=0;i<descriptions.length;i++){
+                                  options.add(descriptions[i].desc ??'');
+                                }
                                 return controller.selected.value == 0
                                     ? InkWell(
                                         onTap: () async {
@@ -91,7 +108,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                         child: PackageInfoCard(
                                           image: list[index].package?.image ??
                                               'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
-                                          options: const ["sdads", "saddsa"],
+                                          options: options,
                                           title:
                                               list[index].package?.name ?? '',
                                           priceWithVat: list[index]
@@ -102,42 +119,42 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                         ),
                                       )
                                     : InkWell(
-                                        onTap: () {
-                                          Get.dialog(
-                                            PackageInfoDialog(
-                                              days: list[index]
-                                                  .package
-                                                  ?.daysNumberOfWeek as String,
-                                              endDate: "12/12/2020",
-                                              image: list[index]
-                                                      .package
-                                                      ?.image ??
-                                                  'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
-                                              options: const [
-                                                "dsasad",
-                                                "asdas",
-                                                "saddsa"
-                                              ],
-                                              packageName:
-                                                  list[index].packageName ?? '',
-                                              packageType: list[index]
-                                                      .package
-                                                      ?.descriptions?[index]
-                                                      .desc ??
-                                                  'diet',
-                                              paymentMethod: "Cash",
-                                              price: list[index]
-                                                      .package
-                                                      ?.priceWithTax
-                                                      ?.toString() ??
-                                                  '',
-                                              subTitle:
-                                                  list[index].branchName ?? '',
-                                            ),
-                                          );
+                                        onTap: ()async {
+                                           detailModel =
+                                          await SubscriptionApis()
+                                              .subscriptionDetails(
+                                              subscripId:
+                                              list[index].id).catchError((err)=>print('errrrrrr '+err));
+                                          if (detailModel.data != null) {
+                                            Get.dialog(
+                                              PackageInfoDialog(
+                                                days: list[index]
+                                                    .package
+                                                    ?.daysNumberOfWeek??0,
+                                                endDate: detailModel.data?.order?.endDate??'',
+                                                image: list[index]
+                                                    .package
+                                                    ?.image ??
+                                                    'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
+                                                options: options,
+                                                packageName:
+                                                detailModel.data?.order?.package?.name??'',
+                                                packageType:  detailModel.data?.order?.package?.type??'diet',
+                                                paymentMethod: "Cash",
+                                                price: detailModel.data?.order?.package?.priceWithTax??0,
+                                                subTitle:
+                                                list[index].branchName ?? '',
+                                              ),
+                                            );
+                                          } else {
+                                            null;
+                                          }
                                         },
                                         child: SupscriptionCard(
-                                          image: "",
+                                          image: list[index]
+                                              .package
+                                              ?.image ??
+                                              'https://thumbs.dreamstime.com/z/brown-packages-13927988.jpg',
                                           days: list[index]
                                                   .package
                                                   ?.daysNumberOfWeek
@@ -149,7 +166,7 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                                   ?.priceWithTax
                                                   .toString() ??
                                               '',
-                                          endDate: "15/2/2022",
+                                          endDate:  detailModel.data?.order?.endDate??'',
                                         ),
                                       );
                               },

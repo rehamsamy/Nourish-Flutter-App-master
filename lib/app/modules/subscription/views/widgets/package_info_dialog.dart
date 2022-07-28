@@ -26,8 +26,8 @@ class PackageInfoDialog extends StatelessWidget {
   final String packageName;
   final String subTitle;
   final String packageType;
-  final String days;
-  final String price;
+  final int days;
+  final int price;
   final String paymentMethod;
   final String endDate;
   final List<String> options;
@@ -129,14 +129,12 @@ class PackageInfoDialog extends StatelessWidget {
                     SizedBox(
                       width: 4.w,
                     ),
-                    Text(
-                      days,
+                    Text('$days',
                       style: Get.theme.textTheme.headline3,
                     ),
                   ],
                 ),
-                Text(
-                  price,
+                Text('$price',
                   style: Get.theme.textTheme.headline3!
                       .copyWith(color: primaryColor),
                 ),
