@@ -195,7 +195,7 @@ class MealDay {
   int? productId;
   String? day;
   String? mealType;
-  Product1? product;
+  Product? product;
 
   MealDay(
       {this.id,
@@ -212,7 +212,7 @@ class MealDay {
     day = json["day"];
     mealType = json["meal_type"];
     product =
-        json["product"] == null ? null : Product1.fromJson(json["product"]);
+        json["product"] == null ? null : Product.fromJson(json["product"]);
   }
 
   Map<String, dynamic> toJson() {
@@ -229,58 +229,7 @@ class MealDay {
   }
 }
 
-class Product1 {
-  int? id;
-  String? image;
-  int? calories;
-  int? fat;
-  int? protein;
-  int? carb;
-  int? weight;
-  int? price;
-  String? name;
-  String? description;
 
-  Product1(
-      {this.id,
-      this.image,
-      this.calories,
-      this.fat,
-      this.protein,
-      this.carb,
-      this.weight,
-      this.price,
-      this.name,
-      this.description});
-
-  Product1.fromJson(Map<String, dynamic> json) {
-    id = json["id"];
-    image = json["image"];
-    calories = json["calories"];
-    fat = json["fat"];
-    protein = json["protein"];
-    carb = json["carb"];
-    weight = json["weight"];
-    price = json["price"];
-    name = json["name"];
-    description = json["description"];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = <String, dynamic>{};
-    data["id"] = id;
-    data["image"] = image;
-    data["calories"] = calories;
-    data["fat"] = fat;
-    data["protein"] = protein;
-    data["carb"] = carb;
-    data["weight"] = weight;
-    data["price"] = price;
-    data["name"] = name;
-    data["description"] = description;
-    return data;
-  }
-}
 
 class Sunday {
   int? id;

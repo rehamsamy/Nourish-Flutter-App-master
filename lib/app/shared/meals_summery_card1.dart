@@ -51,33 +51,31 @@ class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
 
               ],
             ),
-          SizedBox(height: 12,),
-          FoodItem(
-            title:
-            //x['sat'].values.elementAt(index)
-            (controller.newMealsList?[index].product?.name).toString()
-            ,desc :'',
-            isEnd: index == -1,
-          ),
-            SizedBox(height: 5,),
+         // SizedBox(height: 12,),
+          // FoodItem(
+          //   title:
+          //   //x['sat'].values.elementAt(index)
+          //   (controller.newMealsList?[index].product?.name).toString()
+          //   ,desc :'',
+          //   isEnd: index == -1,
+          // ),
+          //   SizedBox(height: 5,),
 
 
-            // ListView.builder(
-            //   itemCount: 1,
-            //   shrinkWrap: true,
-            //   padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   itemBuilder: (context, index) {
-            //     Get.log('pppp  '+PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(0).toString());
-            //     return FoodItem(
-            //       title:
-            //       //x['sat'].values.elementAt(index)
-            //       PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(index).toString()
-            //       ,desc :'',
-            //       isEnd: index == 1,
-            //     );
-            //   },
-            // ),
+            ListView.builder(
+              itemCount: 1,
+              shrinkWrap: true,
+              padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
+              physics: const NeverScrollableScrollPhysics(),
+              itemBuilder: (context, index) {
+                 return FoodItem(
+                  title:
+                  (controller.newMealsList?[index].product?.name).toString()
+                  ,desc :'',
+                  isEnd: index == 1,
+                );
+              },
+            ),
           ],
         ),
       ),
