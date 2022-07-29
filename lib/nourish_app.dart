@@ -92,6 +92,9 @@ class _NourishAppState extends State<NourishApp> {
               backgroundColor: Colors.white,
               titleTextStyle: appTextTheme.bodyText1,
               systemOverlayStyle: SystemUiOverlayStyle.dark,
+              iconTheme: const IconThemeData(
+                color: Colors.black,
+              ),
             ),
             outlinedButtonTheme: OutlinedButtonThemeData(
               style: ButtonStyle(
