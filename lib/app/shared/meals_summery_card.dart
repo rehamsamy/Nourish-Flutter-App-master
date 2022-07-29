@@ -63,7 +63,7 @@ class MealsSummeryCard extends GetView<PackageCartController> {
             //x['sat'].values.elementAt(index)
             PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(index).toString()
             ,desc :'',
-            isEnd: index == 2,
+            isEnd: index == -1,
           ),
             SizedBox(height: 5,),
 

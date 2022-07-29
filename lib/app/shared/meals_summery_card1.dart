@@ -20,7 +20,7 @@ class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
   @override
   Widget build(BuildContext context) {
 
-    return GetBuilder<PackageCartController>(
+    return GetBuilder<SubscriptionCartController>(
       builder: (_)=> Container(
         width: 374.w,
         margin: EdgeInsets.only(bottom: 18.h),
@@ -55,9 +55,9 @@ class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
           FoodItem(
             title:
             //x['sat'].values.elementAt(index)
-            (controller.newMealsList?[index].orderId).toString()
+            (controller.newMealsList?[index].product?.name).toString()
             ,desc :'',
-            isEnd: index == 2,
+            isEnd: index == -1,
           ),
             SizedBox(height: 5,),
 

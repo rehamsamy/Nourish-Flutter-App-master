@@ -58,7 +58,7 @@ Get.log('subscrip  =>'+response.toString());
         data:  NetworkRequestBody.json(
            map
         ),
-        headers: {'Authorization':'Bearer $token'}
+        //headers: {'Authorization':'Bearer $token'}
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(

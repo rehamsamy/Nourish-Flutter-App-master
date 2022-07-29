@@ -11,6 +11,9 @@ class SubscriptionCartController extends GetxController {
   List<MealDay>? saturdayList;
   List<MealDay>? mondayList;
   List<MealDay>? tuesdayList;
+  List<MealDay>? fridayList;
+  List<MealDay>? thursdayList;
+  List<MealDay>? wednesdayList;
   List<MealDay>? _newMealsList;
   String?selectedDay;
   List<String> daysList=[];
@@ -28,9 +31,13 @@ class SubscriptionCartController extends GetxController {
      saturdayList=detailModel?.data?.meals?.saturday;
      mondayList=detailModel?.data?.meals?.monday;
      tuesdayList=detailModel?.data?.meals?.tuesday;
+     fridayList=detailModel?.data?.meals?.friday;
+     thursdayList= detailModel?.data?.meals?.thursday;
+     wednesdayList= detailModel?.data?.meals?.wednesday;
      _newMealsList=sundayList;
      getDaysList();
       String name = detailModel?.data?.order?.package?.name ?? '';
+      Get.log('mmm   '+(sundayList?[0].product?.calories).toString());
     }
 
     update();
@@ -41,15 +48,22 @@ class SubscriptionCartController extends GetxController {
     return _newMealsList;
   }
 
-  getList(int index) {
-    if (index == 0) {
+  getList(String selectedDay) {
+    Get.log('mmmm  '+selectedDay.toString());
+    if (selectedDay == 'sun') {
       _newMealsList = sundayList;
-    } else if (index == 1) {
+    } else if (selectedDay == 'mon') {
       _newMealsList = mondayList;
-    } else if (index == 2) {
+    } else if (selectedDay == 'tue') {
       _newMealsList = tuesdayList;
-    }else if (index == 3) {
+    }else if (selectedDay == 'sat') {
       _newMealsList = saturdayList;
+    }else if (selectedDay == 'wed') {
+      _newMealsList = wednesdayList;
+    }else if (selectedDay == 'thu') {
+      _newMealsList = thursdayList;
+    }else if (selectedDay == 'fri') {
+      _newMealsList = fridayList;
     }
     update();
   }
@@ -59,7 +73,7 @@ class SubscriptionCartController extends GetxController {
     isMealSelected = index;
     selectedDay=day;
     Get.log('llll  '+index.toString());
-    getList(index);
+    getList(day);
     update();
   }
 
