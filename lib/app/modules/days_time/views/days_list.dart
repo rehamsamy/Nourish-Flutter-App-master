@@ -29,20 +29,13 @@ class DaySelectionList extends StatelessWidget {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return GetBuilder<DaysTimeController>(
-                  init: DaysTimeController(),
-                  initState: (_) {},
-                  builder: (_) {
-                    return DaySelectionWidget(
-                      isSelected: controller.selectedItems.contains(index),
-                      title: AppConstants.days.elementAt(index),
-                      onTap: () {
-                        controller.toggleSelection(
-                            index, controller.branchDays[index]);
-                      },
-                      //TODO: Implement this OFF BRANCH DAYS From HOME SETTINGS API in HOME DIRECTORY
-                      isSelectionEnabled: false,
-                    );
-                  },
+                  builder: (controller) => DaySelectionWidget(
+                    title: AppConstants.days[index],
+                    isSelected: controller.selectedItems.contains(index),
+                    onTap: () => controller.toggleSelection(
+                        index, controller.branchDays[index]),
+                    isOffDay: false,
+                  ),
                 );
               },
             ),
@@ -57,19 +50,19 @@ class DaySelectionWidget extends StatelessWidget {
   DaySelectionWidget(
       {Key? key,
       required this.onTap,
-      required this.isSelectionEnabled,
+      required this.isOffDay,
       required this.isSelected,
       required this.title})
       : super(key: key);
   final void Function()? onTap;
-  bool isSelectionEnabled;
+  bool isOffDay;
   bool isSelected;
   final String title;
 
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      onTap: isSelectionEnabled ? onTap : () {},
+      onTap: !isOffDay ? onTap : () {},
       /* () {
         controller.toggleSelection(
             index, controller.branchDays[index]);
@@ -84,7 +77,7 @@ class DaySelectionWidget extends StatelessWidget {
           alignment: Alignment.center,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(7.r),
-            color: !isSelectionEnabled
+            color: isOffDay
                 ? Colors.grey
                 : isSelected
                     ? primaryColor
@@ -94,7 +87,7 @@ class DaySelectionWidget extends StatelessWidget {
                 : Colors.white, */
             ,
             border: Border.all(
-                color: !isSelectionEnabled
+                color: isOffDay
                     ? Colors.grey
                     : isSelected
                         ? Colors.white
@@ -106,7 +99,7 @@ class DaySelectionWidget extends StatelessWidget {
           child: Text(
             title /*  AppConstants.days[index] */,
             style: Get.textTheme.headline3!.copyWith(
-                color: !isSelectionEnabled
+                color: isOffDay
                     ? Colors.white
                     : isSelected
                         ? Colors.white
