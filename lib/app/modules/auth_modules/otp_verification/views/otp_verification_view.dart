@@ -32,108 +32,117 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
         elevation: 0,
         backgroundColor: Get.theme.scaffoldBackgroundColor,
       ),
-      body: Padding(
-        padding: EdgeInsets.symmetric(horizontal: 36.w),
-        child: Obx(
-          () => Column(
-            children: [
-              SizedBox(
-                height: 60.h,
-              ),
-              Text(
-                controller.isEmail.value
-                    ? LocalKeys.kEmailOtp.tr
-                    : LocalKeys.kFillOTP.tr,
-                style: Get.textTheme.headline1,
-                textAlign: TextAlign.center,
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(vertical: 14.w),
-                child: RichText(
+      body: SingleChildScrollView(
+        child: Padding(
+          padding: EdgeInsets.symmetric(horizontal: 36.w),
+          child: Obx(
+            () => Column(
+              children: [
+                SizedBox(
+                  height: 60.h,
+                ),
+                Text(
+                  controller.isEmail.value
+                      ? LocalKeys.kEmailOtp.tr
+                      : LocalKeys.kFillOTP.tr,
+                  style: Get.textTheme.headline1,
                   textAlign: TextAlign.center,
-                  text: TextSpan(
-                    style: Get.textTheme.headline3!.copyWith(fontSize: 16.sp),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text:
-                            "${LocalKeys.kSentOTPTo.tr} ${controller.isEmail.value ? LocalKeys.kEmailAddress.tr : LocalKeys.kMobileNumber.tr} ",
-                        style:
-                            Get.textTheme.headline3!.copyWith(fontSize: 16.sp),
-                      ),
-                      TextSpan(
-                        text: controller.phone,
-                        style: Get.textTheme.headline3!
-                            .copyWith(fontSize: 16.sp, color: blackColor),
-                      ),
-                    ],
-                  ),
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 23.w),
-                child: PinInputTextField(
-                  pinLength: 4,
-                  decoration: BoxLooseDecoration(
-                    gapSpace: 29.w,
-                    textStyle: Get.textTheme.bodyText2,
-                    strokeColorBuilder: PinListenColorBuilder(
-                      lightGreyColor,
-                      lightGreyColor,
-                    ),
-                    bgColorBuilder: PinListenColorBuilder(
-                      Colors.white,
-                      Colors.white,
+                Padding(
+                  padding: EdgeInsets.symmetric(vertical: 14.w),
+                  child: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
+                      style: Get.textTheme.headline3!.copyWith(fontSize: 16.sp),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text:
+                              "${LocalKeys.kSentOTPTo.tr} ${controller.isEmail.value ? LocalKeys.kEmailAddress.tr : LocalKeys.kMobileNumber.tr} ",
+                          style: Get.textTheme.headline3!
+                              .copyWith(fontSize: 16.sp),
+                        ),
+                        TextSpan(
+                          text: controller.phone,
+                          style: Get.textTheme.headline3!
+                              .copyWith(fontSize: 16.sp, color: blackColor),
+                        ),
+                      ],
                     ),
                   ),
-                  controller: controller.otp,
-                  textInputAction: TextInputAction.go,
-                  keyboardType: TextInputType.text,
-                  textCapitalization: TextCapitalization.characters,
-                  onSubmit: (pin) {},
-                  onChanged: (pin) {},
-                  enableInteractiveSelection: false,
                 ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
-                child: CustomButton(
-                  title: LocalKeys.kContinue.tr,
-                  onPress: () async {
-                    VerifyEmailModel? verifyOtp = await AuthApis()
-                        .verifyOtpMobile(
-                            controller.phone ?? '', controller.otp.text);
-                    token = await Get.find<SharedPrefService>()
-                        .saveToken(verifyOtp?.accessToken ?? "");
-                    if (verifyOtp?.accessToken?.isNotEmpty ?? false) {
-                      loggedUser = verifyOtp?.user ?? LoggedUser();
-                      Get.offAllNamed(Routes.HOME_PAGE);
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 23.w),
+                  child: PinInputTextField(
+                    pinLength: 4,
+                    decoration: BoxLooseDecoration(
+                      gapSpace: 29.w,
+                      textStyle: Get.textTheme.bodyText2,
+                      strokeColorBuilder: PinListenColorBuilder(
+                        lightGreyColor,
+                        lightGreyColor,
+                      ),
+                      bgColorBuilder: PinListenColorBuilder(
+                        Colors.white,
+                        Colors.white,
+                      ),
+                    ),
+                    controller: controller.otp,
+                    textInputAction: TextInputAction.go,
+                    keyboardType: TextInputType.text,
+                    textCapitalization: TextCapitalization.characters,
+                    onSubmit: (pin) {},
+                    onChanged: (pin) {},
+                    enableInteractiveSelection: false,
+                  ),
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 39.h, bottom: 19.h),
+                  child: CustomButton(
+                    title: LocalKeys.kContinue.tr,
+                    onPress: () async {
+                      VerifyEmailModel? verifyOtp = await AuthApis()
+                          .verifyOtpMobile(
+                              controller.phone ?? '', controller.otp.text);
+                      token = await Get.find<SharedPrefService>()
+                          .saveToken(verifyOtp?.accessToken ?? "")
+                          .then((value) {
+                        if (value.isNotEmpty) {
+                          Get.forceAppUpdate();
+
+                          Get.offAllNamed(
+                            Routes.HOME_PAGE,
+                          );
+                        } else {
+                          Get.snackbar("Error", "Something went wrong",
+                              snackPosition: SnackPosition.BOTTOM);
+                        }
+                        return value;
+                      });
+                      print("NEW TOKEN :$token");
+                    },
+                  ),
+                ),
+                InkWell(
+                  onTap: () async {
+                    ResendOtpModel? otpModel = await AuthApis()
+                        .resendOtpMobile(controller.phone ?? '');
+                    if (otpModel.data != null) {
+                      Get.snackbar("Resend Otp Code", otpModel.data?.msg ?? '');
+                      Get.log('ccccccc0');
                     } else {
-                      Get.snackbar("Error", "Something went wrong",
-                          snackPosition: SnackPosition.BOTTOM);
+                      Get.log('ccccccc');
                     }
                   },
-                ),
-              ),
-              InkWell(
-                onTap: () async {
-                  ResendOtpModel? otpModel =
-                      await AuthApis().resendOtpMobile(controller.phone ?? '');
-                  if (otpModel.data != null) {
-                    Get.snackbar("Resend Otp Code", otpModel.data?.msg ?? '');
-                    Get.log('ccccccc0');
-                  } else {
-                    Get.log('ccccccc');
-                  }
-                },
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Text(
-                    LocalKeys.kResendOTP.tr,
-                    style: Get.textTheme.headline3,
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Text(
+                      LocalKeys.kResendOTP.tr,
+                      style: Get.textTheme.headline3,
+                    ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

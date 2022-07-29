@@ -174,7 +174,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                     child: InkWell(
                       onTap: () {
                         //change language
-                        Get.find<LocalizationService>().setLocale(false);
+                        Get.find<LocalizationService>().setLocale(true);
                       },
                       child: Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,

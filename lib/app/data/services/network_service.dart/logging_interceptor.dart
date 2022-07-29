@@ -3,11 +3,9 @@ import 'package:logger/logger.dart';
 
 Logger logger = Logger(
   printer: PrettyPrinter(
-    methodCount: 2,
-    errorMethodCount: 8,
-    lineLength: 40,
     colors: true,
     printEmojis: true,
+    printTime: true,
   ),
 );
 final dioLoggerInterceptor =
@@ -48,8 +46,9 @@ final dioLoggerInterceptor =
   handler.next(error); //continue
 
   logger.wtf("---------------------------------------");
-  logger.wtf(
-      "| [DIO] Error: ${error.error}: ${error.response?.toString()}", error);
+  logger.wtf("| [DIO] Error: ${error.error}: ${error.response?.toString()}" +
+      error.type.toString() +
+      error.message);
   logger.wtf(
       "└------------------------------------------------------------------------------");
 });

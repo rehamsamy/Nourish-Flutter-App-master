@@ -10,13 +10,13 @@ class LocalizationService extends GetxService {
     super.onInit();
   }
 
-  setLocale([bool isWithRestart = false]) async {
+  setLocale(bool isWithRestart) async {
     Get.updateLocale(Locale(Get.locale?.languageCode == 'ar' ? 'en' : 'ar'));
     await Get.find<SharedPrefService>()
         .saveLocale(Get.locale?.languageCode == 'ar' ? 'en' : 'ar');
 
     if (isWithRestart) {
-      Restart.restartApp();
+      await Restart.restartApp();
     }
   }
 

@@ -66,15 +66,11 @@ class SelectedMenu extends StatelessWidget {
                     alignment: Alignment.bottomCenter,
                     //height: height / 3,
                     color: Colors.black26,
-                    child: Positioned(
-                      bottom: 5.h,
-                      left: (width / 3).w,
-                      right: (width / 3).w,
-                      child: Text(
-                        title,
-                        style: Theme.of(context).textTheme.button!.copyWith(
-                            fontSize: 14.sp, fontWeight: FontWeight.bold),
-                      ),
+                    padding: EdgeInsets.only(bottom: 5.h,),
+                    child: Text(
+                      title,
+                      style: Theme.of(context).textTheme.button!.copyWith(
+                          fontSize: 14.sp, fontWeight: FontWeight.bold),
                     ),
                   ),
                 ),
