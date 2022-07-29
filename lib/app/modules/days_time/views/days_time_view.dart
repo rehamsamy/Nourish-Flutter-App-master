@@ -2,9 +2,9 @@ import 'package:date_time_picker/date_time_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/days_time/views/days_list.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_dropdown.dart';
 import 'package:nourish_sa/app_theme.dart';
@@ -49,64 +49,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
             SizedBox(
               height: 27.h,
             ),
-            GetBuilder<DaysTimeController>(
-              builder: (_) => SizedBox(
-                width: Get.width,
-                height: 44.w,
-                child: OverflowBox(
-                  maxWidth: Get.width,
-                  minWidth: Get.width,
-                  child: SizedBox(
-                    height: 44.w,
-                    width: Get.width,
-                    child: ListView.builder(
-                      itemCount: AppConstants.days.length,
-                      padding: EdgeInsetsDirectional.only(start: 22.w),
-                      scrollDirection: Axis.horizontal,
-                      itemBuilder: (context, index) {
-                        return InkWell(
-                          onTap: () {
-                            controller.toggleSelection(
-                                index, controller.branchDays[index]);
-                          },
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.w,
-                            ),
-                            child: Container(
-                              width: 44.w,
-                              height: 44.w,
-                              alignment: Alignment.center,
-                              decoration: BoxDecoration(
-                                borderRadius: BorderRadius.circular(7.r),
-                                color: controller.selectedItems.contains(index)
-                                    ? primaryColor
-                                    : Colors.white,
-                                border: Border.all(
-                                  color:
-                                      controller.selectedItems.contains(index)
-                                          ? Colors.white
-                                          : primaryColor,
-                                ),
-                              ),
-                              child: Text(
-                                AppConstants.days[index],
-                                style: Get.textTheme.headline3!.copyWith(
-                                  color:
-                                      controller.selectedItems.contains(index)
-                                          ? Colors.white
-                                          : primaryColor,
-                                ),
-                              ),
-                            ),
-                          ),
-                        );
-                      },
-                    ),
-                  ),
-                ),
-              ),
-            ),
+            const DaySelectionList(),
             SizedBox(
               height: 35.h,
             ),
