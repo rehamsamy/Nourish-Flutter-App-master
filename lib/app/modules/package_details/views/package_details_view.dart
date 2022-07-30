@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
-import 'package:nourish_sa/app/data/services/locator_service.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
 import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
@@ -54,28 +53,22 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 padding: EdgeInsets.only(top: 16.h, bottom: 14.h),
                 child: SelectionCard(
                   image: Assets.kRestaurantIcon,
-                  isSelected: PackageDetailsController.selectedPlanType == 'branch',
+                  isSelected:
+                      PackageDetailsController.selectedPlanType == 'branch',
                   onTap: () async {
                     PackageDetailsController.selectedPlanType = 'branch';
                     controller.update();
-                    Get.toNamed(Routes.BRANCH_SELECT, arguments: {
-                      'packageDetailModel': controller.packageDetailModel,
-                      'selectedPlanType': PackageDetailsController.selectedPlanType,
-                    });
                   },
                   title: LocalKeys.kFromBranch.tr,
                 ),
               ),
               SelectionCard(
                 image: Assets.kDeliveryCarFood,
-                isSelected: PackageDetailsController.selectedPlanType == 'delivery',
+                isSelected:
+                    PackageDetailsController.selectedPlanType == 'delivery',
                 onTap: () async {
                   PackageDetailsController.selectedPlanType = 'delivery';
                   controller.update();
-                  Get.toNamed(Routes.BRANCH_SELECT, arguments: {
-                    'packageDetailModel': controller.packageDetailModel,
-                    'selectedPlanType': PackageDetailsController.selectedPlanType,
-                  });
                 },
                 title: LocalKeys.kDelivery.tr,
               ),
@@ -86,11 +79,21 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                   if (PackageDetailsController.selectedPlanType == "") {
                     Get.snackbar("Please choose plan type",
                         "Please choose plan type before continue");
-                  }else{
-                    await PostionLocator.determinePosition()
-                        .then((value) => Get.toNamed(Routes.DELIVERY_ADDRESSES));
+                  } else if (PackageDetailsController.selectedPlanType ==
+                      "branch") {
+                    Get.toNamed(Routes.BRANCH_SELECT, arguments: {
+                      'packageDetailModel': controller.packageDetailModel,
+                      'selectedPlanType':
+                          PackageDetailsController.selectedPlanType,
+                    });
+                  } else if (PackageDetailsController.selectedPlanType ==
+                      "delivery") {
+                    Get.toNamed(Routes.DELIVERY_ADDRESSES, arguments: {
+                      'packageDetailModel': controller.packageDetailModel,
+                      'selectedPlanType':
+                          PackageDetailsController.selectedPlanType,
+                    });
                   }
-
                 },
               ),
             ],

@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -23,20 +24,31 @@ class DaySelectionList extends StatelessWidget {
           child: SizedBox(
             height: 44.w,
             width: Get.width,
-            child: ListView.builder(
-              itemCount: AppConstants.days.length,
-              padding: EdgeInsetsDirectional.only(start: 22.w),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) {
-                return GetBuilder<DaysTimeController>(
-                  builder: (controller) => DaySelectionWidget(
-                    title: AppConstants.days[index],
-                    isSelected: controller.selectedItems.contains(index),
-                    onTap: () => controller.toggleSelection(
-                        index, controller.branchDays[index]),
-                    isOffDay: false,
-                  ),
-                );
+            child: FutureBuilder(
+              future: controller.getOffDays(),
+              builder: (context, snapshot) {
+                if (snapshot.hasData) {
+                  return ListView.builder(
+                    itemCount: AppConstants.days.length,
+                    padding: EdgeInsetsDirectional.only(start: 22.w),
+                    scrollDirection: Axis.horizontal,
+                    itemBuilder: (context, index) {
+                      return GetBuilder<DaysTimeController>(
+                        builder: (controller) => DaySelectionWidget(
+                          title: AppConstants.days[index].substring(0, 3),
+                          isSelected: controller.selectedItems.contains(index),
+                          onTap: () => controller.toggleSelection(
+                              index, controller.branchDays[index]),
+                          isOffDay: controller.offDays[index],
+                        ),
+                      );
+                    },
+                  );
+                } else {
+                  return const Center(
+                    child: CupertinoActivityIndicator(),
+                  );
+                }
               },
             ),
           ),

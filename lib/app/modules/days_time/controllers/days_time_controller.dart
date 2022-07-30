@@ -1,6 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/models/home_setting_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/home_setting_apis.dart';
+import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 
 import '../../../data/models/branch_model.dart';
 import '../../../data/models/package_detail_model.dart';
@@ -46,6 +49,71 @@ class DaysTimeController extends GetxController {
     'saturday',
   ];
   Map<String, dynamic> daysTimeSelectedValues = {};
+  List<bool> offDays = List.generate(7, (index) => false);
+  Future<List<bool>> getOffDays() async {
+    HomeSettingModel? homeSettingsModel =
+        await HomeSettingApis().getHomeSetting();
+    if (PackageDetailsController.selectedPlanType == "delivery") {
+      if (homeSettingsModel?.data?.offDaysDeliverySunday?.toLowerCase() ==
+          "true") {
+        offDays[0] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysDeliveryMonday?.toLowerCase() ==
+          "true") {
+        offDays[1] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysDeliveryTuesday?.toLowerCase() ==
+          "true") {
+        offDays[2] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysDeliveryWednesday?.toLowerCase() ==
+          "true") {
+        offDays[3] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysDeliveryThursday?.toLowerCase() ==
+          "true") {
+        offDays[4] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysDeliveryFriday?.toLowerCase() ==
+          "true") {
+        offDays[5] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysDeliverySaturday?.toLowerCase() ==
+          "true") {
+        offDays[6] = true;
+      }
+    } else {
+      if (homeSettingsModel?.data?.offDaysPickupSunday?.toLowerCase() ==
+          "true") {
+        offDays[0] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysPickupMonday?.toLowerCase() ==
+          "true") {
+        offDays[1] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysPickupTuesday?.toLowerCase() ==
+          "true") {
+        offDays[2] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysPickupWednesday?.toLowerCase() ==
+          "true") {
+        offDays[3] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysPickupThursday?.toLowerCase() ==
+          "true") {
+        offDays[4] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysPickupFriday?.toLowerCase() ==
+          "true") {
+        offDays[5] = true;
+      }
+      if (homeSettingsModel?.data?.offDaysPickupSaturday?.toLowerCase() ==
+          "true") {
+        offDays[6] = true;
+      }
+    }
+    return offDays;
+  }
 
   void toggleSelection(int index, String dayName) {
     if (selectedItems.contains(index)) {

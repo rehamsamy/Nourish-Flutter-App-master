@@ -1,8 +1,8 @@
-
 import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import '../services/network_service.dart/dio_network_service.dart';
+
 class HomeApis {
   Future<List<CategoryItem>?> getHomeCategories() async {
     List<CategoryItem> categoriesList = [];
@@ -23,7 +23,7 @@ class HomeApis {
     );
     response.maybeWhen(
         ok: (model) {
-          categoriesList=model.categoryData?.categoriesList;
+          categoriesList = model.categoryData?.categoriesList;
           return model.categoryData?.categoriesList;
         },
         orElse: () {});
@@ -31,7 +31,7 @@ class HomeApis {
   }
 
   Future<List<PackageItem>?> getHomePackages() async {
-    List<PackageItem> weeklyList=[];
+    List<PackageItem> weeklyList = [];
     const request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homePackages',
@@ -51,14 +51,15 @@ class HomeApis {
     response.maybeWhen(
         ok: (authResponse) {
           weeklyList.clear();
-          HomePackageModel ?model=authResponse;
-          List<PackageItem> ?list=authResponse.data.weekly as List<PackageItem> ;
-          weeklyList=list;
-          int? length=model?.data?.monthly?.length;
-for (int i =0;i<length!;i++){
-  weeklyList.add((model?.data?.monthly?[i]) as PackageItem );
-}
-         //
+          HomePackageModel? model = authResponse;
+          List<PackageItem>? list =
+              authResponse.data.weekly as List<PackageItem>;
+          weeklyList = list;
+          int? length = model?.data?.monthly?.length;
+          for (int i = 0; i < length!; i++) {
+            weeklyList.add((model?.data?.monthly?[i]) as PackageItem);
+          }
+          //
           return weeklyList;
         },
         orElse: () {});
