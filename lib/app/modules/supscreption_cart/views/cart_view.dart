@@ -75,8 +75,7 @@ class SubscriptionCartView extends GetView<SubscriptionCartController> {
                                 SizedBox(
                                   width: 6.w,
                                 ),
-                                Text(
-                                  /* ${product?.carb} */ "26% Carb",
+                                Text('${(controller.product?.carb).toString()}% Carb',
                                   style: Get.textTheme.button!
                                       .copyWith(fontSize: 12.sp),
                                 ),
@@ -94,8 +93,7 @@ class SubscriptionCartView extends GetView<SubscriptionCartController> {
                                 SizedBox(
                                   width: 6.w,
                                 ),
-                                Text(
-                                  /* ${product?.carb} */ "% Fat",
+                                Text('${(controller.product?.fat).toString()}% Fat',
                                   style: Get.textTheme.button!
                                       .copyWith(fontSize: 12.sp),
                                 ),
@@ -113,8 +111,7 @@ class SubscriptionCartView extends GetView<SubscriptionCartController> {
                                 SizedBox(
                                   width: 6.w,
                                 ),
-                                Text(
-                                  /* ${product?.carb} */ "% Protein",
+                                Text('${(controller.product?.protein).toString()}% Protein',
                                   style: Get.textTheme.button!
                                       .copyWith(fontSize: 12.sp),
                                 ),
@@ -132,8 +129,7 @@ class SubscriptionCartView extends GetView<SubscriptionCartController> {
                                 SizedBox(
                                   width: 6.w,
                                 ),
-                                Text(
-                                  /* ${product?.carb} */ "% Calories",
+                                Text('${(controller.product?.calories).toString()}% Calories',
                                   style: Get.textTheme.button!
                                       .copyWith(fontSize: 12.sp),
                                 ),

@@ -18,6 +18,7 @@ class SubscriptionCartController extends GetxController {
   String?selectedDay;
   List<String> daysList=[];
   int isMealSelected = 0;
+  Product ?product;
 
   Map<String, dynamic> decoded = {};
   @override
@@ -35,6 +36,7 @@ class SubscriptionCartController extends GetxController {
      thursdayList= detailModel?.data?.meals?.thursday;
      wednesdayList= detailModel?.data?.meals?.wednesday;
      _newMealsList=sundayList;
+     product=sundayList?[0].product;
      getDaysList();
       String name = detailModel?.data?.order?.package?.name ?? '';
       Get.log('mmm   '+(sundayList?[0].product?.calories).toString());
@@ -52,18 +54,25 @@ class SubscriptionCartController extends GetxController {
     Get.log('mmmm  '+selectedDay.toString());
     if (selectedDay == 'sun') {
       _newMealsList = sundayList;
+      product=sundayList?[0].product;
     } else if (selectedDay == 'mon') {
       _newMealsList = mondayList;
+      product=mondayList?[0].product;
     } else if (selectedDay == 'tue') {
       _newMealsList = tuesdayList;
+      product=tuesdayList?[0].product;
     }else if (selectedDay == 'sat') {
       _newMealsList = saturdayList;
+      product=saturdayList?[0].product;
     }else if (selectedDay == 'wed') {
       _newMealsList = wednesdayList;
+      product=wednesdayList?[0].product;
     }else if (selectedDay == 'thu') {
       _newMealsList = thursdayList;
+      product=thursdayList?[0].product;
     }else if (selectedDay == 'fri') {
       _newMealsList = fridayList;
+      product=fridayList?[0].product;
     }
     update();
   }

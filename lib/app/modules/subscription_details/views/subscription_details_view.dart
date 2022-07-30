@@ -104,7 +104,12 @@ class SubscriptionDetailsView extends GetView<SubscriptionDetailsController> {
                         ),
                         SubscriptionDetailsItem(
                           title: LocalKeys.kPickupType.tr,
-                          onTap: () => Get.offNamed(Routes.ADD_ADDRESS,
+                          onTap: () =>
+                          //     Get.toNamed(Routes.BRANCH_SELECT, arguments: {
+                          //   'packageDetailModel': controller.packageDetailModel,
+                          //   'selectedPlanType': PackageDetailsController.selectedPlanType,
+                          // });
+                              Get.offNamed(Routes.BRANCH_SELECT,
                               arguments: {
                                 'branchData',
                                 controller.detailModel.data?.order?.branch
