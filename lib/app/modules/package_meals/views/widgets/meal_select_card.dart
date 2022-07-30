@@ -100,12 +100,6 @@ class _MealSelectCardState extends State<MealSelectCard> {
                             [controller.selectedMeal]=widget.title;
                             Get.log('nnnn ==>'+PackageMealsController.selectedDays1.toString()+widget.title.toString());
 
-                            // PackageMealsController.selectedDays1={
-                            //   PackageMealsController.selectedDays[controller.currentDay]:
-                            //   [controller.selectedMeal]
-                            // };
-
-
                           });
                           print(PackageMealsController.selectedDays);
                         },

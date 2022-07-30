@@ -5,8 +5,8 @@ import 'package:nourish_sa/app/modules/package_details/views/package_details_vie
 import '../../../data/services/analytics_service.dart';
 
 class PackageMealsController extends GetxController {
- static Map<String, dynamic> selectedDays = {};
- static Map<String, dynamic> selectedDays1 = {};
+  static Map<String, dynamic> selectedDays = {};
+  static Map<String, dynamic> selectedDays1 = {};
   Map map = Get.arguments;
   int dinnerSelected = 1;
   int lunchSelected = 1;
@@ -24,7 +24,7 @@ class PackageMealsController extends GetxController {
   List<MealsModel>? _newMealsList;
   String currentDay = "";
   String? selectedMeal;
-  int ? packagePrice;
+  int? packagePrice;
   @override
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
@@ -36,7 +36,7 @@ class PackageMealsController extends GetxController {
         PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice;
     extraLunchPrice =
         PackageDetailsView.packageDetailModel?.data?.extraLunchPrice;
-    packagePrice=PackageDetailsView.packageDetailModel?.data?.priceWithTax;
+    packagePrice = PackageDetailsView.packageDetailModel?.data?.priceWithTax;
     breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
@@ -54,9 +54,9 @@ class PackageMealsController extends GetxController {
     }
     update();
     addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
-        ((extraBreakfastPrice ?? 0 )* breakfastSelected) +
-        ((extraDinnerPrice ?? 0 )* dinnerSelected);
-    totalPackagePrice=addtionalPackagePrice+(packagePrice ?? 0);
+        ((extraBreakfastPrice ?? 0) * breakfastSelected) +
+        ((extraDinnerPrice ?? 0) * dinnerSelected);
+    totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
     update();
   }
 
@@ -81,11 +81,14 @@ class PackageMealsController extends GetxController {
         isMealSelected = 0;
       }
     }
-
-    addtionalPackagePrice = ((extraLunchPrice ?? 0 )* lunchSelected) +
-        ((extraBreakfastPrice ?? 0) * breakfastSelected) +
-        ((extraDinnerPrice ?? 0 )* dinnerSelected);
-    totalPackagePrice=addtionalPackagePrice+(packagePrice ?? 0);
+    if (lunchSelected == 1 || breakfastSelected == 1 || dinnerSelected == 1) {
+      addtionalPackagePrice = 0;
+    } else {
+      addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
+          ((extraBreakfastPrice ?? 0) * breakfastSelected) +
+          ((extraDinnerPrice ?? 0) * dinnerSelected);
+      totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
+    }
     update();
   }
 
@@ -109,8 +112,7 @@ class PackageMealsController extends GetxController {
       _newMealsList = lunchesList;
     }
     update();
-    Get.log('vvvvv  '+selectedDays1.toString());
-
+    Get.log('vvvvv  ' + selectedDays1.toString());
   }
 
   selectDay(String day) {
@@ -122,12 +124,10 @@ class PackageMealsController extends GetxController {
       'dinner': '',
     };
     update();
-    Get.log('vv    11 '+ selectedDays1.toString());
-    Get.log('pppp  '+PackageMealsController.selectedDays1['wednesday'].values.elementAt(0).toString());
-
-
+    Get.log('vv    11 ' + selectedDays1.toString());
+    Get.log('pppp  ' +
+        PackageMealsController.selectedDays1[day].values
+            .elementAt(0)
+            .toString());
   }
-
-
-
 }
