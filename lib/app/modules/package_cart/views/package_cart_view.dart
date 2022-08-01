@@ -164,6 +164,7 @@ class PackageCartView extends GetView<PackageCartController> {
                             ),
                             child: InkWell(
                               onTap: (){
+                                Get.log('mealss==.'+PackageMealsController.selectedDays1.toString());
                                controller.changeMealSelected(index,PackageMealsController.selectedDays1.keys.elementAt(index));
                                 // controller.selectDay(
                                 //     PackageMealsController.selectedDays1.keys.elementAt(index));
