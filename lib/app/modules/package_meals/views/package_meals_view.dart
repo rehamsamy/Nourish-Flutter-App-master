@@ -91,6 +91,19 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                         controller.extraDinnerPrice != null,
                                     titleValue: '${controller.dinnerSelected}'),
                               ),
+                              InkWell(
+                                onTap: () {
+                                  controller.changeMealSelected(4, "snacks");
+                                },
+                                child: DinnerAnimatedContainer(
+                                    isSelected: controller.isMealSelected == 4,
+                                    title: LocalKeys.kSnacks.tr,
+                                    type: 'snacks',
+                                    canAddMore:
+                                        controller.snacksList?.isNotEmpty ??
+                                            false,
+                                    titleValue: '${controller.snacksSelected}'),
+                              ),
 
                               // DinnerAnimatedContainer(
                               //   isSelected: false,
@@ -204,6 +217,25 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
                           'total': controller.totalPackagePrice,
                      */
+                        if (controller.selectedDays1.keys.length !=
+                            controller.selectedDays.keys.length) {
+                          Get.snackbar("Empty meals",
+                              "please select meals for all days");
+                          return;
+                        } else {
+                          for (int i = 0;
+                              i <= controller.selectedDays.keys.length;
+                              i++) {
+                            //check if meals are selected for all days if not show error
+                            if (controller
+                                    .selectedDays[controller.selectedDays] ==
+                                null) {
+                              Get.snackbar("Empty meals",
+                                  "please select meals for all days");
+                              return;
+                            }
+                          }
+                        }
                         Get.toNamed(Routes.PACKAGE_CART, arguments: {
                           'total': controller.totalPackagePrice,
                           'isSubscribtion': false

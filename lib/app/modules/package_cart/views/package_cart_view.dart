@@ -18,7 +18,7 @@ class PackageCartView extends GetView<PackageCartController> {
   // SubscriptionDetailModel? detailModel;
   @override
   Widget build(BuildContext context) {
-     int? total =controller.total;
+    int? total = controller.total;
     return Scaffold(
       appBar: AppBar(
         title: Text(LocalKeys.kCart.tr),
@@ -26,7 +26,7 @@ class PackageCartView extends GetView<PackageCartController> {
         shadowColor: const Color(0xff000000).withOpacity(0.3),
       ),
       body: GetBuilder<PackageCartController>(
-        builder: (_)=> Padding(
+        builder: (_) => Padding(
           padding: EdgeInsets.symmetric(
             horizontal: 27.w,
           ),
@@ -154,7 +154,8 @@ class PackageCartView extends GetView<PackageCartController> {
                       height: 44.w,
                       width: Get.width,
                       child: ListView.builder(
-                        itemCount: PackageMealsController.selectedDays1.keys.length,
+                        itemCount:
+                            PackageMealsController().selectedDays1.keys.length,
                         padding: EdgeInsetsDirectional.only(start: 22.w),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -163,11 +164,16 @@ class PackageCartView extends GetView<PackageCartController> {
                               horizontal: 5.w,
                             ),
                             child: InkWell(
-                              onTap: (){
-                               controller.changeMealSelected(index,PackageMealsController.selectedDays1.keys.elementAt(index));
+                              onTap: () {
+                                controller.changeMealSelected(
+                                    index,
+                                    PackageMealsController()
+                                        .selectedDays1
+                                        .keys
+                                        .elementAt(index));
                                 // controller.selectDay(
                                 //     PackageMealsController.selectedDays1.keys.elementAt(index));
-                              //  Get.log('ffff   '+controller.daySelected.toString()+'  l  '+controller.daysList[index].toString());
+                                //  Get.log('ffff   '+controller.daySelected.toString()+'  l  '+controller.daysList[index].toString());
                               },
                               child: Container(
                                 width: 44.w,
@@ -175,20 +181,22 @@ class PackageCartView extends GetView<PackageCartController> {
                                 alignment: Alignment.center,
                                 decoration: BoxDecoration(
                                   borderRadius: BorderRadius.circular(7.r),
-                                  color: index== controller.isMealSelected
+                                  color: index == controller.isMealSelected
                                       ? primaryColor
                                       : whiteColor,
                                   border: Border.all(
-                                  color:  index== controller.isMealSelected
-                                        ? primaryColor
-                                        : lightGreyColor
-                                  ),
+                                      color: index == controller.isMealSelected
+                                          ? primaryColor
+                                          : lightGreyColor),
                                 ),
                                 child: Text(
-                                    (PackageMealsController.selectedDays1.keys.elementAt(index)).substring(0,3),
+                                  (PackageMealsController()
+                                          .selectedDays1
+                                          .keys
+                                          .elementAt(index))
+                                      .substring(0, 3),
                                   style: Get.textTheme.headline3!.copyWith(
-                                    color: index ==
-                                        controller.isMealSelected
+                                    color: index == controller.isMealSelected
                                         ? whiteColor
                                         : lightGreyColor,
                                   ),
@@ -206,13 +214,12 @@ class PackageCartView extends GetView<PackageCartController> {
                 ),
                 SizedBox(
                   height: 400,
-                  child:
-                ListView.builder(
-                    itemCount: PackageMealsController.selectedDays1.length,
-                    physics: NeverScrollableScrollPhysics(),
+                  child: ListView.builder(
+                    itemCount: PackageMealsController().selectedDays1.length,
+                    physics: const BouncingScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
-                        return MealsSummeryCard( inedx);
+                      return MealsSummeryCard(inedx);
                     },
                   ),
                 ),
@@ -228,13 +235,11 @@ class PackageCartView extends GetView<PackageCartController> {
                           ),
                           CartItem(
                             item: "${LocalKeys.kDelivery.tr}:",
-                            value:
-                                "${'0'} SAR",
+                            value: "${'0'} SAR",
                           ),
                           CartItem(
                             item: LocalKeys.kTax.tr,
-                            value:
-                                "${controller.detailModel?.data?.tax} SAR",
+                            value: "${controller.detailModel?.data?.tax} SAR",
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 21.h, bottom: 15.h),

@@ -23,8 +23,8 @@ class DinnerAnimatedContainer extends GetView<PackageMealsController> {
     return GetBuilder<PackageMealsController>(
       builder: (_) => AnimatedContainer(
         duration: const Duration(milliseconds: 500),
-        width: isSelected ? 120.w : 110.w,
-        height: isSelected ? 115.h : 93.h,
+        width: isSelected ? 110.w : 80.w,
+        height: isSelected ? 95.h : 80.h,
         margin:
             EdgeInsetsDirectional.only(end: 10.w, top: isSelected ? 0.h : 9.h),
         decoration: BoxDecoration(

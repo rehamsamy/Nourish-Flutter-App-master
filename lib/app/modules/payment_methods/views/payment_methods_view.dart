@@ -132,7 +132,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                         start_date: DaysTimeController.startDate ?? '',
                         period_id:
                             DaysTimeController.selectedBranchPeriodId ?? 1,
-                        selectedDays: PackageMealsController.selectedDays,
+                        selectedDays: PackageMealsController().selectedDays,
                       );
                       if (orderModel?.data != null) {
                         Get.snackbar('Add Order', orderModel?.data?.msg ?? '');

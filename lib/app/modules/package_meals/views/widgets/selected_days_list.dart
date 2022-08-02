@@ -26,14 +26,14 @@ class SelectedDaysListView extends StatelessWidget {
           child: GetBuilder<PackageMealsController>(
             builder: (PackageMealsController controller) => ListView.builder(
               //itemCount: AppConstants.days.length,
-              itemCount: PackageMealsController.selectedDays.keys.length,
+              itemCount: controller.selectedDays.keys.length,
               padding: EdgeInsetsDirectional.only(start: 22.w),
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) {
                 return FadeIn(
                   child: GestureDetector(
                     onTap: () => controller.selectDay(
-                        PackageMealsController.selectedDays.keys.elementAt(index)),
+                        controller.selectedDays.keys.elementAt(index)),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 5.w,
@@ -46,13 +46,13 @@ class SelectedDaysListView extends StatelessWidget {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.r),
-                              color: PackageMealsController.selectedDays.keys
+                              color: controller.selectedDays.keys
                                           .elementAt(index) ==
                                       controller.currentDay
                                   ? primaryColor
                                   : whiteColor,
                               border: Border.all(
-                                color: PackageMealsController.selectedDays.keys
+                                color: controller.selectedDays.keys
                                             .elementAt(index) ==
                                         controller.currentDay
                                     ? primaryColor
@@ -60,11 +60,11 @@ class SelectedDaysListView extends StatelessWidget {
                               ),
                             ),
                             child: Text(
-                              PackageMealsController.selectedDays.keys
+                              controller.selectedDays.keys
                                   .elementAt(index)
                                   .substring(0, 3),
                               style: Get.textTheme.headline3!.copyWith(
-                                color: PackageMealsController.selectedDays.keys
+                                color: controller.selectedDays.keys
                                             .elementAt(index) ==
                                         controller.currentDay
                                     ? whiteColor
@@ -75,7 +75,7 @@ class SelectedDaysListView extends StatelessWidget {
                           SizedBox(
                             height: 6.h,
                           ),
-                          PackageMealsController.selectedDays.keys.elementAt(index) ==
+                          controller.selectedDays.keys.elementAt(index) ==
                                   controller.currentDay
                               ? CustomPaint(
                                   painter: TrianglePainter(
