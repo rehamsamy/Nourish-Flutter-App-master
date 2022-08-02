@@ -4,10 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
-import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
-import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
-
 import '../../app_theme.dart';
 import '../modules/package_cart/controllers/package_cart_controller.dart';
 
