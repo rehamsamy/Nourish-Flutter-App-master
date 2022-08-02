@@ -46,6 +46,7 @@ class PackageMealsController extends GetxController {
     breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
+
     _newMealsList = dinnersList;
     super.onInit();
   }
