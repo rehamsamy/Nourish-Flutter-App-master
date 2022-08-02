@@ -81,7 +81,6 @@ class SubscriptionCartController extends GetxController {
   changeMealSelected(int index,String day) {
     isMealSelected = index;
     selectedDay=day;
-    Get.log('llll  '+index.toString());
     getList(day);
     update();
   }

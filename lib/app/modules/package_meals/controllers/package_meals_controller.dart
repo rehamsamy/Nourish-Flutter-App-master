@@ -5,8 +5,8 @@ import 'package:nourish_sa/app/modules/package_details/views/package_details_vie
 import '../../../data/services/analytics_service.dart';
 
 class PackageMealsController extends GetxController {
-  Map<String, dynamic> selectedDays = {};
-  Map<String, dynamic> selectedDays1 = {};
+  static Map<String, dynamic> selectedDays = {};
+  Map<String, Map> selectedDays1 = {};
   Map map = Get.arguments;
   int dinnerSelected = 1;
   int lunchSelected = 1;
@@ -35,6 +35,7 @@ class PackageMealsController extends GetxController {
         selectedDays.keys.toString() +
         selectedDays.toString());
     currentDay = selectedDays.keys.first;
+    selectedDays1 = {};
     extraDinnerPrice =
         PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice;
     extraBreakfastPrice =
@@ -131,19 +132,16 @@ class PackageMealsController extends GetxController {
       _newMealsList = snacksList;
     }
     update();
-    Get.log('vvvvv  ' + selectedDays1.toString());
   }
 
   selectDay(String day) {
     //selectedDays1.clear();
     currentDay = day;
+    selectedDays1[day] = {
+      'breakfast': '',
+      'lunch': '',
+      'dinner': '',
+    };
     update();
-    Get.log('$selectedDays1' + selectedDays1.toString());
-    Get.log('pppp  ' +
-        PackageMealsController()
-            .selectedDays1[day]
-            .values
-            .elementAt(0)
-            .toString());
   }
 }

@@ -15,7 +15,7 @@ import '../controllers/package_cart_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageCartView extends GetView<PackageCartController> {
-  // SubscriptionDetailModel? detailModel;
+  PackageMealsController packageMealsController = Get.find();
   @override
   Widget build(BuildContext context) {
     int? total = controller.total;
@@ -155,7 +155,7 @@ class PackageCartView extends GetView<PackageCartController> {
                       width: Get.width,
                       child: ListView.builder(
                         itemCount:
-                            PackageMealsController().selectedDays1.keys.length,
+                            packageMealsController.selectedDays1.keys.length,
                         padding: EdgeInsetsDirectional.only(start: 22.w),
                         scrollDirection: Axis.horizontal,
                         itemBuilder: (context, index) {
@@ -165,15 +165,13 @@ class PackageCartView extends GetView<PackageCartController> {
                             ),
                             child: InkWell(
                               onTap: () {
+                                Get.log('mealss==.' +
+                                    packageMealsController.selectedDays1
+                                        .toString());
                                 controller.changeMealSelected(
                                     index,
-                                    PackageMealsController()
-                                        .selectedDays1
-                                        .keys
+                                    packageMealsController.selectedDays1.keys
                                         .elementAt(index));
-                                // controller.selectDay(
-                                //     PackageMealsController.selectedDays1.keys.elementAt(index));
-                                //  Get.log('ffff   '+controller.daySelected.toString()+'  l  '+controller.daysList[index].toString());
                               },
                               child: Container(
                                 width: 44.w,
@@ -190,9 +188,7 @@ class PackageCartView extends GetView<PackageCartController> {
                                           : lightGreyColor),
                                 ),
                                 child: Text(
-                                  (PackageMealsController()
-                                          .selectedDays1
-                                          .keys
+                                  (packageMealsController.selectedDays1.keys
                                           .elementAt(index))
                                       .substring(0, 3),
                                   style: Get.textTheme.headline3!.copyWith(
@@ -215,8 +211,11 @@ class PackageCartView extends GetView<PackageCartController> {
                 SizedBox(
                   height: 400,
                   child: ListView.builder(
-                    itemCount: PackageMealsController().selectedDays1.length,
-                    physics: const BouncingScrollPhysics(),
+                    itemCount: controller
+                        .selectedMealsProductsData[controller.currentDay]
+                        ?.keys
+                        .length,
+                    physics: const NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
                       return MealsSummeryCard(inedx);

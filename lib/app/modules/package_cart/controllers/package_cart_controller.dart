@@ -20,10 +20,18 @@ class PackageCartController extends GetxController {
   int total = 0;
   String currentDay = "";
 
+  List<String>? productsList;
+  List<String>? dinnerProductsList;
+  List<String>? breakfastProductsList;
+  List<String>? lunchProductsList;
+  Map<String, Map> selectedMealsProductsData = {};
+  PackageMealsController packageMealsController = Get.find();
   Map<String, dynamic> decoded = {};
   @override
   void onInit() {
     super.onInit();
+    currentDay = packageMealsController.selectedDays1.keys.first;
+    selectedMealsProductsData = packageMealsController.selectedDays1;
     AnalyticsService.instance.logEvent("Cart_View");
 
     isSubscribtion = args['isSubscribtion'] as bool;
@@ -94,11 +102,6 @@ class PackageCartController extends GetxController {
       daysList.add('tue');
     }
 
-    update();
-  }
-
-  selectDay(String day) {
-    currentDay = day;
     update();
   }
 }

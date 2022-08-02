@@ -24,12 +24,12 @@ class Data {
 
   Data.fromJson(dynamic json) {
     responseData = json['response_data'] != null ? ResponseData.fromJson(json['responseData']) : null;
-    if (json['packages'] != null) {
-      packages = [];
-      json['packages'].forEach((v) {
-        packages?.add(Packages.fromJson(v));
-      });
-    }
+    // if (json['packages'] != null) {
+    //   packages = [];
+    //   json['packages'].forEach((v) {
+    //     packages?.add(Packages.fromJson(v));
+    //   });
+    // }
   }
   ResponseData? responseData;
   List<Packages>? packages;
