@@ -213,7 +213,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
                           'total': controller.totalPackagePrice,
                      */
-                        if (controller.selectedDays1.keys.length !=
+                        /*   if (controller.selectedDays1.keys.length !=
                             PackageMealsController.selectedDays.keys.length) {
                           Get.snackbar("Empty meals",
                               "please select meals for all days");
@@ -233,7 +233,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                               return;
                             }
                           }
-                        }
+                        }*/
                         Get.toNamed(Routes.PACKAGE_CART, arguments: {
                           'total': controller.totalPackagePrice,
                           'isSubscribtion': false

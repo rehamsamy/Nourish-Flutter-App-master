@@ -96,7 +96,7 @@ class _MealSelectCardState extends State<MealSelectCard> {
                                     .selectedDays[controller.currentDay]
                                 [controller.selectedMeal] = ([widget.id]);
                             controller.selectedDays1[controller.currentDay]
-                                ?[controller.selectedMeal] = ([widget.title]);
+                                ?[controller.selectedMeal] = (widget.title);
 
                             Get.log('Selected meals ids ==>' +
                                 PackageMealsController.selectedDays.toString() +
