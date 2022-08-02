@@ -88,7 +88,7 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                     });
                   } else if (PackageDetailsController.selectedPlanType ==
                       "delivery") {
-                    Get.toNamed(Routes.DELIVERY_ADDRESSES, arguments: {
+                    Get.toNamed(Routes.BRANCH_SELECT, arguments: {
                       'packageDetailModel': controller.packageDetailModel,
                       'selectedPlanType':
                           PackageDetailsController.selectedPlanType,

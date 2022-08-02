@@ -32,9 +32,9 @@ class SelectedDaysListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return FadeIn(
                   child: GestureDetector(
-                    onTap: () => PackageMealsController().selectDay(
-                        PackageMealsController.selectedDays.keys
-                            .elementAt(index)),
+                    onTap: () => controller.selectDay(PackageMealsController
+                        .selectedDays.keys
+                        .elementAt(index)),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 5.w,

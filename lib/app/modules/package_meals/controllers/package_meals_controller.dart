@@ -46,6 +46,11 @@ class PackageMealsController extends GetxController {
     breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
+    dinnerSelected = PackageDetailsView.packageDetailModel?.data?.dinner ?? 1;
+    lunchSelected = PackageDetailsView.packageDetailModel?.data?.lunch ?? 1;
+    breakfastSelected =
+        PackageDetailsView.packageDetailModel?.data?.breakfast ?? 1;
+    snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 1;
 
     _newMealsList = dinnersList;
     super.onInit();
@@ -58,7 +63,7 @@ class PackageMealsController extends GetxController {
       breakfastSelected++;
     } else if (meal == 'lunch') {
       lunchSelected++;
-    } else if (meal == 'snacks') {
+    } else if (meal == 'snack') {
       snacksSelected++;
     }
     update();
@@ -89,7 +94,7 @@ class PackageMealsController extends GetxController {
         lunchSelected = 1;
         isMealSelected = 0;
       }
-    } else if (meal == 'snacks') {
+    } else if (meal == 'snack') {
       snacksSelected--;
       if (snacksSelected == 0) {
         snacksSelected = 1;
@@ -137,11 +142,13 @@ class PackageMealsController extends GetxController {
 
   selectDay(String day) {
     //selectedDays1.clear();
+
     currentDay = day;
     selectedDays1[day] = {
       'breakfast': '',
       'lunch': '',
       'dinner': '',
+      'snack': '',
     };
     update();
   }

@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
-import 'package:nourish_sa/routes/app_pages.dart';
 
 class EnableLocationDialog extends StatelessWidget {
   const EnableLocationDialog({Key? key}) : super(key: key);
@@ -57,9 +57,7 @@ class EnableLocationDialog extends StatelessWidget {
             CustomButton(
               title: LocalKeys.kEnable.tr,
               onPress: () {
-                Get.back();
-
-                Get.toNamed(Routes.DELIVERY_ADDRESSES);
+                Geolocator.openLocationSettings();
               },
             ),
           ],

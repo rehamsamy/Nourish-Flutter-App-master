@@ -126,7 +126,7 @@ class DaysTimeController extends GetxController {
         'breakfast': [],
         'lunch': [],
         'dinner': [],
-        'snacks': [],
+        'snack': [],
       };
       Get.log(daysTimeSelectedValues.toString());
     }

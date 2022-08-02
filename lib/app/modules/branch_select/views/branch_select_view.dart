@@ -125,10 +125,15 @@ class BranchSelectView extends GetView<BranchSelectController> {
                                                 controller.setBranch(controller
                                                         .branches[index].id ??
                                                     0);
-                                                Get.toNamed(
-                                                    Routes.DELIVERY_ADDRESSES);
+                                                controller.selectedPlanType ==
+                                                        "delivery"
+                                                    ? Get.toNamed(Routes
+                                                        .DELIVERY_ADDRESSES)
+                                                    : Get.toNamed(
+                                                        Routes.DAYS_TIME);
                                               },
-                                              selected: BranchSelectController.branchId ==
+                                              selected: BranchSelectController
+                                                      .branchId ==
                                                   controller
                                                       .branches[index].id);
                                         },
