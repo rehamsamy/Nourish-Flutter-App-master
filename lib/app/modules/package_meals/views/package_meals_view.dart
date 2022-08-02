@@ -218,17 +218,19 @@ class PackageMealsView extends GetView<PackageMealsController> {
                           'total': controller.totalPackagePrice,
                      */
                         if (controller.selectedDays1.keys.length !=
-                            controller.selectedDays.keys.length) {
+                            PackageMealsController.selectedDays.keys.length) {
                           Get.snackbar("Empty meals",
                               "please select meals for all days");
                           return;
                         } else {
                           for (int i = 0;
-                              i <= controller.selectedDays.keys.length;
+                              i <=
+                                  PackageMealsController
+                                      .selectedDays.keys.length;
                               i++) {
                             //check if meals are selected for all days if not show error
-                            if (controller
-                                    .selectedDays[controller.selectedDays] ==
+                            if (PackageMealsController.selectedDays[
+                                    PackageMealsController.selectedDays] ==
                                 null) {
                               Get.snackbar("Empty meals",
                                   "please select meals for all days");

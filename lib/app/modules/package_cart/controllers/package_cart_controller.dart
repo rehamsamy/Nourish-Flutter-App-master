@@ -37,7 +37,7 @@ class PackageCartController extends GetxController {
     isSubscribtion = args['isSubscribtion'] as bool;
     total = args['total'] as int;
     detailModel = PackageDetailsView.packageDetailModel;
-    currentDay = PackageMealsController().selectedDays.keys.first;
+    currentDay = PackageMealsController.selectedDays.keys.first;
     Get.log('mmm   ' + currentDay);
     // if(isSubscribtion ==false){
     //   Get.log('cccc  '+isSubscribtion.toString());
@@ -54,7 +54,7 @@ class PackageCartController extends GetxController {
     // }
     if (isSubscribtion == false) {
       // saturdayList=PackageMealsController.selectedDays['saturday'];
-      Get.log('xxxxxxx  ' + PackageMealsController().selectedDays.toString());
+      Get.log('xxxxxxx  ' + PackageMealsController.selectedDays.toString());
       getDaysList();
     }
 
