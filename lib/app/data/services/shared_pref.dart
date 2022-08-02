@@ -7,9 +7,10 @@ class SharedPrefService extends GetxService {
   String? token;
 
   Future<String> saveToken(String token) async {
-    return await prefs.setString("token", token).then((value) {
+    return await prefs.setString("token", token).then((value) async {
       this.token = "";
       this.token = token;
+      await prefs.reload();
       return token;
     });
   }
@@ -31,7 +32,10 @@ class SharedPrefService extends GetxService {
   }
 
   Future<bool> saveLocale(String langCode) async {
-    return await prefs.setString("lang", langCode);
+    return await prefs.setString("lang", langCode).then((value) async {
+      await prefs.reload();
+      return value;
+    });
   }
 
   String loadLocale() {
@@ -39,7 +43,10 @@ class SharedPrefService extends GetxService {
   }
 
   Future<bool> saveIsFirstTime() async {
-    return await prefs.setBool("FirstTime", false);
+    return await prefs.setBool("FirstTime", false).then((value) async {
+      await prefs.reload();
+      return value;
+    });
   }
 
   bool loadIsFirstTime() {
