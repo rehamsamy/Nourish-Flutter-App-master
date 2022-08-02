@@ -26,6 +26,7 @@ class MealSelectCard extends StatefulWidget {
 }
 
 class _MealSelectCardState extends State<MealSelectCard> {
+  PackageMealsController packageMealsController=Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -89,13 +90,12 @@ class _MealSelectCardState extends State<MealSelectCard> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
-                            PackageMealsController.selectedDays1[controller.currentDay] = {};
                             widget.isSelected = true;
                             PackageMealsController.selectedDays[controller.currentDay]
                                 [controller.selectedMeal] = [widget.id];
-                            PackageMealsController.selectedDays1[controller.currentDay]![
+                            packageMealsController.selectedDays1[controller.currentDay]![
                                 controller.selectedMeal] = widget.title;
-                            Get.log('selected days map ==>'+ PackageMealsController.selectedDays1.toString());
+                            Get.log('selected days map ==>'+ packageMealsController.selectedDays1.toString());
 
                           });
                           print(PackageMealsController.selectedDays);

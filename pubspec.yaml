@@ -44,6 +44,8 @@ dependencies:
   restart_app: ^1.1.0
   shared_preferences: ^2.0.6
   shimmer: ^2.0.0
+#  dio: ^4.0.4
+  http: ^0.13.4
 
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6

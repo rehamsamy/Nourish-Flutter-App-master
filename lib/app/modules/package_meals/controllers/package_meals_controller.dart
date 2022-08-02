@@ -6,7 +6,7 @@ import '../../../data/services/analytics_service.dart';
 
 class PackageMealsController extends GetxController {
   static Map<String, dynamic> selectedDays = {};
-  static Map<String, Map> selectedDays1 = {};
+   Map<String, Map> selectedDays1 = {};
   Map map = Get.arguments;
   int dinnerSelected = 1;
   int lunchSelected = 1;
@@ -30,6 +30,7 @@ class PackageMealsController extends GetxController {
     AnalyticsService.instance.logEvent("Package_Meals_View");
     selectedDays = map['selectedDays'];
     currentDay = selectedDays.keys.first;
+    selectedDays1={};
     extraDinnerPrice =
         PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice;
     extraBreakfastPrice =
@@ -112,7 +113,6 @@ class PackageMealsController extends GetxController {
       _newMealsList = lunchesList;
     }
     update();
-    Get.log('vvvvv  ' + selectedDays1.toString());
   }
 
   selectDay(String day) {
@@ -122,9 +122,9 @@ class PackageMealsController extends GetxController {
       'breakfast': '',
       'lunch': '',
       'dinner': '',
+
     };
     update();
-    Get.log('vv    11 ' + selectedDays1.toString());
 
   }
 }

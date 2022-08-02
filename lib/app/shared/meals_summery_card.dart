@@ -18,11 +18,7 @@ class MealsSummeryCard extends GetView<PackageCartController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.log('nnnn ' + controller.currentDay);
-    Map x = {
-      'sat': {'dinner': '123', 'breakfast': '450', 'lunch': '888'}
-    };
-
+Get.log('selected days map 2==>  ${controller.currentDay}   mmm     ${controller.selectedMealsProductsData[controller.selectedMealsProductsData]?.keys.length} '+controller.selectedMealsProductsData[controller.currentDay].toString());
     return GetBuilder<PackageCartController>(
       builder: (_) => Container(
         width: 374.w,
@@ -46,25 +42,24 @@ class MealsSummeryCard extends GetView<PackageCartController> {
                 SizedBox(
                   width: 12.w,
                 ),
-                if (PackageMealsController.selectedDays1.containsKey(controller.currentDay))
+                if (controller.selectedMealsProductsData.containsKey(controller.currentDay))
                   Text(
-                    PackageMealsController.selectedDays1[controller.currentDay]?.keys
+                    (controller.selectedMealsProductsData[controller.currentDay])?.keys
                             .elementAt(index) ??
                         'not found',
                     style: Get.textTheme.bodyText1,
                   )
                 else
-                  Text('not found'),
+                 const Text('not found'),
               ],
             ),
-            SizedBox(
+            const SizedBox(
               height: 12,
             ),
             FoodItem(
               title:
-                  //x['sat'].values.elementAt(index)
-                  PackageMealsController.selectedDays1[controller.currentDay]?.values
-                          .first ??
+              controller.selectedMealsProductsData[controller.currentDay]?.values
+                          .elementAt(index) ??
                       'not found',
               desc: '',
               isEnd: index == -1,
@@ -73,22 +68,22 @@ class MealsSummeryCard extends GetView<PackageCartController> {
               height: 5,
             ),
 
-            // ListView.builder(
-            //   itemCount: 1,
-            //   shrinkWrap: true,
-            //   padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
-            //   physics: const NeverScrollableScrollPhysics(),
-            //   itemBuilder: (context, index) {
-            //     Get.log('pppp  '+PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(0).toString());
-            //     return FoodItem(
-            //       title:
-            //       //x['sat'].values.elementAt(index)
-            //       PackageMealsController.selectedDays1[controller.currentDay].values.elementAt(index).toString()
-            //       ,desc :'',
-            //       isEnd: index == 1,
-            //     );
-            //   },
-            // ),
+           //  ListView.builder(
+           //    itemCount: controller.selectedMealsProductsData[controller.currentDay]?.values.length,
+           //    shrinkWrap: true,
+           // //   padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
+           //   // physics: const NeverScrollableScrollPhysics(),
+           //    itemBuilder: (context, index) {
+           //      return FoodItem(
+           //        title:
+           //        controller.selectedMealsProductsData[controller.currentDay]?.values
+           //                      .elementAt(index) ??
+           //                  'not found'
+           //        ,desc :'',
+           //        isEnd: index == -1,
+           //      );
+           //    },
+           //  ),
           ],
         ),
       ),
@@ -134,7 +129,7 @@ class FoodItem extends StatelessWidget {
                 padding: EdgeInsetsDirectional.only(start: 4.5.w),
                 child: DottedLine(
                   direction: Axis.vertical,
-                  lineLength: 35.h,
+                  lineLength: 20.h,
                   lineThickness: 2.h,
                   dashColor: primaryColor,
                 ),
