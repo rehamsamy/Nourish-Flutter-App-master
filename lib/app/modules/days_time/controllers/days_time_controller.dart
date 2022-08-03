@@ -5,7 +5,6 @@ import 'package:nourish_sa/app/data/models/home_setting_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_setting_apis.dart';
 import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 
-import '../../../data/models/branch_model.dart';
 import '../../../data/models/package_detail_model.dart';
 import '../../../data/services/analytics_service.dart';
 import '../../package_details/views/package_details_view.dart';
@@ -18,13 +17,14 @@ class DaysTimeController extends GetxController {
   List<int> selectedItems = [];
 
   @override
-  void onInit() {
+  void onInit() async {
     super.onInit();
     AnalyticsService.instance.logEvent("Days_Time_View");
     packageDetailModel = PackageDetailsView.packageDetailModel;
     daysCount = packageDetailModel?.data?.daysNumberOfWeek ?? 0;
     branches = packageDetailModel?.data?.branches;
     daysStart = int.parse(packageDetailModel?.data?.daysBeforeStart ?? '');
+    await HomeSettingApis().getHomeSetting();
     branchTime.clear();
     int length = packageDetailModel?.data?.branches?.length ?? 0;
     if (length > 0) {
@@ -36,6 +36,7 @@ class DaysTimeController extends GetxController {
           .toList();
       branchTimeSelectedValue = branchTime[0];
     }
+    update();
   }
 
   String branchTimeSelectedValue = '';
@@ -125,7 +126,9 @@ class DaysTimeController extends GetxController {
         'breakfast': [],
         'lunch': [],
         'dinner': [],
+        'snack': [],
       };
+      Get.log(daysTimeSelectedValues.toString());
     }
     update();
   }
@@ -144,7 +147,7 @@ class DaysTimeController extends GetxController {
   // static List<String> selectedDays = [];
   int daysCount = 0;
   int? daysStart;
-  List<BranchItem>? branches;
+  List<Branches>? branches;
   List<String> selectedDays = [];
   List<String> branchTime = [];
   List<int?>? branchTimeIds = [];

@@ -62,7 +62,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                     title: LocalKeys.kBreakfast.tr,
                                     type: 'breakfast',
                                     canAddMore:
-                                        controller.extraBreakfastPrice != null,
+                                        controller.breakfastSelected != 0,
                                     titleValue:
                                         '${controller.breakfastSelected}'),
                               ),
@@ -75,8 +75,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                     isSelected: controller.isMealSelected == 3,
                                     title: LocalKeys.kLunch.tr,
                                     type: 'lunch',
-                                    canAddMore:
-                                        controller.extraLunchPrice != null,
+                                    canAddMore: controller.lunchSelected != 0,
                                     titleValue: '${controller.lunchSelected}'),
                               ),
                               InkWell(
@@ -87,9 +86,19 @@ class PackageMealsView extends GetView<PackageMealsController> {
                                     isSelected: controller.isMealSelected == 1,
                                     title: LocalKeys.kDinner.tr,
                                     type: 'dinner',
-                                    canAddMore:
-                                        controller.extraDinnerPrice != null,
+                                    canAddMore: controller.dinnerSelected != 0,
                                     titleValue: '${controller.dinnerSelected}'),
+                              ),
+                              InkWell(
+                                onTap: () {
+                                  controller.changeMealSelected(4, "snack");
+                                },
+                                child: DinnerAnimatedContainer(
+                                    isSelected: controller.isMealSelected == 4,
+                                    title: LocalKeys.kSnacks.tr,
+                                    type: 'snack',
+                                    canAddMore: controller.snacksSelected != 0,
+                                    titleValue: '${controller.snacksSelected}'),
                               ),
 
                               // DinnerAnimatedContainer(
@@ -204,6 +213,27 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
                           'total': controller.totalPackagePrice,
                      */
+                        /*   if (controller.selectedDays1.keys.length !=
+                            PackageMealsController.selectedDays.keys.length) {
+                          Get.snackbar("Empty meals",
+                              "please select meals for all days");
+                          return;
+                        } else {
+                          for (int i = 0;
+                              i <=
+                                  PackageMealsController
+                                      .selectedDays.keys.length;
+                              i++) {
+                            //check if meals are selected for all days if not show error
+                            if (PackageMealsController.selectedDays[
+                                    PackageMealsController.selectedDays] ==
+                                null) {
+                              Get.snackbar("Empty meals",
+                                  "please select meals for all days");
+                              return;
+                            }
+                          }
+                        }*/
                         Get.toNamed(Routes.PACKAGE_CART, arguments: {
                           'total': controller.totalPackagePrice,
                           'isSubscribtion': false

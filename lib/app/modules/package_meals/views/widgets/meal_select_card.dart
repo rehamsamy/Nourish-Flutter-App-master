@@ -26,7 +26,7 @@ class MealSelectCard extends StatefulWidget {
 }
 
 class _MealSelectCardState extends State<MealSelectCard> {
-  PackageMealsController packageMealsController=Get.find();
+  PackageMealsController packageMealsController = Get.find();
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -90,15 +90,22 @@ class _MealSelectCardState extends State<MealSelectCard> {
                       child: OutlinedButton(
                         onPressed: () {
                           setState(() {
+                            // PackageMealsController.selectedDays1.clear();
                             widget.isSelected = true;
-                            PackageMealsController.selectedDays[controller.currentDay]
-                                [controller.selectedMeal] = [widget.id];
-                            packageMealsController.selectedDays1[controller.currentDay]![
-                                controller.selectedMeal] = widget.title;
-                            Get.log('selected days map ==>'+ packageMealsController.selectedDays1.toString());
+                            PackageMealsController
+                                    .selectedDays[controller.currentDay]
+                                [controller.selectedMeal] = ([widget.id]);
+                            controller.selectedDays1[controller.currentDay]
+                                ?[controller.selectedMeal] = (widget.title);
 
+                            Get.log('Selected meals ids ==>' +
+                                PackageMealsController.selectedDays.toString() +
+                                widget.title.toString());
+
+                            Get.log('Selected meals titles ==>' +
+                                controller.selectedDays1.toString() +
+                                widget.title.toString());
                           });
-                          print(PackageMealsController.selectedDays);
                         },
                         style: ButtonStyle(
                           backgroundColor: MaterialStateProperty.all<Color>(
@@ -119,9 +126,13 @@ class _MealSelectCardState extends State<MealSelectCard> {
                               margin: EdgeInsetsDirectional.only(end: 10.w),
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                color: widget.isSelected ? Colors.white : Colors.transparent,
+                                color: widget.isSelected
+                                    ? Colors.white
+                                    : Colors.transparent,
                                 border: Border.all(
-                                  color: widget.isSelected ? Colors.white : primaryColor,
+                                  color: widget.isSelected
+                                      ? Colors.white
+                                      : primaryColor,
                                 ),
                               ),
                               child: Icon(
@@ -134,7 +145,9 @@ class _MealSelectCardState extends State<MealSelectCard> {
                               "Select",
                               textAlign: TextAlign.center,
                               style: TextStyle(
-                                color: widget.isSelected ? Colors.white : primaryColor,
+                                color: widget.isSelected
+                                    ? Colors.white
+                                    : primaryColor,
                                 fontWeight: FontWeight.w400,
                                 fontSize: 15.sp,
                               ),

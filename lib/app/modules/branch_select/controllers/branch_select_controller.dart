@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 
 import '../../../data/models/branch_model.dart';
 import '../../../data/remote_data_sources/branch_apis.dart';
@@ -12,14 +13,17 @@ class BranchSelectController extends GetxController {
   List<BranchItem> branches = [];
   Position? location;
   var mapMarkers = <Marker>[];
- static int branchId = 1;
+  static int branchId = 1;
   GoogleMapController? mapController;
   void setBranch(int id) {
     branchId = id;
     update();
   }
 
+  var selectedPlanType = "";
+
   Future<List<BranchItem>> getBranches() async {
+    selectedPlanType = PackageDetailsController.selectedPlanType;
     location = await PostionLocator.determinePosition();
     branches = (await BranchApis().getBranches().then((value) {
       return value

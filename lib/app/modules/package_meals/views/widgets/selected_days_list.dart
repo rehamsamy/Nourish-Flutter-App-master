@@ -32,8 +32,9 @@ class SelectedDaysListView extends StatelessWidget {
               itemBuilder: (context, index) {
                 return FadeIn(
                   child: GestureDetector(
-                    onTap: () => controller.selectDay(
-                        PackageMealsController.selectedDays.keys.elementAt(index)),
+                    onTap: () => controller.selectDay(PackageMealsController
+                        .selectedDays.keys
+                        .elementAt(index)),
                     child: Padding(
                       padding: EdgeInsets.symmetric(
                         horizontal: 5.w,
@@ -75,7 +76,8 @@ class SelectedDaysListView extends StatelessWidget {
                           SizedBox(
                             height: 6.h,
                           ),
-                          PackageMealsController.selectedDays.keys.elementAt(index) ==
+                          PackageMealsController.selectedDays.keys
+                                      .elementAt(index) ==
                                   controller.currentDay
                               ? CustomPaint(
                                   painter: TrianglePainter(

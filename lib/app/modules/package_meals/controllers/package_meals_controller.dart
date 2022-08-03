@@ -6,22 +6,25 @@ import '../../../data/services/analytics_service.dart';
 
 class PackageMealsController extends GetxController {
   static Map<String, dynamic> selectedDays = {};
-   Map<String, Map> selectedDays1 = {};
+  Map<String, Map> selectedDays1 = {};
   Map map = Get.arguments;
   int dinnerSelected = 1;
   int lunchSelected = 1;
   int breakfastSelected = 1;
+  int snacksSelected = 1;
   int? extraDinnerPrice = 0;
   int? extraBreakfastPrice = 0;
   int? extraLunchPrice = 0;
+  int? extraSnacksPrice = 0;
   int isMealSelected = 0;
   int selectedIndex = 0;
   int addtionalPackagePrice = 0;
   int totalPackagePrice = 0;
-  List<MealsModel>? breakfastsList;
-  List<MealsModel>? lunchesList;
-  List<MealsModel>? dinnersList;
-  List<MealsModel>? _newMealsList;
+  List<MealModel>? breakfastsList;
+  List<MealModel>? lunchesList;
+  List<MealModel>? dinnersList;
+  List<MealModel>? snacksList;
+  List<MealModel>? _newMealsList;
   String currentDay = "";
   String? selectedMeal;
   int? packagePrice;
@@ -29,19 +32,32 @@ class PackageMealsController extends GetxController {
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
     selectedDays = map['selectedDays'];
+    Get.log('SELECTED DAYS ' +
+        selectedDays.keys.toString() +
+        selectedDays.toString());
     currentDay = selectedDays.keys.first;
-    selectedDays1={};
+    selectedDays1 = {};
     extraDinnerPrice =
         PackageDetailsView.packageDetailModel?.data?.extraDinnerPrice;
     extraBreakfastPrice =
         PackageDetailsView.packageDetailModel?.data?.extraBreakfastPrice;
     extraLunchPrice =
         PackageDetailsView.packageDetailModel?.data?.extraLunchPrice;
+    extraSnacksPrice =
+        PackageDetailsView.packageDetailModel?.data?.extraSnackPrice;
     packagePrice = PackageDetailsView.packageDetailModel?.data?.priceWithTax;
+    //////////////////////
     breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
-    _newMealsList = dinnersList;
+    snacksList = PackageDetailsView.packageDetailModel?.data?.snacks;
+    //////////////////////
+    dinnerSelected = PackageDetailsView.packageDetailModel?.data?.dinner ?? 1;
+    lunchSelected = PackageDetailsView.packageDetailModel?.data?.lunch ?? 1;
+    breakfastSelected =
+        PackageDetailsView.packageDetailModel?.data?.breakfast ?? 1;
+    snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 1;
+    _newMealsList = breakfastsList;
     super.onInit();
   }
 
@@ -52,6 +68,8 @@ class PackageMealsController extends GetxController {
       breakfastSelected++;
     } else if (meal == 'lunch') {
       lunchSelected++;
+    } else if (meal == 'snack') {
+      snacksSelected++;
     }
     update();
     addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
@@ -81,13 +99,23 @@ class PackageMealsController extends GetxController {
         lunchSelected = 1;
         isMealSelected = 0;
       }
+    } else if (meal == 'snack') {
+      snacksSelected--;
+      if (snacksSelected == 0) {
+        snacksSelected = 1;
+        isMealSelected = 0;
+      }
     }
-    if (lunchSelected == 1 || breakfastSelected == 1 || dinnerSelected == 1) {
+    if (lunchSelected == 1 ||
+        breakfastSelected == 1 ||
+        dinnerSelected == 1 ||
+        snacksSelected == 1) {
       addtionalPackagePrice = 0;
     } else {
       addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
           ((extraBreakfastPrice ?? 0) * breakfastSelected) +
-          ((extraDinnerPrice ?? 0) * dinnerSelected);
+          ((extraDinnerPrice ?? 0) * dinnerSelected) +
+          ((extraDinnerPrice ?? 0) * snacksSelected);
       totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
     }
     update();
@@ -100,7 +128,7 @@ class PackageMealsController extends GetxController {
     update();
   }
 
-  List<MealsModel>? get newMealsList {
+  List<MealModel>? get newMealsList {
     return _newMealsList;
   }
 
@@ -111,20 +139,22 @@ class PackageMealsController extends GetxController {
       _newMealsList = breakfastsList;
     } else if (index == 3) {
       _newMealsList = lunchesList;
+    } else if (index == 4) {
+      _newMealsList = snacksList;
     }
     update();
   }
 
   selectDay(String day) {
     //selectedDays1.clear();
+
     currentDay = day;
     selectedDays1[day] = {
       'breakfast': '',
       'lunch': '',
       'dinner': '',
-
+      'snack': '',
     };
     update();
-
   }
 }
