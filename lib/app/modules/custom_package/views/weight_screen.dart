@@ -82,7 +82,7 @@ class WeightScreen extends GetView<CustomPackageController> {
                         width: 11.w,
                       ),
                       Text(
-                        LocalKeys.kKg.tr,
+                        controller.heightType=='kg' ?  LocalKeys.kKg.tr:LocalKeys.kPound.tr,
                         style: Get.textTheme.headline3,
                       ),
                     ],

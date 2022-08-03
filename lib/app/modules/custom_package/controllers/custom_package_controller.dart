@@ -44,19 +44,15 @@ class CustomPackageController extends GetxController {
 
   void changeMale(bool newVal) {
     isMaleSelected = newVal;
-    Get.log('cccc ' + newVal.toString());
     update();
   }
 
   void changeFemale(bool newVal) {
-    isFemaleSelected = newVal;
-    Get.log('cccc ' + newVal.toString());
     update();
   }
 
   void setBirthdate(String newVal) {
     birtdate = newVal;
-    Get.log('cccc ' + newVal.toString());
     update();
   }
 
