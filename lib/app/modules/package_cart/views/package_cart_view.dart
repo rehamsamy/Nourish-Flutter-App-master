@@ -9,6 +9,7 @@ import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/meals_summery_card.dart';
+import 'package:nourish_sa/app/shared/meals_summery_card1.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import '../../../../app_theme.dart';
 import '../controllers/package_cart_controller.dart';
@@ -203,11 +204,11 @@ class PackageCartView extends GetView<PackageCartController> {
                   height: 25.h,
                 ),
                 SizedBox(
-                  height: 400,
+                  height: 300,
                   child:
                   ListView.builder(
                     itemCount: controller.selectedMealsProductsData[controller.currentDay]?.keys.length,
-                    physics: NeverScrollableScrollPhysics(),
+                    //physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
                       return MealsSummeryCard( inedx);

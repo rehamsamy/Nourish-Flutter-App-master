@@ -6,7 +6,7 @@ import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_c
 import '../../../data/services/analytics_service.dart';
 
 class PackageCartController extends GetxController {
-  bool isSubscribtion = true;
+  bool isSubscribtion = false;
   Map args = Get.arguments;
   PackageDetailModel? detailModel;
   List<MealDay>? sundayList;
