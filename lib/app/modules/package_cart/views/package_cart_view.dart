@@ -306,7 +306,7 @@ class PackageCartView extends GetView<PackageCartController> {
     );
   }
 }
-
+//
 class CartItem extends StatelessWidget {
   const CartItem(
       {required this.item, required this.value, this.isTotal = false, Key? key})
