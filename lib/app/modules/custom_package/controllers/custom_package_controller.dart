@@ -3,7 +3,6 @@ import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/create_package_model.dart';
 import 'package:nourish_sa/app/data/models/experience_model.dart';
-import 'package:nourish_sa/app/data/services/network_service.dart/logging_interceptor.dart';
 
 import '../../../data/services/analytics_service.dart';
 
@@ -44,19 +43,16 @@ class CustomPackageController extends GetxController {
 
   void changeMale(bool newVal) {
     isMaleSelected = newVal;
-    Get.log('cccc ' + newVal.toString());
     update();
   }
 
   void changeFemale(bool newVal) {
     isFemaleSelected = newVal;
-    Get.log('cccc ' + newVal.toString());
     update();
   }
 
   void setBirthdate(String newVal) {
     birtdate = newVal;
-    Get.log('cccc ' + newVal.toString());
     update();
   }
 
@@ -102,12 +98,6 @@ class CustomPackageController extends GetxController {
     } else {
       selectedMeals.add(i);
     }
-    logger.wtf("selected meals : " +
-        selectedMeals.toString() +
-        "index : " +
-        i.toString() +
-        "List type" +
-        selectedMeals.runtimeType.toString());
     update();
   }
 }

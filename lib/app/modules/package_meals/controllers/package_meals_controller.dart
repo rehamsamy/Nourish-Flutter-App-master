@@ -46,6 +46,7 @@ class PackageMealsController extends GetxController {
     extraSnacksPrice =
         PackageDetailsView.packageDetailModel?.data?.extraSnackPrice;
     packagePrice = PackageDetailsView.packageDetailModel?.data?.priceWithTax;
+    totalPackagePrice = packagePrice ?? 0;
     //////////////////////
     breakfastsList = PackageDetailsView.packageDetailModel?.data?.breakfasts;
     lunchesList = PackageDetailsView.packageDetailModel?.data?.lunches;
@@ -57,7 +58,7 @@ class PackageMealsController extends GetxController {
     breakfastSelected =
         PackageDetailsView.packageDetailModel?.data?.breakfast ?? 1;
     snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 1;
-    _newMealsList = breakfastsList;
+    _newMealsList = dinnersList;
     super.onInit();
   }
 

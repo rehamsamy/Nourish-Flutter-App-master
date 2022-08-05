@@ -1,55 +1,76 @@
 class CreatePackageModel {
-  CreatePackageModel({
-      this.data,});
-
-  CreatePackageModel.fromJson(dynamic json) {
-    data = json['data'] != null ? Data.fromJson(json['data']) : null;
-  }
   Data? data;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (data != null) {
-      map['data'] = data?.toJson();
+  CreatePackageModel({this.data});
+
+  CreatePackageModel.fromJson(Map<String, dynamic> json) {
+    if (json["data"] is Map) {
+      data = json["data"] == null ? null : Data.fromJson(json["data"]);
     }
-    return map;
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    if (this.data != null) {
+      data["data"] = this.data?.toJson();
+    }
+    return data;
+  }
 }
 
 class Data {
-  Data({
-      this.responseData, 
-      this.packages,});
-
-  Data.fromJson(dynamic json) {
-    responseData = json['response_data'] != null ? ResponseData.fromJson(json['responseData']) : null;
-    // if (json['packages'] != null) {
-    //   packages = [];
-    //   json['packages'].forEach((v) {
-    //     packages?.add(Packages.fromJson(v));
-    //   });
-    // }
-  }
   ResponseData? responseData;
   List<Packages>? packages;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    if (responseData != null) {
-      map['response_data'] = responseData?.toJson();
+  Data({this.responseData, this.packages});
+
+  Data.fromJson(Map<String, dynamic> json) {
+    if (json["response_data"] is Map) {
+      responseData = json["response_data"] == null
+          ? null
+          : ResponseData.fromJson(json["response_data"]);
     }
-    if (packages != null) {
-      map['packages'] = packages?.map((v) => v.toJson()).toList();
+    if (json["packages"] is List) {
+      packages = json["packages"] == null
+          ? null
+          : (json["packages"] as List)
+              .map((e) => Packages.fromJson(e))
+              .toList();
     }
-    return map;
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    if (responseData != null) {
+      data["response_data"] = responseData?.toJson();
+    }
+    if (packages != null) {
+      data["packages"] = packages?.map((e) => e.toJson()).toList();
+    }
+    return data;
+  }
 }
 
 class Packages {
-  Packages({
-      this.id,
+  int? id;
+  String? image;
+  int? tax;
+  int? priceWithTax;
+  int? daysNumberOfWeek;
+  int? special;
+  dynamic? specialFor;
+  double? totalCarbs;
+  double? totalFats;
+  double? totalProteins;
+  String? name;
+  List<Descriptions>? descriptions;
+  List<Breakfasts>? breakfasts;
+  List<Lunches>? lunches;
+  List<Dinners>? dinners;
+  List<dynamic>? snacks;
+
+  Packages(
+      {this.id,
       this.image,
       this.tax,
       this.priceWithTax,
@@ -63,94 +84,117 @@ class Packages {
       this.descriptions,
       this.breakfasts,
       this.lunches,
-      this.dinners,});
+      this.dinners,
+      this.snacks});
 
-  Packages.fromJson(dynamic json) {
-    id = json['id'];
-    image = json['image'];
-    tax = json['tax'];
-    priceWithTax = json['price_with_tax'];
-    daysNumberOfWeek = json['days_number_of_week'];
-    special = json['special'];
-    specialFor = json['special_for'];
-    totalCarbs = json['total_carbs'];
-    totalFats = json['total_fats'];
-    totalProteins = json['total_proteins'];
-    name = json['name'];
-    if (json['descriptions'] != null) {
-      descriptions = [];
-      json['descriptions'].forEach((v) {
-        descriptions?.add(Descriptions.fromJson(v));
-      });
+  Packages.fromJson(Map<String, dynamic> json) {
+    if (json["id"] is int) {
+      id = json["id"];
     }
-    if (json['breakfasts'] != null) {
-      breakfasts = [];
-      json['breakfasts'].forEach((v) {
-        breakfasts?.add(Breakfasts.fromJson(v));
-      });
+    if (json["image"] is String) {
+      image = json["image"];
     }
-    if (json['lunches'] != null) {
-      lunches = [];
-      json['lunches'].forEach((v) {
-        lunches?.add(Breakfasts.fromJson(v));
-      });
+    if (json["tax"] is int) {
+      tax = json["tax"];
     }
-    if (json['dinners'] != null) {
-      dinners = [];
-      json['dinners'].forEach((v) {
-        dinners?.add(Breakfasts.fromJson(v));
-      });
+    if (json["price_with_tax"] is int) {
+      priceWithTax = json["price_with_tax"];
+    }
+    if (json["days_number_of_week"] is int) {
+      daysNumberOfWeek = json["days_number_of_week"];
+    }
+    if (json["special"] is int) {
+      special = json["special"];
+    }
+    specialFor = json["special_for"];
+    if (json["total_carbs"] is double) {
+      totalCarbs = json["total_carbs"];
+    }
+    if (json["total_fats"] is double) {
+      totalFats = json["total_fats"];
+    }
+    if (json["total_proteins"] is double) {
+      totalProteins = json["total_proteins"];
+    }
+    if (json["name"] is String) {
+      name = json["name"];
+    }
+    if (json["descriptions"] is List) {
+      descriptions = json["descriptions"] == null
+          ? null
+          : (json["descriptions"] as List)
+              .map((e) => Descriptions.fromJson(e))
+              .toList();
+    }
+    if (json["breakfasts"] is List) {
+      breakfasts = json["breakfasts"] == null
+          ? null
+          : (json["breakfasts"] as List)
+              .map((e) => Breakfasts.fromJson(e))
+              .toList();
+    }
+    if (json["lunches"] is List) {
+      lunches = json["lunches"] == null
+          ? null
+          : (json["lunches"] as List).map((e) => Lunches.fromJson(e)).toList();
+    }
+    if (json["dinners"] is List) {
+      dinners = json["dinners"] == null
+          ? null
+          : (json["dinners"] as List).map((e) => Dinners.fromJson(e)).toList();
+    }
+    if (json["snacks"] is List) {
+      snacks = json["snacks"] ?? [];
     }
   }
-  int? id;
-  String? image;
-  int? tax;
-  int? priceWithTax;
-  int? daysNumberOfWeek;
-  int? special;
-  dynamic specialFor;
-  double? totalCarbs;
-  double? totalFats;
-  double? totalProteins;
-  String? name;
-  List<Descriptions>? descriptions;
-  List<Breakfasts>? breakfasts;
-  List<dynamic>? lunches;
-  List<dynamic>? dinners;
 
   Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['image'] = image;
-    map['tax'] = tax;
-    map['price_with_tax'] = priceWithTax;
-    map['days_number_of_week'] = daysNumberOfWeek;
-    map['special'] = special;
-    map['special_for'] = specialFor;
-    map['total_carbs'] = totalCarbs;
-    map['total_fats'] = totalFats;
-    map['total_proteins'] = totalProteins;
-    map['name'] = name;
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data["id"] = id;
+    data["image"] = image;
+    data["tax"] = tax;
+    data["price_with_tax"] = priceWithTax;
+    data["days_number_of_week"] = daysNumberOfWeek;
+    data["special"] = special;
+    data["special_for"] = specialFor;
+    data["total_carbs"] = totalCarbs;
+    data["total_fats"] = totalFats;
+    data["total_proteins"] = totalProteins;
+    data["name"] = name;
     if (descriptions != null) {
-      map['descriptions'] = descriptions?.map((v) => v.toJson()).toList();
+      data["descriptions"] = descriptions?.map((e) => e.toJson()).toList();
     }
     if (breakfasts != null) {
-      map['breakfasts'] = breakfasts?.map((v) => v.toJson()).toList();
+      data["breakfasts"] = breakfasts?.map((e) => e.toJson()).toList();
     }
     if (lunches != null) {
-      map['lunches'] = lunches?.map((v) => v.toJson()).toList();
+      data["lunches"] = lunches?.map((e) => e.toJson()).toList();
     }
     if (dinners != null) {
-      map['dinners'] = dinners?.map((v) => v.toJson()).toList();
+      data["dinners"] = dinners?.map((e) => e.toJson()).toList();
     }
-    return map;
+    if (snacks != null) {
+      data["snacks"] = snacks;
+    }
+    return data;
   }
-
 }
 
-class Breakfasts {
-  Breakfasts({
-      this.id,
+class Dinners {
+  int? id;
+  String? image;
+  int? calories;
+  int? fat;
+  int? protein;
+  int? carb;
+  int? weight;
+  int? price;
+  String? name;
+  String? description;
+  Pivot2? pivot;
+
+  Dinners(
+      {this.id,
       this.image,
       this.calories,
       this.fat,
@@ -160,21 +204,191 @@ class Breakfasts {
       this.price,
       this.name,
       this.description,
-      this.pivot,});
+      this.pivot});
 
-  Breakfasts.fromJson(dynamic json) {
-    id = json['id'];
-    image = json['image'];
-    calories = json['calories'];
-    fat = json['fat'];
-    protein = json['protein'];
-    carb = json['carb'];
-    weight = json['weight'];
-    price = json['price'];
-    name = json['name'];
-    description = json['description'];
-    pivot = json['pivot'] != null ? Pivot.fromJson(json['pivot']) : null;
+  Dinners.fromJson(Map<String, dynamic> json) {
+    if (json["id"] is int) {
+      id = json["id"];
+    }
+    if (json["image"] is String) {
+      image = json["image"];
+    }
+    if (json["calories"] is int) {
+      calories = json["calories"];
+    }
+    if (json["fat"] is int) {
+      fat = json["fat"];
+    }
+    if (json["protein"] is int) {
+      protein = json["protein"];
+    }
+    if (json["carb"] is int) {
+      carb = json["carb"];
+    }
+    if (json["weight"] is int) {
+      weight = json["weight"];
+    }
+    if (json["price"] is int) {
+      price = json["price"];
+    }
+    if (json["name"] is String) {
+      name = json["name"];
+    }
+    if (json["description"] is String) {
+      description = json["description"];
+    }
+    if (json["pivot"] is Map) {
+      pivot = json["pivot"] == null ? null : Pivot2.fromJson(json["pivot"]);
+    }
   }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data["id"] = id;
+    data["image"] = image;
+    data["calories"] = calories;
+    data["fat"] = fat;
+    data["protein"] = protein;
+    data["carb"] = carb;
+    data["weight"] = weight;
+    data["price"] = price;
+    data["name"] = name;
+    data["description"] = description;
+    if (pivot != null) {
+      data["pivot"] = pivot?.toJson();
+    }
+    return data;
+  }
+}
+
+class Pivot2 {
+  int? packageId;
+  int? productId;
+
+  Pivot2({this.packageId, this.productId});
+
+  Pivot2.fromJson(Map<String, dynamic> json) {
+    if (json["package_id"] is int) {
+      packageId = json["package_id"];
+    }
+    if (json["product_id"] is int) {
+      productId = json["product_id"];
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data["package_id"] = packageId;
+    data["product_id"] = productId;
+    return data;
+  }
+}
+
+class Lunches {
+  int? id;
+  String? image;
+  int? calories;
+  int? fat;
+  int? protein;
+  int? carb;
+  int? weight;
+  int? price;
+  String? name;
+  String? description;
+  Pivot1? pivot;
+
+  Lunches(
+      {this.id,
+      this.image,
+      this.calories,
+      this.fat,
+      this.protein,
+      this.carb,
+      this.weight,
+      this.price,
+      this.name,
+      this.description,
+      this.pivot});
+
+  Lunches.fromJson(Map<String, dynamic> json) {
+    if (json["id"] is int) {
+      id = json["id"];
+    }
+    if (json["image"] is String) {
+      image = json["image"];
+    }
+    if (json["calories"] is int) {
+      calories = json["calories"];
+    }
+    if (json["fat"] is int) {
+      fat = json["fat"];
+    }
+    if (json["protein"] is int) {
+      protein = json["protein"];
+    }
+    if (json["carb"] is int) {
+      carb = json["carb"];
+    }
+    if (json["weight"] is int) {
+      weight = json["weight"];
+    }
+    if (json["price"] is int) {
+      price = json["price"];
+    }
+    if (json["name"] is String) {
+      name = json["name"];
+    }
+    if (json["description"] is String) {
+      description = json["description"];
+    }
+    if (json["pivot"] is Map) {
+      pivot = json["pivot"] == null ? null : Pivot1.fromJson(json["pivot"]);
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data["id"] = id;
+    data["image"] = image;
+    data["calories"] = calories;
+    data["fat"] = fat;
+    data["protein"] = protein;
+    data["carb"] = carb;
+    data["weight"] = weight;
+    data["price"] = price;
+    data["name"] = name;
+    data["description"] = description;
+    if (pivot != null) {
+      data["pivot"] = pivot?.toJson();
+    }
+    return data;
+  }
+}
+
+class Pivot1 {
+  int? packageId;
+  int? productId;
+
+  Pivot1({this.packageId, this.productId});
+
+  Pivot1.fromJson(Map<String, dynamic> json) {
+    if (json["package_id"] is int) {
+      packageId = json["package_id"];
+    }
+    if (json["product_id"] is int) {
+      productId = json["product_id"];
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data["package_id"] = packageId;
+    data["product_id"] = productId;
+    return data;
+  }
+}
+
+class Breakfasts {
   int? id;
   String? image;
   int? calories;
@@ -187,93 +401,149 @@ class Breakfasts {
   String? description;
   Pivot? pivot;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['image'] = image;
-    map['calories'] = calories;
-    map['fat'] = fat;
-    map['protein'] = protein;
-    map['carb'] = carb;
-    map['weight'] = weight;
-    map['price'] = price;
-    map['name'] = name;
-    map['description'] = description;
-    if (pivot != null) {
-      map['pivot'] = pivot?.toJson();
+  Breakfasts(
+      {this.id,
+      this.image,
+      this.calories,
+      this.fat,
+      this.protein,
+      this.carb,
+      this.weight,
+      this.price,
+      this.name,
+      this.description,
+      this.pivot});
+
+  Breakfasts.fromJson(Map<String, dynamic> json) {
+    if (json["id"] is int) {
+      id = json["id"];
     }
-    return map;
+    if (json["image"] is String) {
+      image = json["image"];
+    }
+    if (json["calories"] is int) {
+      calories = json["calories"];
+    }
+    if (json["fat"] is int) {
+      fat = json["fat"];
+    }
+    if (json["protein"] is int) {
+      protein = json["protein"];
+    }
+    if (json["carb"] is int) {
+      carb = json["carb"];
+    }
+    if (json["weight"] is int) {
+      weight = json["weight"];
+    }
+    if (json["price"] is int) {
+      price = json["price"];
+    }
+    if (json["name"] is String) {
+      name = json["name"];
+    }
+    if (json["description"] is String) {
+      description = json["description"];
+    }
+    if (json["pivot"] is Map) {
+      pivot = json["pivot"] == null ? null : Pivot.fromJson(json["pivot"]);
+    }
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
+    data["image"] = image;
+    data["calories"] = calories;
+    data["fat"] = fat;
+    data["protein"] = protein;
+    data["carb"] = carb;
+    data["weight"] = weight;
+    data["price"] = price;
+    data["name"] = name;
+    data["description"] = description;
+    if (pivot != null) {
+      data["pivot"] = pivot?.toJson();
+    }
+    return data;
+  }
 }
 
 class Pivot {
-  Pivot({
-      this.packageId,
-      this.productId,});
-
-  Pivot.fromJson(dynamic json) {
-    packageId = json['package_id'];
-    productId = json['product_id'];
-  }
   int? packageId;
   int? productId;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['package_id'] = packageId;
-    map['product_id'] = productId;
-    return map;
+  Pivot({this.packageId, this.productId});
+
+  Pivot.fromJson(Map<String, dynamic> json) {
+    if (json["package_id"] is int) {
+      packageId = json["package_id"];
+    }
+    if (json["product_id"] is int) {
+      productId = json["product_id"];
+    }
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["package_id"] = packageId;
+    data["product_id"] = productId;
+    return data;
+  }
 }
 
 class Descriptions {
-  Descriptions({
-      this.id, 
-      this.desc,});
-
-  Descriptions.fromJson(dynamic json) {
-    id = json['id'];
-    desc = json['desc'];
-  }
   int? id;
   String? desc;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['desc'] = desc;
-    return map;
+  Descriptions({this.id, this.desc});
+
+  Descriptions.fromJson(Map<String, dynamic> json) {
+    if (json["id"] is int) {
+      id = json["id"];
+    }
+    if (json["desc"] is String) {
+      desc = json["desc"];
+    }
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
+    data["desc"] = desc;
+    return data;
+  }
 }
 
 class ResponseData {
-  ResponseData({
-      this.carbs, 
-      this.fat, 
-      this.protein, 
-      this.calories,});
-
-  ResponseData.fromJson(dynamic json) {
-    carbs = json['carbs'];
-    fat = json['fat'];
-    protein = json['protein'];
-    calories = json['calories'];
-  }
   double? carbs;
   double? fat;
   double? protein;
   double? calories;
 
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['carbs'] = carbs;
-    map['fat'] = fat;
-    map['protein'] = protein;
-    map['calories'] = calories;
-    return map;
+  ResponseData({this.carbs, this.fat, this.protein, this.calories});
+
+  ResponseData.fromJson(Map<String, dynamic> json) {
+    if (json["carbs"] is double) {
+      carbs = json["carbs"];
+    }
+    if (json["fat"] is double) {
+      fat = json["fat"];
+    }
+    if (json["protein"] is double) {
+      protein = json["protein"];
+    }
+    if (json["calories"] is double) {
+      calories = json["calories"];
+    }
   }
 
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = Map<String, dynamic>();
+    data["carbs"] = carbs;
+    data["fat"] = fat;
+    data["protein"] = protein;
+    data["calories"] = calories;
+    return data;
+  }
 }

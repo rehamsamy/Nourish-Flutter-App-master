@@ -2,10 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
-import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/meals_summery_card.dart';
@@ -234,7 +232,7 @@ class PackageCartView extends GetView<PackageCartController> {
                           ),
                           CartItem(
                             item: "${LocalKeys.kDelivery.tr}:",
-                            value: "${'0'} SAR",
+                            value: "${0} SAR",
                           ),
                           CartItem(
                             item: LocalKeys.kTax.tr,
@@ -284,7 +282,7 @@ class PackageCartView extends GetView<PackageCartController> {
                           ),
                           CartItem(
                             item: LocalKeys.kDiscount.tr,
-                            value: "5,0 SAR",
+                            value: "0,0 SAR",
                           ),
                           CartItem(
                             item: LocalKeys.kTotal.tr,

@@ -4,7 +4,6 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/create_package_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
@@ -14,11 +13,9 @@ import '../controllers/custom_package_controller.dart';
 import 'main_goal.dart';
 
 class ResultScreen extends GetView<CustomPackageController> {
-  Map<String,dynamic> map=Get.arguments;
-  CreatePackageModel ? packageModel;
+  Map<String, dynamic> map = Get.arguments;
   @override
   Widget build(BuildContext context) {
-    packageModel=map['resultModel'];
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -60,7 +57,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Text(
-                        "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sedLorem ipsum dolor sit amet, consetetur sadipscing elitr, sed",
+                        "",
                         style:
                             Get.textTheme.headline3!.copyWith(fontSize: 14.sp),
                         textAlign: TextAlign.center,
@@ -68,7 +65,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                       Padding(
                         padding: EdgeInsets.only(top: 30.h, bottom: 3.h),
                         child: Text(
-                          '${packageModel?.data?.responseData?.calories??'0.0'}',
+                          '${controller.packageModel?.data?.responseData?.calories ?? '0.0'}',
                           style: Get.textTheme.headline6,
                         ),
                       ),
@@ -98,7 +95,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '${packageModel?.data?.responseData?.carbs??'0.0'}',
+                                  '${controller.packageModel?.data?.responseData?.carbs ?? '0.0'}',
                                   style: Get.textTheme.bodyText1,
                                 ),
                               ),
@@ -120,7 +117,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '${packageModel?.data?.responseData?.fat??'0.0'}',
+                                  '${controller.packageModel?.data?.responseData?.fat ?? '0.0'}',
                                   style: Get.textTheme.bodyText1!
                                       .copyWith(color: primaryColor),
                                 ),
@@ -143,7 +140,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                                 ),
                                 alignment: Alignment.center,
                                 child: Text(
-                                  '${packageModel?.data?.responseData?.protein??'0.0'}',
+                                  '${controller.packageModel?.data?.responseData?.protein ?? '0.0'}',
                                   style: Get.textTheme.bodyText1!
                                       .copyWith(color: const Color(0xff2BB07B)),
                                 ),
@@ -163,7 +160,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      "37 years old male, 105 kg",
+                      "",
                       style: Get.textTheme.headline3!.copyWith(fontSize: 14.sp),
                     ),
                     Row(
@@ -175,7 +172,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                           color: primaryColor,
                         ),
                         Text(
-                          LocalKeys.kEdit.tr,
+                          "", //LocalKeys.kEdit.tr,
                           style: Get.textTheme.caption!
                               .copyWith(color: primaryColor),
                         )

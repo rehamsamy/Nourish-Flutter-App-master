@@ -54,9 +54,9 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 child: SelectionCard(
                   image: Assets.kRestaurantIcon,
                   isSelected:
-                      PackageDetailsController.selectedPlanType == 'branch',
+                      PackageDetailsController.selectedPlanType == 'pickup',
                   onTap: () async {
-                    PackageDetailsController.selectedPlanType = 'branch';
+                    PackageDetailsController.selectedPlanType = 'pickup';
                     controller.update();
                   },
                   title: LocalKeys.kFromBranch.tr,
@@ -80,7 +80,7 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                     Get.snackbar("Please choose plan type",
                         "Please choose plan type before continue");
                   } else if (PackageDetailsController.selectedPlanType ==
-                      "branch") {
+                      "pickup") {
                     Get.toNamed(Routes.BRANCH_SELECT, arguments: {
                       'packageDetailModel': controller.packageDetailModel,
                       'selectedPlanType':

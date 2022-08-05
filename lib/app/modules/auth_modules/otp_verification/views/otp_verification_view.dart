@@ -105,10 +105,9 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                               controller.phone ?? '', controller.otp.text);
                       token = await Get.find<SharedPrefService>()
                           .saveToken(verifyOtp?.accessToken ?? "")
-                          .then((value) {
+                          .then((value) async {
                         if (value.isNotEmpty) {
-                          Get.forceAppUpdate();
-
+                          await Get.find<SharedPrefService>().prefs.reload();
                           Get.offAllNamed(
                             Routes.HOME_PAGE,
                           );

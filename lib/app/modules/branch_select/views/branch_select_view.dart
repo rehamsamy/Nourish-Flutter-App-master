@@ -171,6 +171,18 @@ class BranchSelectView extends GetView<BranchSelectController> {
                                         ?.copyWith(color: Colors.white)),
                               ),
                             ),
+                      Positioned(
+                        top: 10,
+                        left: 10,
+                        child: SafeArea(
+                          child: IconButton(
+                            icon: const Icon(Icons.arrow_back),
+                            onPressed: () {
+                              Get.back();
+                            },
+                          ),
+                        ),
+                      ),
                     ],
                   ),
                 ),

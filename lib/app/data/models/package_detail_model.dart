@@ -10,7 +10,7 @@ class PackageDetailModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (this.data != null) {
       data["data"] = this.data?.toJson();
     }
@@ -121,7 +121,7 @@ class Data {
     if (json["breakfasts"] is List) {
       breakfasts = json["breakfasts"] == null
           ? null
-          : (json["lunches"] as List)
+          : (json["breakfasts"] as List)
               .map((e) => MealModel.fromJson(e))
               .toList();
     }
@@ -147,7 +147,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["id"] = id;
     data["image"] = image;
     data["tax"] = tax;
@@ -170,7 +170,7 @@ class Data {
       data["branches"] = branches?.map((e) => e.toJson()).toList();
     }
     if (breakfasts != null) {
-      data["breakfasts"] = breakfasts;
+      data["breakfasts"] = breakfasts?.map((e) => e.toJson()).toList();
     }
     if (lunches != null) {
       data["lunches"] = lunches?.map((e) => e.toJson()).toList();
@@ -248,7 +248,7 @@ class Snacks {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["id"] = id;
     data["image"] = image;
     data["calories"] = calories;
@@ -282,7 +282,7 @@ class Pivot5 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["package_id"] = packageId;
     data["product_id"] = productId;
     return data;
@@ -352,7 +352,7 @@ class MealModel {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["id"] = id;
     data["image"] = image;
     data["calories"] = calories;
@@ -409,7 +409,7 @@ class Pivot3 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["package_id"] = packageId;
     data["product_id"] = productId;
     return data;
@@ -684,7 +684,7 @@ class Pivot1 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["branch_id"] = branchId;
     data["period_id"] = periodId;
     return data;
@@ -707,7 +707,7 @@ class Pivot {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["package_id"] = packageId;
     data["branch_id"] = branchId;
     return data;
