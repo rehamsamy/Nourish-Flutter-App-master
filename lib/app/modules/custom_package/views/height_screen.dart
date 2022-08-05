@@ -76,7 +76,7 @@ class HeightScreen extends GetView<CustomPackageController> {
                     width: 11.w,
                   ),
                   Text(
-                    LocalKeys.kCm.tr,
+                  controller.heightType=='cm' ?LocalKeys.kCm.tr:LocalKeys.kFeet.tr,
                     style: Get.textTheme.headline3,
                   ),
                 ],

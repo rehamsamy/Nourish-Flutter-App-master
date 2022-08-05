@@ -47,7 +47,6 @@ class CustomPackageController extends GetxController {
   }
 
   void changeFemale(bool newVal) {
-    isFemaleSelected = newVal;
     update();
   }
 

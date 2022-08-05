@@ -207,13 +207,13 @@ class PackageCartView extends GetView<PackageCartController> {
                   height: 25.h,
                 ),
                 SizedBox(
-                  height: 400,
+                  height: 300,
                   child: ListView.builder(
                     itemCount: controller
                         .selectedMealsProductsData[controller.currentDay]
                         ?.keys
                         .length,
-                    physics: const NeverScrollableScrollPhysics(),
+                    //physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
                       return MealsSummeryCard(inedx);
@@ -232,7 +232,7 @@ class PackageCartView extends GetView<PackageCartController> {
                           ),
                           CartItem(
                             item: "${LocalKeys.kDelivery.tr}:",
-                            value: "${0} SAR",
+                            value: "${'0'} SAR",
                           ),
                           CartItem(
                             item: LocalKeys.kTax.tr,
@@ -282,7 +282,7 @@ class PackageCartView extends GetView<PackageCartController> {
                           ),
                           CartItem(
                             item: LocalKeys.kDiscount.tr,
-                            value: "0,0 SAR",
+                            value: "5,0 SAR",
                           ),
                           CartItem(
                             item: LocalKeys.kTotal.tr,
@@ -311,6 +311,7 @@ class PackageCartView extends GetView<PackageCartController> {
   }
 }
 
+//
 class CartItem extends StatelessWidget {
   const CartItem(
       {required this.item, required this.value, this.isTotal = false, Key? key})
