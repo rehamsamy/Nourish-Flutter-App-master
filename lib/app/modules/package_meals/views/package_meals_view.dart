@@ -287,8 +287,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   id: controller.newMealsList?[index].id ?? 0,
                   title: controller.newMealsList?[index].name ?? '',
                   caleries:
-                      controller.newMealsList?[index].description.toString() ??
-                          '',
+                      controller.newMealsList?[index].calories.toString() ?? '',
                   image: controller.newMealsList?[index].image ?? '',
                   isSelected: false,
                 ),

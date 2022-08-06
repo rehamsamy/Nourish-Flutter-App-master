@@ -49,10 +49,17 @@ class OrderApis {
       required int payment_id,
       required Map selectedDays}) async {
     AddOrderModel addOrderModel = AddOrderModel();
-  Map<String,dynamic>  days= {'saturday': {'breakfast': [], 'lunch': [], 'dinner': []},
-    'friday': {'breakfast': [], 'lunch': [], 'dinner': []}, 'thursday': {'breakfast': [],
-      'lunch': [], 'dinner': []}, 'wednesday': {'breakfast': [], 'lunch': [], 'dinner': []},
-    'tuesday': {'breakfast': [], 'lunch': [], 'dinner': [10]}};
+    Map<String, dynamic> days = {
+      'saturday': {'breakfast': [], 'lunch': [], 'dinner': []},
+      'friday': {'breakfast': [], 'lunch': [], 'dinner': []},
+      'thursday': {'breakfast': [], 'lunch': [], 'dinner': []},
+      'wednesday': {'breakfast': [], 'lunch': [], 'dinner': []},
+      'tuesday': {
+        'breakfast': [],
+        'lunch': [],
+        'dinner': [10]
+      }
+    };
     final String? token = Get.find<SharedPrefService>().getToken() ?? '';
 
     //days[sunday][breakfast][]
@@ -68,11 +75,10 @@ class OrderApis {
       'days': selectedDays,
     };
     final request = NetworkRequest(
-        type: NetworkRequestType.POST,
-        path: 'addOrder',
-        data: NetworkRequestBody.json(map),
-
-      );
+      type: NetworkRequestType.POST,
+      path: 'addOrder',
+      data: NetworkRequestBody.json(map),
+    );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,

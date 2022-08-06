@@ -5,7 +5,7 @@ Map<String, String> ar = {
       "خطأ في تحديد الموقع برجاء التأكد من تفعيل الموقع",
 
   LocalKeys.kRequiredField: 'حقل مطلوب',
-  LocalKeys.kPhoneLength: 'طول رقم التليفون',
+  LocalKeys.kPhoneLength: 'رقم الهاتف يجب ان يكون 10 أرقام',
   LocalKeys.kEmailInvalid: 'بريد إلكتروني غير صالح',
   LocalKeys.kContinue: 'متابعة',
   LocalKeys.kSubmit: 'إرسال',
@@ -247,5 +247,4 @@ Map<String, String> ar = {
   LocalKeys.kNoteFollowMailReceiveReceipt: 'ملاحظة: تابع بريدك لاستلام الإيصال',
   LocalKeys.kStartDate: 'تاريخ البدء',
   LocalKeys.kNoInternetConnection: 'لا يوجد اتصال بالشبكة',
-
 };

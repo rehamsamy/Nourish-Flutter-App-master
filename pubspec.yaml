@@ -14,7 +14,7 @@ dependencies:
   cached_network_image: ^3.1.0
   card_swiper: ^2.0.1
   connectivity_plus: ^2.1.0
-  cr_logger: ^1.0.0
+  
   cupertino_icons: ^1.0.2
   date_time_picker: ^2.1.0
   dio: ^4.0.0
@@ -46,7 +46,7 @@ dependencies:
   shimmer: ^2.0.0
 #  dio: ^4.0.4
   http: ^0.13.4
-
+  flutter_secure_storage: ^5.1.0
 dependency_overrides:
   firebase_messaging_platform_interface: 3.1.6
   firebase_analytics_platform_interface: 3.0.5

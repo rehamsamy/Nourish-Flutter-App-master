@@ -32,7 +32,7 @@ class BranchSelectCard extends StatelessWidget {
                 height: 140.h,
                 width: 250.w,
                 decoration: BoxDecoration(
-                    color: selected ? whiteColor : greyColor,
+                    color: selected ? whiteColor : greyColor.withOpacity(.7),
                     border:
                         Border.all(width: selected ? 2 : 0, color: whiteColor),
                     borderRadius: BorderRadius.circular(20.0)),

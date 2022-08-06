@@ -60,6 +60,7 @@ Map<String, String> en = {
   LocalKeys.kLogin: "Login",
   LocalKeys.kPhone: "Phone",
   LocalKeys.kSignUpHere: "Sign Up Here",
+  LocalKeys.kPhoneLength: "Phone number must be 10 digits",
 
 // OnBoarding
   LocalKeys.kGetStarted: "Get Started",
@@ -94,8 +95,8 @@ Map<String, String> en = {
   LocalKeys.kCart: "Cart",
   LocalKeys.kYourPackages: "Your Packages",
   LocalKeys.kDays: "Days",
-LocalKeys.kDaySelectCount :"you must choose ",
-LocalKeys.kStartDayDate : "you must choose day after",
+  LocalKeys.kDaySelectCount: "you must choose ",
+  LocalKeys.kStartDayDate: "you must choose day after",
   LocalKeys.kSubTotal: "Subtotal:",
   LocalKeys.kDelivery: "Delivery:",
   LocalKeys.kTax: "Tax:",

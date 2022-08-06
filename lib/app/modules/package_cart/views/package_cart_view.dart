@@ -227,8 +227,13 @@ class PackageCartView extends GetView<PackageCartController> {
                         children: [
                           CartItem(
                             item: LocalKeys.kSubTotal.tr,
-                            value:
-                                "${controller.detailModel?.data?.priceWithTax} SAR",
+                            value: ((controller.detailModel?.data
+                                                ?.priceWithTax ??
+                                            0) -
+                                        (controller.detailModel?.data?.tax ??
+                                            0))
+                                    .toString() +
+                                " SAR",
                           ),
                           CartItem(
                             item: "${LocalKeys.kDelivery.tr}:",
@@ -282,7 +287,7 @@ class PackageCartView extends GetView<PackageCartController> {
                           ),
                           CartItem(
                             item: LocalKeys.kDiscount.tr,
-                            value: "5,0 SAR",
+                            value: "0,0 SAR",
                           ),
                           CartItem(
                             item: LocalKeys.kTotal.tr,

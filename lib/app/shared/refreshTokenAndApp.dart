@@ -4,7 +4,7 @@ import 'package:nourish_sa/routes/app_pages.dart';
 
 Future refreshAppWithNewToken() async {
   //call token service
-  String token = Get.find<SharedPrefService>().getToken.toString();
+  String token = Get.find<SharedPrefService>().getToken().toString();
   if (token == "null" || token.toString() == "") {
     Get.offAllNamed(Routes.LOGIN);
     Get.snackbar("Not Authorized".tr, "Please Login");

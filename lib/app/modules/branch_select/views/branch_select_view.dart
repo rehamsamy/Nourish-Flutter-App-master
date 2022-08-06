@@ -46,10 +46,10 @@ class BranchSelectView extends GetView<BranchSelectController> {
                           ? Positioned(
                               bottom: -1,
                               child: Container(
-                                height: context.height * .25,
+                                height: context.height * .3,
                                 width: context.width,
                                 decoration: const BoxDecoration(
-                                  color: Color.fromARGB(255, 145, 0, 0),
+                                  color: primaryColor,
                                   borderRadius: BorderRadius.only(
                                     topLeft: Radius.circular(20),
                                     topRight: Radius.circular(20),
@@ -69,7 +69,8 @@ class BranchSelectView extends GetView<BranchSelectController> {
                                 child: Column(
                                   children: [
                                     Padding(
-                                      padding: const EdgeInsets.all(8.0),
+                                      padding: const EdgeInsets.symmetric(
+                                          horizontal: 16, vertical: 32),
                                       child: Row(
                                         children: [
                                           const Icon(
