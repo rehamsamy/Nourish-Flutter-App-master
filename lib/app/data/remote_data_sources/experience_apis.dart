@@ -6,7 +6,7 @@ import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 class ExperienceApis {
   Future<List<ExperienceItem>?> getExperience() async {
-    final String? token = Get.find<SharedPrefService>().getToken();
+    final String? token = SharedPrefService.getToken() ?? '';
 
     List<ExperienceItem>? list;
     ExperienceModel experienceModel = ExperienceModel();

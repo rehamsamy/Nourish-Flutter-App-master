@@ -13,7 +13,6 @@ import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controlle
 import 'package:nourish_sa/app/modules/home_screen/controllers/home_screen_controller.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:intercom_flutter/intercom_flutter.dart';
 import '../../../../../app_theme.dart';
@@ -227,10 +226,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                       String mes = model.data?.msg ?? '';
                       Get.log('log mess   => ' + mes);
                       Get.snackbar("Logout", model.data?.msg ?? '');
-                      SharedPreferences pref =
-                          await SharedPreferences.getInstance();
-                      await SharedPrefService(prefs: pref).removeToken();
-
+                      SharedPrefService.removeToken();
                       Intercom.instance.logout();
                       Get.offAllNamed(Routes.LOGIN);
                       controller.scaffoldKey!.currentState!.openEndDrawer();

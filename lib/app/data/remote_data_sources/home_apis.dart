@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
@@ -7,7 +6,7 @@ import '../services/network_service.dart/dio_network_service.dart';
 
 class HomeApis {
   Future<List<CategoryItem>?> getHomeCategories() async {
-    final String? token = Get.find<SharedPrefService>().getToken();
+    final String? token = SharedPrefService.getToken() ?? '';
 
     List<CategoryItem> categoriesList = [];
     final request = NetworkRequest(
@@ -38,7 +37,7 @@ class HomeApis {
   }
 
   Future<List<PackageItem>?> getHomePackages() async {
-    final String? token = Get.find<SharedPrefService>().getToken();
+    final String? token = SharedPrefService.getToken() ?? '';
 
     List<PackageItem> weeklyList = [];
     final request = NetworkRequest(

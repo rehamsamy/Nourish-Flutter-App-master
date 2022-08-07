@@ -1,11 +1,10 @@
-import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/notification_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 class NotificationApis {
-  final String? token = Get.find<SharedPrefService>().getToken();
+  final String? token = SharedPrefService.getToken() ?? '';
 
   Future<List<NotificationItem>?> getNotifications() async {
     List<NotificationItem>? notificationsList = [];

@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/add_order_model.dart';
 import 'package:nourish_sa/app/data/models/change_order_period_model.dart';
@@ -9,7 +8,7 @@ class OrderApis {
   Future<ChangeOrderPeriodModel?> changeOrderPeriod(
       int? orderId, int? periodId) async {
     ChangeOrderPeriodModel orderPeriodModel = ChangeOrderPeriodModel();
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    final String? token = SharedPrefService.getToken() ?? '';
 
     Map<String, dynamic>? map = {
       'order_id': orderId,
@@ -60,7 +59,7 @@ class OrderApis {
         'dinner': [10]
       }
     };
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    final String? token = SharedPrefService.getToken() ?? '';
 
     //days[sunday][breakfast][]
     print(selectedDays);

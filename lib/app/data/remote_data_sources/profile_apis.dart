@@ -1,5 +1,4 @@
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/profile_model.dart';
 import 'package:nourish_sa/app/data/models/update_profile_model.dart';
@@ -10,7 +9,7 @@ class ProfileApis {
   Future<ProfileModel?> getProfileInfo() async {
     ProfileModel? profileModel = ProfileModel();
 
-    final String? token = Get.find<SharedPrefService>().getToken();
+    final String? token = SharedPrefService.getToken() ?? '';
     final request = NetworkRequest(
       type: NetworkRequestType.POST,
       path: 'me',
@@ -44,7 +43,8 @@ class ProfileApis {
       required String email}) async {
     //const   String token1='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTU3NDY4NjIsImV4cCI6MTY1NTc1MDQ2MiwibmJmIjoxNjU1NzQ2ODYyLCJqdGkiOiJLMmZ6TWYwZGxaZzk2MGN6Iiwic3ViIjoxNywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.uezCaWKBlwynQq-CEfIgI1RN8fkcHj5an4NzTMeOlPE';
     UpdateProfileModel updateProfileModel = UpdateProfileModel();
-    final String? token = Get.find<SharedPrefService>().getToken();
+
+    final String? token = SharedPrefService.getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
         path: 'updateProfile',

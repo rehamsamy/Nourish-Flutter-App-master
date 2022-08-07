@@ -18,7 +18,7 @@ class CreatePackageApis {
     required List selectedMeals,
   }) async {
     CreatePackageModel? packageModel;
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    final String? token = SharedPrefService.getToken() ?? '';
     logger.wtf(goal);
     Map<String, dynamic> days = {'saturday': 1};
     Map<String, dynamic> map = {

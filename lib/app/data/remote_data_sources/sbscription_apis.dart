@@ -1,5 +1,4 @@
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/pause_subscription_model.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
@@ -11,7 +10,7 @@ class SubscriptionApis {
   Future<List<SubscriptionItem>?> getSubscriptionAccordingType(
       String subscriptionType) async {
     List<SubscriptionItem>? list = [];
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    final String? token = SharedPrefService.getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
         path: subscriptionType,
@@ -51,7 +50,7 @@ class SubscriptionApis {
       'resume_from': resumFrom
     };
     PauseSubscriptionModel pauseModel = PauseSubscriptionModel();
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    final String? token = SharedPrefService.getToken() ?? '';
     Get.log('================  ' + token.toString());
     final request = NetworkRequest(
       type: NetworkRequestType.POST,

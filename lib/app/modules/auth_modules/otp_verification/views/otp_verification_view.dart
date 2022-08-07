@@ -88,10 +88,11 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                     ),
                     controller: controller.otp,
                     textInputAction: TextInputAction.go,
-                    keyboardType: TextInputType.text,
+                    keyboardType: TextInputType.phone,
                     textCapitalization: TextCapitalization.characters,
                     onSubmit: (pin) {},
                     onChanged: (pin) {},
+                    autoFocus: true,
                     enableInteractiveSelection: false,
                   ),
                 ),
@@ -103,11 +104,10 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                       VerifyEmailModel? verifyOtp = await AuthApis()
                           .verifyOtpMobile(
                               controller.phone ?? '', controller.otp.text);
-                      token = await Get.find<SharedPrefService>()
-                          .saveToken(verifyOtp?.accessToken ?? "")
-                          .then((value) async {
-                        if (value.isNotEmpty) {
-                          await Get.find<SharedPrefService>().prefs.reload();
+                      token = await SharedPrefService.saveToken(
+                              verifyOtp?.accessToken ?? "")
+                          .then((saved) async {
+                        if (saved) {
                           Get.offAllNamed(
                             Routes.HOME_PAGE,
                           );
@@ -115,7 +115,7 @@ class OtpVerificationView extends GetView<OtpVerificationController> {
                           Get.snackbar("Error", "Something went wrong",
                               snackPosition: SnackPosition.BOTTOM);
                         }
-                        return value;
+                        return null;
                       });
                       print("NEW TOKEN :$token");
                     },

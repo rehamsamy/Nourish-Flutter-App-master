@@ -98,7 +98,7 @@ Map<String, String> en = {
   LocalKeys.kDaySelectCount: "you must choose ",
   LocalKeys.kStartDayDate: "you must choose day after",
   LocalKeys.kSubTotal: "Subtotal:",
-  LocalKeys.kDelivery: "Delivery:",
+  LocalKeys.kDelivery: "Delivery",
   LocalKeys.kTax: "Tax:",
   LocalKeys.kEnterCouponCode: "Enter Coupon Code",
   LocalKeys.kApply: "Apply",

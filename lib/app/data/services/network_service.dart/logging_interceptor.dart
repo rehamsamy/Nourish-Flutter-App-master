@@ -32,17 +32,6 @@ final dioLoggerInterceptor =
 
   // return response; // continue
 }, onError: (DioError error, handler) async {
-  /*if (error.response?.data != null) {
-    if ((error.response?.statusCode == 401 ||
-            error.response?.statusCode == 403) &&
-        (token != null || token != "")) {
-      AuthApis().refreshToken();
-    } else if (error.response!.statusCode! > 500 ||
-        error.response!.statusCode! == 404) {
-      Get.to(() => const NetworkError());
-    }
-  }
-*/
   handler.next(error); //continue
 
   logger.wtf("---------------------------------------");

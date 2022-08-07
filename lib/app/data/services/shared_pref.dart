@@ -2,54 +2,27 @@ import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefService extends GetxService {
-  final SharedPreferences prefs;
-  SharedPrefService({required this.prefs});
-  String? token;
+  static late SharedPreferences _prefs;
 
-  Future<String> saveToken(String token) async {
-    return await prefs.setString("token", token).then((value) async {
-      this.token = "";
-      this.token = token;
-      //sawait prefs.reload();
-      return token;
-    });
-  }
+  static Future init() async => _prefs = await SharedPreferences.getInstance();
 
-  String? getToken() {
-    final String? accessToken = prefs.getString("token");
-    if (accessToken != null && accessToken.isNotEmpty) {
-      token = accessToken;
+  static Future<bool> saveToken(String token) async =>
+      await _prefs.setString("token", token);
+  static String? getToken() => _prefs.getString("token");
+  static Future<bool> removeToken() async => await _prefs.remove("token");
 
-      return accessToken;
-    } else {
-      return null;
-    }
-  }
-
-  Future<bool> removeToken() async {
-    token = null;
-    return prefs.remove("token");
-  }
-
-  Future<bool> saveLocale(String langCode) async {
-    return await prefs.setString("lang", langCode).then((value) async {
-      //await prefs.reload();
-      return value;
-    });
-  }
-
-  String loadLocale() {
-    return prefs.getString("lang") ?? "en";
-  }
+  static Future<bool> saveLocale(String locale) async =>
+      await _prefs.setString("lang", locale);
+  static String? getLocale() => _prefs.getString("lang");
 
   Future<bool> saveIsFirstTime() async {
-    return await prefs.setBool("FirstTime", false).then((value) async {
+    return await _prefs.setBool("FirstTime", false).then((value) async {
       //await prefs.reload();
       return value;
     });
   }
 
   bool loadIsFirstTime() {
-    return prefs.getBool("FirstTime") ?? true;
+    return _prefs.getBool("FirstTime") ?? true;
   }
 }

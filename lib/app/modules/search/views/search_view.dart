@@ -163,17 +163,6 @@ class SearchView extends GetView<SearchController> {
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          Padding(
-                            padding: EdgeInsets.only(
-                              top: 20.h,
-                              bottom: 8.h,
-                            ),
-                            child: Text(
-                              LocalKeys.kRecentSearch.tr,
-                              style: Get.textTheme.caption!
-                                  .copyWith(color: blueGreyColor),
-                            ),
-                          ),
                           Expanded(
                             child: ListView.builder(
                               itemCount: controller.searchList?.length,

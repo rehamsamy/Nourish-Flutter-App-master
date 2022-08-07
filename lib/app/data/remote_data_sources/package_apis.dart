@@ -8,7 +8,7 @@ import 'package:nourish_sa/app/data/services/shared_pref.dart';
 class PackageApis {
   Future<List<PackageItem>?> getPackagesAccordingType(
       String packageType) async {
-    final String? token = Get.find<SharedPrefService>().getToken();
+    final String? token = SharedPrefService.getToken() ?? '';
 
     List<PackageItem>? packagesList = [];
     final request = NetworkRequest(
@@ -41,7 +41,7 @@ class PackageApis {
   }
 
   Future<PackageDetailModel?> getPackageDetail(int packageId) async {
-    final String? token = Get.find<SharedPrefService>().getToken();
+    final String? token = SharedPrefService.getToken() ?? '';
 
     PackageDetailModel? detailModel;
     final request = NetworkRequest(

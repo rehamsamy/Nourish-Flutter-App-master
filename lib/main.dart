@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:intercom_flutter/intercom_flutter.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
@@ -23,10 +22,10 @@ void main() async {
     iosApiKey: AppConstants.kIntercomIosKey,
     androidApiKey: AppConstants.kIntercomAndroidKey,
   );
-  final pref = await SharedPreferences.getInstance();
 
-  Get.put(SharedPrefService(prefs: pref));
+  await SharedPrefService.init();
   Get.put(LocalizationService());
+  Get.put(SharedPrefService());
 
   final messaging = FCMConfig.instance.messaging;
   late NotificationSettings settings;

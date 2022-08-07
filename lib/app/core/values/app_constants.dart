@@ -5,14 +5,14 @@ import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_se
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 //Network global data
-String? token = Get.find<SharedPrefService>().getToken() ?? '';
+String? token = SharedPrefService.getToken() ?? '';
 
 NetworkService networkService = NetworkService(
   baseUrl: AppConstants.kBaseUrl,
   httpHeaders: {
     'Content-Type': 'application/json',
     'Accept': 'application/json',
-    'Authorization': 'Bearer ${Get.find<SharedPrefService>().getToken() ?? ''}',
+    'Authorization': 'Bearer ${SharedPrefService.getToken() ?? ''}',
     'Language': Get.locale?.languageCode ?? 'en',
   },
 );

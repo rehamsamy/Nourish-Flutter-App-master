@@ -68,7 +68,7 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
   static const INITIAL = Routes.SPLASH;
-  static String token = Get.find<SharedPrefService>().getToken() ?? '';
+  static String token = SharedPrefService.getToken() ?? '';
 
   static final routes = [
     GetPage(

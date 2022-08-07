@@ -274,6 +274,13 @@ packages:
       url: "https://pub.dartlang.org"
     source: hosted
     version: "4.0.8+8"
+  dio_smart_retry:
+    dependency: "direct main"
+    description:
+      name: dio_smart_retry
+      url: "https://pub.dartlang.org"
+    source: hosted
+    version: "1.3.2"
   dotted_line:
     dependency: "direct main"
     description:

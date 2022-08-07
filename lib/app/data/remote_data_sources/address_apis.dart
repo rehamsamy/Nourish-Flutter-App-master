@@ -1,5 +1,4 @@
 import 'package:get/get_core/src/get_main.dart';
-import 'package:get/get_instance/get_instance.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/add_address_model.dart';
 import 'package:nourish_sa/app/data/models/address_model.dart';
@@ -33,7 +32,7 @@ class AddressApis {
       'delivery_instructions': delivery_instructions
     };
     AddAddressModel? addressModel;
-    final String? token = await Get.find<SharedPrefService>().getToken() ?? '';
+    final String? token = SharedPrefService.getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
         path: 'addAddress',
@@ -54,7 +53,7 @@ class AddressApis {
 
   Future<List<AddressItem>?> getAddress() async {
     List<AddressItem>? list = [];
-    final String? token = Get.find<SharedPrefService>().getToken() ?? '';
+    final String? token = SharedPrefService.getToken() ?? '';
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
         path: 'getAddresses',

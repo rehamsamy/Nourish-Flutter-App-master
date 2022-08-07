@@ -1,4 +1,3 @@
-import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/product_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
@@ -6,7 +5,7 @@ import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 class ProductApis {
   Future<List<ProductItem>?> getProducts({required int category_id}) async {
-    final String? token = Get.find<SharedPrefService>().getToken();
+    final String? token = SharedPrefService.getToken() ?? '';
 
     List<ProductItem>? products = [];
     String? x;

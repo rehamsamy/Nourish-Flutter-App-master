@@ -5,6 +5,7 @@ import 'package:nourish_sa/app/data/models/register_model.dart';
 import 'package:nourish_sa/app/data/models/resend_otp_model.dart';
 import 'package:nourish_sa/app/data/models/verify_email_model.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
+import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:restart_app/restart_app.dart';
 
 import '../services/network_service.dart/dio_network_service.dart';
@@ -116,7 +117,7 @@ class AuthApis {
         },
         badRequest: (info) {},
         orElse: () {});
-    await Get.find<SharedPrefService>().saveToken(emailModel.accessToken ?? "");
+    await SharedPrefService.saveToken(emailModel.accessToken ?? "");
 
     return emailModel;
   }
@@ -137,7 +138,7 @@ class AuthApis {
     response.maybeWhen(ok: (data) async {
       print('vvv' + data.toString());
       loginModel = data as LoginModel;
-      Get.find<SharedPrefService>().removeToken();
+      SharedPrefService.removeToken();
       Restart.restartApp();
       return loginModel;
     }, orElse: () {
@@ -171,9 +172,17 @@ class AuthApis {
     );
     return resendOtpModel;
   }
-/*
+
   Future<String> refreshToken() async {
     VerifyEmailModel data = VerifyEmailModel();
+    if (token?.toLowerCase().toString() == "null" ||
+        token?.toLowerCase().toString() == "") {
+      Future.delayed(const Duration(seconds: 3), () {
+        Get.snackbar("Can't access this feature",
+            "You need to login to access this feature , navigating to login page");
+      });
+      Get.toNamed(Routes.LOGIN);
+    }
     final request = NetworkRequest(
         type: NetworkRequestType.POST,
         path: 'auth/refresh',
@@ -189,8 +198,7 @@ class AuthApis {
       ok: (authResponse) async {
         data = authResponse as VerifyEmailModel;
         token = authResponse.accessToken;
-        await Get.find<SharedPrefService>().saveToken(token ?? "");
-        Get.forceAppUpdate();
+        await SharedPrefService.saveToken(token ?? "");
       },
       badRequest: (info) {},
       noAuth: (data) {
@@ -199,5 +207,5 @@ class AuthApis {
       orElse: () {},
     );
     return token ?? "";
-  }*/
+  }
 }

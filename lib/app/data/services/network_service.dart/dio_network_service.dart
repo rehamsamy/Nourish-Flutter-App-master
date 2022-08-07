@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_smart_retry/dio_smart_retry.dart';
 import 'package:flutter/foundation.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/logging_interceptor.dart';
@@ -115,12 +116,15 @@ class NetworkService {
   final Map<String, String> _headers;
   Future<Dio> _getDefaultDioClient() async {
     _headers['content-type'] = 'application/json; charset=utf-8';
-    final dio = Dio()
+    final dio = Dio();
+    dio
       ..interceptors.add(dioLoggerInterceptor)
+      ..interceptors.add(RetryInterceptor(dio: dio))
       ..options.baseUrl = baseUrl
       ..options.headers = _headers
       ..options.connectTimeout = 15000 // 15 seconds
       ..options.receiveTimeout = 15000; // 15 seconds
+
     return dio;
   }
 

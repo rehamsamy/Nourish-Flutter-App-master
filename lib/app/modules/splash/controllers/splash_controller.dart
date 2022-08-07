@@ -9,7 +9,7 @@ class SplashController extends GetxController {
   String token = "";
   @override
   void onInit() async {
-    token = Get.find<SharedPrefService>().getToken() ?? '';
+    token = SharedPrefService.getToken() ?? '';
     Future.delayed(const Duration(seconds: 3)).then((value) async {
       AnalyticsService.instance.logEvent("Splash_View");
       Get.log('bb  ' + token.toString());
