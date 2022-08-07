@@ -41,7 +41,7 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 padding: EdgeInsets.only(top: 11.h, bottom: 18.h),
                 child: Text(controller.packageDetailModel?.data?.name ?? "N/A"),
               ),
-              PackageCaleroiesDetails(),
+              const PackageCaleroiesDetails(),
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(

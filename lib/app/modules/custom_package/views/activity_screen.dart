@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/create_package_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/create_package_apis.dart';
 import 'package:nourish_sa/app/modules/custom_package/controllers/custom_package_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
@@ -59,47 +58,33 @@ class ActivityScreen extends GetView<CustomPackageController> {
                   CustomButton(
                     title: LocalKeys.kContinue.tr,
                     onPress: () async {
-                      CreatePackageModel? packageModel =
-                          await CreatePackageApis()
-                              .createPackage(
-                                  gender: controller
-                                          .isMaleSelected
-                                      ? 'male'
-                                      : 'female',
-                                  experience_id: selectedExper,
-                                  date_of_birth: controller.birtdate ?? '',
-                                  height:
-                                      int
-                                          .parse(
-                                              controller
-                                                  .heightTextEditingController
-                                                  .text),
-                                  height_unit:
-                                      controller
-                                              .isFeetSelected.value
-                                          ? 'feet'
-                                          : 'cm',
-                                  weight:
-                                      int
-                                          .parse(
-                                              controller
-                                                  .weightTextEditingController
-                                                  .text),
-                                  weight_unit: controller.isPoundSelected.value
-                                      ? 'pound'
-                                      : 'kg',
-                                  goal: controller.mainGoal,
-                                  selectedMeals: controller.selectedMeals).catchError((err)=>Get.log('ccc    1  '+err.toString()))
-                              .then((value) {
-                        AnalyticsService.instance.logEvent("Calculation_View");
-                        controller.packageModel = value;
-                        Get.snackbar('Create package', 'create package successfully');
-                        Get.to(
-                          () =>  CalcuationScreen(),
-                          arguments: {'resultModel':value}
-                        );
-                        return value;
-                      });
+                      AnalyticsService.instance.logEvent("Calculation_View");
+
+                      controller.packageModel = await CreatePackageApis()
+                          .createPackage(
+                              gender: controller.isMaleSelected
+                                  ? 'male'
+                                  : 'female',
+                              experience_id: selectedExper,
+                              date_of_birth: controller.birtdate ?? '',
+                              height: int
+                                  .parse(controller
+                                      .heightTextEditingController.text),
+                              height_unit:
+                                  controller.isFeetSelected.value
+                                      ? 'feet'
+                                      : 'cm',
+                              weight: int.parse(
+                                  controller.weightTextEditingController.text),
+                              weight_unit: controller.isPoundSelected.value
+                                  ? 'pound'
+                                  : 'kg',
+                              goal: controller.mainGoal,
+                              selectedMeals: controller.selectedMeals);
+                      Get.to(
+                        () => CalcuationScreen(),
+                        arguments: {'resultModel': controller.packageModel},
+                      );
                     },
                   ),
                   SizedBox(

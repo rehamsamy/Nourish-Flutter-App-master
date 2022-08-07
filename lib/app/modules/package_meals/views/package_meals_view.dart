@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/selected_days_list.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/modules/package_meals/views/widgets/meal_info_dialog.dart';
@@ -38,7 +39,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                       style: Get.textTheme.headline1),
                   Padding(
                     padding: EdgeInsets.only(top: 11.h),
-                    child: PackageCaleroiesDetails(),
+                    child: const PackageCaleroiesDetails(),
                   ),
                   GetBuilder<PackageMealsController>(
                     builder: (_) => SizedBox(
@@ -161,19 +162,27 @@ class PackageMealsView extends GetView<PackageMealsController> {
                       children: [
                         DayMealBenefitsValues(
                           title: LocalKeys.kCarb.tr,
-                          value: "500",
+                          value: Get.find<PackageDetailsController>()
+                              .carbs
+                              .toString(),
                         ),
                         DayMealBenefitsValues(
                           title: LocalKeys.kProtein.tr,
-                          value: "500",
+                          value: Get.find<PackageDetailsController>()
+                              .protein
+                              .toString(),
                         ),
                         DayMealBenefitsValues(
-                          title: LocalKeys.kProtein.tr,
-                          value: "500",
+                          title: LocalKeys.kFat.tr,
+                          value: Get.find<PackageDetailsController>()
+                              .fat
+                              .toString(),
                         ),
                         DayMealBenefitsValues(
                           title: LocalKeys.kCalories.tr,
-                          value: "500",
+                          value: Get.find<PackageDetailsController>()
+                              .calories
+                              .toString(),
                         ),
                       ],
                     ),

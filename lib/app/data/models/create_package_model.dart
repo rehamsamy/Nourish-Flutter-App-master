@@ -40,7 +40,7 @@ class Data {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     if (responseData != null) {
       data["response_data"] = responseData?.toJson();
     }
@@ -58,7 +58,7 @@ class Packages {
   int? priceWithTax;
   int? daysNumberOfWeek;
   int? special;
-  dynamic? specialFor;
+  dynamic specialFor;
   double? totalCarbs;
   double? totalFats;
   double? totalProteins;
@@ -67,7 +67,7 @@ class Packages {
   List<Breakfasts>? breakfasts;
   List<Lunches>? lunches;
   List<Dinners>? dinners;
-  List<dynamic>? snacks;
+  List<Snacks>? snacks;
 
   Packages(
       {this.id,
@@ -144,12 +144,14 @@ class Packages {
           : (json["dinners"] as List).map((e) => Dinners.fromJson(e)).toList();
     }
     if (json["snacks"] is List) {
-      snacks = json["snacks"] ?? [];
+      snacks = json["snacks"] == null
+          ? null
+          : (json["snacks"] as List).map((e) => Snacks.fromJson(e)).toList();
     }
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["id"] = id;
     data["image"] = image;
     data["tax"] = tax;
@@ -174,8 +176,112 @@ class Packages {
       data["dinners"] = dinners?.map((e) => e.toJson()).toList();
     }
     if (snacks != null) {
-      data["snacks"] = snacks;
+      data["snacks"] = snacks?.map((e) => e.toJson()).toList();
     }
+    return data;
+  }
+}
+
+class Snacks {
+  int? id;
+  String? image;
+  int? calories;
+  int? fat;
+  int? protein;
+  int? carb;
+  int? weight;
+  int? price;
+  String? name;
+  String? description;
+  Pivot3? pivot;
+
+  Snacks(
+      {this.id,
+      this.image,
+      this.calories,
+      this.fat,
+      this.protein,
+      this.carb,
+      this.weight,
+      this.price,
+      this.name,
+      this.description,
+      this.pivot});
+
+  Snacks.fromJson(Map<String, dynamic> json) {
+    if (json["id"] is int) {
+      id = json["id"];
+    }
+    if (json["image"] is String) {
+      image = json["image"];
+    }
+    if (json["calories"] is int) {
+      calories = json["calories"];
+    }
+    if (json["fat"] is int) {
+      fat = json["fat"];
+    }
+    if (json["protein"] is int) {
+      protein = json["protein"];
+    }
+    if (json["carb"] is int) {
+      carb = json["carb"];
+    }
+    if (json["weight"] is int) {
+      weight = json["weight"];
+    }
+    if (json["price"] is int) {
+      price = json["price"];
+    }
+    if (json["name"] is String) {
+      name = json["name"];
+    }
+    if (json["description"] is String) {
+      description = json["description"];
+    }
+    if (json["pivot"] is Map) {
+      pivot = json["pivot"] == null ? null : Pivot3.fromJson(json["pivot"]);
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["id"] = id;
+    data["image"] = image;
+    data["calories"] = calories;
+    data["fat"] = fat;
+    data["protein"] = protein;
+    data["carb"] = carb;
+    data["weight"] = weight;
+    data["price"] = price;
+    data["name"] = name;
+    data["description"] = description;
+    if (pivot != null) {
+      data["pivot"] = pivot?.toJson();
+    }
+    return data;
+  }
+}
+
+class Pivot3 {
+  int? packageId;
+  int? productId;
+
+  Pivot3({this.packageId, this.productId});
+
+  Pivot3.fromJson(Map<String, dynamic> json) {
+    if (json["package_id"] is int) {
+      packageId = json["package_id"];
+    }
+    if (json["product_id"] is int) {
+      productId = json["product_id"];
+    }
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = <String, dynamic>{};
+    data["package_id"] = packageId;
+    data["product_id"] = productId;
     return data;
   }
 }
@@ -243,7 +349,7 @@ class Dinners {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["id"] = id;
     data["image"] = image;
     data["calories"] = calories;
@@ -277,7 +383,7 @@ class Pivot2 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["package_id"] = packageId;
     data["product_id"] = productId;
     return data;
@@ -347,7 +453,7 @@ class Lunches {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["id"] = id;
     data["image"] = image;
     data["calories"] = calories;
@@ -381,7 +487,7 @@ class Pivot1 {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["package_id"] = packageId;
     data["product_id"] = productId;
     return data;
@@ -539,7 +645,7 @@ class ResponseData {
   }
 
   Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = Map<String, dynamic>();
+    final Map<String, dynamic> data = <String, dynamic>{};
     data["carbs"] = carbs;
     data["fat"] = fat;
     data["protein"] = protein;

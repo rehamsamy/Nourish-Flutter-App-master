@@ -18,7 +18,7 @@ class CustomPackageController extends GetxController {
   List<int> selectedMeals = [];
   String? birtdate;
   double? height;
-  String? heightType;
+  String? heightType = "cm";
   RxBool isCmSelected = true.obs;
   RxBool isFeetSelected = false.obs;
   RxBool isPoundSelected = true.obs;

@@ -14,7 +14,6 @@ import 'package:nourish_sa/app/modules/packages/views/package_info_card.dart';
 import 'package:nourish_sa/app/shared/dialogs/filter_dialog.dart';
 import 'package:nourish_sa/app/shared/tab_bar_selector.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
-import 'package:shimmer/shimmer.dart';
 
 class AllPackagesBody extends GetView<PackagesController> {
   const AllPackagesBody({this.isWithFilter = true, Key? key}) : super(key: key);
@@ -76,15 +75,18 @@ class AllPackagesBody extends GetView<PackagesController> {
         Obx(
           () => FutureBuilder(
               future: PackageApis().getPackagesAccordingType(
-                  controller.selectedPackageType == 0 ? 'monthly' : 'weekly'),
+                  controller.selectedPackageType.value == 0
+                      ? 'monthly'
+                      : 'weekly'),
               builder: (_, snap) {
-                if(snap.connectionState==ConnectionState.waiting){
-                  return  ListView.builder(itemCount: 3,
+                if (snap.connectionState == ConnectionState.waiting) {
+                  return ListView.builder(
+                      itemCount: 3,
                       shrinkWrap: true,
-                      itemBuilder: (_,index)=> Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 8),
-                        child: MealLoading(366.w, 130.h),
-                      ));
+                      itemBuilder: (_, index) => Padding(
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: MealLoading(366.w, 130.h),
+                          ));
                 }
 
                 if (snap.hasData) {
@@ -125,16 +127,10 @@ class AllPackagesBody extends GetView<PackagesController> {
                       },
                     );
                   } else {
-                    return Shimmer.fromColors(
-                      baseColor: Colors.grey.shade300,
-                      highlightColor: Colors.grey.shade100,
-                      // height: 300,
+                    return SizedBox(
+                      height: 100.h,
                       child: const Center(
-                        child: PackageInfoCard(
-                            title: "BreadFase",
-                            priceWithVat: "150",
-                            image: "",
-                            options: ["1", "2", "3"]),
+                        child: Text("No packages found"),
                       ),
                     );
                   }
@@ -143,7 +139,6 @@ class AllPackagesBody extends GetView<PackagesController> {
                     height: 300,
                   );
                 }
-
               }),
         ),
       ],

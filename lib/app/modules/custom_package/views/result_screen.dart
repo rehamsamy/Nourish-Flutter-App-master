@@ -4,18 +4,21 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/modules/custom_package/views/result_meals.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
 import '../../../data/services/analytics_service.dart';
 import '../controllers/custom_package_controller.dart';
-import 'main_goal.dart';
 
 class ResultScreen extends GetView<CustomPackageController> {
   Map<String, dynamic> map = Get.arguments;
   @override
   Widget build(BuildContext context) {
+    print("Result :" +
+        (controller.packageModel?.data?.responseData?.calories ?? 2.0)
+            .toString());
     return Scaffold(
       appBar: AppBar(
         title: Image.asset(
@@ -87,7 +90,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                             children: [
                               Container(
                                 height: 60.h,
-                                width: 60.w,
+                                width: 100.w,
                                 margin: EdgeInsets.only(bottom: 10.h),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: lightGreyColor),
@@ -109,7 +112,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                             children: [
                               Container(
                                 height: 60.h,
-                                width: 60.w,
+                                width: 100.w,
                                 margin: EdgeInsets.only(bottom: 10.h),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: lightGreyColor),
@@ -132,7 +135,7 @@ class ResultScreen extends GetView<CustomPackageController> {
                             children: [
                               Container(
                                 height: 60.h,
-                                width: 60.w,
+                                width: 100.w,
                                 margin: EdgeInsets.only(bottom: 10.h),
                                 decoration: BoxDecoration(
                                   border: Border.all(color: lightGreyColor),
@@ -187,7 +190,9 @@ class ResultScreen extends GetView<CustomPackageController> {
                     title: LocalKeys.kContinue.tr,
                     onPress: () {
                       AnalyticsService.instance.logEvent("Main_Goal_View");
-                      Get.to(() => const MainGoalScreen());
+                      Get.to(() => MyMealResults(
+                            package: controller.packageModel,
+                          ));
                     }),
                 SizedBox(
                   height: 18.h,
