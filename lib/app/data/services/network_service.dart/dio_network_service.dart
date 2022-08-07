@@ -124,7 +124,6 @@ class NetworkService {
       ..options.headers = _headers
       ..options.connectTimeout = 15000 // 15 seconds
       ..options.receiveTimeout = 15000; // 15 seconds
-
     return dio;
   }
 
