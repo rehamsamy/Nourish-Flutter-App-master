@@ -1,16 +1,23 @@
+import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/notification_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 class NotificationApis {
+  final String? token = Get.find<SharedPrefService>().getToken();
+
   Future<List<NotificationItem>?> getNotifications() async {
     List<NotificationItem>? notificationsList = [];
-    const request = NetworkRequest(
+    final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'notifications',
-      data: NetworkRequestBody.json(
+      data: const NetworkRequestBody.json(
         {},
       ),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(

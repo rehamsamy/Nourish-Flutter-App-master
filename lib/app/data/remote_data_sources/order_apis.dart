@@ -78,6 +78,9 @@ class OrderApis {
       type: NetworkRequestType.POST,
       path: 'addOrder',
       data: NetworkRequestBody.json(map),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(

@@ -9,12 +9,17 @@ import 'package:nourish_sa/app/data/services/shared_pref.dart';
 class ProfileApis {
   Future<ProfileModel?> getProfileInfo() async {
     ProfileModel? profileModel = ProfileModel();
-    final request = const NetworkRequest(
+
+    final String? token = Get.find<SharedPrefService>().getToken();
+    final request = NetworkRequest(
       type: NetworkRequestType.POST,
       path: 'me',
-      data: NetworkRequestBody.json(
+      data: const NetworkRequestBody.json(
         {},
       ),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
     final response = await networkService.execute(
       request,

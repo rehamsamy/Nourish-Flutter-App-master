@@ -1,15 +1,22 @@
+import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
 import 'package:nourish_sa/app/data/models/branch_model.dart';
 import '../services/network_service.dart/dio_network_service.dart';
+import '../services/shared_pref.dart';
 
 class BranchApis {
   Future<List<BranchItem>?> getBranches() async {
+    final String? token = Get.find<SharedPrefService>().getToken();
+
     BranchModel? branchModel = BranchModel();
     List<BranchItem>? list;
-    const request = NetworkRequest(
+    var request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'branches',
-      data: NetworkRequestBody.json({}),
+      data: const NetworkRequestBody.json({}),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
 
     final response = await networkService.execute(

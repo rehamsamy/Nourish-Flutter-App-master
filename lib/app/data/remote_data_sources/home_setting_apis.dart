@@ -1,17 +1,23 @@
+import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
-import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/data/models/home_setting_model.dart';
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
+import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 class HomeSettingApis {
   Future<HomeSettingModel?> getHomeSetting() async {
-    HomeSettingModel homePackageModel =HomeSettingModel();
-    const request = NetworkRequest(
+    final String? token = Get.find<SharedPrefService>().getToken();
+
+    HomeSettingModel homePackageModel = HomeSettingModel();
+    final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'homeSettings',
-      data: NetworkRequestBody.json(
+      data: const NetworkRequestBody.json(
         {},
       ),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
     // Execute a request and convert response to your model:
     final response = await networkService.execute(

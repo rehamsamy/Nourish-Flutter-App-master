@@ -40,6 +40,9 @@ class CreatePackageApis {
       type: NetworkRequestType.POST,
       path: 'updateAdditionalData',
       data: NetworkRequestBody.json(map),
+      headers: {
+        'Authorization': 'Bearer $token',
+      },
     );
 
     final response = await networkService.execute(
