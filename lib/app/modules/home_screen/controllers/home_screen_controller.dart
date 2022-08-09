@@ -52,4 +52,5 @@ class HomeScreenController extends GetxController {
     isLoading = val;
     update();
   }
+  //
 }
