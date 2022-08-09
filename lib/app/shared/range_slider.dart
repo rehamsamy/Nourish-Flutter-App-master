@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 
 typedef OnApplyButtonClick<T> = Function(RangeValues? selectedValues);
 
@@ -11,22 +12,27 @@ class RangeSliderPicker extends StatefulWidget {
   const RangeSliderPicker({
     Key? key,
     this.selectedRangeValues,
-    this.divisions = 1,
-    this.maxValue = 40,
+    this.divisions = 2,
+    this.maxValue = 2000,
     this.minValue = 0,
   }) : super(key: key);
 
   @override
-  _RangeSliderPickerState createState() => _RangeSliderPickerState();
+  RangeSliderPickerState createState() => RangeSliderPickerState();
+
+
+
 }
 
-class _RangeSliderPickerState extends State<RangeSliderPicker> {
-  late RangeValues _selectedRangeValues;
+class RangeSliderPickerState extends State<RangeSliderPicker> {
+  static RangeValues ? selectedRangeValues;
+
+
 
   @override
   void initState() {
     super.initState();
-    _selectedRangeValues = widget.selectedRangeValues ??
+    selectedRangeValues = widget.selectedRangeValues ??
         RangeValues(widget.minValue.toDouble(), widget.maxValue.toDouble());
   }
 
@@ -49,15 +55,16 @@ class _RangeSliderPickerState extends State<RangeSliderPicker> {
                   child: RangeSlider(
                     min: widget.minValue.toDouble(),
                     max: widget.maxValue.toDouble(),
-                    values: _selectedRangeValues,
+                    values: selectedRangeValues as RangeValues,
                     divisions: widget.maxValue,
                     labels: RangeLabels(
-                      _selectedRangeValues.start.round().toString(),
-                      _selectedRangeValues.end.round().toString(),
+                      (selectedRangeValues?.start.round()).toString(),
+                        (selectedRangeValues?.end.round()).toString(),
                     ),
                     onChanged: (RangeValues values) {
                       setState(() {
-                        _selectedRangeValues = values;
+                        selectedRangeValues = values;
+                        Get.log('range =====>'+values.start.toString());
                       });
                     },
                   ),
@@ -69,4 +76,5 @@ class _RangeSliderPickerState extends State<RangeSliderPicker> {
       ),
     );
   }
+
 }

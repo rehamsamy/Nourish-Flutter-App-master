@@ -1,6 +1,7 @@
 import 'package:nourish_sa/app/data/models/categories_model.dart';
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
+import 'package:nourish_sa/app/data/models/package_filter_model.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import '../services/network_service.dart/dio_network_service.dart';
 
@@ -74,4 +75,38 @@ class HomeApis {
         orElse: () {});
     return weeklyList;
   }
+
+
+  Future<List<PackageItem>?> getFilterPackages(
+      String ? packageType,double ? start,double ? end) async {
+    List<PackageItem>? packagesList = [];
+    final request = NetworkRequest(
+      type: NetworkRequestType.GET,
+      path: 'packages/?type=$packageType&price_from=$start&price_to=$end',
+      data: const NetworkRequestBody.json(
+        { // 'type':packageType
+        },
+      ),
+    );
+    // Execute a request and convert response to your model:
+    final response = await networkService.execute(
+      request,
+      PackageFilterModel
+          .fromJson, // <- Function to convert API response to your model
+      onReceiveProgress: (count, total) {},
+      onSendProgress: (count, total) {},
+    );
+
+    response.maybeWhen(
+        ok: (response) {
+          PackageFilterModel model = response ;
+          packagesList = model.data?.data;
+          return packagesList;
+        },
+        orElse: () {});
+    return packagesList;
+  }
+
+
+
 }

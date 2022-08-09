@@ -1,16 +1,18 @@
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
+import 'package:nourish_sa/app/core/values/localization/langs/Client%20App-en.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
-import 'package:nourish_sa/app/data/models/package_model.dart';
+import 'package:nourish_sa/app/data/models/package_filter_model.dart' as filter;
+import 'package:nourish_sa/app/data/models/package_model.dart' as normal;
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
 class PackageApis {
-  Future<List<PackageItem>?> getPackagesAccordingType(
+  Future<List<normal.PackageItem>?> getPackagesAccordingType(
       String packageType) async {
     final String? token = SharedPrefService.getToken() ?? '';
 
-    List<PackageItem>? packagesList = [];
+    List<normal.PackageItem>? packagesList = [];
     final request = NetworkRequest(
       type: NetworkRequestType.GET,
       path: 'packages/?type=$packageType',
@@ -23,7 +25,7 @@ class PackageApis {
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      PackageModel
+     normal. PackageModel
           .fromJson, // <- Function to convert API response to your model
       onReceiveProgress: (count, total) {},
       onSendProgress: (count, total) {},
@@ -31,7 +33,7 @@ class PackageApis {
 
     response.maybeWhen(
         ok: (response) {
-          PackageModel model = response;
+         normal. PackageModel model = response;
           packagesList = model.data?.packagedata;
           Get.log('size of package  ee');
           return packagesList;
@@ -71,4 +73,8 @@ class PackageApis {
         orElse: () {});
     return detailModel;
   }
+
+
+
+
 }

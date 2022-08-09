@@ -18,6 +18,7 @@ import 'package:nourish_sa/app/shared/headline_with_view_all.dart';
 import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_card.dart';
 import 'package:nourish_sa/app/modules/home_screen/views/widgets/package_card.dart';
 import 'package:nourish_sa/app/shared/custom_appbar.dart';
+import 'package:nourish_sa/app/shared/range_slider.dart';
 import 'package:nourish_sa/app_theme.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -31,7 +32,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
 
   @override
   Widget build(BuildContext context) {
-    return GetBuilder<HomePageController>(
+    return GetBuilder<HomeScreenController>(
       builder: (_) => Scaffold(
         key: controller.scaffoldKey,
         appBar: CustomAppBar(
@@ -111,29 +112,42 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   },
                 ),
               ),
-              FutureBuilder(
-                  future: HomeApis().getHomePackages(),
-                  builder: (_, snapshot) {
-                    if (snapshot.hasData) {
-                      homePackagesList = snapshot.data as List<PackageItem>;
-                      return SizedBox(
+
+                       SizedBox(
                           width: Get.width,
                           height: 185.h,
                           child: buildSwiper(
-                            homePackagesList.length,
-                          ));
-                    } else {
-                      return SizedBox(
-                          width: Get.width,
-                          height: 185.h,
-                          child: ListView.builder(
-                            physics: const BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (context, index) =>
-                                MealLoading(220.w, 140.h),
-                          ));
-                    }
-                  }),
+                            controller.homeFilterPackagesList.length,
+                          )),
+
+              // FutureBuilder(
+              //     future:!(controller.filterSelected)?HomeApis().getHomePackages():
+              //     HomeApis().getFilterPackages(controller.packageFilterType, RangeSliderPickerState.selectedRangeValues?.start,
+              //         RangeSliderPickerState.selectedRangeValues?.end),
+              //     builder: (_, snapshot) {
+              //       if (snapshot.hasData) {
+              //         List<PackageItem>   homePackagesList = snapshot.data as List<PackageItem>;
+              //          controller.tooglePackageList(homePackagesList);
+              //         homePackagesList=controller.homeFilterPackagesList as List<PackageItem> ;
+              //         Get.log('list size   ===> '+homePackagesList.length.toString());
+              //         return SizedBox(
+              //             width: Get.width,
+              //             height: 185.h,
+              //             child: buildSwiper(
+              //               homePackagesList.length,
+              //             ));
+              //       } else {
+              //         return SizedBox(
+              //             width: Get.width,
+              //             height: 185.h,.
+              //             child: ListView.builder(
+              //               physics: const BouncingScrollPhysics(),
+              //               scrollDirection: Axis.horizontal,
+              //               itemBuilder: (context, index) =>
+              //                   MealLoading(220.w, 140.h),
+              //             ));
+              //       }
+              //     }),
               SizedBox(
                 height: 52.h,
               ),
@@ -165,59 +179,62 @@ class HomeScreenView extends GetView<HomeScreenController> {
     int length,
   ) {
     return Swiper(
-      outer: true,
-      physics: const BouncingScrollPhysics(),
-      itemCount: length,
-      autoplay: true,
-      itemWidth: 155.h,
-      viewportFraction: 0.8,
-      itemBuilder: (context, index) {
-        return PackageCard(
-            title: homePackagesList[index].name ?? '',
-            onTap: () async {
-              PackageDetailModel? model = await PackageApis()
-                  .getPackageDetail(homePackagesList[index].id ?? 0);
-              if (model?.data != null) {
-                Get.toNamed(Routes.PACKAGE_DETAILS,
-                    arguments: {'packageDetailModel': model});
-              }
-            },
-            image: homePackagesList[index].image ?? '');
-      },
-      pagination: SwiperPagination(
-        margin: EdgeInsets.only(top: 10.h),
-        builder: SwiperCustomPagination(
-          builder: (BuildContext context, SwiperPluginConfig config) {
-            final list = <Widget>[];
+        outer: true,
+        physics: const BouncingScrollPhysics(),
+        itemCount: length,
+        autoplay: true,
+        itemWidth: 155.h,
+        viewportFraction: 0.8,
+        itemBuilder: (context, index) {
+          return PackageCard(
+              title: controller.homeFilterPackagesList[index].name ?? '',
+              onTap: () async {
+                PackageDetailModel? model = await PackageApis()
+                    .getPackageDetail(controller.homeFilterPackagesList[index].id ?? 0);
+                if (model?.data != null) {
+                  Get.toNamed(Routes.PACKAGE_DETAILS,
+                      arguments: {'packageDetailModel': model});
+                }
+              },
+              image: controller.homeFilterPackagesList[index].image ?? '');
+        },
+        pagination: SwiperPagination(
+          margin: EdgeInsets.only(top: 10.h),
+          builder: SwiperCustomPagination(
+            builder: (BuildContext context, SwiperPluginConfig config) {
+              final list = <Widget>[];
 
-            for (var i = 0; i < config.itemCount; ++i) {
-              final active = i == config.activeIndex;
-              list.add(Container(
-                key: Key('pagination_$i'),
-                margin: EdgeInsets.all(3.w),
-                child: ClipOval(
-                  child: Container(
-                    width: active ? 12.w : 5.h,
-                    height: active ? 5.h : 5.h,
-                    decoration: BoxDecoration(
-                      color: active ? primaryColor : greyColor,
-                      borderRadius: active ? BorderRadius.circular(20.r) : null,
-                      shape: active ? BoxShape.rectangle : BoxShape.circle,
+              for (var i = 0; i < config.itemCount; ++i) {
+                final active = i == config.activeIndex;
+                list.add(Container(
+                  key: Key('pagination_$i'),
+                  margin: EdgeInsets.all(3.w),
+                  child: ClipOval(
+                    child: Container(
+                      width: active ? 12.w : 5.h,
+                      height: active ? 5.h : 5.h,
+                      decoration: BoxDecoration(
+                        color: active ? primaryColor : greyColor,
+                        borderRadius: active ? BorderRadius.circular(20.r) : null,
+                        shape: active ? BoxShape.rectangle : BoxShape.circle,
+                      ),
                     ),
                   ),
-                ),
-              ));
-            }
-            return Row(
-              key: key,
-              mainAxisSize: MainAxisSize.min,
-              children: list,
-            );
-          },
+                ));
+              }
+              return Row(
+                key: key,
+                mainAxisSize: MainAxisSize.min,
+                children: list,
+              );
+            },
+          ),
         ),
-      ),
     );
   }
+
+
+
 }
 
 class SearchBar extends StatelessWidget {
