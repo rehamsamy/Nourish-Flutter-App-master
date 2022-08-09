@@ -19,6 +19,7 @@ class HomeScreenController extends GetxController {
   List<PackageItem> homeFilterPackagesList=[];
    String  packageFilterType='weakly';
    bool filterSelected=false;
+   bool packageLoading=false;
 
   @override
   void onInit() async {
@@ -26,13 +27,10 @@ class HomeScreenController extends GetxController {
     AnalyticsService.instance.logEvent("Home_View");
     profileModel = await ProfileApis().getProfileInfo();
     handleIsLoading(true);
-
-    HomeApis().getHomePackages().then((value) {
-      homeFilterPackagesList=value??[];
-          update();
-    }
-     );
-
+     packageLoading=true;
+      update();
+      Get.log('home  ==> init ' );
+   getHomePackagesList();
   }
 
  tooglePackageList(List<PackageItem> value){
@@ -40,6 +38,10 @@ class HomeScreenController extends GetxController {
     update();
 
  }
+  tooglePackageListLoading( bool newVal){
+    packageLoading=newVal;
+    update();
+  }
  changeIsFilterSelected(bool newVal){
     filterSelected=newVal;
     update();
@@ -51,6 +53,16 @@ class HomeScreenController extends GetxController {
   handleIsLoading(bool val) {
     isLoading = val;
     update();
+  }
+
+  void getHomePackagesList() {
+    HomeApis().getHomePackages().then((value) {
+      homeFilterPackagesList=value??[];
+      packageLoading=false;
+      update();
+    }
+    );
+
   }
   //
 }

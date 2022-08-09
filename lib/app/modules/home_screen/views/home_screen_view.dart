@@ -32,18 +32,21 @@ class HomeScreenView extends GetView<HomeScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    controller.filterSelected=false;
+    Get.log('home  ==>'+controller.filterSelected.toString());
     return GetBuilder<HomeScreenController>(
-      builder: (_) => Scaffold(
-        key: controller.scaffoldKey,
-        appBar: CustomAppBar(
-          scaffoldKey: controller.scaffoldKey,
-        ),
-        drawer: const MainDrawer(),
-        body: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              /*  Padding(
+      builder: (_) =>
+          Scaffold(
+            key: controller.scaffoldKey,
+            appBar: CustomAppBar(
+              scaffoldKey: controller.scaffoldKey,
+            ),
+            drawer: const MainDrawer(),
+            body: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  /*  Padding(
                 padding: EdgeInsets.only(
                     top: 35.h, bottom: 15.h, left: 27.w, right: 27.w),
                 child: Text(
@@ -51,190 +54,208 @@ class HomeScreenView extends GetView<HomeScreenController> {
                   style: Get.textTheme.headline1,
                 ),
               ), */
-              const SizedBox(height: 16),
-              SearchBar(homePackagesList: homePackagesList),
-              Column(
-                children: [
+                  const SizedBox(height: 16),
+                  SearchBar(homePackagesList: homePackagesList),
+                  Column(
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
+                        child: HeadlineWithViewAll(
+                          title: LocalKeys.kMenus.tr,
+                          withViewAll: true,
+                          onTap: () {
+                            Get.find<HomePageController>().changeIndex(1);
+                          },
+                        ),
+                      ),
+                      FutureBuilder(
+                          future: HomeApis().getHomeCategories(),
+                          builder: (_, snapshot) {
+                            if (snapshot.hasData) {
+                              categoriesList = snapshot.data as List<CategoryItem>;
+                              return SizedBox(
+                                  width: Get.width,
+                                  height: 100.h,
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: categoriesList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    padding: EdgeInsets.symmetric(horizontal: 7.w),
+                                    itemBuilder: (context, index) {
+                                      return MealCard(
+                                          title: categoriesList[index].name ?? '',
+                                          color: AppConstants.colorsMenu[index % 5],
+                                          image: categoriesList[index].image ?? '');
+                                    },
+                                  ));
+                            } else {
+                              return SizedBox(
+                                  width: Get.width,
+                                  height: 100.h,
+                                  child: ListView.builder(
+                                    physics: const BouncingScrollPhysics(),
+                                    itemCount: categoriesList.length,
+                                    scrollDirection: Axis.horizontal,
+                                    padding: EdgeInsets.symmetric(horizontal: 7.w),
+                                    itemBuilder: (context, index) {
+                                      return MealLoading(128.w, 99.h);
+                                    },
+                                  ));
+                            }
+                          }),
+                    ],
+                  ),
                   Padding(
-                    padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
+                    padding: EdgeInsets.only(top: 31.h, bottom: 20.h),
                     child: HeadlineWithViewAll(
-                      title: LocalKeys.kMenus.tr,
-                      withViewAll: true,
+                      title: LocalKeys.kPackages.tr,
+                      withViewAll: false,
                       onTap: () {
-                        Get.find<HomePageController>().changeIndex(1);
+                        Get.find<HomePageController>().changeIndex(2);
                       },
                     ),
                   ),
-                  FutureBuilder(
-                      future: HomeApis().getHomeCategories(),
-                      builder: (_, snapshot) {
-                        if (snapshot.hasData) {
-                          categoriesList = snapshot.data as List<CategoryItem>;
-                          return SizedBox(
-                              width: Get.width,
-                              height: 100.h,
-                              child: ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: categoriesList.length,
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.symmetric(horizontal: 7.w),
-                                itemBuilder: (context, index) {
-                                  return MealCard(
-                                      title: categoriesList[index].name ?? '',
-                                      color: AppConstants.colorsMenu[index % 5],
-                                      image: categoriesList[index].image ?? '');
-                                },
-                              ));
-                        } else {
-                          return SizedBox(
-                              width: Get.width,
-                              height: 100.h,
-                              child: ListView.builder(
-                                physics: const BouncingScrollPhysics(),
-                                itemCount: categoriesList.length,
-                                scrollDirection: Axis.horizontal,
-                                padding: EdgeInsets.symmetric(horizontal: 7.w),
-                                itemBuilder: (context, index) {
-                                  return MealLoading(128.w, 99.h);
-                                },
-                              ));
-                        }
-                      }),
+                  getHomePackageAndFilter(),
+
+                  // FutureBuilder(
+                  //     future:!(controller.filterSelected)?HomeApis().getHomePackages():
+                  //     HomeApis().getFilterPackages(controller.packageFilterType, RangeSliderPickerState.selectedRangeValues?.start,
+                  //         RangeSliderPickerState.selectedRangeValues?.end),
+                  //     builder: (_, snapshot) {
+                  //       if (snapshot.hasData) {
+                  //         List<PackageItem>   homePackagesList = snapshot.data as List<PackageItem>;
+                  //          controller.tooglePackageList(homePackagesList);
+                  //         homePackagesList=controller.homeFilterPackagesList as List<PackageItem> ;
+                  //         Get.log('list size   ===> '+homePackagesList.length.toString());
+                  //         return SizedBox(
+                  //             width: Get.width,
+                  //             height: 185.h,
+                  //             child: buildSwiper(
+                  //               homePackagesList.length,
+                  //             ));
+                  //       } else {
+                  //         return SizedBox(
+                  //             width: Get.width,
+                  //             height: 185.h,.
+                  //             child: ListView.builder(
+                  //               physics: const BouncingScrollPhysics(),
+                  //               scrollDirection: Axis.horizontal,
+                  //               itemBuilder: (context, index) =>
+                  //                   MealLoading(220.w, 140.h),
+                  //             ));
+                  //       }
+                  //     }),
+                  SizedBox(
+                    height: 52.h,
+                  ),
+                  InkWell(
+                    onTap: () {
+                      Get.toNamed(Routes.CUSTOM_PACKAGE);
+                    },
+                    child: Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 27.w),
+                      child: Center(
+                        child: Image.asset(
+                          Assets.kOwnPackage,
+                          fit: BoxFit.fitWidth,
+                        ),
+                      ),
+                    ),
+                  ),
+                  const AllPackagesBody(
+                    isWithFilter: false,
+                  ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(top: 31.h, bottom: 20.h),
-                child: HeadlineWithViewAll(
-                  title: LocalKeys.kPackages.tr,
-                  withViewAll: false,
-                  onTap: () {
-                    Get.find<HomePageController>().changeIndex(2);
-                  },
-                ),
-              ),
+            ),
+          ),
+    );
+  }
 
-                       SizedBox(
-                          width: Get.width,
-                          height: 185.h,
-                          child: buildSwiper(
-                            controller.homeFilterPackagesList.length,
-                          )),
+  buildSwiper(int length,) {
+    return Swiper(
+      outer: true,
+      physics: const BouncingScrollPhysics(),
+      itemCount: length,
+      autoplay: true,
+      itemWidth: 155.h,
+      viewportFraction: 0.8,
+      itemBuilder: (context, index) {
+        return PackageCard(
+            title: controller.homeFilterPackagesList[index].name ?? '',
+            onTap: () async {
+              PackageDetailModel? model = await PackageApis()
+                  .getPackageDetail(controller.homeFilterPackagesList[index].id ?? 0);
+              if (model?.data != null) {
+                Get.toNamed(Routes.PACKAGE_DETAILS,
+                    arguments: {'packageDetailModel': model});
+              }
+            },
+            image: controller.homeFilterPackagesList[index].image ?? '');
+      },
+      pagination: SwiperPagination(
+        margin: EdgeInsets.only(top: 10.h),
+        builder: SwiperCustomPagination(
+          builder: (BuildContext context, SwiperPluginConfig config) {
+            final list = <Widget>[];
 
-              // FutureBuilder(
-              //     future:!(controller.filterSelected)?HomeApis().getHomePackages():
-              //     HomeApis().getFilterPackages(controller.packageFilterType, RangeSliderPickerState.selectedRangeValues?.start,
-              //         RangeSliderPickerState.selectedRangeValues?.end),
-              //     builder: (_, snapshot) {
-              //       if (snapshot.hasData) {
-              //         List<PackageItem>   homePackagesList = snapshot.data as List<PackageItem>;
-              //          controller.tooglePackageList(homePackagesList);
-              //         homePackagesList=controller.homeFilterPackagesList as List<PackageItem> ;
-              //         Get.log('list size   ===> '+homePackagesList.length.toString());
-              //         return SizedBox(
-              //             width: Get.width,
-              //             height: 185.h,
-              //             child: buildSwiper(
-              //               homePackagesList.length,
-              //             ));
-              //       } else {
-              //         return SizedBox(
-              //             width: Get.width,
-              //             height: 185.h,.
-              //             child: ListView.builder(
-              //               physics: const BouncingScrollPhysics(),
-              //               scrollDirection: Axis.horizontal,
-              //               itemBuilder: (context, index) =>
-              //                   MealLoading(220.w, 140.h),
-              //             ));
-              //       }
-              //     }),
-              SizedBox(
-                height: 52.h,
-              ),
-              InkWell(
-                onTap: () {
-                  Get.toNamed(Routes.CUSTOM_PACKAGE);
-                },
-                child: Padding(
-                  padding: EdgeInsets.symmetric(horizontal: 27.w),
-                  child: Center(
-                    child: Image.asset(
-                      Assets.kOwnPackage,
-                      fit: BoxFit.fitWidth,
+            for (var i = 0; i < config.itemCount; ++i) {
+              final active = i == config.activeIndex;
+              list.add(Container(
+                key: Key('pagination_$i'),
+                margin: EdgeInsets.all(3.w),
+                child: ClipOval(
+                  child: Container(
+                    width: active ? 12.w : 5.h,
+                    height: active ? 5.h : 5.h,
+                    decoration: BoxDecoration(
+                      color: active ? primaryColor : greyColor,
+                      borderRadius: active ? BorderRadius.circular(20.r) : null,
+                      shape: active ? BoxShape.rectangle : BoxShape.circle,
                     ),
                   ),
                 ),
-              ),
-              const AllPackagesBody(
-                isWithFilter: false,
-              ),
-            ],
-          ),
+              ));
+            }
+            return Row(
+              key: key,
+              mainAxisSize: MainAxisSize.min,
+              children: list,
+            );
+          },
         ),
       ),
     );
   }
 
-  buildSwiper(
-    int length,
-  ) {
-    return Swiper(
-        outer: true,
-        physics: const BouncingScrollPhysics(),
-        itemCount: length,
-        autoplay: true,
-        itemWidth: 155.h,
-        viewportFraction: 0.8,
-        itemBuilder: (context, index) {
-          return PackageCard(
-              title: controller.homeFilterPackagesList[index].name ?? '',
-              onTap: () async {
-                PackageDetailModel? model = await PackageApis()
-                    .getPackageDetail(controller.homeFilterPackagesList[index].id ?? 0);
-                if (model?.data != null) {
-                  Get.toNamed(Routes.PACKAGE_DETAILS,
-                      arguments: {'packageDetailModel': model});
-                }
-              },
-              image: controller.homeFilterPackagesList[index].image ?? '');
-        },
-        pagination: SwiperPagination(
-          margin: EdgeInsets.only(top: 10.h),
-          builder: SwiperCustomPagination(
-            builder: (BuildContext context, SwiperPluginConfig config) {
-              final list = <Widget>[];
-
-              for (var i = 0; i < config.itemCount; ++i) {
-                final active = i == config.activeIndex;
-                list.add(Container(
-                  key: Key('pagination_$i'),
-                  margin: EdgeInsets.all(3.w),
-                  child: ClipOval(
-                    child: Container(
-                      width: active ? 12.w : 5.h,
-                      height: active ? 5.h : 5.h,
-                      decoration: BoxDecoration(
-                        color: active ? primaryColor : greyColor,
-                        borderRadius: active ? BorderRadius.circular(20.r) : null,
-                        shape: active ? BoxShape.rectangle : BoxShape.circle,
-                      ),
-                    ),
-                  ),
-                ));
-              }
-              return Row(
-                key: key,
-                mainAxisSize: MainAxisSize.min,
-                children: list,
-              );
-            },
-          ),
-        ),
-    );
+  getHomePackageAndFilter() {
+    if (!controller.packageLoading) {
+      return SizedBox(
+          width: Get.width,
+          height: 185.h,
+          child: buildSwiper(
+            controller.homeFilterPackagesList.length,
+          ));
+    }
+    else {
+      if (controller.homeFilterPackagesList.isNotEmpty) {
+        return SizedBox(
+            width: Get.width,
+            height: 185.h,
+            child: ListView.builder(
+              physics: const BouncingScrollPhysics(),
+              scrollDirection: Axis.horizontal,
+              itemBuilder: (context, index) => MealLoading(220.w, 140.h),
+            ));
+      }
+      else {
+        return SizedBox(
+            width: Get.width,
+            height: 185.h,
+            child: Center(child: Text('no packages found')));
+      }
+    }
   }
-
-
-
 }
 
 class SearchBar extends StatelessWidget {

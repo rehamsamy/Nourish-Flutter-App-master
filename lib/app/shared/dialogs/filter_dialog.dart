@@ -102,11 +102,13 @@ class FilterDialog extends GetView<HomeScreenController> {
                       title: LocalKeys.kContinue.tr,
                       onPress: () async {
                         controller.changeIsFilterSelected(true);
+                        controller.tooglePackageListLoading(true);
                         RangeValues? x = RangeSliderPickerState
                             .selectedRangeValues;
                         HomeApis().getFilterPackages(controller.packageFilterType, RangeSliderPickerState.selectedRangeValues?.start,
                             RangeSliderPickerState.selectedRangeValues?.end).then((value) {
                               controller.tooglePackageList(value!);
+                              controller.tooglePackageListLoading(false);
                         });
                         Get.back();
                       },
