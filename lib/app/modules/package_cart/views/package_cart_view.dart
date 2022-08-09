@@ -14,8 +14,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageCartView extends GetView<PackageCartController> {
   PackageMealsController packageMealsController = Get.find();
+  List<String> mealsKeys=[];
   @override
   Widget build(BuildContext context) {
+    // mealsKeys=controller.selectedMealsProductsData[controller.currentDay]
+    //     ?.keys;
+    controller.selectedMealsProductsData[controller.currentDay]?.forEach((key, value) {
+      Get.log('data ===>'+value.toString()+' kkk   '+key.toString());
+      if(value!=null){
+        mealsKeys.add(key);
+      }
+    });
+    Get.log('data ===>'+mealsKeys.toString());
     int? total = controller.total;
     return Scaffold(
       appBar: AppBar(
@@ -210,7 +220,7 @@ class PackageCartView extends GetView<PackageCartController> {
                   height: 300,
                   child: ListView.builder(
                     itemCount: controller
-                        .selectedMealsProductsData[controller.currentDay]
+                       .selectedMealsProductsData[controller.currentDay]
                         ?.keys
                         .length,
                     //physics: NeverScrollableScrollPhysics(),

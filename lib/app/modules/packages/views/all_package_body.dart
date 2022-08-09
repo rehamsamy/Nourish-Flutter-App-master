@@ -8,6 +8,7 @@ import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/data/models/package_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/package_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
+import 'package:nourish_sa/app/modules/home_screen/controllers/home_screen_controller.dart';
 import 'package:nourish_sa/app/modules/home_screen/views/widgets/meal_loading.dart';
 import 'package:nourish_sa/app/modules/packages/controllers/packages_controller.dart';
 import 'package:nourish_sa/app/modules/packages/views/package_info_card.dart';
@@ -20,6 +21,7 @@ class AllPackagesBody extends GetView<PackagesController> {
   final bool isWithFilter;
   @override
   Widget build(BuildContext context) {
+    HomeScreenController homeScreenController=Get.find();
     return Column(
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [

@@ -29,7 +29,7 @@ class HomeScreenView extends GetView<HomeScreenController> {
   HomeScreenView({Key? key}) : super(key: key);
   List<CategoryItem> categoriesList = [];
   static List<PackageItem> homePackagesList = [];
-
+  HomeScreenController homeScreenController=Get.find();
   @override
   Widget build(BuildContext context) {
     controller.filterSelected=false;
