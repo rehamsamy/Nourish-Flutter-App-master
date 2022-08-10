@@ -229,8 +229,6 @@ class MealDay {
   }
 }
 
-
-
 class Sunday {
   int? id;
   int? orderId;
@@ -431,11 +429,11 @@ class User {
   String? image;
   int? status;
   String? mobile;
-  dynamic? smsCode;
-  dynamic? emailVerifyCode;
+  dynamic smsCode;
+  dynamic emailVerifyCode;
   int? verified;
-  dynamic? locale;
-  dynamic? deviceToken;
+  dynamic locale;
+  dynamic deviceToken;
   String? name;
   String? firstName;
   String? lastName;
@@ -590,7 +588,7 @@ class Address {
   String? street;
   String? postalCode;
   String? additionalNumber;
-  dynamic? deliveryInstructions;
+  dynamic deliveryInstructions;
 
   Address(
       {this.id,

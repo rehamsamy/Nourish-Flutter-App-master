@@ -33,7 +33,32 @@ final dioLoggerInterceptor =
   // return response; // continue
 }, onError: (DioError error, handler) async {
   handler.next(error); //continue
-
+  /*  for (int i in [
+    408,
+    429,
+    500,
+    502,
+    503,
+    504,
+    440,
+    460,
+    499,
+    522,
+    523,
+    524,
+    527,
+    598,
+    599
+  ]) {
+    if (error.response?.statusCode == i) {
+      Get.log("Network error statuscode is : " + i.toString());
+      await AuthApis().refreshToken().then((value) {
+        print(value);
+        Get.forceAppUpdate();
+        return value;
+      });
+    }
+  } */
   logger.wtf("---------------------------------------");
   logger.wtf("| [DIO] Error: ${error.error}: ${error.response?.toString()}" +
       error.type.toString() +

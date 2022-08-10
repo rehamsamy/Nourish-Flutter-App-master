@@ -24,10 +24,10 @@ class Data {
   int? tax;
   int? priceWithTax;
   int? daysNumberOfWeek;
-  dynamic? extraBreakfastPrice;
-  dynamic? extraSnackPrice;
+  dynamic extraBreakfastPrice;
+  dynamic extraSnackPrice;
   int? extraLunchPrice;
-  dynamic? extraDinnerPrice;
+  dynamic extraDinnerPrice;
   String? daysBeforeStart;
   int? breakfast;
   int? lunch;
