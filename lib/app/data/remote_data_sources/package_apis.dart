@@ -1,7 +1,8 @@
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/app_constants.dart';
+import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
-import 'package:nourish_sa/app/data/models/package_model.dart';
+import 'package:nourish_sa/app/data/models/package_model.dart' ;
 import 'package:nourish_sa/app/data/services/network_service.dart/dio_network_service.dart';
 import 'package:nourish_sa/app/data/services/shared_pref.dart';
 
@@ -23,7 +24,7 @@ class PackageApis {
     // Execute a request and convert response to your model:
     final response = await networkService.execute(
       request,
-      PackageModel
+     PackageModel
           .fromJson, // <- Function to convert API response to your model
       onReceiveProgress: (count, total) {},
       onSendProgress: (count, total) {},
@@ -71,4 +72,8 @@ class PackageApis {
         orElse: () {});
     return detailModel;
   }
+
+
+
+
 }

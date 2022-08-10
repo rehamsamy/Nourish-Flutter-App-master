@@ -1,10 +1,10 @@
 import 'package:nourish_sa/app/data/models/home_package_model.dart';
 
-class PackageModel {
-  PackageModel({
+class PackageFilterModel {
+  PackageFilterModel({
       this.data,});
 
-  PackageModel.fromJson(dynamic json) {
+  PackageFilterModel.fromJson(dynamic json) {
     data = json['data'] != null ? Data.fromJson(json['data']) : null;
   }
   Data? data;
@@ -21,25 +21,25 @@ class PackageModel {
 
 class Data {
   Data({
-      this.packagedata, 
+      this.data, 
       this.paginate,});
 
   Data.fromJson(dynamic json) {
     if (json['data'] != null) {
-      packagedata = [];
+      data = [];
       json['data'].forEach((v) {
-        packagedata?.add(PackageItem.fromJson(v));
+        data?.add(PackageItem.fromJson(v));
       });
     }
     paginate = json['paginate'] != null ? Paginate.fromJson(json['paginate']) : null;
   }
-  List<PackageItem>? packagedata;
+  List<PackageItem>? data;
   Paginate? paginate;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};
-    if (packagedata != null) {
-      map['data'] = packagedata?.map((v) => v.toJson()).toList();
+    if (data != null) {
+      map['data'] = data?.map((v) => v.toJson()).toList();
     }
     if (paginate != null) {
       map['paginate'] = paginate?.toJson();
@@ -77,5 +77,3 @@ class Paginate {
   }
 
 }
-
-
