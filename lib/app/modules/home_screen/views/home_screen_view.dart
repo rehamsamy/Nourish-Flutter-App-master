@@ -230,31 +230,30 @@ class HomeScreenView extends GetView<HomeScreenController> {
 
   getHomePackageAndFilter() {
     if (!controller.packageLoading) {
-      return SizedBox(
-          width: Get.width,
-          height: 185.h,
-          child: buildSwiper(
-            controller.homeFilterPackagesList.length,
-          ));
-    }
-    else {
       if (controller.homeFilterPackagesList.isNotEmpty) {
         return SizedBox(
             width: Get.width,
             height: 185.h,
-            child: ListView.builder(
-              physics: const BouncingScrollPhysics(),
-              scrollDirection: Axis.horizontal,
-              itemBuilder: (context, index) => MealLoading(220.w, 140.h),
+            child: buildSwiper(
+              controller.homeFilterPackagesList.length,
             ));
-      }
-      else {
+      } else {
         return SizedBox(
             width: Get.width,
             height: 185.h,
             child: Center(child: Text('no packages found')));
       }
+    }else{
+      return SizedBox(
+          width: Get.width,
+          height: 185.h,
+          child: ListView.builder(
+            physics: const BouncingScrollPhysics(),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) => MealLoading(220.w, 140.h),
+          ));
     }
+
   }
 }
 

@@ -1,3 +1,5 @@
+import 'package:nourish_sa/app/data/models/home_package_model.dart';
+
 class PackageModel {
   PackageModel({
       this.data,});
@@ -76,71 +78,4 @@ class Paginate {
 
 }
 
-class PackageItem {
-  PackageItem({
-      this.id, 
-      this.image, 
-      this.tax, 
-      this.priceWithTax, 
-      this.daysNumberOfWeek, 
-      this.name, 
-      this.descriptions,});
 
-  PackageItem.fromJson(dynamic json) {
-    id = json['id'];
-    image = json['image'];
-    tax = json['tax'];
-    priceWithTax = json['price_with_tax'];
-    daysNumberOfWeek = json['days_number_of_week'];
-    name = json['name'];
-    if (json['descriptions'] != null) {
-      descriptions = [];
-      json['descriptions'].forEach((v) {
-        descriptions?.add(Descriptions.fromJson(v));
-      });
-    }
-  }
-  int? id;
-  String? image;
-  int? tax;
-  int? priceWithTax;
-  int? daysNumberOfWeek;
-  String? name;
-  List<Descriptions>? descriptions;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['image'] = image;
-    map['tax'] = tax;
-    map['price_with_tax'] = priceWithTax;
-    map['days_number_of_week'] = daysNumberOfWeek;
-    map['name'] = name;
-    if (descriptions != null) {
-      map['descriptions'] = descriptions?.map((v) => v.toJson()).toList();
-    }
-    return map;
-  }
-
-}
-
-class Descriptions {
-  Descriptions({
-      this.id, 
-      this.desc,});
-
-  Descriptions.fromJson(dynamic json) {
-    id = json['id'];
-    desc = json['desc'];
-  }
-  int? id;
-  String? desc;
-
-  Map<String, dynamic> toJson() {
-    final map = <String, dynamic>{};
-    map['id'] = id;
-    map['desc'] = desc;
-    return map;
-  }
-
-}

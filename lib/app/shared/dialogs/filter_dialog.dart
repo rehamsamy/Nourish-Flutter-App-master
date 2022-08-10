@@ -6,6 +6,7 @@ import 'package:nourish_sa/app/data/models/package_filter_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/package_apis.dart';
 import 'package:nourish_sa/app/modules/home_screen/controllers/home_screen_controller.dart';
+import 'package:nourish_sa/app/modules/packages/controllers/packages_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app_theme.dart';
 
@@ -17,6 +18,7 @@ class FilterDialog extends GetView<HomeScreenController> {
 
   @override
   Widget build(BuildContext context) {
+    PackagesController pageController=Get.find();
     return GetBuilder<HomeScreenController>(
       builder: (_)=> AlertDialog(
         scrollable: true,
@@ -109,6 +111,8 @@ class FilterDialog extends GetView<HomeScreenController> {
                             RangeSliderPickerState.selectedRangeValues?.end).then((value) {
                               controller.tooglePackageList(value!);
                               controller.tooglePackageListLoading(false);
+                              pageController.tooglePackageList(value);
+                              pageController.tooglePackageListLoading(false);
                         });
                         Get.back();
                       },

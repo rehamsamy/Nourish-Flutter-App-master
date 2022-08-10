@@ -19,7 +19,7 @@ class HomeScreenController extends GetxController {
   List<PackageItem> homeFilterPackagesList=[];
    String  packageFilterType='weakly';
    bool filterSelected=false;
-   bool packageLoading=false;
+   bool packageLoading=true;
 
   @override
   void onInit() async {
