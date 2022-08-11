@@ -152,19 +152,19 @@ class PackageMealsController extends GetxController {
   selectDay(String day) {
     currentDay = day;
 
-      selectedDays1[day] = {
-        ( extraLunchPrice==null||extraLunchPrice==0)?null:'lunch': '',
-        ( extraBreakfastPrice==null||extraBreakfastPrice==0)?null:'breakfast': '',
-        ( extraDinnerPrice==null||extraDinnerPrice==0)?null:'dinner': '',
-       ( extraSnacksPrice==null||extraSnacksPrice==0)?null:'snack': '',
-      };
+      // selectedDays1[day] = {
+      //   ( extraLunchPrice==null||extraLunchPrice==0)?null:'lunch': '',
+      //   ( extraBreakfastPrice==null||extraBreakfastPrice==0)?null:'breakfast': '',
+      //   ( extraDinnerPrice==null||extraDinnerPrice==0)?null:'dinner': '',
+      //  ( extraSnacksPrice==null||extraSnacksPrice==0)?null:'snack': '',
+      // };
 
-    // selectedDays1[day] = {
-    //   'breakfast': '',
-    //   'lunch': '',
-    //   'dinner': '',
-    //   'snack': '',
-    // };
+    selectedDays1[day] = {
+      'breakfast': '',
+      'lunch': '',
+      'dinner': '',
+      'snack': '',
+    };
     update();
   }
 }
