@@ -54,22 +54,22 @@ class AddressApis {
   Future<List<AddressItem>?> getAddress() async {
     List<AddressItem>? list = [];
     final String? token = SharedPrefService.getToken() ?? '';
+    Get.log('token is   ===>'+token.toString());
     final request = NetworkRequest(
         type: NetworkRequestType.GET,
         path: 'getAddresses',
         data: const NetworkRequestBody.json({}),
-        headers: {'Authorization': 'Bearer $token'});
+        headers: {'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NjAxMjEwMzIsImV4cCI6MTY2MDIwNzQzMiwibmJmIjoxNjYwMTIxMDMyLCJqdGkiOiJwaHJJMkV5VHE5WHMwUmNlIiwic3ViIjo0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.emlzw52RmIiN7egV8WTpzap1XKy0o7zo5XaYzm8qWss'}
+        );
     final response = await networkService.execute(
       request,
       AddressModel
           .fromJson, // <- Function to convert API response to your model
     );
-    Get.log('ccccccc  3' + response.toString());
     response.maybeWhen(
         ok: (response) {
           AddressModel model = response as AddressModel;
           list = model.data;
-          Get.log('ccccccc  3' + (list?.length.toString()).toString());
         },
         orElse: () {});
     return list;

@@ -45,8 +45,9 @@ class MealsSummeryCard extends GetView<PackageCartController> {
                 if (controller.selectedMealsProductsData.containsKey(controller.currentDay))
                   Text(
                     (controller.selectedMealsProductsData[controller.currentDay])?.keys
-                        .elementAt(index) ??
-                        'not found',
+                        .elementAt(index)??'' ,
+                        //?? null,
+                       // 'not found',
                     style: Get.textTheme.bodyText1,
                   )
                 else

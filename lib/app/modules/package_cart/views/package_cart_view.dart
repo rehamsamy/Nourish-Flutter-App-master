@@ -15,16 +15,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 class PackageCartView extends GetView<PackageCartController> {
   PackageMealsController packageMealsController = Get.find();
   List<String> mealsKeys=[];
+  Map<String,Map> newMeals={};
   @override
   Widget build(BuildContext context) {
-    // mealsKeys=controller.selectedMealsProductsData[controller.currentDay]
-    //     ?.keys;
-    controller.selectedMealsProductsData[controller.currentDay]?.forEach((key, value) {
-      Get.log('data ===>'+value.toString()+' kkk   '+key.toString());
-      if(value!=null){
-        mealsKeys.add(key);
-      }
-    });
     Get.log('data ===>'+mealsKeys.toString());
     int? total = controller.total;
     return Scaffold(

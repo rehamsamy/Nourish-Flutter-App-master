@@ -32,9 +32,6 @@ class PackageMealsController extends GetxController {
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
     selectedDays = map['selectedDays'];
-    Get.log('SELECTED DAYS ' +
-        selectedDays.keys.toString() +
-        selectedDays.toString());
     currentDay = selectedDays.keys.first;
     selectedDays1 = {};
     extraDinnerPrice =
@@ -60,6 +57,12 @@ class PackageMealsController extends GetxController {
     snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 1;
     _newMealsList = dinnersList;
     super.onInit();
+
+    Get.log('SELECTED DAYS ' +
+        extraDinnerPrice.toString() +' dinner '+
+        extraSnacksPrice.toString()+' snack  '+
+        extraBreakfastPrice.toString() +'  break  '+
+        extraLunchPrice.toString() +' lunch ');
   }
 
   addMeal(String meal) {
@@ -148,12 +151,20 @@ class PackageMealsController extends GetxController {
 
   selectDay(String day) {
     currentDay = day;
-    selectedDays1[day] = {
-      'breakfast': '',
-      'lunch': '',
-      'dinner': '',
-      'snack': '',
-    };
+
+      selectedDays1[day] = {
+        ( extraLunchPrice==null||extraLunchPrice==0)?null:'lunch': '',
+        ( extraBreakfastPrice==null||extraBreakfastPrice==0)?null:'breakfast': '',
+        ( extraDinnerPrice==null||extraDinnerPrice==0)?null:'dinner': '',
+       ( extraSnacksPrice==null||extraSnacksPrice==0)?null:'snack': '',
+      };
+
+    // selectedDays1[day] = {
+    //   'breakfast': '',
+    //   'lunch': '',
+    //   'dinner': '',
+    //   'snack': '',
+    // };
     update();
   }
 }

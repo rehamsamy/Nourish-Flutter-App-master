@@ -28,7 +28,7 @@ class PackageCartController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    currentDay = packageMealsController.selectedDays1.keys.first;
+    currentDay = packageMealsController.selectedDays1.keys.first??'';
     selectedMealsProductsData=packageMealsController.selectedDays1;
     AnalyticsService.instance.logEvent("Cart_View");
     total = args['total'] as int;
