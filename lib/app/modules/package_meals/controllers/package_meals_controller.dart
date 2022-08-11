@@ -25,7 +25,7 @@ class PackageMealsController extends GetxController {
   List<MealModel>? dinnersList;
   List<MealModel>? snacksList;
   List<MealModel>? _newMealsList;
-  String currentDay = "";
+  String currentDay = "sun";
   String? selectedMeal;
   int? packagePrice;
   @override
