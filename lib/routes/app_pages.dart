@@ -1,6 +1,5 @@
 import 'package:get/get.dart';
 
-import 'package:nourish_sa/app/data/services/shared_pref.dart';
 import 'package:nourish_sa/app/modules/branch_select/bindings/branch_select_binding.dart';
 import 'package:nourish_sa/app/modules/branch_select/views/branch_select_view.dart';
 import 'package:nourish_sa/app/modules/package_cart/bindings/package_cart_binding.dart';
@@ -54,8 +53,6 @@ import '../app/modules/profile/bindings/profile_binding.dart';
 import '../app/modules/profile/views/profile_view.dart';
 import '../app/modules/search/bindings/search_binding.dart';
 import '../app/modules/search/views/search_view.dart';
-import '../app/modules/splash/bindings/splash_binding.dart';
-import '../app/modules/splash/views/splash_view.dart';
 import '../app/modules/subscription_details/bindings/subscription_details_binding.dart';
 import '../app/modules/subscription_details/views/subscription_details_view.dart';
 import '../app/modules/subscription_status/bindings/subscription_status_binding.dart';
@@ -68,16 +65,12 @@ part 'app_routes.dart';
 class AppPages {
   AppPages._();
   static const INITIAL = Routes.SPLASH;
-  static String token = SharedPrefService.getToken() ?? '';
 
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () {
-        Get.log('vv   0  ' + token.toString());
-        return token == "" ? const SplashView() : const HomePageView();
-      },
-      binding: token == "" ? SplashBinding() : HomePageBinding(),
+      page: () => const HomePageView(),
+      binding: HomePageBinding(),
     ),
     GetPage(
       name: _Paths.ON_BOARDING,

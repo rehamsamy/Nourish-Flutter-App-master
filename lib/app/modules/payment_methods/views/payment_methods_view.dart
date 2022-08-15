@@ -16,6 +16,7 @@ import 'package:nourish_sa/app/modules/payment_methods/views/widgets/payment_met
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/routes/app_pages.dart';
 
+import '../../../data/models/package_detail_model.dart';
 import '../../branch_select/controllers/branch_select_controller.dart';
 import '../controllers/payment_methods_controller.dart';
 
@@ -134,13 +135,19 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                             DaysTimeController.selectedBranchPeriodId ?? 1,
                         selectedDays: PackageMealsController.selectedDays,
                       );
-                      if (orderModel?.data != null) {
-                        Get.snackbar('Add Order', orderModel?.data?.msg ?? '');
+                      if (orderModel?.data == null) {
                         Get.offNamedUntil(
-                            Routes.SUCCESS_ORDER, (route) => route.isFirst);
-                      } else {
-                        Get.snackbar('Add Order', orderModel?.message ?? '');
-                      }
+                            Routes.SUCCESS_ORDER, (route) => route.isFirst,
+                            arguments: {
+                              'addOrderModel': orderModel ?? AddOrderModel(),
+                              'packageDetailModel':
+                                  PackageDetailsView.packageDetailModel ??
+                                      PackageDetailModel(),
+                              'selectedPlanType':
+                                  PackageDetailsController.selectedPlanType,
+                              'startDate': DaysTimeController.startDate,
+                            });
+                      } else {}
                     },
                   ),
                 ),

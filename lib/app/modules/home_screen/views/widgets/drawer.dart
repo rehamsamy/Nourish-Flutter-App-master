@@ -46,8 +46,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                           radius: 30.w,
                           backgroundColor: whiteColor,
                           child: CustomNetworkImage(
-                            imageUrl: controller.profileModel?.image ??
-                                'https://1.bp.blogspot.com/-3BIIq_YpmzY/YCvbdCUbXWI/AAAAAAAAKMU/aU7Pr7wLVicrrAgzon0EtGxTxtteKzjqACLcBGAsYHQ/s16000/%25D8%25B5%25D9%2588%25D8%25B1-%25D8%25A8%25D9%2586%25D8%25A7%25D8%25AA-%25D8%25AC%25D9%258A%25D8%25B1%25D9%2584%25D9%258A-13.webp',
+                            imageUrl: controller.profileModel?.image ?? '',
                             height: 24.h,
                             width: 24.w,
                             radius: 10,
@@ -66,6 +65,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                         children: [
                           Text(
                             controller.profileModel?.name ?? 'Login ',
+                            textAlign: TextAlign.start,
                             style: Get.textTheme.headline1!
                                 .copyWith(color: whiteColor),
                           ),
@@ -134,24 +134,29 @@ class MainDrawer extends GetView<HomeScreenController> {
                       Get.find<HomePageController>().currentIndex.value = 1;
                     },
                   ),
-                  DrawerItem(
-                    name: LocalKeys.kMySubscription.tr,
-                    icon: Assets.kCheckList,
-                    onTap: () {
-                      controller.scaffoldKey!.currentState!.openEndDrawer();
-
-                      Get.toNamed(Routes.SUBSCRIPTION);
-                    },
-                  ),
-                  DrawerItem(
-                    name: LocalKeys.kAddressBook.tr,
-                    icon: Assets.kLocation,
-                    onTap: () {
-                      Get.toNamed(Routes.ADD_ADDRESS);
-                      // Get.toNamed(Routes.DELIVERY_ADDRESSES);
-                      controller.scaffoldKey!.currentState!.openEndDrawer();
-                    },
-                  ),
+                  controller.profileModel?.id != null
+                      ? DrawerItem(
+                          name: LocalKeys.kMySubscription.tr,
+                          icon: Assets.kCheckList,
+                          onTap: () {
+                            controller.scaffoldKey!.currentState!
+                                .openEndDrawer();
+                            Get.toNamed(Routes.SUBSCRIPTION);
+                          },
+                        )
+                      : const SizedBox(),
+                  controller.profileModel?.id != null
+                      ? DrawerItem(
+                          name: LocalKeys.kAddressBook.tr,
+                          icon: Assets.kLocation,
+                          onTap: () {
+                            Get.toNamed(Routes.ADD_ADDRESS);
+                            // Get.toNamed(Routes.DELIVERY_ADDRESSES);
+                            controller.scaffoldKey!.currentState!
+                                .openEndDrawer();
+                          },
+                        )
+                      : const SizedBox(),
                   DrawerItem(
                     name: LocalKeys.kHelpCenter.tr,
                     icon: Assets.kQuestionHelp,
@@ -217,21 +222,24 @@ class MainDrawer extends GetView<HomeScreenController> {
                       ),
                     ),
                   ),
-                  DrawerItem(
-                    name: LocalKeys.kLogout.tr,
-                    icon: Assets.kLogOut,
-                    onTap: () async {
-                      LoginModel model =
-                          await AuthApis().logoutUser() as LoginModel;
-                      String mes = model.data?.msg ?? '';
-                      Get.log('log mess   => ' + mes);
-                      Get.snackbar("Logout", model.data?.msg ?? '');
-                      SharedPrefService.removeToken();
-                      Intercom.instance.logout();
-                      Get.offAllNamed(Routes.LOGIN);
-                      controller.scaffoldKey!.currentState!.openEndDrawer();
-                    },
-                  ),
+                  controller.profileModel?.id != null
+                      ? DrawerItem(
+                          name: LocalKeys.kLogout.tr,
+                          icon: Assets.kLogOut,
+                          onTap: () async {
+                            LoginModel model =
+                                await AuthApis().logoutUser() as LoginModel;
+                            String mes = model.data?.msg ?? '';
+                            Get.log('log mess   => ' + mes);
+                            Get.snackbar("Logout", model.data?.msg ?? '');
+                            SharedPrefService.removeToken();
+                            Intercom.instance.logout();
+                            Get.offAllNamed(Routes.LOGIN);
+                            controller.scaffoldKey!.currentState!
+                                .openEndDrawer();
+                          },
+                        )
+                      : const SizedBox(),
                 ],
               ),
             ),

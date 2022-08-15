@@ -13,12 +13,13 @@ class OrderWaitingNumberDialog extends StatelessWidget {
       {required this.packageName,
       required this.startDate,
       required this.packageType,
+      required this.onBranchPress,
       Key? key})
       : super(key: key);
   final String packageName;
   final String startDate;
   final String packageType;
-
+  final Function onBranchPress;
   @override
   Widget build(BuildContext context) {
     return AlertDialog(
@@ -57,8 +58,8 @@ class OrderWaitingNumberDialog extends StatelessWidget {
               ),
             ),
             CustomButton(
-              title:  LocalKeys.kSwitchToBranch.tr,
-              onPress: () {},
+              title: LocalKeys.kSwitchToBranch.tr,
+              onPress: onBranchPress,
             ),
             Padding(
               padding: EdgeInsets.only(top: 24.h, bottom: 18.h),

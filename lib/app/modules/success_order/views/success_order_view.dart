@@ -64,12 +64,6 @@ class SuccessOrderView extends GetView<SuccessOrderController> {
                           style: Get.textTheme.bodyText1!
                               .copyWith(color: primaryColor),
                         ),
-                        Text(
-                          "${LocalKeys.ksubscriptionno.tr}: 250",
-                          style: Get.textTheme.caption!.copyWith(
-                            color: blueGreyColor,
-                          ),
-                        ),
                       ],
                     ),
                     Container(
@@ -88,20 +82,20 @@ class SuccessOrderView extends GetView<SuccessOrderController> {
                       ),
                     ),
                     Text(
-                      "Package Name Here",
+                      controller.packageDetailModel.data?.name ?? "",
                       style: Get.textTheme.bodyText1,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 10.h, bottom: 8.h),
                       child: Text(
-                        "${LocalKeys.kStartDate.tr}: 12/2/2022",
+                        "${LocalKeys.kStartDate.tr}: ${controller.startDate}",
                         style: Get.textTheme.bodyText1!.copyWith(
                           fontSize: 14.sp,
                         ),
                       ),
                     ),
                     Text(
-                      LocalKeys.kDelivery.tr,
+                      controller.selectedPlanType,
                       style: Get.textTheme.bodyText1!.copyWith(
                         fontSize: 14.sp,
                       ),
@@ -121,7 +115,7 @@ class SuccessOrderView extends GetView<SuccessOrderController> {
               CustomButton(
                 title: LocalKeys.kBackHome.tr,
                 onPress: () {
-                  Get.until((route) => Get.currentRoute == Routes.HOME_PAGE);
+                  Get.offAllNamed(Routes.HOME_SCREEN);
                 },
               ),
             ],

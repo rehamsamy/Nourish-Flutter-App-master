@@ -26,11 +26,13 @@ class PackageCard extends StatelessWidget {
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(14.r),
         image: DecorationImage(
-          fit: BoxFit.fill,
-          image: CachedNetworkImageProvider(
-            image,
-          ),
-        ),
+            fit: BoxFit.fill,
+            image: CachedNetworkImageProvider(
+              image,
+            ),
+            filterQuality: FilterQuality.high,
+            colorFilter: ColorFilter.mode(
+                Colors.black.withOpacity(.2), BlendMode.darken)),
       ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -44,13 +46,12 @@ class PackageCard extends StatelessWidget {
             ),
           ),
           CustomButton(
-            title: LocalKeys.kDetails.tr,
-            onPress: onTap,
-            height: 48.h,
-            width: 100.w,
-            style: Get.textTheme.caption!.copyWith(color: blackColor),
-            color: const Color.fromARGB(255, 244, 206, 100),
-          ),
+              title: LocalKeys.kDetails.tr,
+              onPress: onTap,
+              height: 48.h,
+              width: 100.w,
+              style: Get.textTheme.caption!.copyWith(color: whiteColor),
+              color: const Color.fromARGB(255, 255, 187, 1)),
         ],
       ),
     );

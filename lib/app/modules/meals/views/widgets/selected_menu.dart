@@ -37,41 +37,42 @@ class SelectedMenu extends StatelessWidget {
           color: color,
           borderRadius: BorderRadius.circular(5.r),
         ),
-        child: Stack(
+        child: Column(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(5.r),
-              child: CachedNetworkImage(
-                imageUrl: image,
-                fit: BoxFit.fitWidth,
-                width: width,
-                errorWidget: (context, url, error) => Container(
+            Expanded(
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(5.r),
+                child: CachedNetworkImage(
+                  imageUrl: image,
+                  fit: BoxFit.contain,
+                  height: height - 20,
                   width: width,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(5.r),
+                  errorWidget: (context, url, error) => Container(
+                    width: width,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(5.r),
+                    ),
+                    child: const CupertinoActivityIndicator(),
                   ),
-                  child: const CupertinoActivityIndicator(),
                 ),
               ),
             ),
-            SizedBox(
-              height: 5.h,
-            ),
             Column(
               children: [
-                const Spacer(),
-                Padding(
-                  padding: const EdgeInsets.only(top: 4.0),
-                  child: Container(
-                    alignment: Alignment.bottomCenter,
-                    //height: height / 3,
-                    color: Colors.black26,
-                    padding: EdgeInsets.only(bottom: 5.h,),
-                    child: Text(
-                      title,
-                      style: Theme.of(context).textTheme.button!.copyWith(
-                          fontSize: 14.sp, fontWeight: FontWeight.bold),
-                    ),
+                Container(
+                  alignment: Alignment.bottomCenter,
+                  //height: height / 3,
+
+                  padding: EdgeInsets.only(
+                    top: 3.h,
+                    bottom: 3.h,
+                  ),
+                  child: Text(
+                    title,
+                    style: Theme.of(context)
+                        .textTheme
+                        .button!
+                        .copyWith(fontSize: 14.sp, fontWeight: FontWeight.bold),
                   ),
                 ),
               ],

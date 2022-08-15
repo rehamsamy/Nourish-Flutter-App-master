@@ -16,10 +16,17 @@ class BranchSelectController extends GetxController {
   Position? location;
   var mapMarkers = <Marker>[];
   static int branchId = 1;
+  Future<List<BranchItem>>? getAllBranches;
   GoogleMapController? mapController;
   void setBranch(int id) {
     branchId = id;
     update();
+  }
+
+  @override
+  void onInit() {
+    getAllBranches = getBranches(false);
+    super.onInit();
   }
 
   var selectedPlanType = "";
@@ -28,7 +35,7 @@ class BranchSelectController extends GetxController {
     ByteData data = await rootBundle.load(path);
 
     ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
-        targetWidth: width);
+        targetWidth: width * 2, targetHeight: width * 2);
 
     ui.FrameInfo fi = await codec.getNextFrame();
 
@@ -37,22 +44,24 @@ class BranchSelectController extends GetxController {
         .asUint8List();
   }
 
-  Future<List<BranchItem>> getBranches() async {
+  Future<List<BranchItem>> getBranches(bool getAll) async {
     var branchIcon =
-        await getBytesFromAsset('assets/images/resturntIcon.PNG', 100);
+        await getBytesFromAsset('assets/images/restaurant_location.png', 100);
     selectedPlanType = PackageDetailsController.selectedPlanType;
     location = await PostionLocator.determinePosition();
-    branches = (await BranchApis().getBranches().then((value) async {
-      value = value
-          ?.where((element) =>
-              element.coverageArea! >
-              calculateDistance(element.lat, element.lng))
-          .toList();
-      if (value?.isEmpty ?? false || selectedPlanType == "pickup") {
-        value = await BranchApis().getBranches();
-      }
-      return value;
-    }))!;
+    if (!getAll || selectedPlanType == "delivery") {
+      branches = (await BranchApis().getBranches().then((value) async {
+        value = value
+            ?.where((element) =>
+                element.coverageArea! <=
+                calculateDistance(element.lat, element.lng))
+            .toList();
+
+        return value;
+      }))!;
+    } else {
+      branches = (await BranchApis().getBranches())!;
+    }
     mapMarkers.addAll(branches.map((e) {
       return Marker(
           icon: BitmapDescriptor.fromBytes(branchIcon),

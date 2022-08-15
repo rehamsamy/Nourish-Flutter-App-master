@@ -39,26 +39,36 @@ class BranchSelectCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    Row(
                       children: [
-                        Text(
-                          title,
-                          style: TextStyle(
-                              fontSize: 16,
-                              color: selected ? primaryColor : Colors.black,
-                              fontWeight: selected
-                                  ? FontWeight.bold
-                                  : FontWeight.normal),
+                        Image.asset(
+                          'assets/images/restaurant_icon.png',
+                          height: 60.h,
+                          width: 60.w,
                         ),
-                        Text(
-                          address,
-                          style: TextStyle(
-                              fontSize: 14,
-                              color: selected ? primaryColor : Colors.black,
-                              fontWeight: selected
-                                  ? FontWeight.bold
-                                  : FontWeight.normal),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              title,
+                              style: TextStyle(
+                                  fontSize: 16,
+                                  color: selected ? primaryColor : Colors.black,
+                                  fontWeight: selected
+                                      ? FontWeight.bold
+                                      : FontWeight.normal),
+                            ),
+                            Text(
+                              address,
+                              overflow: TextOverflow.ellipsis,
+                              style: TextStyle(
+                                  fontSize: 14,
+                                  color: selected ? primaryColor : Colors.black,
+                                  fontWeight: selected
+                                      ? FontWeight.bold
+                                      : FontWeight.normal),
+                            ),
+                          ],
                         ),
                       ],
                     ),
