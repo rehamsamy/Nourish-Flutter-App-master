@@ -17,19 +17,19 @@ class PackageCartController extends GetxController {
   List<String> daysList = [];
   int isMealSelected = 0;
   int total = 0;
-  String currentDay ='';
+  String currentDay = '';
   List<String>? productsList;
   List<String>? dinnerProductsList;
   List<String>? breakfastProductsList;
   List<String>? lunchProductsList;
-  Map<String,Map> selectedMealsProductsData ={};
-  PackageMealsController packageMealsController=Get.find();
+  Map<String, Map> selectedMealsProductsData = {};
+  PackageMealsController packageMealsController = Get.find();
   Map<String, dynamic> decoded = {};
   @override
   void onInit() {
     super.onInit();
-    currentDay = packageMealsController.selectedDays1.keys.first??'';
-    selectedMealsProductsData=packageMealsController.selectedDays1;
+    currentDay = packageMealsController.selectedDays1.keys.first;
+    selectedMealsProductsData = packageMealsController.selectedDays1;
     AnalyticsService.instance.logEvent("Cart_View");
     total = args['total'] as int;
     detailModel = PackageDetailsView.packageDetailModel;
@@ -44,11 +44,10 @@ class PackageCartController extends GetxController {
     return _newMealsList;
   }
 
-
   changeMealSelected(int index, String day) {
     isMealSelected = index;
-    currentDay=day;
-    Get.log('current date is  '+currentDay);
+    currentDay = day;
+    Get.log('current date is  ' + currentDay);
     update();
   }
 
@@ -69,5 +68,4 @@ class PackageCartController extends GetxController {
 
     update();
   }
-
 }

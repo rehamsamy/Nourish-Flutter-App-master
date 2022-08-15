@@ -1,5 +1,7 @@
 import 'dart:math';
-
+import 'dart:typed_data';
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -22,21 +24,45 @@ class BranchSelectController extends GetxController {
 
   var selectedPlanType = "";
 
+  Future<Uint8List> getBytesFromAsset(String path, int width) async {
+    ByteData data = await rootBundle.load(path);
+
+    ui.Codec codec = await ui.instantiateImageCodec(data.buffer.asUint8List(),
+        targetWidth: width);
+
+    ui.FrameInfo fi = await codec.getNextFrame();
+
+    return (await fi.image.toByteData(format: ui.ImageByteFormat.png))!
+        .buffer
+        .asUint8List();
+  }
+
   Future<List<BranchItem>> getBranches() async {
+    var branchIcon =
+        await getBytesFromAsset('assets/images/resturntIcon.PNG', 100);
     selectedPlanType = PackageDetailsController.selectedPlanType;
     location = await PostionLocator.determinePosition();
-    branches = (await BranchApis().getBranches().then((value) {
-      return value
+    branches = (await BranchApis().getBranches().then((value) async {
+      value = value
           ?.where((element) =>
-              element.coverageArea! <
+              element.coverageArea! >
               calculateDistance(element.lat, element.lng))
           .toList();
+      if (value?.isEmpty ?? false || selectedPlanType == "pickup") {
+        value = await BranchApis().getBranches();
+      }
+      return value;
     }))!;
-    mapMarkers.addAll(branches
-        .map((e) => Marker(
-            markerId: MarkerId(e.id.toString()),
-            position: LatLng(e.lat ?? 0, e.lng ?? 0)))
-        .toList());
+    mapMarkers.addAll(branches.map((e) {
+      return Marker(
+          icon: BitmapDescriptor.fromBytes(branchIcon),
+          markerId: MarkerId(e.id.toString()),
+          infoWindow: InfoWindow(
+            title: e.name,
+            snippet: e.address.toString(),
+          ),
+          position: LatLng(e.lat ?? 0, e.lng ?? 0));
+    }).toList());
     update();
     return branches;
   }
