@@ -15,8 +15,13 @@ class BranchSelectController extends GetxController {
   List<BranchItem> branches = [];
   Position? location;
   var mapMarkers = <Marker>[];
+  Marker _selectedMarker = const Marker(
+    markerId: MarkerId('selected'),
+    position: LatLng(0, 0),
+    infoWindow: InfoWindow(title: 'Selected'),
+  );
   static int branchId = 1;
-  Future<List<BranchItem>>? getAllBranches;
+  Future<List<BranchItem>?>? getAllBranches;
   GoogleMapController? mapController;
   void setBranch(int id) {
     branchId = id;
@@ -44,16 +49,18 @@ class BranchSelectController extends GetxController {
         .asUint8List();
   }
 
-  Future<List<BranchItem>> getBranches(bool getAll) async {
+  Future<List<BranchItem>?> getBranches(bool getAll) async {
     var branchIcon =
         await getBytesFromAsset('assets/images/restaurant_location.png', 100);
     selectedPlanType = PackageDetailsController.selectedPlanType;
     location = await PostionLocator.determinePosition();
-    if (!getAll || selectedPlanType == "delivery") {
+    if (getAll) {
+      branches = (await BranchApis().getBranches())!;
+    } else if (selectedPlanType == "delivery") {
       branches = (await BranchApis().getBranches().then((value) async {
         value = value
             ?.where((element) =>
-                element.coverageArea! <=
+                element.coverageArea! >=
                 calculateDistance(element.lat, element.lng))
             .toList();
 
@@ -62,6 +69,11 @@ class BranchSelectController extends GetxController {
     } else {
       branches = (await BranchApis().getBranches())!;
     }
+    _selectedMarker = Marker(
+        markerId: const MarkerId('selected'),
+        position: LatLng(location?.latitude ?? 0, location?.longitude ?? 0),
+        infoWindow: const InfoWindow(title: 'Your Location'));
+
     mapMarkers.addAll(branches.map((e) {
       return Marker(
           icon: BitmapDescriptor.fromBytes(branchIcon),
@@ -72,6 +84,7 @@ class BranchSelectController extends GetxController {
           ),
           position: LatLng(e.lat ?? 0, e.lng ?? 0));
     }).toList());
+    mapMarkers.add(_selectedMarker);
     update();
     return branches;
   }
@@ -88,6 +101,18 @@ class BranchSelectController extends GetxController {
 
   Future onMapCreated(GoogleMapController controller) async {
     mapController = controller;
+    update();
+  }
+
+  void onMapTap(LatLng position) {
+    mapController?.animateCamera(CameraUpdate.newCameraPosition(
+        CameraPosition(target: position, zoom: 15)));
+    mapMarkers.remove(_selectedMarker);
+    _selectedMarker = Marker(
+        markerId: const MarkerId('selected'),
+        position: position,
+        infoWindow: const InfoWindow(title: 'Selected'));
+    mapMarkers.add(_selectedMarker);
 
     update();
   }

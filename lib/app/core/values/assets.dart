@@ -82,9 +82,8 @@ class Assets {
   static const String kPlaceholder = _kImages + "placeholder.png";
   static const String kNotification = _kImages + "notification.svg";
   static const String kEmailEnvelopeIcon = _kImages + "email_envelope_icon.svg";
-    static const String kRestaurantIcon = _kImages + "restaurant_icon.svg";
+  static const String kRestaurantIcon = _kImages + "restaurant_icon.svg";
   static const String kSandSandwatchIcon = _kImages + "sand_sandwatch_icon.svg";
   static const String kWeb = _kImages + "web.svg";
-  static const String images = _kImages + "images.jpg";
-
+  static const String images = _kImages + "images.png";
 }

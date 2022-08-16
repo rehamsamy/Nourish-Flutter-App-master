@@ -29,8 +29,8 @@ class BranchSelectCard extends StatelessWidget {
         child: Column(
           children: [
             Container(
-                height: 140.h,
-                width: 250.w,
+                height: 160.h,
+                width: 280.w,
                 decoration: BoxDecoration(
                     color: selected ? whiteColor : greyColor.withOpacity(.7),
                     border:
@@ -39,46 +39,63 @@ class BranchSelectCard extends StatelessWidget {
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   children: [
-                    Row(
-                      children: [
-                        Image.asset(
-                          'assets/images/restaurant_icon.png',
-                          height: 60.h,
-                          width: 60.w,
-                        ),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              title,
-                              style: TextStyle(
-                                  fontSize: 16,
-                                  color: selected ? primaryColor : Colors.black,
-                                  fontWeight: selected
-                                      ? FontWeight.bold
-                                      : FontWeight.normal),
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Image.asset(
+                            'assets/images/restaurant_icon.png',
+                            height: 60.h,
+                            width: 60.w,
+                          ),
+                          Expanded(
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                const SizedBox(
+                                  height: 4,
+                                ),
+                                Expanded(
+                                  child: Text(
+                                    title,
+                                    overflow: TextOverflow.ellipsis,
+                                    style: TextStyle(
+                                        fontSize: 16,
+                                        color: selected
+                                            ? primaryColor
+                                            : Colors.black,
+                                        fontWeight: selected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal),
+                                  ),
+                                ),
+                                const SizedBox(height: 4),
+                                Expanded(
+                                  child: Text(
+                                    address,
+                                    overflow: TextOverflow.visible,
+                                    style: TextStyle(
+                                        fontSize: 14,
+                                        color: selected
+                                            ? primaryColor
+                                            : Colors.black,
+                                        fontWeight: selected
+                                            ? FontWeight.bold
+                                            : FontWeight.normal),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              address,
-                              overflow: TextOverflow.ellipsis,
-                              style: TextStyle(
-                                  fontSize: 14,
-                                  color: selected ? primaryColor : Colors.black,
-                                  fontWeight: selected
-                                      ? FontWeight.bold
-                                      : FontWeight.normal),
-                            ),
-                          ],
-                        ),
-                      ],
+                          ),
+                        ],
+                      ),
                     ),
-                    TextButton(
+                    ElevatedButton(
                       onPressed: onContinue,
                       child: Text(
                         LocalKeys.kContinue.tr,
                         style: TextStyle(
                             fontSize: 14,
-                            color: selected ? primaryColor : Colors.black,
+                            color: selected ? whiteColor : Colors.black,
                             fontWeight:
                                 selected ? FontWeight.bold : FontWeight.normal),
                       ),

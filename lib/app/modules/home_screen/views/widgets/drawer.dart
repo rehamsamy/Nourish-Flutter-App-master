@@ -46,7 +46,7 @@ class MainDrawer extends GetView<HomeScreenController> {
                           radius: 30.w,
                           backgroundColor: whiteColor,
                           child: CustomNetworkImage(
-                            imageUrl: controller.profileModel?.image ?? '',
+                            imageUrl: controller.profileModel?.image ?? '.',
                             height: 24.h,
                             width: 24.w,
                             radius: 10,

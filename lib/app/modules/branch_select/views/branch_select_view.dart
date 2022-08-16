@@ -23,6 +23,8 @@ class BranchSelectView extends GetView<BranchSelectController> {
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             controller.branches = snapshot.data!;
+            Get.log(
+                'Branches: ${controller.branches.length} -- Selected Plan ${controller.selectedPlanType}');
             return GetBuilder<BranchSelectController>(
               builder: (controller) => Stack(
                 children: [
@@ -35,8 +37,11 @@ class BranchSelectView extends GetView<BranchSelectController> {
                         trafficEnabled: false,
                         mapToolbarEnabled: false,
                         buildingsEnabled: false,
+                        myLocationEnabled: true,
                         myLocationButtonEnabled: true,
                         markers: controller.mapMarkers.toSet(),
+                        //*TODO: Add a marker for the current location
+                        onTap: controller.onMapTap,
                         initialCameraPosition: CameraPosition(
                             target: LatLng(controller.location?.latitude ?? 0,
                                 controller.location?.longitude ?? 0),
@@ -46,7 +51,7 @@ class BranchSelectView extends GetView<BranchSelectController> {
                     Positioned(
                       bottom: -1,
                       child: Container(
-                        height: context.height * .3,
+                        height: context.height * .33,
                         width: context.width,
                         decoration: const BoxDecoration(
                           color: primaryColor,
@@ -192,7 +197,7 @@ class BranchSelectView extends GetView<BranchSelectController> {
                                   "pickup";
                               controller.selectedPlanType = "pickup";
                               controller.branches =
-                                  await controller.getBranches(true);
+                                  (await controller.getBranches(true))!;
                               controller.update();
                             },
                           )),

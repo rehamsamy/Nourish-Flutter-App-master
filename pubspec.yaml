@@ -15,6 +15,7 @@ dependencies:
   card_swiper: ^2.0.1
   connectivity_plus: ^2.1.0
   cupertino_icons: ^1.0.2
+  custom_info_window: ^1.0.1
   date_time_picker: ^2.1.0
   dio: ^4.0.0
   dio_logger: ^4.0.8+8
