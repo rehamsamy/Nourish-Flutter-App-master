@@ -71,7 +71,7 @@ class CustomDropDown extends StatelessWidget {
                   e,
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
-                  style: Theme.of(context).textTheme.caption,
+                  style: Theme.of(context).textTheme.bodyMedium,
                 ),
                 value: values != null ? values![items.indexOf(e)] : e,
                 enabled: isEnabled,

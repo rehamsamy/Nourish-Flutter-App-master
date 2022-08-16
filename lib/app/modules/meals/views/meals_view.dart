@@ -67,7 +67,8 @@ class MealsView extends GetView<MealsController> {
                                   onTap: () {
                                     controller.changeSelected(index);
                                     controller.changeCategoryId(
-                                        categories?[index].id);
+                                        categories?[index].id,
+                                        categories?[index].name ?? '');
                                   },
                                   child: SelectedMenu(
                                     image: categories?[index].image ?? '',
@@ -92,11 +93,11 @@ class MealsView extends GetView<MealsController> {
                     })),
             Padding(
               padding: EdgeInsets.only(top: 26.h, bottom: 8.h),
-              child: HeadlineWithViewAll(
-                title: "Healthy Category",
-                withViewAll: false,
-                onTap: () {},
-              ),
+              child: Obx(() => HeadlineWithViewAll(
+                    title: "${controller.categoryName} Category",
+                    withViewAll: false,
+                    onTap: () {},
+                  )),
             ),
             SizedBox(
               height: 10.h,

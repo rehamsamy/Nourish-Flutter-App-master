@@ -9,7 +9,8 @@ import 'package:pin_input_text_field/pin_input_text_field.dart';
 import '../../../../../app_theme.dart';
 
 class OTPDialog extends GetView<ProfileController> {
-  const OTPDialog({Key? key}) : super(key: key);
+  const OTPDialog(this.phoneNumber, {Key? key}) : super(key: key);
+  final String phoneNumber;
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +53,7 @@ class OTPDialog extends GetView<ProfileController> {
             Padding(
               padding: EdgeInsets.symmetric(vertical: 21.5.w),
               child: Text(
-                "${LocalKeys.kSentOTPTo.tr} ${LocalKeys.kMobileNumber.tr} +1 322 322 445",
+                "${LocalKeys.kSentOTPTo.tr} ${LocalKeys.kMobileNumber.tr} $phoneNumber",
                 textAlign: TextAlign.center,
                 style: Get.textTheme.headline3,
               ),

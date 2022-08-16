@@ -87,6 +87,9 @@ class CustomInput extends StatelessWidget {
                   maxLength: maxLength,
                   decoration: InputDecoration(
                     hintText: hint,
+                    hintStyle: Theme.of(context).textTheme.caption?.copyWith(
+                          color: Theme.of(context).disabledColor,
+                        ),
                     contentPadding: EdgeInsets.symmetric(horizontal: 12.w),
                     suffixIcon: suffixIcon != null
                         ? Padding(

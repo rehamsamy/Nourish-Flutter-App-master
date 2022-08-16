@@ -10,7 +10,6 @@ import 'package:nourish_sa/app/data/models/update_profile_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/profile_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:nourish_sa/app/modules/profile/views/otp_dialog.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
@@ -135,6 +134,16 @@ class ProfileView extends GetView<ProfileController> {
                         CustomButton(
                           title: LocalKeys.kSave.tr,
                           onPress: () async {
+                            Get.dialog(Container(
+                              width: Get.width / 10,
+                              height: Get.height / 10,
+                              color: Colors.black54,
+                              child: const Center(
+                                child: CircularProgressIndicator(
+                                    color: primaryColor),
+                              ),
+                            ));
+
                             UpdateProfileModel updateModel =
                                 await ProfileApis().updateProfileInfo(
                               first_name: controller.firstName.text,
@@ -146,7 +155,9 @@ class ProfileView extends GetView<ProfileController> {
                             Get.log('updated   =>' + mes.toString());
                             // Get.snackbar("Unknown Network error",
                             //  updateModel.data?.msg ?? '');
-                            Get.dialog(const OTPDialog());
+                            //Get.dialog(OTPDialog(controller.phone.text));
+                            Get.forceAppUpdate();
+                            Get.back();
                           },
                         ),
                       ],
