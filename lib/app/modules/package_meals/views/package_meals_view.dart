@@ -51,9 +51,10 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         child: SizedBox(
                           height: 102.h,
                           width: Get.width,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                          child: ListView(
+                            scrollDirection: Axis.horizontal,
                             children: [
+                              SizedBox(width: 20,),
                               InkWell(
                                 onTap: () {
                                   controller.changeMealSelected(2, "breakfast");

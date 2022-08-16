@@ -216,7 +216,7 @@ class PackageCartView extends GetView<PackageCartController> {
                        .selectedMealsProductsData[controller.currentDay]
                         ?.keys
                         .length,
-                    //physics: NeverScrollableScrollPhysics(),
+                    physics: NeverScrollableScrollPhysics(),
                     shrinkWrap: true,
                     itemBuilder: (context, inedx) {
                       return MealsSummeryCard(inedx);

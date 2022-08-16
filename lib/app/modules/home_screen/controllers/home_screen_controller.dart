@@ -4,6 +4,7 @@ import 'package:nourish_sa/app/data/models/home_package_model.dart';
 import 'package:nourish_sa/app/data/models/profile_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/home_apis.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/profile_apis.dart';
+import 'package:nourish_sa/app/modules/home_screen/views/home_screen_view.dart';
 import '../../../data/services/analytics_service.dart';
 
 class HomeScreenController extends GetxController {
@@ -53,11 +54,11 @@ class HomeScreenController extends GetxController {
   void getHomePackagesList() {
     HomeApis().getHomePackages().then((value) {
       homeFilterPackagesList=value??[];
+      HomeScreenView.homePackagesList=value??[];
       packageLoading=false;
       update();
     }
     );
 
   }
-  //
 }

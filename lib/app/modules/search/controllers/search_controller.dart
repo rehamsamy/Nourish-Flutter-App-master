@@ -24,7 +24,8 @@ class SearchController extends GetxController {
       return;
     }
 
-   searchList= packagesList?.where((element) => ((element.name) as String).toLowerCase().contains(text.toLowerCase())).toList();
+   searchList= packagesList?.where((element) => ((element.name) as String)
+       .toLowerCase().contains(text.toLowerCase())).toList();
 
     // packagesList?.forEach((package) {
     //   if (package.name!.contains(text)) {
