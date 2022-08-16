@@ -12,7 +12,7 @@ class PackageCaleroiesDetails extends GetView<PackageDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.customPackageData != null
+    return controller.packageDetailModel != null
         ? Container(
             width: 358.w,
             margin: EdgeInsets.only(bottom: 30.h),
@@ -21,132 +21,146 @@ class PackageCaleroiesDetails extends GetView<PackageDetailsController> {
               borderRadius: BorderRadius.circular(5.r),
             ),
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-            child: Wrap(
+            child:
+            Wrap(
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
               direction: Axis.horizontal,
               runAlignment: WrapAlignment.center,
-              spacing: 10.w,
-              runSpacing: 10.h,
-              children: [
-                controller.calories != 0
-                    ? SizedBox(
-                        width: 160.w,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              Assets.kBookmark,
-                              width: 9.w,
-                              height: 11.h,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 6.w,
-                            ),
-                            Expanded(
-                              child: Text(
-                                controller.calories.toString() + "cal",
-                                style: Get.textTheme.button!.copyWith(
-                                  fontSize: 12.sp,
-                                  height: 1,
-                                ),
-                                textAlign: TextAlign.start,
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                controller.carbs != 0
-                    ? SizedBox(
-                        width: 160.w,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              Assets.kBookmark,
-                              width: 9.w,
-                              height: 11.h,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 6.w,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "${controller.carbs} carbs",
-                                style: Get.textTheme.button!.copyWith(
-                                  fontSize: 12.sp,
-                                  height: 1,
+              spacing: 20.w,
+              runSpacing: 20.h,
+              children:
+              List.generate(controller.packageDetailModel?.data?.descriptions?.length??0, (index) =>
+                              Expanded(
+                                child: Text(
+                                  controller.packageDetailModel?.data?.descriptions?[index].desc??'',
+                                  style: Get.textTheme.button!.copyWith(
+                                    fontSize: 12.sp,
+                                    height: 1,
+                                  ),
+                                  textAlign: TextAlign.start,
                                 ),
                               ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                controller.fat != 0
-                    ? SizedBox(
-                        width: 160.w,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              Assets.kBookmark,
-                              width: 9.w,
-                              height: 11.h,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 6.w,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "${controller.fat} Fat",
-                                style: Get.textTheme.button!.copyWith(
-                                  fontSize: 12.sp,
-                                  height: 1,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-                controller.protein != 0
-                    ? SizedBox(
-                        width: 160.w,
-                        child: Row(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            SvgPicture.asset(
-                              Assets.kBookmark,
-                              width: 9.w,
-                              height: 11.h,
-                              color: Colors.white,
-                            ),
-                            SizedBox(
-                              width: 6.w,
-                            ),
-                            Expanded(
-                              child: Text(
-                                "${controller.protein} protein",
-                                style: Get.textTheme.button!.copyWith(
-                                  fontSize: 12.sp,
-                                  height: 1,
-                                ),
-                              ),
-                            ),
-                          ],
-                        ),
-                      )
-                    : const SizedBox.shrink(),
-              ],
+                        )
+              // children: [
+              //   controller.packageDetailModel?.data?.descriptions?[0] != 0
+              //       ? SizedBox(
+              //           width: 160.w,
+              //           child: Row(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisSize: MainAxisSize.min,
+              //             children: [
+              //               SvgPicture.asset(
+              //                 Assets.kBookmark,
+              //                 width: 9.w,
+              //                 height: 11.h,
+              //                 color: Colors.white,
+              //               ),
+              //               SizedBox(
+              //                 width: 6.w,
+              //               ),
+              //               Expanded(
+              //                 child: Text(
+              //                   controller.packageDetailModel?.data?.descriptions?[0].desc??'',
+              //                   style: Get.textTheme.button!.copyWith(
+              //                     fontSize: 12.sp,
+              //                     height: 1,
+              //                   ),
+              //                   textAlign: TextAlign.start,
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         )
+              //       : const SizedBox.shrink(),
+              //   controller.packageDetailModel?.data?.descriptions?[1] !=null
+              //       ? SizedBox(
+              //           width: 160.w,
+              //           child: Row(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisSize: MainAxisSize.min,
+              //             children: [
+              //               SvgPicture.asset(
+              //                 Assets.kBookmark,
+              //                 width: 9.w,
+              //                 height: 11.h,
+              //                 color: Colors.white,
+              //               ),
+              //               SizedBox(
+              //                 width: 6.w,
+              //               ),
+              //               Expanded(
+              //                 child: Text(
+              //                   "${controller.packageDetailModel?.data?.descriptions?[1].desc??''}",
+              //                   style: Get.textTheme.button!.copyWith(
+              //                     fontSize: 12.sp,
+              //                     height: 1,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         )
+              //       : const SizedBox.shrink(),
+              //   controller.packageDetailModel?.data?.descriptions?[2] !=null
+              //       ? SizedBox(
+              //           width: 160.w,
+              //           child: Row(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisSize: MainAxisSize.min,
+              //             children: [
+              //               SvgPicture.asset(
+              //                 Assets.kBookmark,
+              //                 width: 9.w,
+              //                 height: 11.h,
+              //                 color: Colors.white,
+              //               ),
+              //               SizedBox(
+              //                 width: 6.w,
+              //               ),
+              //               Expanded(
+              //                 child: Text(
+              //                   "${controller.packageDetailModel?.data?.descriptions?[2].desc??''}",
+              //                   style: Get.textTheme.button!.copyWith(
+              //                     fontSize: 12.sp,
+              //                     height: 1,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         )
+              //       : const SizedBox.shrink(),
+              //   controller.packageDetailModel?.data?.descriptions?[3] != null
+              //       ? SizedBox(
+              //           width: 160.w,
+              //           child: Row(
+              //             crossAxisAlignment: CrossAxisAlignment.start,
+              //             mainAxisSize: MainAxisSize.min,
+              //             children: [
+              //               SvgPicture.asset(
+              //                 Assets.kBookmark,
+              //                 width: 9.w,
+              //                 height: 11.h,
+              //                 color: Colors.white,
+              //               ),
+              //               SizedBox(
+              //                 width: 6.w,
+              //               ),
+              //               Expanded(
+              //                 child: Text(
+              //                   "${controller.packageDetailModel?.data?.descriptions?[3].desc??''}",
+              //                   style: Get.textTheme.button!.copyWith(
+              //                     fontSize: 12.sp,
+              //                     height: 1,
+              //                   ),
+              //                 ),
+              //               ),
+              //             ],
+              //           ),
+              //         )
+              //       : const SizedBox.shrink(),
+              // ],
             ),
           )
         : const SizedBox.shrink();

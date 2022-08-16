@@ -23,6 +23,7 @@ class PackageDetailsController extends GetxController {
     AnalyticsService.instance.logEvent("Package_Details_View");
     packageDetailModel = map['packageDetailModel'];
     customPackageData = map['customPackageData'];
+    Get.log('custom  ==> '+customPackageData.toString());
     if (customPackageData != null) {
       calories = customPackageData?.calories ?? 0;
       protein = customPackageData?.protein ?? 0;
