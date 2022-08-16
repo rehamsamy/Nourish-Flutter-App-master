@@ -78,7 +78,8 @@ class PackageMealsController extends GetxController {
     update();
     addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
         ((extraBreakfastPrice ?? 0) * breakfastSelected) +
-        ((extraDinnerPrice ?? 0) * dinnerSelected);
+        ((extraDinnerPrice ?? 0) * dinnerSelected)+
+          ((extraSnacksPrice ?? 0) * snacksSelected) ;
     totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
     update();
   }
@@ -110,18 +111,19 @@ class PackageMealsController extends GetxController {
         isMealSelected = 0;
       }
     }
-    if (lunchSelected == 1 ||
-        breakfastSelected == 1 ||
-        dinnerSelected == 1 ||
-        snacksSelected == 1) {
-      addtionalPackagePrice = 0;
-    } else {
+    // if (lunchSelected == 1 ||
+    //     breakfastSelected == 1 ||
+    //     dinnerSelected == 1 ||
+    //     snacksSelected == 1) {
+    //   addtionalPackagePrice = 0;
+    // } else {
       addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
           ((extraBreakfastPrice ?? 0) * breakfastSelected) +
           ((extraDinnerPrice ?? 0) * dinnerSelected) +
-          ((extraDinnerPrice ?? 0) * snacksSelected);
+          ((extraDinnerPrice ?? 0) * snacksSelected)+
+          ((extraSnacksPrice ?? 0) * snacksSelected);
       totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
-    }
+   // }
     update();
   }
 

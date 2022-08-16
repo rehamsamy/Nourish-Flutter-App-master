@@ -16,7 +16,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageMealsView extends GetView<PackageMealsController> {
   const PackageMealsView({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -49,7 +48,7 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         maxWidth: Get.width,
                         minWidth: Get.width,
                         child: SizedBox(
-                          height: 102.h,
+                          height: 115.h,
                           width: Get.width,
                           child: ListView(
                             scrollDirection: Axis.horizontal,
