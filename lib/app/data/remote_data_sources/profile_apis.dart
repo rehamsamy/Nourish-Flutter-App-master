@@ -41,8 +41,7 @@ class ProfileApis {
       required String last_name,
       required String mobile,
       required String email}) async {
-    //const   String token1='eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NTU3NDY4NjIsImV4cCI6MTY1NTc1MDQ2MiwibmJmIjoxNjU1NzQ2ODYyLCJqdGkiOiJLMmZ6TWYwZGxaZzk2MGN6Iiwic3ViIjoxNywicHJ2IjoiMjNiZDVjODk0OWY2MDBhZGIzOWU3MDFjNDAwODcyZGI3YTU5NzZmNyJ9.uezCaWKBlwynQq-CEfIgI1RN8fkcHj5an4NzTMeOlPE';
-    UpdateProfileModel updateProfileModel = UpdateProfileModel();
+     UpdateProfileModel updateProfileModel = UpdateProfileModel();
 
     final String? token = SharedPrefService.getToken() ?? '';
     final request = NetworkRequest(

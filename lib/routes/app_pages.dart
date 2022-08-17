@@ -1,12 +1,10 @@
 import 'package:get/get.dart';
-
 import 'package:nourish_sa/app/modules/branch_select/bindings/branch_select_binding.dart';
 import 'package:nourish_sa/app/modules/branch_select/views/branch_select_view.dart';
 import 'package:nourish_sa/app/modules/package_cart/bindings/package_cart_binding.dart';
 import 'package:nourish_sa/app/modules/package_cart/views/package_cart_view.dart';
 import 'package:nourish_sa/app/modules/supscreption_cart/bindings/cart_binding.dart';
 import 'package:nourish_sa/app/modules/supscreption_cart/views/cart_view.dart';
-
 import '../app/modules/Subscription/bindings/subscription_binding.dart';
 import '../app/modules/Subscription/views/subscription_view.dart';
 import '../app/modules/add_Address/bindings/add_address_binding.dart';
