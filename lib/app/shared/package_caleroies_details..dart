@@ -13,7 +13,7 @@ class PackageCaleroiesDetails extends GetView<PackageDetailsController> {
 
   @override
   Widget build(BuildContext context) {
-    return controller.packageDetailModel != null
+    return controller.customPackageData != null
         ? Container(
             width: 358.w,
             margin: EdgeInsets.only(bottom: 30.h),
@@ -22,44 +22,124 @@ class PackageCaleroiesDetails extends GetView<PackageDetailsController> {
               borderRadius: BorderRadius.circular(5.r),
             ),
             padding: EdgeInsets.symmetric(horizontal: 12.w, vertical: 16.h),
-            child:
-            Wrap(
+            child: Wrap(
               alignment: WrapAlignment.center,
               crossAxisAlignment: WrapCrossAlignment.center,
               direction: Axis.horizontal,
               runAlignment: WrapAlignment.center,
               spacing: 10.w,
-              runSpacing: 15.h,
-              children:
-              List.generate(controller.packageDetailModel?.data?.descriptions?.length??0, (index) =>
-                           Container(
-                             width: Get.width/2-50,
-                             child: Row(
-                               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                SvgPicture.asset(
-                                  Assets.kBookmark,
-                                  width: 9.w,
-                                  height: 11.h,
-                                  color: Colors.white,
-                                ),
-                                SizedBox(
-                                  width: 6.w,
-                                ),
-                                Expanded(
-                                  child: Text(
-                                    "${controller.packageDetailModel?.data?.descriptions?[index].desc??''}",
-                                    style: Get.textTheme.button!.copyWith(
-                                      fontSize: 12.sp,
-                                      height: 1,
-                                    ),
-                                  ),
-                                ),
-                              ],
+              runSpacing: 10.h,
+              children: [
+                SizedBox(
+                  width: 160.w,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        Assets.kBookmark,
+                        width: 9.w,
+                        height: 11.h,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 6.w,
+                      ),
+                      Expanded(
+                        child: Text(
+                          '${controller.calories} cal',
+                          style: Get.textTheme.button!.copyWith(
+                            fontSize: 12.sp,
+                            height: 1,
                           ),
-                           ),
-
-                        )
+                          textAlign: TextAlign.start,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        Assets.kBookmark,
+                        width: 9.w,
+                        height: 11.h,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 6.w,
+                      ),
+                      Expanded(
+                        child: Text(
+                          '${controller.carbs} carbs',
+                          style: Get.textTheme.button!.copyWith(
+                            fontSize: 12.sp,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        Assets.kBookmark,
+                        width: 9.w,
+                        height: 11.h,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 6.w,
+                      ),
+                      Expanded(
+                        child: Text(
+                          '${controller.protein} protein',
+                          style: Get.textTheme.button!.copyWith(
+                            fontSize: 12.sp,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 160.w,
+                  child: Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      SvgPicture.asset(
+                        Assets.kBookmark,
+                        width: 9.w,
+                        height: 11.h,
+                        color: Colors.white,
+                      ),
+                      SizedBox(
+                        width: 6.w,
+                      ),
+                      Expanded(
+                        child: Text(
+                          '${controller.fat} fat',
+                          style: Get.textTheme.button!.copyWith(
+                            fontSize: 12.sp,
+                            height: 1,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
           )
         : const SizedBox.shrink();

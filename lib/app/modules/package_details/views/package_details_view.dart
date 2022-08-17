@@ -5,6 +5,7 @@ import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_network_image.dart';
+import 'package:nourish_sa/app/shared/dialogs/package_description_details.dart';
 import 'package:nourish_sa/app/shared/package_caleroies_details..dart';
 import 'package:nourish_sa/app/shared/selection_card.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -41,7 +42,7 @@ class PackageDetailsView extends GetView<PackageDetailsController> {
                 padding: EdgeInsets.only(top: 11.h, bottom: 18.h),
                 child: Text(controller.packageDetailModel?.data?.name ?? "N/A"),
               ),
-              const PackageCaleroiesDetails(),
+              const PackageDescriptionDetails(),
               Align(
                 alignment: AlignmentDirectional.centerStart,
                 child: Text(
