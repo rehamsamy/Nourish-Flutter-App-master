@@ -59,8 +59,7 @@ class AddressApis {
         type: NetworkRequestType.GET,
         path: 'getAddresses',
         data: const NetworkRequestBody.json({}),
-        headers: {'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwczpcL1wvYXBpLmVhdC1ub3VyaXNoLmNvbVwvYXBpXC9hdXRoXC92ZXJpZnlNb2JpbGVPVFAiLCJpYXQiOjE2NjAxMjEwMzIsImV4cCI6MTY2MDIwNzQzMiwibmJmIjoxNjYwMTIxMDMyLCJqdGkiOiJwaHJJMkV5VHE5WHMwUmNlIiwic3ViIjo0LCJwcnYiOiIyM2JkNWM4OTQ5ZjYwMGFkYjM5ZTcwMWM0MDA4NzJkYjdhNTk3NmY3In0.emlzw52RmIiN7egV8WTpzap1XKy0o7zo5XaYzm8qWss'}
-        );
+          );
     final response = await networkService.execute(
       request,
       AddressModel
