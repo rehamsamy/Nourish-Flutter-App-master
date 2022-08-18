@@ -1,5 +1,6 @@
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
+import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
 
 import '../../../data/services/analytics_service.dart';
@@ -55,14 +56,40 @@ class PackageMealsController extends GetxController {
     breakfastSelected =
         PackageDetailsView.packageDetailModel?.data?.breakfast ?? 1;
     snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 1;
-    _newMealsList = dinnersList;
+
+    _newMealsList = breakfastsList!.isNotEmpty
+        ? breakfastsList
+        : lunchesList?.isNotEmpty ?? false
+            ? lunchesList
+            : dinnersList?.isNotEmpty ?? false
+                ? dinnersList
+                : snacksList?.isNotEmpty ?? false
+                    ? snacksList
+                    : [];
+    selectedMeal = breakfastsList!.isNotEmpty
+        ? "breakfast"
+        : lunchesList?.isNotEmpty ?? false
+            ? "lunch"
+            : dinnersList?.isNotEmpty ?? false
+                ? "dinner"
+                : snacksList?.isNotEmpty ?? false
+                    ? "snack"
+                    : "";
+    ;
+    Get.log('PackageDetails ==> ' +
+        PackageDetailsController.x!.data!.lunches.toString());
+    update();
     super.onInit();
 
     Get.log('SELECTED DAYS ' +
-        extraDinnerPrice.toString() +' dinner '+
-        extraSnacksPrice.toString()+' snack  '+
-        extraBreakfastPrice.toString() +'  break  '+
-        extraLunchPrice.toString() +' lunch ');
+        extraDinnerPrice.toString() +
+        ' dinner ' +
+        extraSnacksPrice.toString() +
+        ' snack  ' +
+        extraBreakfastPrice.toString() +
+        '  break  ' +
+        extraLunchPrice.toString() +
+        ' lunch ');
   }
 
   addMeal(String meal) {
@@ -78,8 +105,8 @@ class PackageMealsController extends GetxController {
     update();
     addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
         ((extraBreakfastPrice ?? 0) * breakfastSelected) +
-        ((extraDinnerPrice ?? 0) * dinnerSelected)+
-          ((extraSnacksPrice ?? 0) * snacksSelected) ;
+        ((extraDinnerPrice ?? 0) * dinnerSelected) +
+        ((extraSnacksPrice ?? 0) * snacksSelected);
     totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
     update();
   }
@@ -117,13 +144,13 @@ class PackageMealsController extends GetxController {
     //     snacksSelected == 1) {
     //   addtionalPackagePrice = 0;
     // } else {
-      addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
-          ((extraBreakfastPrice ?? 0) * breakfastSelected) +
-          ((extraDinnerPrice ?? 0) * dinnerSelected) +
-          ((extraDinnerPrice ?? 0) * snacksSelected)+
-          ((extraSnacksPrice ?? 0) * snacksSelected);
-      totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
-   // }
+    addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
+        ((extraBreakfastPrice ?? 0) * breakfastSelected) +
+        ((extraDinnerPrice ?? 0) * dinnerSelected) +
+        ((extraDinnerPrice ?? 0) * snacksSelected) +
+        ((extraSnacksPrice ?? 0) * snacksSelected);
+    totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
+    // }
     update();
   }
 
@@ -154,12 +181,12 @@ class PackageMealsController extends GetxController {
   selectDay(String day) {
     currentDay = day;
 
-      // selectedDays1[day] = {
-      //   ( extraLunchPrice==null||extraLunchPrice==0)?null:'lunch': '',
-      //   ( extraBreakfastPrice==null||extraBreakfastPrice==0)?null:'breakfast': '',
-      //   ( extraDinnerPrice==null||extraDinnerPrice==0)?null:'dinner': '',
-      //  ( extraSnacksPrice==null||extraSnacksPrice==0)?null:'snack': '',
-      // };
+    // selectedDays1[day] = {
+    //   ( extraLunchPrice==null||extraLunchPrice==0)?null:'lunch': '',
+    //   ( extraBreakfastPrice==null||extraBreakfastPrice==0)?null:'breakfast': '',
+    //   ( extraDinnerPrice==null||extraDinnerPrice==0)?null:'dinner': '',
+    //  ( extraSnacksPrice==null||extraSnacksPrice==0)?null:'snack': '',
+    // };
 
     selectedDays1[day] = {
       'breakfast': '',
