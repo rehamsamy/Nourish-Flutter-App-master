@@ -61,7 +61,10 @@ class BranchSelectController extends GetxController {
         value = value
             ?.where((element) =>
                 element.coverageArea! >=
-                calculateDistance(element.lat, element.lng))
+                calculateDistance(
+                  element.lat,
+                  element.lng,
+                ))
             .toList();
 
         return value;
@@ -89,9 +92,12 @@ class BranchSelectController extends GetxController {
     return branches;
   }
 
-  double calculateDistance(lat2, lon2) {
-    double lat1 = location!.latitude;
-    double lon1 = location!.longitude;
+  double calculateDistance(lat2, lon2, [lat1 = 0, lon1 = 0]) {
+    if (lat1 == 0 && lon1 == 0) {
+      lat1 = location?.latitude ?? 0;
+      lon1 = location?.longitude ?? 0;
+    }
+
     var p = 0.017453292519943295;
     var a = 0.5 -
         cos((lat2 - lat1) * p) / 2 +
@@ -104,7 +110,7 @@ class BranchSelectController extends GetxController {
     update();
   }
 
-  void onMapTap(LatLng position) {
+  void onMapTap(LatLng position) async {
     mapController?.animateCamera(CameraUpdate.newCameraPosition(
         CameraPosition(target: position, zoom: 15)));
     mapMarkers.remove(_selectedMarker);
@@ -113,7 +119,16 @@ class BranchSelectController extends GetxController {
         position: position,
         infoWindow: const InfoWindow(title: 'Selected'));
     mapMarkers.add(_selectedMarker);
+    branches = (await BranchApis().getBranches().then((value) async {
+      value = value
+          ?.where((element) =>
+              element.coverageArea! >=
+              calculateDistance(element.lat, element.lng, position.latitude,
+                  position.longitude))
+          .toList();
 
+      return value;
+    }))!;
     update();
   }
 }

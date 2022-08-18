@@ -1,8 +1,11 @@
+import 'dart:ui';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/shared/dialogs/no_delivery_here_dialog.dart';
 import 'package:nourish_sa/app_theme.dart';
@@ -46,6 +49,20 @@ class BranchSelectView extends GetView<BranchSelectController> {
                             target: LatLng(controller.location?.latitude ?? 0,
                                 controller.location?.longitude ?? 0),
                             zoom: 15)),
+                  ),
+                  Positioned(
+                    top: 40,
+                    left: 20,
+                    child: TextButton.icon(
+                        label: Text(LocalKeys.kBack.tr,
+                            style: const TextStyle(color: Colors.black)),
+                        icon: const Icon(
+                          Icons.arrow_back_ios_new_outlined,
+                          color: Colors.black,
+                        ),
+                        onPressed: () {
+                          Get.back();
+                        }),
                   ),
                   if (controller.branches.isNotEmpty)
                     Positioned(
