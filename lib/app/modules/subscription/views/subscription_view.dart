@@ -156,11 +156,9 @@ class SubscriptionView extends GetView<SubscriptionController> {
                                                         ?.type ??
                                                     'diet',
                                                 paymentMethod: "Cash",
-                                                price: detailModel
-                                                        .data
-                                                        ?.order
-                                                        ?.package
-                                                        ?.priceWithTax ??
+                                                price: detailModel.data?.order
+                                                        ?.package?.priceWithTax!
+                                                        .toInt() ??
                                                     0,
                                                 subTitle:
                                                     list[index].branchName ??

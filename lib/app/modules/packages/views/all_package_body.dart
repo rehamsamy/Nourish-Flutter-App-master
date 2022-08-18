@@ -22,9 +22,9 @@ class AllPackagesBody extends GetView<PackagesController> {
   final bool isWithFilter;
   @override
   Widget build(BuildContext context) {
-    HomeScreenController homeScreenController=Get.find();
+    HomeScreenController homeScreenController = Get.find();
     return GetBuilder<PackagesController>(
-      builder: (_)=> Column(
+      builder: (_) => Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Padding(
@@ -151,9 +151,8 @@ class AllPackagesBody extends GetView<PackagesController> {
     );
   }
 
-
   getPackagesList() {
-    if (controller.packageLoading==false) {
+    if (controller.packageLoading == false) {
       if (controller.homeFilterPackagesList.isNotEmpty) {
         return ListView.builder(
           itemCount: controller.homeFilterPackagesList.length,
@@ -164,29 +163,49 @@ class AllPackagesBody extends GetView<PackagesController> {
             return InkWell(
               onTap: () async {
                 PackageDetailModel? model = await PackageApis()
-                    .getPackageDetail(controller.homeFilterPackagesList[index].id ?? 0);
+                    .getPackageDetail(
+                        controller.homeFilterPackagesList[index].id ?? 0);
                 if (model?.data != null) {
-                  Get.toNamed(Routes.PACKAGE_DETAILS, arguments: {'packageDetailModel': model});
+                  Get.toNamed(Routes.PACKAGE_DETAILS,
+                      arguments: {'packageDetailModel': model});
                 }
               },
               child: PackageInfoCard(
                 image: controller.homeFilterPackagesList[index].image ??
                     "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTrKHPsvNDJHY9tWpkHrfkfo8Dkf0LvZU3Hdg&usqp=CAU.png",
                 options: List.generate(
-                    controller.homeFilterPackagesList[index].descriptions?.length ?? 0,
+                    controller.homeFilterPackagesList[index].descriptions
+                            ?.length ??
+                        0,
                     (index2) =>
-                        controller.homeFilterPackagesList[index].descriptions?[index2].desc ?? ""),
-                title: controller.homeFilterPackagesList[index].name ?? "BreadFase",
-                priceWithVat:
-                    controller.homeFilterPackagesList[index].priceWithTax?.toString() ?? "150",
+                        controller.homeFilterPackagesList[index]
+                            .descriptions?[index2].desc ??
+                        ""),
+                title: controller.homeFilterPackagesList[index].name ??
+                    "BreadFase",
+                priceWithVat: controller
+                        .homeFilterPackagesList[index].priceWithTax
+                        ?.toString() ??
+                    "150",
               ),
             );
           },
         );
-      }
-      else {
+      } else {
         return SizedBox(
-            width: Get.width, height: 185.h, child: Center(child: Text('no packages found')));
+            width: Get.width,
+            height: 185.h,
+            child: Column(
+              children: [
+                Center(child: SvgPicture.asset(Assets.kMeal)),
+                SizedBox(
+                  height: 20.h,
+                ),
+                Text(
+                  "No packages found",
+                ),
+              ],
+            ));
       }
     } else {
       return ListView.builder(

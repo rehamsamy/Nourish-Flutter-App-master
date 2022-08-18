@@ -1,6 +1,9 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/svg.dart';
 
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/notification_model.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/notifiacation_apis.dart';
@@ -55,7 +58,7 @@ class NotificationView extends GetView<NotificationController> {
                       return Padding(
                         padding: EdgeInsets.symmetric(horizontal: 2.w),
                         child: ListView.builder(
-                          shrinkWrap: true,
+                            shrinkWrap: true,
                             itemCount: notificationsList.length,
                             itemBuilder: (context, index) {
                               return Column(
@@ -71,8 +74,8 @@ class NotificationView extends GetView<NotificationController> {
                                         .copyWith(color: blackColor),
                                   ),
                                   Padding(
-                                    padding: EdgeInsets.only(
-                                        top: 6.h, bottom: 11.h),
+                                    padding:
+                                        EdgeInsets.only(top: 6.h, bottom: 11.h),
                                     child: Text(
                                       notificationsList[index].time ??
                                           "5 hours ago",
@@ -90,13 +93,17 @@ class NotificationView extends GetView<NotificationController> {
                             }),
                       );
                     } else {
-                      return const Center(
-                        child: Text('no notification found'),
+                      return Center(
+                        child: SvgPicture.asset(
+                          Assets.kNoNotification,
+                          height: 50.h,
+                          width: 50.w,
+                        ),
                       );
                     }
                   } else {
-                    return const SizedBox(
-                      height: 200,
+                    return const Center(
+                      child: CupertinoActivityIndicator(),
                     );
                   }
                 }),

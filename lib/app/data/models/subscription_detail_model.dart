@@ -97,9 +97,9 @@ class Meals {
 }
 
 class Tuesday {
-  int? id;
-  int? orderId;
-  int? productId;
+  num? id;
+  num? orderId;
+  num? productId;
   String? day;
   String? mealType;
   Product2? product;
@@ -137,14 +137,14 @@ class Tuesday {
 }
 
 class Product2 {
-  int? id;
+  num? id;
   String? image;
-  int? calories;
-  int? fat;
-  int? protein;
-  int? carb;
-  int? weight;
-  int? price;
+  num? calories;
+  num? fat;
+  num? protein;
+  num? carb;
+  num? weight;
+  num? price;
   String? name;
   String? description;
 
@@ -190,9 +190,9 @@ class Product2 {
 }
 
 class MealDay {
-  int? id;
-  int? orderId;
-  int? productId;
+  num? id;
+  num? orderId;
+  num? productId;
   String? day;
   String? mealType;
   Product? product;
@@ -230,9 +230,9 @@ class MealDay {
 }
 
 class Sunday {
-  int? id;
-  int? orderId;
-  int? productId;
+  num? id;
+  num? orderId;
+  num? productId;
   String? day;
   String? mealType;
   Product? product;
@@ -270,14 +270,14 @@ class Sunday {
 }
 
 class Product {
-  int? id;
+  num? id;
   String? image;
-  int? calories;
-  int? fat;
-  int? protein;
-  int? carb;
-  int? weight;
-  int? price;
+  num? calories;
+  num? fat;
+  num? protein;
+  num? carb;
+  num? weight;
+  num? price;
   String? name;
   String? description;
 
@@ -323,15 +323,15 @@ class Product {
 }
 
 class Order {
-  int? id;
-  int? branchId;
-  int? addressId;
+  num? id;
+  num? branchId;
+  num? addressId;
   String? deliveryType;
-  int? periodId;
+  num? periodId;
   String? startDate;
   String? endDate;
-  int? userId;
-  int? packageId;
+  num? userId;
+  num? packageId;
   String? userName;
   String? packageName;
   String? branchName;
@@ -420,18 +420,18 @@ class Order {
 }
 
 class User {
-  int? id;
+  num? id;
   String? nameEn;
   String? email;
   String? emailVerifiedAt;
   String? type;
   String? nameAr;
   String? image;
-  int? status;
+  num? status;
   String? mobile;
   dynamic smsCode;
   dynamic emailVerifyCode;
-  int? verified;
+  num? verified;
   dynamic locale;
   dynamic deviceToken;
   String? name;
@@ -509,12 +509,12 @@ class User {
 }
 
 class AdditionalData {
-  int? id;
+  num? id;
   String? gender;
   String? dateOfBirth;
-  int? height;
+  num? height;
   String? heightUnit;
-  int? weight;
+  num? weight;
   String? weightUnit;
   String? goal;
   String? yourMeals;
@@ -558,7 +558,7 @@ class AdditionalData {
 }
 
 class Period {
-  int? id;
+  num? id;
   String? period;
 
   Period({this.id, this.period});
@@ -577,9 +577,9 @@ class Period {
 }
 
 class Address {
-  int? id;
-  double? lat;
-  double? lng;
+  num? id;
+  num? lat;
+  num? lng;
   String? name;
   String? addressType;
   String? area;
@@ -638,17 +638,17 @@ class Address {
 }
 
 class Branch {
-  int? id;
+  num? id;
   String? googleAddress;
   String? mobile;
-  int? coverageArea;
-  double? lat;
-  double? lng;
-  int? branchCapacity;
-  int? branchPickupCapacity;
-  int? deliveryFees;
-  int? delivery;
-  int? pickup;
+  num? coverageArea;
+  num? lat;
+  num? lng;
+  num? branchCapacity;
+  num? branchPickupCapacity;
+  num? deliveryFees;
+  num? delivery;
+  num? pickup;
   String? name;
   String? address;
   List<PickupPeriods>? pickupPeriods;
@@ -734,10 +734,10 @@ class Branch {
 }
 
 class WorkTimes {
-  int? id;
+  num? id;
   String? dataEn;
   String? dataAr;
-  int? branchId;
+  num? branchId;
 
   WorkTimes({this.id, this.dataEn, this.dataAr, this.branchId});
 
@@ -759,7 +759,7 @@ class WorkTimes {
 }
 
 class DeliveryPeriods {
-  int? id;
+  num? id;
   String? period;
   Pivot1? pivot;
 
@@ -783,8 +783,8 @@ class DeliveryPeriods {
 }
 
 class Pivot1 {
-  int? branchId;
-  int? periodId;
+  num? branchId;
+  num? periodId;
 
   Pivot1({this.branchId, this.periodId});
 
@@ -802,7 +802,7 @@ class Pivot1 {
 }
 
 class PickupPeriods {
-  int? id;
+  num? id;
   String? period;
   Pivot? pivot;
 
@@ -826,8 +826,8 @@ class PickupPeriods {
 }
 
 class Pivot {
-  int? branchId;
-  int? periodId;
+  num? branchId;
+  num? periodId;
 
   Pivot({this.branchId, this.periodId});
 
@@ -845,12 +845,12 @@ class Pivot {
 }
 
 class Package {
-  int? id;
+  num? id;
   String? image;
-  int? tax;
-  int? priceWithTax;
+  num? tax;
+  num? priceWithTax;
   String? type;
-  int? daysNumberOfWeek;
+  num? daysNumberOfWeek;
   String? name;
 
   Package(
