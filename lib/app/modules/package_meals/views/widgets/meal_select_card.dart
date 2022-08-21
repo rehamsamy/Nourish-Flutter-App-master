@@ -63,96 +63,103 @@ class _MealSelectCardState extends State<MealSelectCard> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(
-                          widget.title,
-                          style: Get.textTheme.headline1!.copyWith(
-                            color: primaryColor,
-                          ),
-                        ),
-                        SizedBox(
-                          height: 15.h,
-                        ),
-                        Text(
-                          widget.caleries + " caleries",
-                          style: Get.textTheme.caption!.copyWith(
-                            color: blueGreyColor,
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 103.w,
-                      height: 38.h,
-                      child: OutlinedButton(
-                        onPressed: () {
-                          setState(() {
-                            // PackageMealsController.selectedDays1.clear();
-                            widget.isSelected = true;
-                            PackageMealsController
-                                    .selectedDays[controller.currentDay]
-                                [controller.selectedMeal] = ([widget.id]);
-                            controller.selectedDays1[controller.currentDay]
-                                ?[controller.selectedMeal] = (widget.title);
-
-                            Get.log('Selected meals ids ==>' +
-                                PackageMealsController.selectedDays.toString() +
-                                widget.title.toString());
-
-                            Get.log('Selected meals titles ==>' +
-                                controller.selectedDays1.toString() +
-                                widget.title.toString());
-                          });
-                        },
-                        style: ButtonStyle(
-                          backgroundColor: MaterialStateProperty.all<Color>(
-                            widget.isSelected ? primaryColor : Colors.white,
-                          ),
-                          side: MaterialStateProperty.all<BorderSide>(
-                            const BorderSide(
+                    Expanded(
+                      flex: 7,
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            widget.title,
+                            style: Get.textTheme.headline1!.copyWith(
                               color: primaryColor,
                             ),
                           ),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Container(
-                              width: 23.w,
-                              height: 23.h,
-                              margin: EdgeInsetsDirectional.only(end: 10.w),
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: widget.isSelected
-                                    ? Colors.white
-                                    : Colors.transparent,
-                                border: Border.all(
+                          SizedBox(
+                            height: 15.h,
+                          ),
+                          Text(
+                            widget.caleries + " caleries",
+                            style: Get.textTheme.caption!.copyWith(
+                              color: blueGreyColor,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                    Expanded(
+                      flex: 3,
+                      child: SizedBox(
+                        width: 103.w,
+                        height: 45.h,
+                        child: OutlinedButton(
+                          onPressed: () {
+                            setState(() {
+                              // PackageMealsController.selectedDays1.clear();
+                              widget.isSelected = true;
+                              PackageMealsController
+                                      .selectedDays[controller.currentDay]
+                                  [controller.selectedMeal] = ([widget.id]);
+                              controller.selectedDays1[controller.currentDay]
+                                  ?[controller.selectedMeal] = (widget.title);
+
+                              Get.log('Selected meals ids ==>' +
+                                  PackageMealsController.selectedDays
+                                      .toString() +
+                                  widget.title.toString());
+
+                              Get.log('Selected meals titles ==>' +
+                                  controller.selectedDays1.toString() +
+                                  widget.title.toString());
+                            });
+                          },
+                          style: ButtonStyle(
+                            backgroundColor: MaterialStateProperty.all<Color>(
+                              widget.isSelected ? primaryColor : Colors.white,
+                            ),
+                            side: MaterialStateProperty.all<BorderSide>(
+                              const BorderSide(
+                                color: primaryColor,
+                              ),
+                            ),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Container(
+                                width: 23.w,
+                                height: 23.h,
+                                margin: EdgeInsetsDirectional.only(end: 10.w),
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: widget.isSelected
+                                      ? Colors.white
+                                      : Colors.transparent,
+                                  border: Border.all(
+                                    color: widget.isSelected
+                                        ? Colors.white
+                                        : primaryColor,
+                                  ),
+                                ),
+                                child: Icon(
+                                  widget.isSelected ? Icons.done : Icons.add,
+                                  color: primaryColor,
+                                  size: 16.r,
+                                ),
+                              ),
+                              Text(
+                                "Select",
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
                                   color: widget.isSelected
                                       ? Colors.white
                                       : primaryColor,
+                                  fontWeight: FontWeight.w400,
+                                  fontSize: 15.sp,
                                 ),
                               ),
-                              child: Icon(
-                                widget.isSelected ? Icons.done : Icons.add,
-                                color: primaryColor,
-                                size: 16.r,
-                              ),
-                            ),
-                            Text(
-                              "Select",
-                              textAlign: TextAlign.center,
-                              style: TextStyle(
-                                color: widget.isSelected
-                                    ? Colors.white
-                                    : primaryColor,
-                                fontWeight: FontWeight.w400,
-                                fontSize: 15.sp,
-                              ),
-                            ),
-                          ],
+                            ],
+                          ),
                         ),
                       ),
                     )

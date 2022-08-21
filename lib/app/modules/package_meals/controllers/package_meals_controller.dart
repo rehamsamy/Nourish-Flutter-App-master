@@ -51,11 +51,11 @@ class PackageMealsController extends GetxController {
     dinnersList = PackageDetailsView.packageDetailModel?.data?.dinners;
     snacksList = PackageDetailsView.packageDetailModel?.data?.snacks;
     //////////////////////
-    dinnerSelected = PackageDetailsView.packageDetailModel?.data?.dinner ?? 1;
-    lunchSelected = PackageDetailsView.packageDetailModel?.data?.lunch ?? 1;
+    dinnerSelected = PackageDetailsView.packageDetailModel?.data?.dinner ?? 0;
+    lunchSelected = PackageDetailsView.packageDetailModel?.data?.lunch ?? 0;
     breakfastSelected =
-        PackageDetailsView.packageDetailModel?.data?.breakfast ?? 1;
-    snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 1;
+        PackageDetailsView.packageDetailModel?.data?.breakfast ?? 0;
+    snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 0;
 
     _newMealsList = breakfastsList!.isNotEmpty
         ? breakfastsList
@@ -66,15 +66,15 @@ class PackageMealsController extends GetxController {
                 : snacksList?.isNotEmpty ?? false
                     ? snacksList
                     : [];
-    selectedMeal = breakfastsList!.isNotEmpty
-        ? "breakfast"
+    isMealSelected = breakfastsList!.isNotEmpty
+        ? 2
         : lunchesList?.isNotEmpty ?? false
-            ? "lunch"
+            ? 3
             : dinnersList?.isNotEmpty ?? false
-                ? "dinner"
+                ? 1
                 : snacksList?.isNotEmpty ?? false
-                    ? "snack"
-                    : "";
+                    ? 4
+                    : 0;
     ;
     Get.log('PackageDetails ==> ' +
         PackageDetailsController.x!.data!.lunches.toString());
@@ -103,10 +103,10 @@ class PackageMealsController extends GetxController {
       snacksSelected++;
     }
     update();
-    addtionalPackagePrice = ((extraLunchPrice ?? 0) * lunchSelected) +
-        ((extraBreakfastPrice ?? 0) * breakfastSelected) +
-        ((extraDinnerPrice ?? 0) * dinnerSelected) +
-        ((extraSnacksPrice ?? 0) * snacksSelected);
+    addtionalPackagePrice = ((extraLunchPrice ?? 0) * (lunchSelected - 1)) +
+        ((extraBreakfastPrice ?? 0) * (breakfastSelected - 1)) +
+        ((extraDinnerPrice ?? 0) * (dinnerSelected - 1)) +
+        ((extraSnacksPrice ?? 0) * (snacksSelected - 1));
     totalPackagePrice = addtionalPackagePrice + (packagePrice ?? 0);
     update();
   }
