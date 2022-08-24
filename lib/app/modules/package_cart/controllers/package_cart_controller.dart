@@ -1,4 +1,6 @@
+import 'package:flutter/widgets.dart';
 import 'package:get/get.dart';
+import 'package:nourish_sa/app/data/models/coupon_discount_model.dart';
 import 'package:nourish_sa/app/data/models/package_detail_model.dart';
 import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
 import 'package:nourish_sa/app/modules/package_details/views/package_details_view.dart';
@@ -17,6 +19,7 @@ class PackageCartController extends GetxController {
   List<String> daysList = [];
   int isMealSelected = 0;
   int total = 0;
+  double packageDiscountPrice = 0;
   String currentDay = '';
   List<String>? productsList;
   List<String>? dinnerProductsList;
@@ -25,6 +28,9 @@ class PackageCartController extends GetxController {
   Map<String, Map> selectedMealsProductsData = {};
   PackageMealsController packageMealsController = Get.find();
   Map<String, dynamic> decoded = {};
+  CouponDiscountModel? discountData;
+  TextEditingController couponController = TextEditingController();
+
   @override
   void onInit() {
     super.onInit();

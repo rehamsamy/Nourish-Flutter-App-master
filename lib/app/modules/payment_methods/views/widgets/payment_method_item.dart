@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/src/size_extension.dart';
 import 'package:get/get.dart';
@@ -45,4 +44,3 @@ class PaymentMethodItem extends StatelessWidget {
     );
   }
 }
-

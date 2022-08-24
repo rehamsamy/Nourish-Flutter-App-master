@@ -47,11 +47,19 @@ class SelectedDaysListView extends StatelessWidget {
                             alignment: Alignment.center,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(7.r),
-                              color: PackageMealsController.selectedDays.keys
-                                          .elementAt(index) ==
-                                      controller.currentDay
-                                  ? primaryColor
-                                  : whiteColor,
+                              color: PackageMealsController.selectedMeals[
+                                                  controller.currentDay]
+                                              [controller.selectedMeal] !=
+                                          "" &&
+                                      PackageMealsController.selectedDays.keys
+                                              .elementAt(index) ==
+                                          controller.currentDay
+                                  ? greyColor
+                                  : PackageMealsController.selectedDays.keys
+                                              .elementAt(index) ==
+                                          controller.currentDay
+                                      ? primaryColor
+                                      : whiteColor,
                               border: Border.all(
                                 color: PackageMealsController.selectedDays.keys
                                             .elementAt(index) ==

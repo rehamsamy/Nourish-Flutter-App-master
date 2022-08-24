@@ -7,9 +7,11 @@ import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
 import 'package:nourish_sa/app/data/models/profile_model.dart';
 import 'package:nourish_sa/app/data/models/update_profile_model.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/auth_apis.dart';
 import 'package:nourish_sa/app/data/remote_data_sources/profile_apis.dart';
 import 'package:nourish_sa/app/modules/home_page/controllers/home_page_controller.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:nourish_sa/app/modules/profile/views/otp_dialog.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/custom_input.dart';
 import 'package:nourish_sa/app_theme.dart';
@@ -143,7 +145,11 @@ class ProfileView extends GetView<ProfileController> {
                                     color: primaryColor),
                               ),
                             ));
-
+                            if (controller.phone.text != userModel.mobile) {
+                              Get.dialog(OTPDialog(controller.phone.text));
+                              await AuthApis()
+                                  .resendOtpMobile(controller.phone.text);
+                            }
                             UpdateProfileModel updateModel =
                                 await ProfileApis().updateProfileInfo(
                               first_name: controller.firstName.text,

@@ -8,6 +8,7 @@ import '../../../data/services/analytics_service.dart';
 class PackageMealsController extends GetxController {
   static Map<String, dynamic> selectedDays = {};
   Map<String, Map> selectedDays1 = {};
+  static Map<String, dynamic> selectedMeals = {};
   Map map = Get.arguments;
   int dinnerSelected = 1;
   int lunchSelected = 1;
@@ -33,6 +34,7 @@ class PackageMealsController extends GetxController {
   void onInit() {
     AnalyticsService.instance.logEvent("Package_Meals_View");
     selectedDays = map['selectedDays'];
+    selectedMeals = map['selectedMeals'];
     currentDay = selectedDays.keys.first;
     selectedDays1 = {};
     extraDinnerPrice =
@@ -56,7 +58,30 @@ class PackageMealsController extends GetxController {
     breakfastSelected =
         PackageDetailsView.packageDetailModel?.data?.breakfast ?? 0;
     snacksSelected = PackageDetailsView.packageDetailModel?.data?.snack ?? 0;
+    for (int i = 0; i < selectedMeals.keys.length; i++) {
+      if (breakfastSelected == 0) {
+        Map<String, dynamic> day =
+            selectedMeals[selectedMeals.keys.toList()[i]];
+        day.remove('breakfast');
+      }
+      if (lunchSelected == 0) {
+        Map<String, dynamic> day =
+            selectedMeals[selectedMeals.keys.toList()[i]];
+        day.remove('lunch');
+      }
+      if (dinnerSelected == 0) {
+        Map<String, dynamic> day =
+            selectedMeals[selectedMeals.keys.toList()[i]];
+        day.remove('dinner');
+      }
 
+      if (snacksSelected == 0) {
+        Map<String, dynamic> day =
+            selectedMeals[selectedMeals.keys.toList()[i]];
+        day.remove('snack');
+      }
+    }
+    Get.log("SELECTED MEALS AFTER DELETING EMPTY MEALS : $selectedMeals");
     _newMealsList = breakfastsList!.isNotEmpty
         ? breakfastsList
         : lunchesList?.isNotEmpty ?? false
@@ -66,6 +91,15 @@ class PackageMealsController extends GetxController {
                 : snacksList?.isNotEmpty ?? false
                     ? snacksList
                     : [];
+    selectedMeal = breakfastsList!.isNotEmpty
+        ? 'breakfast'
+        : lunchesList?.isNotEmpty ?? false
+            ? 'lunch'
+            : dinnersList?.isNotEmpty ?? false
+                ? 'dinner'
+                : snacksList?.isNotEmpty ?? false
+                    ? 'snack'
+                    : '';
     isMealSelected = breakfastsList!.isNotEmpty
         ? 2
         : lunchesList?.isNotEmpty ?? false

@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:internet_connection_checker/internet_connection_checker.dart';
+import 'package:nourish_sa/app/modules/splash/views/splash_view.dart';
 
 import 'app/core/values/localization/messages.dart';
 
@@ -60,6 +61,7 @@ class _NourishAppState extends State<NourishApp> {
           debugShowCheckedModeBanner: false,
           navigatorObservers: [BotToastNavigatorObserver()],
           initialRoute: AppPages.INITIAL,
+          //home:  SplashView(),
           getPages: AppPages.routes,
           // home:  ChangeEmailView(),
           locale: Get.locale,

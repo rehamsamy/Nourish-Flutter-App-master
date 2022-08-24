@@ -144,7 +144,7 @@ class DaysTimeView extends GetView<DaysTimeController> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                //  Text(LocalKeys.kBranchTime.tr),
+                  //  Text(LocalKeys.kBranchTime.tr),
                   GetBuilder(
                       builder: (DaysTimeController controller) =>
                           CustomDropDown(
@@ -185,7 +185,8 @@ class DaysTimeView extends GetView<DaysTimeController> {
 
                 // print('1111  x ' + selectedDays.toString()+'      222   '+controller.selectedItems.toString());
                 return Get.toNamed(Routes.PACKAGE_MEALS, arguments: {
-                  'selectedDays': controller.daysTimeSelectedValues
+                  'selectedDays': controller.daysTimeSelectedValues,
+                  'selectedMeals': controller.daysTimeSelectedMeals,
                 });
               },
             ),

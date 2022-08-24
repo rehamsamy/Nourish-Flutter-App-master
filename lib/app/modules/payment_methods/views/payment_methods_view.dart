@@ -64,7 +64,7 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                   style: Get.textTheme.headline1,
                 ),
                 FutureBuilder(
-                    future: PaymentApis().getPaymentMethods(),
+                    future: controller.getPayments,
                     builder: (_, snapshot) {
                       if (snapshot.hasData) {
                         List<PaymentItem>? list =
@@ -76,18 +76,23 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                             physics: const NeverScrollableScrollPhysics(),
                             itemBuilder: (context, index) {
                               selectedPaymentId = list[index].id;
+                              if (list[index].name == "Cash") {
+                                controller.cashOnDeliveryPayment = list[index];
+                                controller.hasCashPayment = true;
+
+                                return const SizedBox();
+                              }
                               return InkWell(
                                 onTap: () {
-                                  controller.changeSelectedPaymentIndex(index);
+                                  controller.changeSelectedPaymentIndex(
+                                      list[index].id ?? 0);
                                 },
                                 child: PaymentMethodItem(
                                   image: list[index].logo ??
                                       'https://ecommercenews.eu/wp-content/uploads/2013/06/most_common_payment_methods_in_europe.png',
                                   name: list[index].name ?? "masterCard",
-                                  isSelected:
-                                      controller.selectPaymentId == index
-                                          ? true
-                                          : false,
+                                  isSelected: controller.selectPaymentId ==
+                                      list[index].id,
                                 ),
                               );
                             },
@@ -106,15 +111,32 @@ class PaymentMethodsView extends GetView<PaymentMethodsController> {
                         );
                       }
                     }),
-                Padding(
-                  padding: EdgeInsets.symmetric(vertical: 26.h),
-                  child: const OrDivider(),
-                ),
-                PaymentMethodItem(
-                  image: "",
-                  name: LocalKeys.kcashondelivery.tr,
-                  isSelected: true,
-                ),
+                GetBuilder<PaymentMethodsController>(builder: ((controller) {
+                  return controller.hasCashPayment
+                      ? Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(vertical: 26.h),
+                              child: const OrDivider(),
+                            ),
+                            InkWell(
+                              onTap: () {
+                                controller.changeSelectedPaymentIndex(
+                                    controller.cashOnDeliveryPayment?.id ?? 0);
+                              },
+                              child: PaymentMethodItem(
+                                image: controller.cashOnDeliveryPayment?.logo ??
+                                    "",
+                                name: controller.cashOnDeliveryPayment?.name ??
+                                    LocalKeys.kcashondelivery.tr,
+                                isSelected: controller.selectPaymentId ==
+                                    controller.cashOnDeliveryPayment?.id,
+                              ),
+                            ),
+                          ],
+                        )
+                      : SizedBox();
+                })),
                 Padding(
                   padding: EdgeInsets.symmetric(vertical: 46.h),
                   child: CustomButton(

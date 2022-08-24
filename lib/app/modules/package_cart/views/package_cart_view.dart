@@ -4,6 +4,9 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
 import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
+import 'package:nourish_sa/app/data/remote_data_sources/cart_apis.dart';
+import 'package:nourish_sa/app/modules/branch_select/controllers/branch_select_controller.dart';
+import 'package:nourish_sa/app/modules/package_details/controllers/package_details_controller.dart';
 import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import 'package:nourish_sa/app/shared/custom_button.dart';
 import 'package:nourish_sa/app/shared/meals_summery_card.dart';
@@ -14,11 +17,11 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class PackageCartView extends GetView<PackageCartController> {
   PackageMealsController packageMealsController = Get.find();
-  List<String> mealsKeys=[];
-  Map<String,Map> newMeals={};
+  List<String> mealsKeys = [];
+  Map<String, Map> newMeals = {};
   @override
   Widget build(BuildContext context) {
-    Get.log('data ===>'+mealsKeys.toString());
+    Get.log('data ===>' + mealsKeys.toString());
     int? total = controller.total;
     return Scaffold(
       appBar: AppBar(
@@ -213,7 +216,7 @@ class PackageCartView extends GetView<PackageCartController> {
                   height: 300,
                   child: ListView.builder(
                     itemCount: controller
-                       .selectedMealsProductsData[controller.currentDay]
+                        .selectedMealsProductsData[controller.currentDay]
                         ?.keys
                         .length,
                     physics: NeverScrollableScrollPhysics(),
@@ -249,6 +252,7 @@ class PackageCartView extends GetView<PackageCartController> {
                           Padding(
                             padding: EdgeInsets.only(top: 21.h, bottom: 15.h),
                             child: TextFormField(
+                              controller: controller.couponController,
                               maxLines: 1,
                               showCursor: true,
                               cursorHeight: 5.h,
@@ -270,7 +274,30 @@ class PackageCartView extends GetView<PackageCartController> {
                                   ),
                                 ),
                                 suffixIcon: InkWell(
-                                  onTap: () {},
+                                  onTap: () async {
+                                    controller.discountData =
+                                        await CartApis.getDiscountPrice(
+                                                coupon: controller
+                                                    .couponController.text,
+                                                branchId: BranchSelectController
+                                                    .branchId,
+                                                packageId:
+                                                    PackageDetailsController
+                                                        .x?.data?.id,
+                                                totalPrice: controller.total)
+                                            .then((value) {
+                                      if (value?.data?.totalAfterDiscount !=
+                                          null) {
+                                        controller.total =
+                                            value?.data?.totalAfterDiscount ??
+                                                0;
+                                        controller.packageDiscountPrice =
+                                            (value?.data?.discount ?? 0)
+                                                .toDouble();
+                                      }
+                                      controller.update();
+                                    });
+                                  },
                                   child: Container(
                                     height: 42.h,
                                     width: 87.06.w,
@@ -288,14 +315,21 @@ class PackageCartView extends GetView<PackageCartController> {
                               ),
                             ),
                           ),
-                          CartItem(
-                            item: LocalKeys.kDiscount.tr,
-                            value: "0,0 SAR",
-                          ),
-                          CartItem(
-                            item: LocalKeys.kTotal.tr,
-                            value: "$total SAR",
-                            isTotal: true,
+                          GetBuilder<PackageCartController>(
+                            builder: (controller) => Column(
+                              children: [
+                                CartItem(
+                                  item: LocalKeys.kDiscount.tr,
+                                  value:
+                                      "${controller.packageDiscountPrice} SAR",
+                                ),
+                                CartItem(
+                                  item: LocalKeys.kTotal.tr,
+                                  value: "$total SAR",
+                                  isTotal: true,
+                                ),
+                              ],
+                            ),
                           ),
                           Padding(
                             padding: EdgeInsets.only(top: 35.h, bottom: 24.h),

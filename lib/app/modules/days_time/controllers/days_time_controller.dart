@@ -50,6 +50,7 @@ class DaysTimeController extends GetxController {
     'saturday',
   ];
   Map<String, dynamic> daysTimeSelectedValues = {};
+  Map<String, dynamic> daysTimeSelectedMeals = {};
   List<bool> offDays = List.generate(7, (index) => false);
   Future<List<bool>> getOffDays() async {
     HomeSettingModel? homeSettingsModel =
@@ -120,6 +121,7 @@ class DaysTimeController extends GetxController {
     if (selectedItems.contains(index)) {
       selectedItems.remove(index);
       daysTimeSelectedValues.remove(dayName);
+      daysTimeSelectedMeals.remove(dayName);
     } else {
       selectedItems.add(index);
       daysTimeSelectedValues[dayName] = {
@@ -127,6 +129,12 @@ class DaysTimeController extends GetxController {
         'lunch': [],
         'dinner': [],
         'snack': [],
+      };
+      daysTimeSelectedMeals[dayName] = {
+        'breakfast': '',
+        'lunch': '',
+        'dinner': '',
+        'snack': '',
       };
       Get.log(daysTimeSelectedValues.toString());
     }

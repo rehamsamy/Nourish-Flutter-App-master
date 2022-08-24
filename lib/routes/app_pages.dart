@@ -3,6 +3,8 @@ import 'package:nourish_sa/app/modules/branch_select/bindings/branch_select_bind
 import 'package:nourish_sa/app/modules/branch_select/views/branch_select_view.dart';
 import 'package:nourish_sa/app/modules/package_cart/bindings/package_cart_binding.dart';
 import 'package:nourish_sa/app/modules/package_cart/views/package_cart_view.dart';
+import 'package:nourish_sa/app/modules/splash/bindings/splash_binding.dart';
+import 'package:nourish_sa/app/modules/splash/views/splash_view.dart';
 import 'package:nourish_sa/app/modules/supscreption_cart/bindings/cart_binding.dart';
 import 'package:nourish_sa/app/modules/supscreption_cart/views/cart_view.dart';
 import '../app/modules/Subscription/bindings/subscription_binding.dart';
@@ -67,8 +69,8 @@ class AppPages {
   static final routes = [
     GetPage(
       name: _Paths.SPLASH,
-      page: () => const HomePageView(),
-      binding: HomePageBinding(),
+      page: () => const SplashView(),
+      binding: SplashBinding(),
     ),
     GetPage(
       name: _Paths.ON_BOARDING,

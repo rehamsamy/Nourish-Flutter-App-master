@@ -244,36 +244,50 @@ class PackageMealsView extends GetView<PackageMealsController> {
                   CustomButton(
                       title: LocalKeys.kContinue.tr,
                       onPress: () async {
-                        /*     // Get.toNamed(Routes.CART, arguments: {'isSubscribtion':false});
-                        Get.log('vvvvv  ' +
-                            controller.addtionalPackagePrice.toString());
-                        Get.toNamed(Routes.PAYMENT_METHODS, arguments: {
-                          'total': controller.totalPackagePrice,
-                     */
-                        /*   if (controller.selectedDays1.keys.length !=
-                            PackageMealsController.selectedDays.keys.length) {
-                          Get.snackbar("Empty meals",
-                              "please select meals for all days");
-                          return;
-                        } else {
-                          for (int i = 0;
-                              i <=
-                                  PackageMealsController
-                                      .selectedDays.keys.length;
-                              i++) {
-                            //check if meals are selected for all days if not show error
-                            if (PackageMealsController.selectedDays[
-                                    PackageMealsController.selectedDays] ==
-                                null) {
-                              Get.snackbar("Empty meals",
-                                  "please select meals for all days");
-                              return;
-                            }
+                        for (int i = 0;
+                            i <
+                                PackageMealsController
+                                    .selectedMeals.keys.length;
+                            i++) {
+                          //check if a map contains a specific meal
+                          if (PackageMealsController.selectedMeals[
+                                  PackageMealsController.selectedMeals.keys
+                                      .toList()[i]]["breakfast"] ==
+                              "") {
+                            Get.snackbar("Some meals not selected",
+                                "${PackageMealsController.selectedMeals.keys.toList()[i]}'s breakfast not yet selected");
+                            return;
                           }
-                        }*/
+                          if (PackageMealsController.selectedMeals[
+                                  PackageMealsController.selectedMeals.keys
+                                      .toList()[i]]["lunch"] ==
+                              "") {
+                            Get.snackbar("Some meals not selected",
+                                "${PackageMealsController.selectedMeals.keys.toList()[i]}'s lunch not yet selected");
+                            return;
+                          }
+                          if (PackageMealsController.selectedMeals[
+                                  PackageMealsController.selectedMeals.keys
+                                      .toList()[i]]["dinner"] ==
+                              "") {
+                            Get.snackbar("Some meals not selected",
+                                "${PackageMealsController.selectedMeals.keys.toList()[i]}'s dinner not yet selected");
+                            return;
+                          }
+                          if (PackageMealsController.selectedMeals[
+                                  PackageMealsController.selectedMeals.keys
+                                      .toList()[i]]["snack"] ==
+                              "") {
+                            Get.snackbar("Some meals not selected",
+                                "${PackageMealsController.selectedMeals.keys.toList()[i]}'s snack not yet selected");
+                            return;
+                          }
+                        }
+                        ////
                         Get.toNamed(Routes.PACKAGE_CART, arguments: {
                           'total': controller.totalPackagePrice,
-                          'isSubscribtion': false
+                          'isSubscribtion': false,
+                          'selectedMeals': PackageMealsController.selectedMeals
                         });
                       }),
                   SizedBox(
