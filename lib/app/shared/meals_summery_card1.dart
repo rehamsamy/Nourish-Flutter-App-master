@@ -4,24 +4,18 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
-import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
-import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 import 'package:nourish_sa/app/modules/supscreption_cart/controllers/cart_controller.dart';
 
 import '../../app_theme.dart';
-import '../modules/package_cart/controllers/package_cart_controller.dart';
 
 class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
-
   int index;
   MealsSummeryCard1(this.index);
 
   @override
   Widget build(BuildContext context) {
-
     return GetBuilder<SubscriptionCartController>(
-      builder: (_)=> Container(
+      builder: (_) => Container(
         width: 374.w,
         margin: EdgeInsets.only(bottom: 18.h),
         padding: EdgeInsets.symmetric(horizontal: 18.w, vertical: 11.h),
@@ -44,23 +38,21 @@ class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
                   width: 12.w,
                 ),
                 Text(
-                    (controller.newMealsList?[index].mealType).toString(),
-                 // x['sat'].keys.elementAt(index),
+                  (controller.newMealsList?[index].mealType).toString(),
+                  // x['sat'].keys.elementAt(index),
                   style: Get.textTheme.bodyText1,
                 ),
-
               ],
             ),
-         // SizedBox(height: 12,),
-          // FoodItem(
-          //   title:
-          //   //x['sat'].values.elementAt(index)
-          //   (controller.newMealsList?[index].product?.name).toString()
-          //   ,desc :'',
-          //   isEnd: index == -1,
-          // ),
-          //   SizedBox(height: 5,),
-
+            // SizedBox(height: 12,),
+            // FoodItem(
+            //   title:
+            //   //x['sat'].values.elementAt(index)
+            //   (controller.newMealsList?[index].product?.name).toString()
+            //   ,desc :'',
+            //   isEnd: index == -1,
+            // ),
+            //   SizedBox(height: 5,),
 
             ListView.builder(
               itemCount: 1,
@@ -68,10 +60,10 @@ class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
               padding: EdgeInsets.symmetric(vertical: 22.h, horizontal: 27.w),
               physics: const NeverScrollableScrollPhysics(),
               itemBuilder: (context, index) {
-                 return FoodItem(
-                  title:
-                  (controller.newMealsList?[index].product?.name).toString()
-                  ,desc :'',
+                return FoodItem(
+                  title: (controller.newMealsList?[index].product?.name)
+                      .toString(),
+                  desc: '',
                   isEnd: index == 1,
                 );
               },
@@ -84,7 +76,8 @@ class MealsSummeryCard1 extends GetView<SubscriptionCartController> {
 }
 
 class FoodItem extends StatelessWidget {
-  const FoodItem({required this.title,required this.desc, this.isEnd = false, Key? key})
+  const FoodItem(
+      {required this.title, required this.desc, this.isEnd = false, Key? key})
       : super(key: key);
   final String title;
   final String desc;
@@ -109,7 +102,7 @@ class FoodItem extends StatelessWidget {
             SizedBox(
               width: 10.w,
             ),
-             Text(
+            Text(
               title,
             ),
           ],

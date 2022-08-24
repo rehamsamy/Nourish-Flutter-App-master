@@ -287,7 +287,9 @@ class PackageMealsView extends GetView<PackageMealsController> {
                         Get.toNamed(Routes.PACKAGE_CART, arguments: {
                           'total': controller.totalPackagePrice,
                           'isSubscribtion': false,
-                          'selectedMeals': PackageMealsController.selectedMeals
+                          'selectedMeals': PackageMealsController.selectedMeals,
+                          'selectedDays':
+                              PackageMealsController.selectedDays.keys.toList()
                         });
                       }),
                   SizedBox(

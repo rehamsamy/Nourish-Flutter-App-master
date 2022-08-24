@@ -4,9 +4,6 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
 import 'package:nourish_sa/app/core/values/assets.dart';
-import 'package:nourish_sa/app/core/values/localization/local_keys.dart';
-import 'package:nourish_sa/app/data/models/subscription_detail_model.dart';
-import 'package:nourish_sa/app/modules/package_meals/controllers/package_meals_controller.dart';
 
 import '../../app_theme.dart';
 import '../modules/package_cart/controllers/package_cart_controller.dart';
@@ -18,7 +15,6 @@ class MealsSummeryCard extends GetView<PackageCartController> {
 
   @override
   Widget build(BuildContext context) {
-    Get.log('selected days map 2==>  ${controller.currentDay}   mmm     ${controller.selectedMealsProductsData[controller.selectedMealsProductsData]?.keys.length} '+controller.selectedMealsProductsData[controller.currentDay].toString());
     return GetBuilder<PackageCartController>(
       builder: (_) => Container(
         width: 374.w,
@@ -42,30 +38,25 @@ class MealsSummeryCard extends GetView<PackageCartController> {
                 SizedBox(
                   width: 12.w,
                 ),
-                if (controller.selectedMealsProductsData.containsKey(controller.currentDay))
-                  Text(
-                    (controller.selectedMealsProductsData[controller.currentDay])?.keys
-                        .elementAt(index)??'' ,
-                        //?? null,
-                       // 'not found',
-                    style: Get.textTheme.bodyText1,
-                  )
-                else
-                  const Text('not found'),
+                Text(
+                  "" ?? '',
+                  //?? null,
+                  // 'not found',
+                  style: Get.textTheme.bodyText1,
+                )
               ],
             ),
             const SizedBox(
               height: 12,
             ),
             FoodItem(
-              title:
-              controller.selectedMealsProductsData[controller.currentDay]?.values
-                  .elementAt(index) ??
+              title: controller.cartSelectedMeals[controller.currentDay]?.values
+                      .elementAt(index) ??
                   'not found',
               desc: '',
               isEnd: index == -1,
             ),
-            SizedBox(
+            const SizedBox(
               height: 5,
             ),
 
@@ -93,7 +84,8 @@ class MealsSummeryCard extends GetView<PackageCartController> {
 }
 
 class FoodItem extends StatelessWidget {
-  const FoodItem({required this.title, required this.desc, this.isEnd = false, Key? key})
+  const FoodItem(
+      {required this.title, required this.desc, this.isEnd = false, Key? key})
       : super(key: key);
   final String title;
   final String desc;
@@ -127,14 +119,14 @@ class FoodItem extends StatelessWidget {
         isEnd
             ? const SizedBox.shrink()
             : Padding(
-          padding: EdgeInsetsDirectional.only(start: 4.5.w),
-          child: DottedLine(
-            direction: Axis.vertical,
-            lineLength: 20.h,
-            lineThickness: 2.h,
-            dashColor: primaryColor,
-          ),
-        )
+                padding: EdgeInsetsDirectional.only(start: 4.5.w),
+                child: DottedLine(
+                  direction: Axis.vertical,
+                  lineLength: 20.h,
+                  lineThickness: 2.h,
+                  dashColor: primaryColor,
+                ),
+              )
       ],
     );
   }

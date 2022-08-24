@@ -145,59 +145,8 @@ class SubscriptionCartView extends GetView<SubscriptionCartController> {
                 SizedBox(
                   height: 17.h,
                 ),
-                SizedBox(
-                  width: Get.width,
-                  height: 44.w,
-                  child: OverflowBox(
-                    maxWidth: Get.width,
-                    minWidth: Get.width,
-                    child: SizedBox(
-                      height: 44.w,
-                      width: Get.width,
-                      child: ListView.builder(
-                        itemCount: controller.daysList.length,
-                        padding: EdgeInsetsDirectional.only(start: 22.w),
-                        scrollDirection: Axis.horizontal,
-                        itemBuilder: (context, index) {
-                          return Padding(
-                            padding: EdgeInsets.symmetric(
-                              horizontal: 5.w,
-                            ),
-                            child: InkWell(
-                              onTap: () {
-                                controller.changeMealSelected(
-                                    index, controller.daysList[index]);
-                                //  Get.log('ffff   '+controller.daySelected.toString()+'  l  '+controller.daysList[index].toString());
-                              },
-                              child: Container(
-                                width: 44.w,
-                                height: 44.w,
-                                alignment: Alignment.center,
-                                decoration: BoxDecoration(
-                                  borderRadius: BorderRadius.circular(7.r),
-                                  color: index == controller.isMealSelected
-                                      ? primaryColor
-                                      : whiteColor,
-                                  border: Border.all(
-                                      color: index == controller.isMealSelected
-                                          ? primaryColor
-                                          : lightGreyColor),
-                                ),
-                                child: Text(
-                                  controller.daysList[index],
-                                  style: Get.textTheme.headline3!.copyWith(
-                                    color: index == controller.isMealSelected
-                                        ? whiteColor
-                                        : lightGreyColor,
-                                  ),
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    ),
-                  ),
+                DaysList(
+                  controller: controller,
                 ),
                 SizedBox(
                   height: 25.h,
@@ -217,6 +166,73 @@ class SubscriptionCartView extends GetView<SubscriptionCartController> {
                 const SizedBox.shrink()
               ],
             ),
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class DaysList extends StatelessWidget {
+  const DaysList({
+    Key? key,
+    required this.controller,
+  }) : super(key: key);
+
+  final SubscriptionCartController controller;
+
+  @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+      width: Get.width,
+      height: 44.w,
+      child: OverflowBox(
+        maxWidth: Get.width,
+        minWidth: Get.width,
+        child: SizedBox(
+          height: 44.w,
+          width: Get.width,
+          child: ListView.builder(
+            itemCount: controller.daysList.length,
+            padding: EdgeInsetsDirectional.only(start: 22.w),
+            scrollDirection: Axis.horizontal,
+            itemBuilder: (context, index) {
+              return Padding(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 5.w,
+                ),
+                child: InkWell(
+                  onTap: () {
+                    controller.changeMealSelected(
+                        index, controller.daysList[index]);
+                    //  Get.log('ffff   '+controller.daySelected.toString()+'  l  '+controller.daysList[index].toString());
+                  },
+                  child: Container(
+                    width: 44.w,
+                    height: 44.w,
+                    alignment: Alignment.center,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(7.r),
+                      color: index == controller.isMealSelected
+                          ? primaryColor
+                          : whiteColor,
+                      border: Border.all(
+                          color: index == controller.isMealSelected
+                              ? primaryColor
+                              : lightGreyColor),
+                    ),
+                    child: Text(
+                      controller.daysList[index],
+                      style: Get.textTheme.headline3!.copyWith(
+                        color: index == controller.isMealSelected
+                            ? whiteColor
+                            : lightGreyColor,
+                      ),
+                    ),
+                  ),
+                ),
+              );
+            },
           ),
         ),
       ),
